@@ -1,0 +1,119 @@
+{
+  "timestamp_utc": "2026-07-11T17:07:28.914417+00:00",
+  "dry_run": false,
+  "data_dir": "C:\\Users\\LENOVO\\OneDrive\\Desktop\\LexAI\\backend\\Data",
+  "database_dir": "C:\\Users\\LENOVO\\OneDrive\\Desktop\\LexAI\\backend\\Database",
+  "backup_created": "C:\\Users\\LENOVO\\OneDrive\\Desktop\\LexAI\\backend\\Database_backup_20260711T170728Z",
+  "embedding_model": "models/gemini-embedding-001",
+  "total_source_documents": 57,
+  "total_chunks": 139,
+  "law_type_distribution": {
+    "other": 119
+  },
+  "per_document_stats": [
+    {
+      "file": "-0___jonew__judis__15969.pdf",
+      "pages": 3,
+      "chunks": 6,
+      "seconds": 4.63
+    },
+    {
+      "file": "-0___jonew__judis__1601.pdf",
+      "pages": 13,
+      "chunks": 27,
+      "seconds": 6.59
+    },
+    {
+      "file": "-0___jonew__judis__16017.pdf",
+      "pages": 5,
+      "chunks": 9,
+      "seconds": 5.27
+    },
+    {
+      "file": "-0___jonew__judis__16030.pdf",
+      "pages": 4,
+      "chunks": 7,
+      "seconds": 2.55
+    },
+    {
+      "file": "-0___jonew__judis__16033.pdf",
+      "pages": 5,
+      "chunks": 10,
+      "seconds": 6.11
+    },
+    {
+      "file": "-0___jonew__judis__16049.pdf",
+      "pages": 3,
+      "chunks": 4,
+      "seconds": 2.97
+    },
+    {
+      "file": "-0___jonew__judis__1605.pdf",
+      "pages": 6,
+      "chunks": 12,
+      "seconds": 4.0
+    },
+    {
+      "file": "-0___jonew__judis__16064.pdf",
+      "pages": 2,
+      "chunks": 3,
+      "seconds": 0.67
+    },
+    {
+      "file": "-0___jonew__judis__16071.pdf",
+      "pages": 2,
+      "chunks": 4,
+      "seconds": 7.88
+    },
+    {
+      "file": "-0___jonew__judis__16076.pdf",
+      "pages": 3,
+      "chunks": 8,
+      "seconds": 2.84
+    },
+    {
+      "file": "-0___jonew__judis__16081.pdf",
+      "pages": 2,
+      "chunks": 3,
+      "seconds": 2.21
+    },
+    {
+      "file": "-0___jonew__judis__16089.pdf",
+      "pages": 3,
+      "chunks": 6,
+      "seconds": 2.1
+    },
+    {
+      "file": "-0___jonew__judis__16093.pdf",
+      "pages": 4,
+      "chunks": 7,
+      "seconds": 0.97
+    },
+    {
+      "file": "-0___jonew__judis__16096.pdf",
+      "pages": 2,
+      "chunks": 4,
+      "seconds": 3.1
+    },
+    {
+      "file": "-0___jonew__judis__16108.pdf",
+      "pages": 3,
+      "chunks": 5,
+      "seconds": 0.94
+    },
+    {
+      "file": "-0___jonew__judis__16115.pdf",
+      "pages": 2,
+      "chunks": 4,
+      "seconds": 0.68
+    },
+    {
+      "file": "-0___jonew__judis__1612.pdf",
+      "pages": 10,
+      "chunks": 20,
+      "seconds": 5.86
+    }
+  ],
+  "embedding_seconds": 0.0,
+  "total_seconds": 436.5
+}
