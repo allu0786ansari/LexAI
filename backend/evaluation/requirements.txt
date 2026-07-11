@@ -1,0 +1,7 @@
+# Evaluation-only dependencies, on top of backend/requirements.txt.
+# See evaluation/_ragas_compat.py for why the stub import is required
+# before importing ragas (a verified upstream bug, not a version pin
+# issue - no special version pins needed here beyond ragas itself).
+-r ../requirements.txt
+ragas==0.4.3
+pandas>=2.0.0

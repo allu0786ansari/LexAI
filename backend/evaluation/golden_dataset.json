@@ -1,0 +1,21 @@
+{
+  "_readme": "This is a small STARTER set (10 pairs) so run_ragas.py has something to execute immediately. It is NOT the proposal's 300-pair target. Run evaluation/build_golden_dataset.py with real --kaggle-csv and --indiclegalqa-json downloads (proposal section 11 has the URLs) plus --synthetic-count 100 to replace this file with the real dataset.",
+  "total": 10,
+  "dev_set_size": 8,
+  "test_set_size": 2,
+  "source_counts": {"manual_starter": 10},
+  "dev_set": [
+    {"id": "gq_0000", "question": "What is the punishment for murder under Section 302 of the IPC?", "reference_answer": "Under Section 302 IPC, whoever commits murder shall be punished with death, or imprisonment for life, and shall also be liable to fine.", "category": "statute_qa", "source": "manual_starter"},
+    {"id": "gq_0001", "question": "What does Article 21 of the Constitution of India guarantee?", "reference_answer": "Article 21 guarantees the right to life and personal liberty, providing that no person shall be deprived of their life or personal liberty except according to procedure established by law.", "category": "statute_qa", "source": "manual_starter"},
+    {"id": "gq_0002", "question": "How is theft defined under the Indian Penal Code?", "reference_answer": "Under Section 378 IPC, theft is defined as dishonestly taking any movable property out of the possession of another person without that person's consent, intending to permanently deprive them of it.", "category": "statute_qa", "source": "manual_starter"},
+    {"id": "gq_0003", "question": "What is the punishment for theft under the IPC?", "reference_answer": "Under Section 379 IPC, whoever commits theft shall be punished with imprisonment of either description for a term which may extend to three years, or with fine, or both.", "category": "statute_qa", "source": "manual_starter"},
+    {"id": "gq_0004", "question": "What procedural safeguards does the CrPC provide for arrest?", "reference_answer": "The Code of Criminal Procedure requires that a person arrested be informed of the grounds of arrest and be produced before a magistrate within 24 hours, among other safeguards.", "category": "procedural", "source": "manual_starter"},
+    {"id": "gq_0005", "question": "What does the Information Technology Act say about electronic contracts?", "reference_answer": "The IT Act gives legal recognition to electronic records and digital signatures, making electronic contracts valid and enforceable.", "category": "statute_qa", "source": "manual_starter"},
+    {"id": "gq_0006", "question": "What is the required intention for an act to qualify as murder rather than culpable homicide under the IPC?", "reference_answer": "Section 300 IPC distinguishes murder from culpable homicide not amounting to murder based on the presence of specific intention or knowledge, such as an intention to cause death or an act so imminently dangerous that it must, in all probability, cause death.", "category": "interpretive", "source": "manual_starter"},
+    {"id": "gq_0007", "question": "What remedies are available for defamation under Indian law?", "reference_answer": "Indian law provides both criminal remedies (under Section 499-500 IPC) and civil remedies (tort law) for defamation, allowing a complainant to pursue prosecution or a civil suit for damages.", "category": "contextual", "source": "manual_starter"}
+  ],
+  "test_set": [
+    {"id": "gq_0008", "question": "What protections does the Prison Manual provide for undertrial prisoners?", "reference_answer": "The Model Prison Manual requires humane treatment of undertrial prisoners, including separation from convicted prisoners and access to legal aid.", "category": "procedural", "source": "manual_starter"},
+    {"id": "gq_0009", "question": "How should a citizen report cybercrime according to the MHA citizen manual?", "reference_answer": "The MHA citizen manual outlines reporting cybercrime through the National Cyber Crime Reporting Portal or the local police cybercrime cell.", "category": "procedural", "source": "manual_starter"}
+  ]
+}
