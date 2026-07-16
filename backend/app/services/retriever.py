@@ -26,11 +26,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from langchain_core.documents import Document
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
 from app.config.logging import get_logger
 from app.config.settings import Settings
 from app.services.bm25_store import Bm25Store
+from app.services.providers import build_embeddings_client
 from app.services.vector_store import FaissVectorStore
 
 logger = get_logger(__name__)
@@ -117,12 +117,7 @@ class HybridRetriever:
         logger.info("loading_vector_store", directory=str(settings.database_dir))
         self.vector_store = FaissVectorStore.load_local(settings.database_dir)
         self.bm25_store = Bm25Store.load_local(settings.database_dir)
-        self._query_embeddings = GoogleGenerativeAIEmbeddings(
-            model=settings.embedding_model,
-            google_api_key=settings.require_google_api_key(),
-            task_type="retrieval_query",
-            output_dimensionality=settings.embedding_output_dimensionality,
-        )
+        self._query_embeddings = build_embeddings_client(settings, task_type="retrieval_query")
         logger.info(
             "hybrid_retriever_ready",
             faiss_documents=len(self.vector_store),

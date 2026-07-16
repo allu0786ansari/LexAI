@@ -27,18 +27,20 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
+import re
 import shutil
 import sys
 import time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pypdf import PdfReader
 from pypdf.errors import PdfReadError
-from tenacity import retry, retry_if_exception, stop_after_attempt, wait_exponential
 
 from app.config.logging import configure_logging, get_logger
 from app.config.settings import Settings, get_settings
@@ -130,48 +132,58 @@ def process_document(
 # ----------------------------------------------------------------------
 
 def _is_retryable_error(exc: BaseException) -> bool:
-    """
-    Retry on the Google GenAI SDK's API error hierarchy (covers HTTP 429
-    rate limits and 5xx server errors) plus plain network timeouts.
-    Deliberately does NOT retry on ValueError/auth failures — those won't
-    resolve by waiting and should fail the run immediately.
-    """
+    """Retry on transient errors that are likely to clear after a short wait."""
     try:
         from google.genai.errors import APIError
     except ImportError:
         APIError = ()  # pragma: no cover - SDK always present in this project
-    return isinstance(exc, (APIError, TimeoutError, ConnectionError))
+    message = str(exc).lower()
+    return isinstance(exc, (APIError, TimeoutError, ConnectionError)) or "resource_exhausted" in message or "429" in message
+
+
+def _is_quota_error(exc: BaseException) -> bool:
+    message = str(exc).lower()
+    return "resource_exhausted" in message or "429" in message or "quota" in message
+
+
+def _extract_retry_delay_seconds(exc: BaseException, settings: Settings) -> int:
+    message = str(exc)
+    match = re.search(r"retry in\s+([0-9.]+)s", message, re.IGNORECASE)
+    if match:
+        return max(settings.embedding_quota_wait_seconds, math.ceil(float(match.group(1))))
+    return settings.embedding_quota_wait_seconds if _is_quota_error(exc) else int(settings.embedding_retry_min_seconds)
 
 
 def build_retrying_embed_fn(settings: Settings):
     """
-    Returns a function that embeds a batch of texts, retrying with
-    exponential backoff only on transient errors (rate limits, 5xx,
-    network timeouts). Non-retryable errors (auth failures, bad requests)
-    propagate immediately on the first attempt — retrying those would
-    just burn through the retry budget for no reason.
+    Retry embedding calls with a quota-aware pause. Google free-tier
+    embedding requests commonly reject immediate retries with a 429 until
+    the quota window resets, so the next attempt should wait at least one minute.
     """
 
-    def _log_retry(retry_state) -> None:
-        logger.warning(
-            "embedding_batch_retry",
-            attempt=retry_state.attempt_number,
-            wait_seconds=round(retry_state.next_action.sleep, 2) if retry_state.next_action else None,
-            error=str(retry_state.outcome.exception()) if retry_state.outcome else None,
-        )
-
-    @retry(
-        reraise=True,
-        stop=stop_after_attempt(settings.embedding_max_retries),
-        wait=wait_exponential(
-            multiplier=settings.embedding_retry_min_seconds,
-            max=settings.embedding_retry_max_seconds,
-        ),
-        retry=retry_if_exception(_is_retryable_error),
-        before_sleep=_log_retry,
-    )
     def embed(client, texts: list[str]) -> list[list[float]]:
-        return client.embed_documents(texts)
+        last_exc: BaseException | None = None
+        for attempt in range(1, settings.embedding_max_retries + 1):
+            try:
+                return client.embed_documents(texts)
+            except Exception as exc:  # pragma: no cover - exercised via runtime integration
+                last_exc = exc
+                if not _is_retryable_error(exc):
+                    raise
+                wait_seconds = _extract_retry_delay_seconds(exc, settings)
+                if attempt < settings.embedding_max_retries:
+                    logger.warning(
+                        "embedding_batch_retry",
+                        attempt=attempt,
+                        wait_seconds=wait_seconds,
+                        error=str(exc),
+                    )
+                    time.sleep(wait_seconds)
+                    continue
+                raise
+        if last_exc is not None:
+            raise last_exc
+        raise RuntimeError("Embedding retries exhausted without a captured error.")
 
     return embed
 
@@ -181,15 +193,22 @@ def batched(items: list, batch_size: int):
         yield items[i : i + batch_size]
 
 
-def embed_all(chunks: list[Document], settings: Settings) -> list[list[float]]:
-    from langchain_google_genai import GoogleGenerativeAIEmbeddings
+def select_pdf_files_to_process(data_dir: Path, checkpoint_path: Path | None = None) -> list[Path]:
+    pdf_files = sorted(p for p in data_dir.iterdir() if p.suffix.lower() == ".pdf" and p.is_file())
+    if checkpoint_path is None or not checkpoint_path.exists():
+        return pdf_files
 
-    client = GoogleGenerativeAIEmbeddings(
-        model=settings.embedding_model,
-        google_api_key=settings.require_google_api_key(),
-        task_type=settings.embedding_task_type,
-        output_dimensionality=settings.embedding_output_dimensionality,
-    )
+    with open(checkpoint_path, "r", encoding="utf-8") as handle:
+        payload: dict[str, Any] = json.load(handle)
+
+    completed = set(payload.get("completed_files", []))
+    return [pdf_path for pdf_path in pdf_files if pdf_path.name not in completed]
+
+
+def embed_all(chunks: list[Document], settings: Settings) -> list[list[float]]:
+    from app.services.providers import build_embeddings_client
+
+    client = build_embeddings_client(settings, task_type=settings.embedding_task_type)
     embed_fn = build_retrying_embed_fn(settings)
 
     vectors: list[list[float]] = []
@@ -242,7 +261,7 @@ def run_ingestion(
 
     logger.info("ingestion_started", data_dir=str(data_dir), num_source_files=len(pdf_files), dry_run=dry_run)
 
-    if not dry_run:
+    if not dry_run and getattr(settings, "embedding_provider", "ollama") == "google":
         settings.require_google_api_key()
 
     chunker: SemanticChunker | None = None
@@ -254,14 +273,9 @@ def run_ingestion(
             separators=["\n\n", "\n", ". ", " ", ""],
         )
     else:
-        from langchain_google_genai import GoogleGenerativeAIEmbeddings
+        from app.services.providers import build_embeddings_client
 
-        chunk_embeddings_client = GoogleGenerativeAIEmbeddings(
-            model=settings.embedding_model,
-            google_api_key=settings.require_google_api_key(),
-            task_type="semantic_similarity",
-            output_dimensionality=settings.embedding_output_dimensionality,
-        )
+        chunk_embeddings_client = build_embeddings_client(settings, task_type="semantic_similarity")
         chunker = SemanticChunker(
             embeddings=chunk_embeddings_client,
             config=SemanticChunkerConfig(
@@ -309,16 +323,34 @@ def run_ingestion(
         logger.warning("dry_run_skipping_faiss_build", reason="no embedding calls made in dry-run mode")
     else:
         embed_start = time.time()
-        vectors = embed_all(all_chunks, settings)
+        try:
+            vectors = embed_all(all_chunks, settings)
+        except Exception as exc:
+            if _is_quota_error(exc):
+                logger.warning(
+                    "embedding_quota_exhausted_skipping_faiss_build",
+                    error=str(exc),
+                    chunks=len(all_chunks),
+                )
+                vectors = []
+            else:
+                raise
         embedding_seconds = round(time.time() - embed_start, 2)
-        if len(vectors) != len(all_chunks):
-            raise RuntimeError(
-                f"Embedding count ({len(vectors)}) does not match chunk count ({len(all_chunks)}) — aborting."
+        if vectors:
+            if len(vectors) != len(all_chunks):
+                raise RuntimeError(
+                    f"Embedding count ({len(vectors)}) does not match chunk count ({len(all_chunks)}) — aborting."
+                )
+            vector_store = FaissVectorStore(dimension=len(vectors[0]))
+            vector_store.add_documents(all_chunks, vectors)
+            vector_store.save_local(database_dir)
+            logger.info("faiss_index_saved", directory=str(database_dir), vectors=len(vectors))
+        else:
+            logger.warning(
+                "faiss_index_not_built_due_to_embedding_failure",
+                directory=str(database_dir),
+                chunks=len(all_chunks),
             )
-        vector_store = FaissVectorStore(dimension=len(vectors[0]))
-        vector_store.add_documents(all_chunks, vectors)
-        vector_store.save_local(database_dir)
-        logger.info("faiss_index_saved", directory=str(database_dir), vectors=len(vectors))
 
     bm25_store = Bm25Store(all_chunks)
     bm25_store.save_local(database_dir)

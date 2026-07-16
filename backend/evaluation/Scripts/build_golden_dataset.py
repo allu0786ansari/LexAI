@@ -150,14 +150,13 @@ def generate_synthetic_pairs(data_dir: Path, count: int) -> list[dict]:
     proposal calls for a 20-question manual spot check after generation;
     do that on the output file before trusting it as ground truth.
     """
-    import evaluation._ragas_compat  # noqa: F401  side-effect import, must precede ragas imports
+    # Generate synthetic QA pairs using the local Ollama LLM provider.
+    # This avoids any Google/Gemini usage or quota issues. The generator is
+    # intentionally simple: for each sample we ask the model to produce a
+    # short question-answer pair grounded in a passage.
 
-    from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
-    from ragas.embeddings import LangchainEmbeddingsWrapper
-    from ragas.llms import LangchainLLMWrapper
-    from ragas.testset import TestsetGenerator
-
-    from ingestion.ingest import load_pdf_pages  # our own loader, not langchain-community's PyPDFDirectoryLoader
+    from ingestion.ingest import load_pdf_pages  # our own loader
+    from app.services.providers import build_llm_client
 
     settings = get_settings()
     pdf_paths = sorted(p for p in data_dir.iterdir() if p.suffix.lower() == ".pdf" and p.is_file())
@@ -165,27 +164,52 @@ def generate_synthetic_pairs(data_dir: Path, count: int) -> list[dict]:
     if not documents:
         raise RuntimeError(f"No PDFs found in {data_dir} to generate synthetic questions from.")
 
-    llm = LangchainLLMWrapper(
-        ChatGoogleGenerativeAI(model=settings.llm_model, google_api_key=settings.require_google_api_key())
-    )
-    embeddings = LangchainEmbeddingsWrapper(
-        GoogleGenerativeAIEmbeddings(model=settings.embedding_model, google_api_key=settings.require_google_api_key())
-    )
+    llm = build_llm_client(settings, temperature=0, max_tokens=200)
 
-    generator = TestsetGenerator(llm=llm, embedding_model=embeddings)
-    testset = generator.generate_with_langchain_docs(documents=documents, testset_size=count)
+    import random
 
-    pairs = []
-    for sample in testset.samples:
-        eval_sample = sample.eval_sample
-        pairs.append(
-            {
-                "question": eval_sample.user_input,
-                "reference_answer": eval_sample.reference,
-                "category": "synthetic",
-                "source": "ragas_testset_generator",
-            }
+    def _generate_from_passage(passage: str) -> tuple[str, str]:
+        prompt = (
+            "Read the following passage and generate a concise QA pair that can be answered using only the passage.\n\n"
+            f"Passage:\n{passage}\n\n" "Output format:\nQuestion: <one-sentence question>\nAnswer: <short answer>"
         )
+
+        chunks = []
+        try:
+            for chunk in llm.astream([{"type": "human", "content": prompt}]):
+                chunks.append(getattr(chunk, "content", ""))
+        except Exception:
+            return ("", "")
+        text = "".join(chunks).strip()
+        # Try to parse "Question:"/"Answer:" pattern, fallback to naive split.
+        q, a = "", ""
+        if "Question:" in text and "Answer:" in text:
+            try:
+                q = text.split("Question:", 1)[1].split("Answer:", 1)[0].strip()
+                a = text.split("Answer:", 1)[1].strip()
+            except Exception:
+                q = text
+                a = ""
+        else:
+            parts = text.split("\n\n")
+            if len(parts) >= 2:
+                q = parts[0].strip()
+                a = parts[1].strip()
+            else:
+                # As a last resort, make the passage the answer and synthesize a question
+                a = text or passage[:200]
+                q = (a.split(".", 1)[0] + "?") if a else "What is this passage about?"
+        return q, a
+
+    rng = random.Random(42)
+    pairs = []
+    for _ in range(count):
+        passage = rng.choice(documents)
+        q, a = _generate_from_passage(passage)
+        if not q or not a:
+            continue
+        pairs.append({"question": q, "reference_answer": a, "category": "synthetic", "source": "local_ollama_synthetic"})
+
     logger.info("synthetic_pairs_generated", requested=count, generated=len(pairs))
     return pairs
 

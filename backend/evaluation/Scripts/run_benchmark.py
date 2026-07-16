@@ -48,6 +48,7 @@ from app.config.settings import get_settings
 from app.services.bm25_store import Bm25Store
 from app.services.vector_store import FaissVectorStore
 from langchain_core.documents import Document
+from app.services.providers import build_embeddings_client
 
 logger = get_logger(__name__)
 
@@ -279,11 +280,23 @@ def main() -> None:
     chunks = chunk_corpus_with_offsets(corpus)
     logger.info("corpus_chunked", chunks=len(chunks), files=len(corpus))
 
-    from langchain_google_genai import GoogleGenerativeAIEmbeddings
+    # Use local provider for embeddings (Ollama) to avoid external quotas
+    raw_embeddings = build_embeddings_client(settings, task_type="retrieval_document")
 
-    embeddings_client = GoogleGenerativeAIEmbeddings(
-        model=settings.embedding_model, google_api_key=settings.require_google_api_key(), task_type="retrieval_document"
-    )
+    class _EmbeddingsWrapper:
+        def __init__(self, client):
+            self._client = client
+
+        def embed_documents(self, texts: list[str]) -> list[list[float]]:
+            return self._client.embed_documents(texts)
+
+        def embed_query(self, text: str) -> list[float]:
+            # Some providers expose a dedicated embed_query method; fallback to embed_documents
+            if hasattr(self._client, "embed_query"):
+                return self._client.embed_query(text)
+            return self._client.embed_documents([text])[0]
+
+    embeddings_client = _EmbeddingsWrapper(raw_embeddings)
     index = BenchmarkIndex(chunks, embeddings_client)
 
     results = []

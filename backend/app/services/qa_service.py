@@ -28,11 +28,11 @@ from collections.abc import AsyncIterator
 from functools import lru_cache
 
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from langchain_google_genai import ChatGoogleGenerativeAI
 
 from app.config.logging import get_logger
 from app.config.settings import Settings, get_settings
 from app.services.memory import SessionStore
+from app.services.providers import build_llm_client
 from app.services.reranker import CrossEncoderReranker, RerankedDocument
 from app.services.retriever import FusedDocument, HybridRetriever
 
@@ -101,19 +101,11 @@ class LegalQAService:
         self.reranker = CrossEncoderReranker(settings) if settings.reranker_enabled else None
         self.sessions = SessionStore(ttl_minutes=settings.session_ttl_minutes)
 
-        self._llm = ChatGoogleGenerativeAI(
-            model=settings.llm_model,
-            google_api_key=settings.require_google_api_key(),
-            temperature=settings.llm_temperature,
-            max_output_tokens=settings.llm_max_output_tokens,
-            timeout=settings.llm_request_timeout_seconds,
-        )
-        self._hyde_llm = ChatGoogleGenerativeAI(
-            model=settings.llm_model,
-            google_api_key=settings.require_google_api_key(),
+        self._llm = build_llm_client(settings)
+        self._hyde_llm = build_llm_client(
+            settings,
             temperature=0.5,
-            max_output_tokens=settings.hyde_max_output_tokens,
-            timeout=settings.llm_request_timeout_seconds,
+            max_tokens=settings.hyde_max_output_tokens,
         )
         logger.info(
             "qa_service_ready",

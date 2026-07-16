@@ -38,17 +38,20 @@ class Settings(BaseSettings):
     # to be live at the time this project was built — swap freely via
     # env vars, nothing below should ever be hardcoded elsewhere.
     google_api_key: str = Field(default="", description="Google Generative AI API key")
+    llm_provider: str = Field(default="ollama", description="Provider for chat generation: google or ollama")
+    embedding_provider: str = Field(default="ollama", description="Provider for embeddings: google or ollama")
+    ollama_base_url: str = Field(default="http://localhost:11434", description="Base URL for local Ollama service")
     llm_model: str = Field(
-        default="gemini-2.5-flash",
-        description="Chat model id passed to ChatGoogleGenerativeAI. Placeholder — confirm current model availability before deploying.",
+        default="qwen2.5:3b-instruct",
+        description="Chat model id passed to the active chat provider.",
     )
     llm_temperature: float = Field(default=0.3, ge=0.0, le=2.0)
     llm_max_output_tokens: int = Field(default=1024, gt=0)
     llm_request_timeout_seconds: float = Field(default=30.0, gt=0)
 
     embedding_model: str = Field(
-        default="models/gemini-embedding-2",
-        description="Embedding model id passed to GoogleGenerativeAIEmbeddings. Placeholder — confirm current model availability before deploying.",
+        default="nomic-embed-text",
+        description="Embedding model id passed to the active embedding provider.",
     )
     embedding_output_dimensionality: int | None = Field(
         default=768,
@@ -77,6 +80,8 @@ class Settings(BaseSettings):
     embedding_max_retries: int = Field(default=6, ge=1)
     embedding_retry_min_seconds: float = Field(default=2.0, gt=0)
     embedding_retry_max_seconds: float = Field(default=60.0, gt=0)
+    embedding_quota_wait_seconds: int = Field(default=60, ge=1)
+    embedding_task_type: str = Field(default="semantic_similarity")
 
     # ------------------------------------------------------------------
     # Retrieval — Phase 2

@@ -26,7 +26,9 @@ Algorithm:
 from __future__ import annotations
 
 import logging
+import math
 import re
+import time
 from dataclasses import dataclass
 
 import numpy as np
@@ -46,6 +48,10 @@ class SemanticChunkerConfig:
     min_chunk_chars: int = 250
     max_chunk_chars: int = 2200
     hard_split_overlap: int = 150
+    embedding_max_retries: int = 3
+    embedding_retry_min_seconds: float = 1.0
+    embedding_retry_max_seconds: float = 5.0
+    embedding_quota_wait_seconds: int = 60
 
 
 class SemanticChunker:
@@ -68,7 +74,16 @@ class SemanticChunker:
             return self._apply_size_safety_net(sentences or [text])
 
         windows = self._combine_with_buffer(sentences)
-        embeddings = self.embeddings.embed_documents(windows)
+        try:
+            embeddings = self._embed_with_retry(windows)
+        except Exception as exc:
+            logger.warning(
+                "semantic_chunking_fallback_used",
+                exc_info=True,
+                extra={"error": str(exc)},
+            )
+            return self._apply_size_safety_net(self._safety_net.split_text(text))
+
         distances = self._consecutive_distances(embeddings)
 
         if not distances:
@@ -105,6 +120,34 @@ class SemanticChunker:
         return output
 
     # -- internals ---------------------------------------------------
+
+    def _embed_with_retry(self, windows: list[str]) -> list[list[float]]:
+        last_exc: Exception | None = None
+        for attempt in range(1, self.config.embedding_max_retries + 1):
+            try:
+                return self.embeddings.embed_documents(windows)
+            except Exception as exc:
+                last_exc = exc
+                message = str(exc).lower()
+                is_quota_error = "resource_exhausted" in message or "429" in message or "quota" in message
+                if not is_quota_error and attempt >= self.config.embedding_max_retries:
+                    raise
+                wait_seconds = self.config.embedding_quota_wait_seconds if is_quota_error else min(
+                    self.config.embedding_retry_max_seconds,
+                    self.config.embedding_retry_min_seconds * (2 ** (attempt - 1)),
+                )
+                if is_quota_error:
+                    wait_seconds = max(wait_seconds, self.config.embedding_quota_wait_seconds)
+                logger.warning(
+                    "semantic_chunking_embedding_retry attempt=%s wait_seconds=%s error=%s",
+                    attempt,
+                    wait_seconds,
+                    str(exc),
+                )
+                time.sleep(wait_seconds)
+        if last_exc is not None:
+            raise last_exc
+        raise RuntimeError("Embedding retries exhausted without a captured error.")
 
     @staticmethod
     def _split_sentences(text: str) -> list[str]:
