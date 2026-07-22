@@ -39,9 +39,14 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
+
+BACKEND_ROOT = Path(__file__).resolve().parents[2]
+if str(BACKEND_ROOT) not in sys.path:
+    sys.path.insert(0, str(BACKEND_ROOT))
 
 from app.config.logging import configure_logging, get_logger
 from app.config.settings import get_settings
@@ -79,15 +84,22 @@ class QueryGroundTruth:
     tags: list[str]
 
 
+def _find_benchmark_file(benchmark_dir: Path, benchmark_name: str) -> Path | None:
+    for candidate in [benchmark_dir / "benchmarks" / f"{benchmark_name}.json", benchmark_dir / "queries" / f"{benchmark_name}.json"]:
+        if candidate.exists():
+            return candidate
+    return None
+
+
 def load_benchmark(benchmark_dir: Path, benchmark_names: list[str]) -> tuple[list[QueryGroundTruth], dict[str, str]]:
     """Loads {name}.json test files + the corpus text files they reference. Schema matches upstream exactly."""
     tests: list[QueryGroundTruth] = []
     referenced_files: set[str] = set()
 
     for name in benchmark_names:
-        path = benchmark_dir / "benchmarks" / f"{name}.json"
-        if not path.exists():
-            logger.warning("benchmark_file_not_found", path=str(path))
+        path = _find_benchmark_file(benchmark_dir, name)
+        if path is None:
+            logger.warning("benchmark_file_not_found", benchmark_name=name, path=str(benchmark_dir / "benchmarks" / f"{name}.json"))
             continue
         with open(path, encoding="utf-8") as f:
             raw = json.load(f)
@@ -258,9 +270,14 @@ def run_pipeline_config(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--benchmark-dir", type=Path, default=Path("data"), help="Directory containing benchmarks/ and corpus/ subfolders.")
+    parser.add_argument(
+        "--benchmark-dir",
+        type=Path,
+        default=Path(__file__).resolve().parent.parent / "benchmark",
+        help="Directory containing benchmarks/ and corpus/ subfolders, or the repo-local evaluation/benchmark directory.",
+    )
     parser.add_argument("--benchmarks", nargs="+", default=["privacy_qa", "contractnli"], help="Benchmark JSON names (without .json) to include.")
-    parser.add_argument("--output-dir", type=Path, default=Path(__file__).parent / "results")
+    parser.add_argument("--output-dir", type=Path, default=Path(__file__).parent.parent / "results")
     args = parser.parse_args()
 
     settings = get_settings()
@@ -271,8 +288,9 @@ def main() -> None:
         logger.error(
             "no_benchmark_data_found",
             hint=(
-                "Download LegalBench-RAG-mini per proposal §11 and point --benchmark-dir at it. "
-                "Expected <benchmark-dir>/benchmarks/*.json and <benchmark-dir>/corpus/*."
+                "No benchmark tests or corpus files were found. "
+                "Either point --benchmark-dir at a LegalBench-RAG-mini checkout with benchmarks/ and corpus/ folders, "
+                "or use the bundled repo-local benchmark data under evaluation/benchmark."
             ),
         )
         return

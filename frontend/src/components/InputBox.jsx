@@ -46,7 +46,7 @@ export function InputBox({ onSend, disabled }) {
           "focus:outline-none disabled:opacity-50"
         )}
       />
-      <Button size="icon" onClick={handleSubmit} disabled={disabled || !value.trim()} aria-label="Send question">
+      <Button type="button" size="icon" onClick={handleSubmit} disabled={disabled || !value.trim()} aria-label="Send question">
         <ArrowUp className="h-4 w-4" />
       </Button>
     </div>

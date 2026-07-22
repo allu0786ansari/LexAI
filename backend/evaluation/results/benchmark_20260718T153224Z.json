@@ -1,0 +1,30 @@
+{
+  "timestamp_utc": "20260718T153224Z",
+  "benchmarks": [
+    "privacy_qa",
+    "contractnli"
+  ],
+  "results": [
+    {
+      "config": "baseline_faiss_only",
+      "num_queries": 1171,
+      "precision_at_5": 0.0003393680614859095,
+      "recall_at_5": 0.002752174252462896,
+      "ndcg_at_10": 0.002592284476184456
+    },
+    {
+      "config": "hybrid_faiss_bm25_rrf",
+      "num_queries": 1171,
+      "precision_at_5": 0.010830156190764953,
+      "recall_at_5": 0.10781479593205776,
+      "ndcg_at_10": 0.09687305424828617
+    },
+    {
+      "config": "full_hybrid_plus_reranker",
+      "num_queries": 1171,
+      "precision_at_5": 0.019904029317916978,
+      "recall_at_5": 0.18763600777590092,
+      "ndcg_at_10": 0.19460861331975426
+    }
+  ]
+}

@@ -101,8 +101,29 @@ export async function* streamQuery(question, sessionId, { signal } = {}) {
 
 export async function createSession() {
   const response = await fetch(`${API_BASE}/api/session`, { method: "POST" });
-  if (!response.ok) throw new ApiError("Could not start a new session.", response.status);
-  const body = await response.json();
+  if (!response.ok) {
+    let detail = response.statusText;
+    try {
+      const body = await response.json();
+      detail = body.detail || body.error || detail;
+    } catch {
+      /* keep statusText */
+    }
+    throw new ApiError(`Could not start a new session: ${detail}`, response.status);
+  }
+
+  let body;
+  try {
+    body = await response.json();
+  } catch (err) {
+    const text = await response.text().catch(() => "<unreadable response>");
+    throw new ApiError(`Could not parse session response: ${text}`, response.status);
+  }
+
+  if (!body || typeof body.session_id !== "string") {
+    throw new ApiError(`Invalid session response body: ${JSON.stringify(body)}`, response.status);
+  }
+
   return body.session_id;
 }
 

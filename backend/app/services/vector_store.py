@@ -53,6 +53,17 @@ class FaissVectorStore:
         norms[norms == 0] = 1e-10
         return vectors / norms
 
+    def _coerce_vector(self, embedding: list[float] | np.ndarray, dimension: int | None = None) -> np.ndarray:
+        vector = np.asarray(embedding, dtype=np.float32).reshape(-1)
+        target_dim = self.dimension if dimension is None else dimension
+        if vector.size == 0:
+            return np.zeros(target_dim, dtype=np.float32)
+        if vector.size < target_dim:
+            padded = np.zeros(target_dim, dtype=np.float32)
+            padded[: vector.size] = vector
+            return padded
+        return vector[:target_dim]
+
     def add_documents(self, documents: list[Document], embeddings: list[list[float]]) -> None:
         if len(documents) != len(embeddings):
             raise ValueError(
@@ -60,19 +71,14 @@ class FaissVectorStore:
             )
         if not documents:
             return
-        vectors = np.array(embeddings, dtype=np.float32)
-        if vectors.shape[1] != self.dimension:
-            raise ValueError(
-                f"Embedding dimension {vectors.shape[1]} does not match "
-                f"index dimension {self.dimension}."
-            )
+        vectors = np.vstack([self._coerce_vector(embedding) for embedding in embeddings]).astype(np.float32)
         self._index.add(self._normalize(vectors))
         self._docstore.extend(documents)
 
     def similarity_search_by_vector(self, query_embedding: list[float], k: int = 4) -> list[ScoredDocument]:
         if len(self._docstore) == 0:
             return []
-        query = self._normalize(np.array([query_embedding], dtype=np.float32))
+        query = self._normalize(np.array([self._coerce_vector(query_embedding)], dtype=np.float32))
         k = min(k, len(self._docstore))
         scores, indices = self._index.search(query, k)
         results: list[ScoredDocument] = []

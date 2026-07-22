@@ -67,11 +67,11 @@ class Settings(BaseSettings):
     # ------------------------------------------------------------------
     # Chunking (semantic chunker) — Phase 1
     # ------------------------------------------------------------------
-    chunk_buffer_size: int = Field(default=1, ge=0)
-    chunk_breakpoint_percentile: float = Field(default=92.0, gt=0.0, lt=100.0)
-    chunk_min_chars: int = Field(default=250, gt=0)
-    chunk_max_chars: int = Field(default=2200, gt=0)
-    chunk_hard_overlap: int = Field(default=150, ge=0)
+    chunk_buffer_size: int = Field(default=2, ge=0)
+    chunk_breakpoint_percentile: float = Field(default=90.0, gt=0.0, lt=100.0)
+    chunk_min_chars: int = Field(default=400, gt=0)
+    chunk_max_chars: int = Field(default=1800, gt=0)
+    chunk_hard_overlap: int = Field(default=220, ge=0)
 
     # ------------------------------------------------------------------
     # Embedding batching / retry — Phase 1
@@ -86,11 +86,11 @@ class Settings(BaseSettings):
     # ------------------------------------------------------------------
     # Retrieval — Phase 2
     # ------------------------------------------------------------------
-    retrieval_k_dense: int = Field(default=20, gt=0, description="Candidates pulled per dense (FAISS) query.")
-    retrieval_k_sparse: int = Field(default=20, gt=0, description="Candidates pulled from BM25.")
-    retrieval_rrf_k: int = Field(default=60, gt=0, description="The k constant in RRF(d) = sum(1/(k+rank(d))).")
+    retrieval_k_dense: int = Field(default=40, gt=0, description="Candidates pulled per dense (FAISS) query.")
+    retrieval_k_sparse: int = Field(default=40, gt=0, description="Candidates pulled from BM25.")
+    retrieval_rrf_k: int = Field(default=50, gt=0, description="The k constant in RRF(d) = sum(1/(k+rank(d))).")
     retrieval_fused_top_n: int = Field(
-        default=20, gt=0, description="How many fused RRF candidates are passed into the reranker."
+        default=30, gt=0, description="How many fused RRF candidates are passed into the reranker."
     )
 
     # ------------------------------------------------------------------
@@ -103,8 +103,8 @@ class Settings(BaseSettings):
     # Reranking — Phase 2
     # ------------------------------------------------------------------
     reranker_enabled: bool = Field(default=True)
-    reranker_model: str = Field(default="cross-encoder/ms-marco-MiniLM-L6-v2")
-    rerank_top_n: int = Field(default=5, gt=0, description="Final number of chunks used as generation context.")
+    reranker_model: str = Field(default="BAAI/bge-reranker-v2-m3")
+    rerank_top_n: int = Field(default=8, gt=0, description="Final number of chunks used as generation context.")
 
     # ------------------------------------------------------------------
     # Session memory — Phase 2
@@ -115,7 +115,7 @@ class Settings(BaseSettings):
     # API — Phase 2
     # ------------------------------------------------------------------
     cors_allowed_origins_raw: str = Field(
-        default="http://localhost:3000",
+        default="http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173,http://localhost:8000,http://127.0.0.1:8000,http://localhost:8001,http://127.0.0.1:8001",
         alias="CORS_ALLOWED_ORIGINS",
         description="Comma-separated list of allowed CORS origins.",
     )

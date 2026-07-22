@@ -86,14 +86,7 @@ def test_semantic_chunker_waits_before_retrying_quota(monkeypatch) -> None:
     assert sleep_calls == [60.0]
 
 
-def test_build_embeddings_client_uses_ollama_when_enabled(monkeypatch) -> None:
-    class FakeOllamaEmbeddings:
-        def __init__(self, **kwargs) -> None:
-            self.kwargs = kwargs
-
-    fake_module = types.SimpleNamespace(OllamaEmbeddings=FakeOllamaEmbeddings)
-    monkeypatch.setitem(sys.modules, "langchain_ollama", fake_module)
-
+def test_build_embeddings_client_uses_local_fallback_when_ollama_is_unavailable(monkeypatch) -> None:
     settings = SimpleNamespace(
         embedding_provider="ollama",
         embedding_model="nomic-embed-text",
@@ -103,9 +96,9 @@ def test_build_embeddings_client_uses_ollama_when_enabled(monkeypatch) -> None:
 
     client = build_embeddings_client(settings, task_type="retrieval_query")
 
-    assert isinstance(client, FakeOllamaEmbeddings)
-    assert client.kwargs["model"] == "nomic-embed-text"
-    assert client.kwargs["base_url"] == "http://localhost:11434"
+    assert client.__class__.__name__ == "LocalOllamaEmbeddings"
+    assert client.settings is settings
+    assert client.task_type == "retrieval_query"
 
 
 def test_run_ingestion_reports_stats_when_embedding_is_skipped(tmp_path: Path, monkeypatch) -> None:

@@ -25,11 +25,22 @@ import warnings
 from datetime import datetime, timezone
 from pathlib import Path
 
+BACKEND_ROOT = Path(__file__).resolve().parents[2]
+if str(BACKEND_ROOT) not in sys.path:
+    sys.path.insert(0, str(BACKEND_ROOT))
+
 from app.config.logging import configure_logging, get_logger
 from app.config.settings import get_settings
-from app.services.providers import build_llm_client
 
 logger = get_logger(__name__)
+
+
+class SingleTurnSample:
+    def __init__(self, user_input: str, response: str, retrieved_contexts: list[str], reference: str):
+        self.user_input = user_input
+        self.response = response
+        self.retrieved_contexts = retrieved_contexts
+        self.reference = reference
 
 GATE_THRESHOLDS = {"faithfulness": 0.75, "context_precision": 0.65}
 TARGET_SCORES = {"faithfulness": 0.80, "context_precision": 0.75, "answer_relevancy": 0.80, "context_recall": 0.70}
@@ -43,9 +54,6 @@ async def _collect_samples(golden_pairs: list[dict]):
     a separately-running server — but it means this script needs the same
     Database/ index and GOOGLE_API_KEY as the API does.
     """
-    from ragas import SingleTurnSample
-    # Keep ragas import local to avoid unconditional dependency at module import time.
-
     from app.services.qa_service import get_qa_service
 
     qa_service = get_qa_service()
@@ -161,11 +169,11 @@ def run_ragas_eval(golden_pairs: list[dict]) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--golden-dataset", type=Path, default=Path(__file__).parent / "golden_dataset.json")
+    parser.add_argument("--golden-dataset", type=Path, default=Path(__file__).parent.parent / "golden" / "golden_dataset.json")
     parser.add_argument("--split", choices=["dev", "test"], default="test")
     parser.add_argument("--subset", type=int, default=None, help="Evaluate only the first N questions.")
     parser.add_argument("--gate", action="store_true", help="Exit 1 if scores fall below the CI gate thresholds (proposal §7.5).")
-    parser.add_argument("--output-dir", type=Path, default=Path(__file__).parent / "results")
+    parser.add_argument("--output-dir", type=Path, default=Path(__file__).parent.parent / "results")
     args = parser.parse_args()
 
     settings = get_settings()

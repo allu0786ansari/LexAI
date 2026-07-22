@@ -35,6 +35,10 @@ import random
 import sys
 from pathlib import Path
 
+BACKEND_ROOT = Path(__file__).resolve().parents[2]
+if str(BACKEND_ROOT) not in sys.path:
+    sys.path.insert(0, str(BACKEND_ROOT))
+
 from app.config.logging import configure_logging, get_logger
 from app.config.settings import get_settings
 
@@ -51,6 +55,18 @@ SYNTHETIC_DEFAULT = 100
 # Override with --kaggle-question-col / --kaggle-answer-col if neither matches.
 _KAGGLE_QUESTION_CANDIDATES = ["question", "instruction", "prompt", "query"]
 _KAGGLE_ANSWER_CANDIDATES = ["answer", "output", "response", "completion"]
+
+RAW_DATA_DIR = Path(__file__).parent.parent / "raw"
+RAW_JSON_FILES = [
+    RAW_DATA_DIR / "constitution_qa.json",
+    RAW_DATA_DIR / "ipc_qa.json",
+    RAW_DATA_DIR / "crpc_qa.json",
+]
+RAW_JSONL_FILES = [
+    RAW_DATA_DIR / "constitution_instruction.jsonl",
+    RAW_DATA_DIR / "constitution_3300.jsonl",
+    RAW_DATA_DIR / "lawyer_gpt_india.jsonl",
+]
 
 
 def _pick_column(fieldnames: list[str], candidates: list[str], override: str | None) -> str:
@@ -142,6 +158,57 @@ def load_indiclegalqa(json_path: Path, per_category: int, seed: int) -> list[dic
     return pairs
 
 
+def load_raw_json_pairs(json_path: Path) -> list[dict]:
+    with open(json_path, encoding="utf-8") as f:
+        raw = json.load(f)
+    if not isinstance(raw, list):
+        logger.warning("raw_json_unexpected_format", path=str(json_path))
+        return []
+    pairs = []
+    for record in raw:
+        question = str(record.get("question", record.get("prompt", ""))).strip()
+        answer = str(record.get("answer", record.get("response", record.get("output", "")))).strip()
+        if not question or not answer:
+            continue
+        pairs.append(
+            {
+                "question": question,
+                "reference_answer": answer,
+                "category": "raw_qa",
+                "source": json_path.name,
+            }
+        )
+    logger.info("raw_json_pairs_loaded", path=str(json_path), loaded=len(pairs))
+    return pairs
+
+
+def load_raw_jsonl_pairs(jsonl_path: Path) -> list[dict]:
+    pairs: list[dict] = []
+    with open(jsonl_path, encoding="utf-8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError:
+                logger.warning("raw_jsonl_invalid_line", path=str(jsonl_path), line=line.strip()[:120])
+                continue
+            question = str(record.get("question", record.get("instruction", record.get("prompt", "")))).strip()
+            answer = str(record.get("answer", record.get("response", record.get("output", "")))).strip()
+            if not question or not answer:
+                continue
+            pairs.append(
+                {
+                    "question": question,
+                    "reference_answer": answer,
+                    "category": "raw_instruction",
+                    "source": jsonl_path.name,
+                }
+            )
+    logger.info("raw_jsonl_pairs_loaded", path=str(jsonl_path), loaded=len(pairs))
+    return pairs
+
+
 def generate_synthetic_pairs(data_dir: Path, count: int) -> list[dict]:
     """
     Generate `count` synthetic QA pairs from the actual PDF corpus using
@@ -222,7 +289,13 @@ def main() -> None:
     parser.add_argument("--indiclegalqa-json", type=Path, default=None)
     parser.add_argument("--synthetic-count", type=int, default=0, help="0 skips synthetic generation (costs API credits).")
     parser.add_argument("--data-dir", type=Path, default=None, help="Defaults to Settings.data_dir.")
-    parser.add_argument("--output", type=Path, default=Path(__file__).parent / "golden_dataset.json")
+    default_output = Path(__file__).parent.parent / "golden" / "golden_dataset.json"
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=default_output,
+        help="Output path for the golden dataset JSON (default: backend/evaluation/golden/golden_dataset.json)",
+    )
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 
@@ -244,6 +317,19 @@ def main() -> None:
         all_pairs.extend(load_indiclegalqa(args.indiclegalqa_json, INDICLEGALQA_PER_CATEGORY, args.seed))
     else:
         logger.warning("skipping_indiclegalqa_source", reason="--indiclegalqa-json not provided")
+
+    for json_path in RAW_JSON_FILES:
+        if json_path.exists():
+            all_pairs.extend(load_raw_json_pairs(json_path))
+        else:
+            logger.warning("raw_json_missing", path=str(json_path))
+    for jsonl_path in RAW_JSONL_FILES:
+        if jsonl_path.exists():
+            all_pairs.extend(load_raw_jsonl_pairs(jsonl_path))
+        else:
+            logger.warning("raw_jsonl_missing", path=str(jsonl_path))
+    if not any(path.exists() for path in RAW_JSON_FILES + RAW_JSONL_FILES):
+        logger.warning("no_raw_sources_found", path=str(RAW_DATA_DIR))
 
     if args.synthetic_count > 0:
         data_dir = args.data_dir or settings.data_dir
