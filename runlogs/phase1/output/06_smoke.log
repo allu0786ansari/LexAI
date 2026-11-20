@@ -1,0 +1,54 @@
+$ .venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --concurrency 2 --server-log "C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase1\output\06_server.log"
+API starting (pid 25476), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase1\output\06_server.log
+API is up.
+readyz: {
+  "ready": true,
+  "checks": {
+    "llm": {
+      "ok": true,
+      "reachable": true,
+      "model": "qwen2.5-7b-instruct",
+      "model_available": true
+    },
+    "embedder": {
+      "ok": true,
+      "reachable": true,
+      "model": "nomic-embed-text",
+      "dimension": 768,
+      "dimension_ok": true
+    },
+    "index": {
+      "ok": true,
+      "chunks": 2608,
+      "built_at": "2026-11-20T10:41:56.268671+00:00"
+    },
+    "reranker": {
+      "ok": true,
+      "enabled": false,
+      "model": null
+    }
+  }
+}
+[PASS] readyz green: HTTP 200
+
+Asking: What is the punishment for murder under the Indian Penal Code?
+[PASS] tokens stream incrementally: 97 token events; first at 32.04s, last at 52.77s (spread 20.74s)
+latency breakdown (ms): {"hyde_ms": null, "retrieval_ms": 196.2, "rerank_ms": null, "time_to_first_token_ms": 31981.8, "total_ms": 52994.2}
+citations: [(1, 'CrPC_1973.pdf', 107), (2, 'IPC_1860.pdf', 1), (3, 'CrPC_1973.pdf', 247), (4, 'IPC_1860.pdf', 3), (5, 'CrPC_1973.pdf', 246)]
+
+ANSWER:
+[1] The specific punishment for murder under the Indian Penal Code (45 of 1860) is not detailed in the provided passages. However, it can be inferred that a charge of murder would be made under section 302 of the Indian Penal Code, which deals with murder [3][4]. For precise details on the punishment, one would need to refer to the relevant sections of the Indian Penal Code.
+
+This is legal information, not legal advice.
+
+[PASS] answer has citations: 5
+Running 2 concurrent questions while polling /healthz ...
+[PASS] 2 concurrent answers completed: 2/2 finished
+[PASS] /healthz responsive during generation: 711 probes, p50 3.8 ms, p95 8.2 ms
+Disconnecting a client after its first token ...
+[PASS] server healthy after client disconnect: HTTP 200
+API stopped.
+
+SUMMARY: ALL PASSED
+exit=0
+

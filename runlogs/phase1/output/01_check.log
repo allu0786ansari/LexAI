@@ -1,0 +1,63 @@
+$ ver
+
+Microsoft Windows [Version 10.0.26300.9818]
+exit=0
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse --abbrev-ref HEAD
+phase-1-foundation
+exit=0
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse HEAD
+1e6fffd0583254d2d2313abb836f0c146211a425
+exit=0
+
+$ py -0p
+  *               C:\Users\LENOVO\OneDrive\Desktop\LexAI\lexvenv\Scripts\python.exe
+ -V:3.13          C:\Python313\python.exe
+ -V:3.12          C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe
+ -V:3.11          C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\python.exe
+exit=0
+
+$ python --version
+Python 3.12.4
+exit=0
+
+$ where python
+C:\Users\LENOVO\OneDrive\Desktop\LexAI\lexvenv\Scripts\python.exe
+C:\Python313\python.exe
+C:\Users\LENOVO\AppData\Local\Programs\Python\Python311\python.exe
+C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe
+C:\Users\LENOVO\AppData\Local\Microsoft\WindowsApps\python.exe
+exit=0
+
+Python chosen for LexAI: [py -3.12]
+
+$ ollama --version
+ollama version is 0.40.9
+exit=0
+
+$ curl -s http://localhost:11434/api/version
+{"version":"0.40.9"}exit=0
+
+$ nslookup registry.ollama.ai
+Non-authoritative answer:
+Server:  UnKnown
+Address:  172.18.176.112
+
+Name:    registry.ollama.ai
+Addresses:  2606:4700::6812:11aa
+	  2606:4700::6812:10aa
+	  104.18.16.170
+	  104.18.17.170
+
+exit=0
+
+$ nvidia-smi --query-gpu=name,memory.total,memory.used --format=csv
+name, memory.total [MiB], memory.used [MiB]
+NVIDIA GeForce GTX 1650, 4096 MiB, 0 MiB
+exit=0
+
+$ systeminfo (memory lines)
+Total Physical Memory:         7,975 MB
+Available Physical Memory:     1,443 MB
+

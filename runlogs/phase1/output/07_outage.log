@@ -1,0 +1,52 @@
+Stopping Ollama ...
+SUCCESS: The process with PID 14264 (child process of PID 23848) has been terminated.
+SUCCESS: The process with PID 7940 (child process of PID 25404) has been terminated.
+SUCCESS: The process with PID 3064 (child process of PID 24852) has been terminated.
+SUCCESS: The process with PID 17048 (child process of PID 24852) has been terminated.
+SUCCESS: The process with PID 25216 (child process of PID 24852) has been terminated.
+SUCCESS: The process with PID 18612 (child process of PID 24852) has been terminated.
+SUCCESS: The process with PID 6556 (child process of PID 24852) has been terminated.
+SUCCESS: The process with PID 3460 (child process of PID 11076) has been terminated.
+SUCCESS: The process with PID 23848 (child process of PID 11076) has been terminated.
+SUCCESS: The process with PID 25404 (child process of PID 11076) has been terminated.
+SUCCESS: The process with PID 24852 (child process of PID 21000) has been terminated.
+SUCCESS: The process with PID 11076 (child process of PID 21000) has been terminated.
+SUCCESS: The process with PID 21000 (child process of PID 4896) has been terminated.
+ERROR: The process "ollama.exe" not found.
+$ .venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --expect-down --server-log "C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase1\output\07_server.log"
+API starting (pid 23780), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase1\output\07_server.log
+API is up.
+readyz: {
+  "ready": false,
+  "checks": {
+    "llm": {
+      "ok": false,
+      "error": "ConnectError",
+      "detail": "All connection attempts failed"
+    },
+    "embedder": {
+      "ok": false,
+      "error": "TimeoutError",
+      "detail": ""
+    },
+    "index": {
+      "ok": true,
+      "chunks": 2608,
+      "built_at": "2026-11-20T10:41:56.268671+00:00"
+    },
+    "reranker": {
+      "ok": true,
+      "enabled": false,
+      "model": null
+    }
+  }
+}
+[PASS] readyz red when Ollama is down: HTTP 503
+[PASS] question returns an error event, not an answer: error={'code': 'upstream_unavailable', 'message': 'A model server is unavailable. Please try again shortly.', 'request_id': '86ed08274294414b9c3c31b57b2f6945'}
+API stopped.
+
+SUMMARY: ALL PASSED
+exit=0
+
+Restarting Ollama ...
+Ollama started again.

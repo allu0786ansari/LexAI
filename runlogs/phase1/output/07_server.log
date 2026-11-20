@@ -1,0 +1,18 @@
+INFO:     Started server process [16336]
+INFO:     Waiting for application startup.
+{"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-20T10:44:41.297196Z"}
+{"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-20T10:44:44.622047Z"}
+{"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-20T10:44:48.916633Z"}
+{"error": "Embedding failed (nomic-embed-text at http://localhost:11434/v1): ConnectError('All connection attempts failed')", "event": "embedder_unreachable_at_startup", "level": "warning", "timestamp": "2026-11-20T10:44:55.226082Z"}
+{"chunks": 2608, "built_at": "2026-11-20T10:41:56.268671+00:00", "event": "index_loaded", "level": "info", "timestamp": "2026-11-20T10:44:55.446358Z"}
+{"version": "0.2.0", "profile": "laptop-8gb", "llm": "qwen2.5-7b-instruct", "embedder": "nomic-embed-text", "notes": ["embedder unreachable at start-up"], "event": "startup_complete", "level": "info", "timestamp": "2026-11-20T10:44:55.446358Z"}
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:64669 - "GET /healthz HTTP/1.1" 200 OK
+{"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "4d593489b2004e01a2ef601be1bedca9", "path": "/readyz", "level": "warning", "timestamp": "2026-11-20T10:44:58.761941Z"}
+INFO:     127.0.0.1:64672 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+INFO:     127.0.0.1:64672 - "POST /api/query HTTP/1.1" 200 OK
+{"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "session_id": "091ce679-710a-4507-96d4-2879cb00eb47", "request_id": "86ed08274294414b9c3c31b57b2f6945", "path": "/api/query", "level": "warning", "timestamp": "2026-11-20T10:45:03.768948Z"}
+{"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "session_id": "091ce679-710a-4507-96d4-2879cb00eb47", "request_id": "86ed08274294414b9c3c31b57b2f6945", "path": "/api/query", "level": "warning", "timestamp": "2026-11-20T10:45:07.090125Z"}
+{"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "session_id": "091ce679-710a-4507-96d4-2879cb00eb47", "request_id": "86ed08274294414b9c3c31b57b2f6945", "path": "/api/query", "level": "warning", "timestamp": "2026-11-20T10:45:11.412684Z"}
+{"code": "upstream_unavailable", "error": "Embedding failed (nomic-embed-text at http://localhost:11434/v1): ConnectError('All connection attempts failed')", "event": "chat_failed", "session_id": "091ce679-710a-4507-96d4-2879cb00eb47", "request_id": "86ed08274294414b9c3c31b57b2f6945", "path": "/api/query", "level": "error", "timestamp": "2026-11-20T10:45:17.721187Z"}
