@@ -139,6 +139,16 @@ class Settings:
         self.api = api or APISettings()
 
 
+def env_profile(path: Path = ENV_FILE) -> str:
+    """Name of the profile in backend/.env (`# lexai-profile: <name>`), for logs and diagnostics."""
+    if not path.exists():
+        return "none (no backend/.env; built-in defaults)"
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        if line.strip().lower().startswith("# lexai-profile:"):
+            return line.split(":", 1)[1].strip()
+    return "unnamed (backend/.env has no lexai-profile line)"
+
+
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
     return Settings()

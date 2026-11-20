@@ -19,7 +19,7 @@ from lexai.api.middleware import RequestContextMiddleware
 from lexai.api.routes import build_router
 from lexai.core.errors import LexAIError
 from lexai.core.logging import configure_logging, get_logger
-from lexai.core.settings import Settings, get_settings
+from lexai.core.settings import Settings, env_profile, get_settings
 
 logger = get_logger(__name__)
 
@@ -39,6 +39,7 @@ def create_app(settings: Settings | None = None, container: Container | None = N
         logger.info(
             "startup_complete",
             version=__version__,
+            profile=env_profile(),
             llm=settings.llm.model,
             embedder=settings.embed.model,
             notes=app.state.container.notes,

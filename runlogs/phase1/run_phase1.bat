@@ -111,13 +111,22 @@ set "CMD=%PY% -m venv .venv" & call :run "%LOG%"
 set "CMD=.venv\Scripts\python.exe -m pip install --upgrade pip --progress-bar off" & call :run "%LOG%"
 set "CMD=.venv\Scripts\python.exe -m pip install -r requirements-dev.txt --progress-bar off" & call :run "%LOG%"
 set "CMD=.venv\Scripts\python.exe -m pip install --no-deps -e . --progress-bar off" & call :run "%LOG%"
-if exist ".env" goto setup_have_env
-copy "%ROOT%\deploy\env\laptop-8gb.env" ".env" >nul
->>"%LOG%" echo Created backend\.env from deploy\env\laptop-8gb.env
+REM A .env without a "lexai-profile:" line is left over from v0.1: keep a copy, replace it.
+if not exist ".env" goto setup_write_env
+findstr /C:"lexai-profile:" ".env" >nul
+if not errorlevel 1 goto setup_have_env
+copy /Y ".env" ".env.before-phase1" >nul
+>>"%LOG%" echo Old backend\.env without a LexAI profile saved as backend\.env.before-phase1
+:setup_write_env
+copy /Y "%ROOT%\deploy\env\laptop-8gb.env" ".env" >nul
+>>"%LOG%" echo Wrote backend\.env from deploy\env\laptop-8gb.env
 goto setup_done
 :setup_have_env
->>"%LOG%" echo backend\.env already exists - left unchanged
+>>"%LOG%" echo backend\.env already has a LexAI profile - left unchanged
 :setup_done
+>>"%LOG%" echo --- active backend\.env settings ---
+findstr /B /C:"LEXAI_" /C:"# lexai-profile" ".env" >>"%LOG%" 2>&1
+>>"%LOG%" echo.
 set "CMD=.venv\Scripts\python.exe -c "import lexai, faiss, fastapi; print('lexai', lexai.__version__, 'imports OK')"" & call :run "%LOG%"
 popd
 type "%LOG%"

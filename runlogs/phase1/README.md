@@ -10,7 +10,9 @@ Your first run showed Windows, **8 GB RAM** and an NVIDIA GPU with **4 GB VRAM**
 Qwen2.5-7B (4-bit, ~4.7 GB) does not fit in 4 GB of VRAM, so Ollama runs part of
 it on the GPU and the rest on the CPU. It works, but answers take longer to start.
 To leave enough memory, setup writes `backend\.env` from
-`deploy\env\laptop-8gb.env`, which:
+`deploy\env\laptop-8gb.env`. If you already have a `backend\.env` from the old
+version (one without a `# lexai-profile:` line), setup saves it as
+`backend\.env.before-phase1` (git ignores it) and replaces it. The profile:
 
 - builds Qwen2.5-7B with a **4K context** (`deploy\ollama\Modelfile.laptop`)
 - uses **nomic-embed-text** (already on your machine, ~0.3 GB) for embeddings
@@ -30,7 +32,8 @@ To leave enough memory, setup writes `backend\.env` from
 4. **Recommended:** keep the project outside OneDrive (e.g. `C:\dev\LexAI`).
    OneDrive syncing the virtual environment and the index slows everything and
    can lock files mid-write.
-5. Close browsers and other heavy apps while the model runs; 8 GB RAM is tight.
+5. Close browsers and other heavy apps while the model runs. Your last check showed only
+   ~0.9 GB of RAM free before the model loaded; 8 GB is tight.
 
 ## 1. Get the latest branch
 
@@ -50,7 +53,7 @@ runlogs\phase1\run_phase1.bat
 | --- | --- | --- |
 | `check` | Windows version, Python versions, Ollama, DNS, GPU, RAM | `01_check.log` |
 | `setup` | Creates `backend\.venv` with Python 3.12, installs pinned packages with pip, writes `backend\.env` (laptop profile) | `02_setup.log` |
-| `quality` | ruff, format check, mypy, 49 tests | `03_quality.log` |
+| `quality` | ruff, format check, mypy, 51 tests | `03_quality.log` |
 | `models` | Downloads Qwen2.5-7B (4.7 GB) if missing, builds `qwen2.5-7b-instruct` (4K context), checks the embedder, runs a short generation and reports tokens/second and how much of the model is on the GPU | `04_models.log` |
 | `ingest` | Embeds the 59 PDFs (~2,600 chunks) into `backend\var\index`; takes several minutes | `05_ingest.log` |
 | `smoke` | Starts the API, asks real questions, checks streaming, 2 parallel answers, disconnect handling, stops the API | `06_smoke.log`, `06_server.log` |
@@ -76,7 +79,7 @@ git push
 
 ## What "pass" looks like
 
-- `03_quality.log`: ruff, format and mypy clean; `49 passed`.
+- `03_quality.log`: ruff, format and mypy clean; `51 passed`.
 - `04_models.log`: `SUMMARY: ALL PASSED`, `num_ctx=4096`, embedding dimension 768,
   and a line like `loaded: qwen2.5-7b-instruct ... NN% on GPU`.
 - `05_ingest.log`: 59 files, about 2,608 chunks; law types `statute`, `case_law`, `manual` only.
@@ -84,6 +87,11 @@ git push
 - `07_outage.log`: `SUMMARY: ALL PASSED` (readyz 503, error `upstream_unavailable`).
 
 ## If something fails
+
+- **`check_models.py` shows the wrong models**: its first line prints the config file and
+  profile. It must say `profile: laptop-8gb`. If not, run `run_phase1.bat setup` again.
+- **`ERROR: The process "ollama.exe" not found` in the outage log** is harmless: stopping
+  "ollama app.exe" with its child processes already stops the server.
 
 - **`Python 3.12 or 3.13 was not found`**: install Python 3.12 (step 0.1), open a new cmd window, run `run_phase1.bat setup`.
 - **Model download fails**: it is a network/DNS problem (step 0.3); fix it, then run `run_phase1.bat models`.

@@ -50,27 +50,37 @@ class EmbeddingClient:
                 response.raise_for_status()
                 data = sorted(response.json()["data"], key=lambda d: d["index"])
                 vectors = [list(map(float, d["embedding"])) for d in data]
+            except httpx.HTTPStatusError as exc:
+                if exc.response.status_code == 404:
+                    # Not transient: the model is not on the server. Say exactly what to do.
+                    raise UpstreamUnavailable(
+                        f"Embedding model '{self.settings.model}' is not available at "
+                        f"{self.settings.base_url}. Download it first (Ollama: "
+                        f"`ollama pull {self.settings.model}`) or fix LEXAI_EMBED_MODEL in backend/.env."
+                    ) from exc
+                error: httpx.HTTPError = exc
+                retryable = exc.response.status_code in {429, 500, 502, 503}
+            except httpx.TransportError as exc:
+                error = exc
+                retryable = True
+            except (KeyError, ValueError, TypeError) as exc:
+                raise UpstreamUnavailable(f"Malformed embedding response: {exc!r}") from exc
+            else:
                 if len(vectors) != len(texts):
                     raise UpstreamUnavailable(
                         f"Embedder returned {len(vectors)} vectors for {len(texts)} inputs"
                     )
                 return vectors
-            except (httpx.TransportError, httpx.HTTPStatusError) as exc:
-                retryable = isinstance(exc, httpx.TransportError) or (
-                    isinstance(exc, httpx.HTTPStatusError)
-                    and exc.response.status_code in {429, 500, 502, 503}
-                )
-                if retryable and attempt < self.settings.max_retries:
-                    delay = min(10.0, 1.0 * (2**attempt))
-                    logger.warning("embed_retry", attempt=attempt + 1, delay_s=delay, error=repr(exc))
-                    await asyncio.sleep(delay)
-                    attempt += 1
-                    continue
-                raise UpstreamUnavailable(
-                    f"Embedding failed ({self.settings.model} at {self.settings.base_url}): {exc!r}"
-                ) from exc
-            except (KeyError, ValueError, TypeError) as exc:
-                raise UpstreamUnavailable(f"Malformed embedding response: {exc!r}") from exc
+
+            if retryable and attempt < self.settings.max_retries:
+                delay = min(10.0, 1.0 * (2**attempt))
+                logger.warning("embed_retry", attempt=attempt + 1, delay_s=delay, error=repr(error))
+                await asyncio.sleep(delay)
+                attempt += 1
+                continue
+            raise UpstreamUnavailable(
+                f"Embedding failed ({self.settings.model} at {self.settings.base_url}): {error!r}"
+            ) from error
 
     async def embed_documents(self, texts: Sequence[str]) -> list[list[float]]:
         """Embed passages (the document prefix is added here)."""

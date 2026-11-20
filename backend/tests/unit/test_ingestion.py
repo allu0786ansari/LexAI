@@ -74,3 +74,14 @@ def test_swap_in_keeps_a_backup(tmp_path: Path) -> None:
     backup = swap_in(new, live)
     assert (live / "new.txt").exists()
     assert backup is not None and (backup / "old.txt").exists()
+
+
+def test_env_profile_is_read_from_the_marker_line(tmp_path: Path) -> None:
+    from lexai.core.settings import env_profile
+
+    env = tmp_path / ".env"
+    assert env_profile(env).startswith("none")
+    env.write_text("GOOGLE_API_KEY=x\n")
+    assert env_profile(env).startswith("unnamed")
+    env.write_text("# lexai-profile: laptop-8gb\nLEXAI_LLM_MODEL=x\n")
+    assert env_profile(env) == "laptop-8gb"

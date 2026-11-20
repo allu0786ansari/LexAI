@@ -82,3 +82,13 @@ async def test_health_probe_uses_the_query_prefix() -> None:
     c = EmbeddingClient(EmbedSettings(base_url=BASE, model="m", dimension=3, query_prefix="search_query: "))
     assert (await c.health())["dimension_ok"] is True
     assert json.loads(route.calls[0].request.content)["input"] == ["search_query: health probe"]
+
+
+@respx.mock
+async def test_missing_model_says_how_to_fix_it_without_retrying() -> None:
+    route = respx.post(f"{BASE}/embeddings").mock(
+        return_value=httpx.Response(404, json={"error": "not found"})
+    )
+    with pytest.raises(UpstreamUnavailable, match="ollama pull m"):
+        await client().embed_documents(["a"])
+    assert route.call_count == 1

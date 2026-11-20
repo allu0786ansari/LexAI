@@ -21,7 +21,7 @@ import httpx
 
 from lexai.clients.embedder import EmbeddingClient
 from lexai.clients.llm import LLMClient
-from lexai.core.settings import get_settings
+from lexai.core.settings import ENV_FILE, env_profile, get_settings
 from lexai.domain.models import ChatMessage
 
 failures: list[str] = []
@@ -40,9 +40,21 @@ def ollama_root(base_url: str) -> str | None:
 
 async def main() -> None:
     s = get_settings()
+    print(f"Config:   {ENV_FILE} (profile: {env_profile()})")
     print(f"LLM:      {s.llm.model} at {s.llm.base_url}")
     print(f"Embedder: {s.embed.model} ({s.embed.dimension}-dim) at {s.embed.base_url}")
     print(f"Reranker: {'enabled, ' + s.rerank.model if s.rerank.enabled else 'disabled'}\n")
+
+    if s.rerank.enabled:
+        try:
+            import sentence_transformers  # noqa: F401
+        except ImportError:
+            report(
+                "reranker installed",
+                False,
+                "LEXAI_RERANK_ENABLED=true but sentence-transformers is not installed: "
+                "set LEXAI_RERANK_ENABLED=false or `pip install -r requirements-rerank.txt`",
+            )
 
     async with httpx.AsyncClient(timeout=30) as http:
         try:
@@ -58,7 +70,8 @@ async def main() -> None:
             return name in served or f"{name}:latest" in served
 
         report("LLM model served", is_served(s.llm.model), s.llm.model)
-        report("embedding model served", is_served(s.embed.model), s.embed.model)
+        hint = "" if is_served(s.embed.model) else f" (run: ollama pull {s.embed.model})"
+        report("embedding model served", is_served(s.embed.model), s.embed.model + hint)
 
         root = ollama_root(s.llm.base_url)
         if root and is_served(s.llm.model):
