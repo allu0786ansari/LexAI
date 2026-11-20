@@ -1,5 +1,5 @@
 $ .venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --concurrency 2 --server-log "C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase3\output\07_server.log"
-API starting (pid 5952), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase3\output\07_server.log
+API starting (pid 26900), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase3\output\07_server.log
 API is up.
 readyz: {
   "ready": true,
@@ -34,8 +34,8 @@ readyz: {
 [PASS] readyz green: HTTP 200
 
 Asking: What is the punishment for murder under the Indian Penal Code?
-[PASS] tokens stream incrementally: 76 token events; first at 13.88s, last at 29.63s (spread 15.75s)
-latency breakdown (ms): {"condense_ms": null, "hyde_ms": null, "retrieval_ms": 389.9, "rerank_ms": null, "context_ms": 0.0, "time_to_first_token_ms": 13858.6, "generation_ms": 29472.7, "verify_ms": 5.6, "total_ms": 29871.5}
+[PASS] tokens stream incrementally: 74 token events; first at 15.45s, last at 29.47s (spread 14.03s)
+latency breakdown (ms): {"condense_ms": null, "hyde_ms": null, "retrieval_ms": 479.9, "rerank_ms": null, "context_ms": 0.0, "time_to_first_token_ms": 15436.7, "generation_ms": 29198.8, "verify_ms": 1.9, "total_ms": 29709.4}
 citations:
   [1] IPC s.302 - Punishment for murder (p.72)  [repealed 2024-07-01; replaced by BNS; applies to earlier offences]
   [2] IPC s.303 - Punishment for murder by life-convict (p.72)  [repealed 2024-07-01; replaced by BNS; applies to earlier offences]
@@ -44,7 +44,7 @@ citations:
   [5] IPC s.300 - Murder (p.71)  [repealed 2024-07-01; replaced by BNS; applies to earlier offences]
 
 ANSWER:
-The punishment for murder under the Indian Penal Code, 1860 (repealed 2024-07-01; replaced by BNS) is death or imprisonment for life, and the offender is also liable to fine. [1]
+The punishment for murder under the Indian Penal Code, 1860 (replaced by BNS on 2024-07-01) is death or imprisonment for life, and the offender is also liable to fine. [1]
 
 Provisions: IPC s.302 [1]
 This is legal information, not legal advice.
@@ -55,7 +55,7 @@ This is legal information, not legal advice.
 [PASS] repealed IPC is flagged in its citation: 'repealed 2024-07-01; replaced by BNS; applies to earlier offences'
 Running 2 concurrent questions while polling /healthz ...
 [PASS] 2 concurrent answers completed: 2/2 finished
-[PASS] /healthz responsive during generation: 613 probes, p50 4.0 ms, p95 8.4 ms
+[PASS] /healthz responsive during generation: 455 probes, p50 3.9 ms, p95 8.8 ms
 Disconnecting a client after its first token ...
 [PASS] server healthy after client disconnect: HTTP 200
 API stopped.

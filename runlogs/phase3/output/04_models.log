@@ -14,7 +14,7 @@ exit=0
 $ ollama list
 NAME                                ID              SIZE      MODIFIED               
 qwen2.5-7b-instruct:latest          b57dc8ba2735    4.7 GB    Less than a second ago    
-qwen2.5:7b-instruct-q4_K_M          845dbda0ea48    4.7 GB    4 hours ago               
+qwen2.5:7b-instruct-q4_K_M          845dbda0ea48    4.7 GB    5 hours ago               
 nomic-embed-text:latest             0a109f422b47    274 MB    4 weeks ago               
 bge-m3:latest                       790764642607    1.2 GB    4 weeks ago               
 agmesh-phi3.5:latest                061d2b22c7b8    2.4 GB    2 months ago              
@@ -35,8 +35,8 @@ Reranker: disabled
 [PASS] embedding dimension matches config: model returns 768, LEXAI_EMBED_DIMENSION=768
 
 Generation test (the first call also loads the model into memory) ...
-[PASS] LLM generates: first token after 23.7s, 53 chunks in 32.7s (~5.9 tokens/s)
-   reply: A First Information Report (FIR) in India is a document registered with the police based on information provided by a complainant about a cognizable offense, which then initiates an investigation. It serves as the first official record of a crime reported to the police.
+[PASS] LLM generates: first token after 22.9s, 49 chunks in 31.6s (~5.6 tokens/s)
+   reply: A First Information Report (FIR) in India is an official record of a crime reported to the police, and it is filed by the police based on information provided by a complainant under Section 154 of the Indian Penal Code.
    loaded: qwen2.5-7b-instruct:latest  5.2 GB total, 50% on GPU
 
 SUMMARY: ALL PASSED

@@ -90,7 +90,7 @@ Building wheels for collected packages: lexai
   Building editable for lexai (pyproject.toml): started
   Building editable for lexai (pyproject.toml): finished with status 'done'
   Created wheel for lexai: filename=lexai-0.3.0-py3-none-any.whl size=1461 sha256=28809ab6161df8271dbfd341a7d3ea8cfdb4975f0bd488d0562d573d6af264c1
-  Stored in directory: C:\Users\LENOVO\AppData\Local\Temp\pip-ephem-wheel-cache-p2mx6070\wheels\ee\bd\dc\8d2626dd50ad634da097896e6e0a4949bd83b5df6bf2297031
+  Stored in directory: C:\Users\LENOVO\AppData\Local\Temp\pip-ephem-wheel-cache-ehnss2vw\wheels\ee\bd\dc\8d2626dd50ad634da097896e6e0a4949bd83b5df6bf2297031
 Successfully built lexai
 Installing collected packages: lexai
   Attempting uninstall: lexai
@@ -100,8 +100,7 @@ Installing collected packages: lexai
 Successfully installed lexai-0.3.0
 exit=0
 
-Old backend\.env (older profile) saved as backend\.env.previous
-Wrote backend\.env from deploy\env\laptop-8gb.env
+backend\.env already has the current profile - left unchanged
 --- active backend\.env settings ---
 # lexai-profile: laptop-8gb v3
 LEXAI_LLM_BASE_URL=http://localhost:11434/v1
