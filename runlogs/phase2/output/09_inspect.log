@@ -1,0 +1,32 @@
+$ .venv\Scripts\python.exe scripts\inspect_index.py
+live index lexai_chunks_20261120t130116516461: 5100 chunks, 63 documents
+embedding model nomic-embed-text (768-dim), chunker legal-v2-max1400-ov150
+
+Exact lookups
+[FAIL] BNS s.103: None, p.34, 1 piece(s), Chapter VI: Of offences affecting the human body
+[PASS] IPC s.302: 'Punishment for murder', p.72, 1 piece(s), Chapter XVI: Of offencesaffectingthe human body
+[FAIL] BNSS s.173: None, p.52, 4 piece(s), Chapter XIII: Information to the police and their powers to investigate
+[PASS] CrPC s.154: 'Information in cognizable cases', p.78, 3 piece(s), Chapter XII: Information to the police and their powers to investigate
+[FAIL] BSA s.63: None, p.22, 5 piece(s), Part III: On proof › Chapter V: Of documentary evidence
+[PASS] IEA s.65B: 'Admissibility of electronic records', p.34, 4 piece(s), Part II: On proof › Chapter V: Of documentary evidence
+[PASS] Constitution Art.21: 'Protection of life and personal liberty', p.42, 1 piece(s), Part III: Fundamental rights
+[PASS] IT Act s.66: 'Computer related offences', p.23, 1 piece(s), Chapter XI: Offences
+
+Hybrid search (expected provision in the top 10)
+[HIT ] What is the punishment for murder? -> IPC s.302 at rank 1
+       top 5: IPC s.302 | IPC s.303 | IPC s.304 | BNS s.109 | IPC s.307
+[HIT ] How is an FIR registered for a cognizable offence? -> CrPC s.154 at rank 3
+       top 5: CrPC s.198B | MHA Cyber Crime Manual | CrPC s.154 | BNSS Schedule Second | BNSS s.174
+[HIT ] When is an electronic record admissible as evidence? -> IEA s.65B at rank 1
+       top 5: IEA s.65B | BSA s.63 | IEA s.65B | IEA s.85B | IEA s.90A
+[HIT ] Which article protects the right to life and personal liberty? -> Constitution Art.21 at rank 1
+       top 5: Constitution Art.21 | Constitution Art.41 | Union Of India v. Meera Mohideen | Constitution Art.25 | Union Of India v. Meera Mohideen
+[MISS] When can a person get anticipatory bail? -> not in top 10
+       top 5: CrPC Schedule Second | BNSS s.480 | CrPC s.436 | CrPC Schedule Second | CrPC s.437A
+[MISS] What is the punishment for cheating? -> not in top 10
+       top 5: IPC s.417 | IPC s.419 | IT Act s.66D | IPC s.418 | IPC s.468
+[PASS] search quality: 4/6 questions hit (need 4)
+
+SUMMARY: FAILED (3): ['BNS s.103', 'BNSS s.173', 'BSA s.63']
+exit=1
+

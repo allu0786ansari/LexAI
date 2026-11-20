@@ -1,0 +1,593 @@
+$ ollama stop qwen2.5-7b-instruct
+[?2026h[?25l[1G[K[?25h[?2026l[?25l[2K[1G[?25h
+$ .venv\Scripts\python.exe -m lexai.ingestion.cli build
+{"doc": "bns-2023", "pages": 102, "units": 356, "chunks": 497, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:00:33.466449Z"}
+{"doc": "bnss-2023", "pages": 249, "units": 531, "chunks": 935, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:00:36.643709Z"}
+{"doc": "bsa-2023", "pages": 47, "units": 170, "chunks": 222, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:00:37.882572Z"}
+{"doc": "ipc-1860", "pages": 112, "units": 548, "chunks": 626, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:00:41.904191Z"}
+{"doc": "crpc-1973", "pages": 263, "units": 532, "chunks": 892, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:00:52.593769Z"}
+{"doc": "iea-1872", "pages": 60, "units": 179, "chunks": 225, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:00:54.994260Z"}
+{"doc": "constitution", "pages": 404, "units": 486, "chunks": 807, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:09.707336Z"}
+{"doc": "it-act-2000", "pages": 36, "units": 110, "chunks": 145, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:10.960038Z"}
+{"doc": "prisons-act-1894", "pages": 20, "units": 0, "chunks": 37, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:11.046440Z"}
+{"doc": "criminal-law-amendment-2018", "pages": 7, "units": 26, "chunks": 28, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:11.092079Z"}
+{"doc": "mha-cybercrime-manual", "pages": 92, "units": 0, "chunks": 102, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:13.609275Z"}
+{"doc": "mha-cprgr-manual", "pages": 41, "units": 0, "chunks": 31, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.446533Z"}
+{"doc": "mha-cyberfraud-instructions", "pages": 1, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.510397Z"}
+{"doc": "sc-judis-10166", "pages": 14, "units": 0, "chunks": 36, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.589603Z"}
+{"doc": "sc-judis-10187", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.609706Z"}
+{"doc": "sc-judis-10193", "pages": 14, "units": 0, "chunks": 33, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.684985Z"}
+{"doc": "sc-judis-10220", "pages": 5, "units": 0, "chunks": 11, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.716520Z"}
+{"doc": "sc-judis-10290", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.732368Z"}
+{"doc": "sc-judis-10304", "pages": 1, "units": 0, "chunks": 1, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.732368Z"}
+{"doc": "sc-judis-10322", "pages": 1, "units": 0, "chunks": 1, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.748024Z"}
+{"doc": "sc-judis-10347", "pages": 3, "units": 0, "chunks": 5, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.779815Z"}
+{"doc": "sc-judis-10356", "pages": 4, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.795717Z"}
+{"doc": "sc-judis-10391", "pages": 3, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.811473Z"}
+{"doc": "sc-judis-10426", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.842929Z"}
+{"doc": "sc-judis-10439", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.858590Z"}
+{"doc": "sc-judis-10442", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.874455Z"}
+{"doc": "sc-judis-10502", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.906267Z"}
+{"doc": "sc-judis-10519", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.922257Z"}
+{"doc": "sc-judis-10520", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.937992Z"}
+{"doc": "sc-judis-10548", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:14.969323Z"}
+{"doc": "sc-judis-10557", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.000792Z"}
+{"doc": "sc-judis-10562", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.018259Z"}
+{"doc": "sc-judis-10613", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.036035Z"}
+{"doc": "sc-judis-10629", "pages": 1, "units": 0, "chunks": 1, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.047895Z"}
+{"doc": "sc-judis-10637", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.063654Z"}
+{"doc": "sc-judis-10649", "pages": 3, "units": 0, "chunks": 7, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.079326Z"}
+{"doc": "sc-judis-10663", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.095001Z"}
+{"doc": "sc-judis-10668", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.126772Z"}
+{"doc": "sc-judis-10679", "pages": 4, "units": 0, "chunks": 9, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.142489Z"}
+{"doc": "sc-judis-10693", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.174090Z"}
+{"doc": "sc-judis-10752", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.189913Z"}
+{"doc": "sc-judis-10762", "pages": 3, "units": 0, "chunks": 5, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.205875Z"}
+{"doc": "sc-judis-10773", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.221685Z"}
+{"doc": "sc-judis-10796", "pages": 13, "units": 0, "chunks": 31, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.301627Z"}
+{"doc": "sc-judis-10804", "pages": 18, "units": 0, "chunks": 47, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.396958Z"}
+{"doc": "sc-judis-10805", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.428732Z"}
+{"doc": "sc-judis-10814", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.444883Z"}
+{"doc": "sc-judis-10818", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.477035Z"}
+{"doc": "sc-judis-1082", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.502841Z"}
+{"doc": "sc-judis-10823", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.532394Z"}
+{"doc": "sc-judis-10844", "pages": 31, "units": 0, "chunks": 83, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.682207Z"}
+{"doc": "sc-judis-10857", "pages": 3, "units": 0, "chunks": 5, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.714120Z"}
+{"doc": "sc-judis-10877", "pages": 4, "units": 0, "chunks": 7, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.730030Z"}
+{"doc": "sc-judis-10886", "pages": 5, "units": 0, "chunks": 11, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.761468Z"}
+{"doc": "sc-judis-1089", "pages": 11, "units": 0, "chunks": 28, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.888103Z"}
+{"doc": "sc-judis-10892", "pages": 10, "units": 0, "chunks": 24, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:15.947234Z"}
+{"doc": "sc-judis-10897", "pages": 15, "units": 0, "chunks": 34, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:16.014626Z"}
+{"doc": "sc-judis-10910", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:16.046921Z"}
+{"doc": "sc-judis-10924", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:16.062933Z"}
+{"doc": "sc-judis-10933", "pages": 7, "units": 0, "chunks": 15, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:16.110030Z"}
+{"doc": "sc-judis-10937", "pages": 7, "units": 0, "chunks": 17, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:16.141704Z"}
+{"doc": "sc-judis-1094", "pages": 4, "units": 0, "chunks": 9, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:16.173919Z"}
+{"doc": "sc-judis-10941", "pages": 3, "units": 0, "chunks": 7, "event": "document_parsed", "level": "info", "timestamp": "2026-11-20T13:01:16.206144Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "bns-2023", "done": 256, "total": 497, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:01:49.334791Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "bns-2023", "done": 497, "total": 497, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:02:17.074197Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "bnss-2023", "done": 256, "total": 935, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:02:46.071689Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "bnss-2023", "done": 512, "total": 935, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:03:15.152947Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "bnss-2023", "done": 768, "total": 935, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:03:44.208474Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "bnss-2023", "done": 935, "total": 935, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:04:18.688631Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "bsa-2023", "done": 222, "total": 222, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:04:42.971838Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "ipc-1860", "done": 256, "total": 626, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:05:05.205885Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "ipc-1860", "done": 512, "total": 626, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:05:27.877284Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "ipc-1860", "done": 626, "total": 626, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:05:38.056490Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "crpc-1973", "done": 256, "total": 892, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:06:02.606237Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "crpc-1973", "done": 512, "total": 892, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:06:27.443707Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "crpc-1973", "done": 768, "total": 892, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:06:52.182711Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "crpc-1973", "done": 892, "total": 892, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:07:06.278507Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "iea-1872", "done": 225, "total": 225, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:07:26.824715Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "constitution", "done": 256, "total": 807, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:07:49.650496Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "constitution", "done": 512, "total": 807, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:08:13.905229Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "constitution", "done": 768, "total": 807, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:08:41.028931Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "constitution", "done": 807, "total": 807, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:08:45.994245Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "it-act-2000", "done": 145, "total": 145, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:08:59.222963Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "prisons-act-1894", "done": 37, "total": 37, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:03.503537Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "criminal-law-amendment-2018", "done": 28, "total": 28, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:06.009875Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "mha-cybercrime-manual", "done": 102, "total": 102, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:17.499476Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "mha-cprgr-manual", "done": 31, "total": 31, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:21.447271Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "mha-cyberfraud-instructions", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:21.668354Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10166", "done": 36, "total": 36, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:26.014288Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10187", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:26.236769Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10193", "done": 33, "total": 33, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:30.171651Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10220", "done": 11, "total": 11, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:31.421236Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10290", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:31.636298Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10304", "done": 1, "total": 1, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:31.756038Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10322", "done": 1, "total": 1, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:31.884441Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10347", "done": 5, "total": 5, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:32.490762Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10356", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:33.187171Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10391", "done": 4, "total": 4, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:33.661119Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10426", "done": 3, "total": 3, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:34.009200Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10439", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:34.230310Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10442", "done": 8, "total": 8, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:35.186194Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10502", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:35.881120Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10519", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:36.117618Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10520", "done": 3, "total": 3, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:36.452902Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10548", "done": 8, "total": 8, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:37.393452Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10557", "done": 4, "total": 4, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:37.850954Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10562", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:38.089355Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10613", "done": 3, "total": 3, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:38.471545Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10629", "done": 1, "total": 1, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:38.573970Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10637", "done": 3, "total": 3, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:38.908548Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10649", "done": 7, "total": 7, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:39.696748Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10663", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:39.922971Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10668", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:40.596764Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10679", "done": 9, "total": 9, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:41.625957Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10693", "done": 4, "total": 4, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:42.132316Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10752", "done": 4, "total": 4, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:42.605513Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10762", "done": 5, "total": 5, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:43.203798Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10773", "done": 4, "total": 4, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:43.628731Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10796", "done": 31, "total": 31, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:47.211428Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10804", "done": 47, "total": 47, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:52.592794Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10805", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:53.255930Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10814", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:53.948991Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10818", "done": 8, "total": 8, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:54.924835Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-1082", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:55.617443Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10823", "done": 8, "total": 8, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:09:56.580366Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10844", "done": 83, "total": 83, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:07.043576Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10857", "done": 5, "total": 5, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:07.643260Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10877", "done": 7, "total": 7, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:08.464093Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10886", "done": 11, "total": 11, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:09.957478Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-1089", "done": 28, "total": 28, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:13.172021Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10892", "done": 24, "total": 24, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:16.116968Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10897", "done": 34, "total": 34, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:20.272758Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10910", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:20.956140Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10924", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:21.634343Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10933", "done": 15, "total": 15, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:23.475664Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10937", "done": 17, "total": 17, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:25.438483Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-1094", "done": 9, "total": 9, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:26.464852Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10941", "done": 7, "total": 7, "event": "embedded", "level": "info", "timestamp": "2026-11-20T13:10:27.291357Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+
+document                           type         pages units chunks  notes
+----------------------------------------------------------------------------------------------------
+bns-2023                           statute        102   356    497  Gazette print: 208 section(s) without a marginal title
+bnss-2023                          statute        249   531    935  Gazette print: 270 section(s) without a marginal title
+bsa-2023                           statute         47   170    222  Gazette print: 89 section(s) without a marginal title
+ipc-1860                           statute        112   548    626  
+crpc-1973                          statute        263   532    892  
+iea-1872                           statute         60   179    225  
+constitution                       constitution   404   486    807  
+it-act-2000                        statute         36   110    145  
+prisons-act-1894                   statute         20     0     37  only 0 numbered units found; indexed as plain text
+criminal-law-amendment-2018        amendment        7    26     28  
+mha-cybercrime-manual              manual          92     0    102  
+mha-cprgr-manual                   manual          41     0     31  
+mha-cyberfraud-instructions        manual           1     0      2  
+sc-judis-10166                     judgment        14     0     36  
+sc-judis-10187                     judgment         2     0      2  
+sc-judis-10193                     judgment        14     0     33  
+sc-judis-10220                     judgment         5     0     11  
+sc-judis-10290                     judgment         2     0      2  
+sc-judis-10304                     judgment         1     0      1  
+sc-judis-10322                     judgment         1     0      1  
+sc-judis-10347                     judgment         3     0      5  
+sc-judis-10356                     judgment         4     0      6  
+sc-judis-10391                     judgment         3     0      4  
+sc-judis-10426                     judgment         2     0      3  
+sc-judis-10439                     judgment         2     0      2  
+sc-judis-10442                     judgment         4     0      8  
+sc-judis-10502                     judgment         3     0      6  
+sc-judis-10519                     judgment         2     0      2  
+sc-judis-10520                     judgment         2     0      3  
+sc-judis-10548                     judgment         4     0      8  
+sc-judis-10557                     judgment         2     0      4  
+sc-judis-10562                     judgment         2     0      2  
+sc-judis-10613                     judgment         2     0      3  
+sc-judis-10629                     judgment         1     0      1  
+sc-judis-10637                     judgment         2     0      3  
+sc-judis-10649                     judgment         3     0      7  
+sc-judis-10663                     judgment         2     0      2  
+sc-judis-10668                     judgment         3     0      6  
+sc-judis-10679                     judgment         4     0      9  
+sc-judis-10693                     judgment         2     0      4  
+sc-judis-10752                     judgment         2     0      4  
+sc-judis-10762                     judgment         3     0      5  
+sc-judis-10773                     judgment         2     0      4  
+sc-judis-10796                     judgment        13     0     31  
+sc-judis-10804                     judgment        18     0     47  
+sc-judis-10805                     judgment         3     0      6  
+sc-judis-10814                     judgment         3     0      6  
+sc-judis-10818                     judgment         4     0      8  
+sc-judis-1082                      judgment         3     0      6  
+sc-judis-10823                     judgment         4     0      8  
+sc-judis-10844                     judgment        31     0     83  
+sc-judis-10857                     judgment         3     0      5  
+sc-judis-10877                     judgment         4     0      7  
+sc-judis-10886                     judgment         5     0     11  
+sc-judis-1089                      judgment        11     0     28  
+sc-judis-10892                     judgment        10     0     24  
+sc-judis-10897                     judgment        15     0     34  
+sc-judis-10910                     judgment         3     0      6  
+sc-judis-10924                     judgment         3     0      6  
+sc-judis-10933                     judgment         7     0     15  
+sc-judis-10937                     judgment         7     0     17  
+sc-judis-1094                      judgment         4     0      9  
+sc-judis-10941                     judgment         3     0      7  
+----------------------------------------------------------------------------------------------------
+[PASS] total chunks -> 5100/5100
+[PASS] bns-2023: finds 'whoever commits murder shall be punished' -> BNS s.103
+[PASS] bnss-2023: finds 'every information relating to the commission of a cognizable offence' -> BNSS s.173
+[PASS] bsa-2023: finds 'any information contained in an electronic record' -> BSA s.63
+[PASS] ipc-1860: finds 'whoever commits murder shall be punished' -> IPC s.302
+[PASS] ipc-1860: finds 'whoever cheats and thereby dishonestly induces' -> IPC s.415
+[PASS] crpc-1973: finds 'every information relating to the commission of a cognizable offence' -> CrPC s.150
+[PASS] iea-1872: finds 'admissibility of electronic records' -> IEA s.65B
+[PASS] constitution: finds 'no person shall be deprived of his life or personal liberty except according to procedure established by law' -> Constitution Art.21
+[PASS] it-act-2000: finds 'computer related offences' -> IT Act s.66
+
+chunks=5100 embedded_docs=63 copied_docs=0 seconds=599.9
+BUILD STATUS: live: lexai_chunks_20261120t130116516461
+report: C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\var\reports\ingest-20261120T131031Z.json
+exit=0
+
+Build report copied: ingest-20261120T131031Z.json -> 07_build_report.json

@@ -1,7 +1,13 @@
 {
   "comment": "Pinned downloads for data/manifest.yaml. Commit this file.",
-  "updated_at": "2026-11-20T12:50:53+00:00",
+  "updated_at": "2026-11-20T12:59:43+00:00",
   "documents": {
+    "bns-2023": {
+      "url": "https://prsindia.org/files/bills_acts/acts_parliament/2023/The%20Bharatiya%20Nyaya%20Sanhita,%202023.pdf",
+      "sha256": "67c92f7869420685e6cdc29b1bdde19fff91312b10241b3ed3e1163c5399600b",
+      "bytes": 1382923,
+      "fetched_at": "2026-11-20T12:59:43+00:00"
+    },
     "bnss-2023": {
       "url": "https://prsindia.org/files/bills_acts/bills_parliament/2023/The%20Bharatiya%20Nagarik%20Suraksha%20Sanhita,%202023.pdf",
       "sha256": "5e60e2afe30d0fe7eca4f8126301146b76c86a444e690581f81eb564843517fe",

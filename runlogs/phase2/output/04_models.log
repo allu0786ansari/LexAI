@@ -1,7 +1,13 @@
 model qwen2.5:7b-instruct-q4_K_M: already downloaded
 model nomic-embed-text: already downloaded
 $ ollama create qwen2.5-7b-instruct -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\ollama\Modelfile.laptop"
-[?2026h[?25l[1Ggathering model components [K[?25h[?2026l[?2026h[?25l[1Ggathering model components [K
+[?2026h[?25l[1Ggathering model components [K
+using existing layer sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730 [K
+using existing layer sha256:66b9ea09bd5b7099cbb4fc820f31b575c0366fa439b08245566692c6784e281e [K
+using existing layer sha256:eb4402837c7829a690fa845de4d7f3fd842c2adee476d5341da8a46ea9255175 [K
+using existing layer sha256:832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e [K
+using existing layer sha256:22d7aa72d0ee6c7a07405d36e2d224c1bf70efeff5bf812b110220223f4b196b [K
+writing manifest ⠋ [K[?25h[?2026l[?2026h[?25l[A[A[A[A[A[A[1Ggathering model components [K
 using existing layer sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730 [K
 using existing layer sha256:66b9ea09bd5b7099cbb4fc820f31b575c0366fa439b08245566692c6784e281e [K
 using existing layer sha256:eb4402837c7829a690fa845de4d7f3fd842c2adee476d5341da8a46ea9255175 [K
@@ -35,8 +41,8 @@ Reranker: disabled
 [PASS] embedding dimension matches config: model returns 768, LEXAI_EMBED_DIMENSION=768
 
 Generation test (the first call also loads the model into memory) ...
-[PASS] LLM generates: first token after 20.7s, 49 chunks in 28.2s (~6.5 tokens/s)
-   reply: A First Information Report (FIR) in India is an official record of a crime reported to the police, and it is filed by the police based on information provided by a complainant, marking the initiation of an investigation into the reported crime.
+[PASS] LLM generates: first token after 20.8s, 46 chunks in 27.9s (~6.5 tokens/s)
+   reply: A First Information Report (FIR) in India is an official record of a crime reported to the police, and it is filed by the police based on information provided by a complainant, marking the initiation of a criminal proceeding.
    loaded: qwen2.5-7b-instruct:latest  5.2 GB total, 50% on GPU
 
 SUMMARY: ALL PASSED

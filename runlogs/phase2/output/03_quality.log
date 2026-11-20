@@ -27,6 +27,6 @@ tests\unit\test_ingestion.py ......................                      [ 76%]
 tests\unit\test_llm_client.py ......                                     [ 85%]
 tests\unit\test_retrieval.py ..........                                  [100%]
 
-============================= 68 passed in 20.00s =============================
+============================= 68 passed in 19.21s =============================
 exit=0
 
