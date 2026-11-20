@@ -1,6 +1,6 @@
 # ADR 0001 — Phase 1 foundation decisions
 
-Date: 2026-11-20 · Status: proposed (pending Phase 1 run review)
+Date: 2026-11-20 · Status: accepted (verified on the target laptop, see runlogs/phase1/RESULTS.md)
 
 ## Context
 
