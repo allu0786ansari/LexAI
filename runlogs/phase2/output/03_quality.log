@@ -1,0 +1,32 @@
+$ .venv\Scripts\python.exe -m ruff check .
+All checks passed!
+exit=0
+
+$ .venv\Scripts\python.exe -m ruff format --check .
+46 files already formatted
+exit=0
+
+$ .venv\Scripts\python.exe -m mypy
+Success: no issues found in 33 source files
+exit=0
+
+$ .venv\Scripts\python.exe -m pytest -v
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.2.0, pluggy-1.7.0
+rootdir: C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0, platformdirs-4.14.7, asyncio-1.5.0, respx-0.23.1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 72 items
+
+tests\api\test_api.py .............                                      [ 18%]
+tests\unit\test_embedder.py .......                                      [ 27%]
+tests\unit\test_fetch_and_build.py ..........                            [ 41%]
+tests\unit\test_ingestion.py ..........................                  [ 77%]
+tests\unit\test_llm_client.py ......                                     [ 86%]
+tests\unit\test_retrieval.py ..........                                  [100%]
+
+============================= 72 passed in 25.55s =============================
+exit=0
+

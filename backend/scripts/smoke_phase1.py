@@ -96,13 +96,33 @@ async def check_up(base_url: str, concurrency: int) -> None:
             assert first["done"] is not None
             lat = first["done"]["latency"]
             print("latency breakdown (ms):", json.dumps(lat))
-            print("citations:", [(c["ref"], c["source_file"], c["page"]) for c in first["done"]["citations"]])
+            cites = first["done"]["citations"]
+            print("citations:")
+            for c in cites:
+                status = f"  [{c['status']}]" if c.get("status") else ""
+                title = f" - {c['unit_title']}" if c.get("unit_title") else ""
+                print(f"  [{c['ref']}] {c.get('label')}{title} (p.{c['page']}){status}")
             print("\nANSWER:\n" + first["done"]["answer"] + "\n")
+            record("answer has citations", len(cites) > 0, f"{len(cites)}")
+            labels = [c.get("label") or "" for c in cites]
             record(
-                "answer has citations",
-                len(first["done"]["citations"]) > 0,
-                f"{len(first['done']['citations'])}",
+                "citations name the provision",
+                bool(cites) and all(labels),
+                ", ".join(labels) or "none",
             )
+            murder = [c for c in cites if c.get("label") in ("IPC s.302", "BNS s.103")]
+            record(
+                "murder question cites IPC s.302 or BNS s.103",
+                bool(murder),
+                ", ".join(c["label"] for c in murder) or "neither was retrieved",
+            )
+            ipc = next((c for c in cites if (c.get("label") or "").startswith("IPC ")), None)
+            if ipc is not None:
+                record(
+                    "repealed IPC is flagged in its citation",
+                    "repealed" in (ipc.get("status") or "").lower(),
+                    repr(ipc.get("status")),
+                )
 
         print(f"Running {concurrency} concurrent questions while polling /healthz ...")
         health_ms: list[float] = []

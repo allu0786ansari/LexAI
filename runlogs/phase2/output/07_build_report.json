@@ -1,0 +1,698 @@
+{
+  "started_at": "2026-11-20T13:30:08+00:00",
+  "dry_run": false,
+  "collection": "lexai_chunks_20261120t133053900723",
+  "previous": "lexai_chunks_20261120t130116516461",
+  "status": "live: lexai_chunks_20261120t133053900723",
+  "documents": [
+    {
+      "id": "bns-2023",
+      "title": "The Bharatiya Nyaya Sanhita, 2023",
+      "type": "statute",
+      "pages": 102,
+      "units": 358,
+      "chunks": 490,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "bnss-2023",
+      "title": "The Bharatiya Nagarik Suraksha Sanhita, 2023",
+      "type": "statute",
+      "pages": 249,
+      "units": 531,
+      "chunks": 915,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "bsa-2023",
+      "title": "The Bharatiya Sakshya Adhiniyam, 2023",
+      "type": "statute",
+      "pages": 47,
+      "units": 170,
+      "chunks": 219,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "ipc-1860",
+      "title": "The Indian Penal Code, 1860",
+      "type": "statute",
+      "pages": 112,
+      "units": 548,
+      "chunks": 626,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "crpc-1973",
+      "title": "The Code of Criminal Procedure, 1973",
+      "type": "statute",
+      "pages": 263,
+      "units": 532,
+      "chunks": 892,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "iea-1872",
+      "title": "The Indian Evidence Act, 1872",
+      "type": "statute",
+      "pages": 60,
+      "units": 179,
+      "chunks": 225,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "constitution",
+      "title": "The Constitution of India",
+      "type": "constitution",
+      "pages": 404,
+      "units": 486,
+      "chunks": 807,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "it-act-2000",
+      "title": "The Information Technology Act, 2000",
+      "type": "statute",
+      "pages": 36,
+      "units": 110,
+      "chunks": 145,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "prisons-act-1894",
+      "title": "The Prisons Act, 1894 (Maharashtra compilation, with Bombay amendments)",
+      "type": "statute",
+      "pages": 20,
+      "units": 0,
+      "chunks": 37,
+      "warnings": [
+        "only 0 numbered units found; indexed as plain text"
+      ],
+      "problems": []
+    },
+    {
+      "id": "criminal-law-amendment-2018",
+      "title": "The Criminal Law (Amendment) Act, 2018",
+      "type": "amendment",
+      "pages": 7,
+      "units": 26,
+      "chunks": 28,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "mha-cybercrime-manual",
+      "title": "Ministry of Home Affairs \u2014 Cyber Crime Manual",
+      "type": "manual",
+      "pages": 92,
+      "units": 0,
+      "chunks": 102,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "mha-cprgr-manual",
+      "title": "Ministry of Home Affairs \u2014 CPRGR Manual",
+      "type": "manual",
+      "pages": 41,
+      "units": 0,
+      "chunks": 31,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "mha-cyberfraud-instructions",
+      "title": "Ministry of Home Affairs \u2014 Instructions on Cyber Fraud Reporting",
+      "type": "manual",
+      "pages": 1,
+      "units": 0,
+      "chunks": 2,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10166",
+      "title": "Balaji Raghavan [In T.C.(C) No.9/94]S.P. Anand [In T.C.(C) N v.  (1995-12-15)",
+      "type": "judgment",
+      "pages": 14,
+      "units": 0,
+      "chunks": 36,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10187",
+      "title": "Dharamdeo v. Bijarat & Ors. (1995-12-12)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 2,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10193",
+      "title": "Ramakant Mayekar v. Smt. Celine D\u2019Silva (1995-12-11)",
+      "type": "judgment",
+      "pages": 14,
+      "units": 0,
+      "chunks": 33,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10220",
+      "title": "Sector-6 v.  (1995-12-06)",
+      "type": "judgment",
+      "pages": 5,
+      "units": 0,
+      "chunks": 11,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10290",
+      "title": "S. Prabh Singh Dhillon Etc. Etc. v. Hoshiarpur Improvement Trust & Ors. (1995-11-23)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 2,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10304",
+      "title": "Sakti Through Its Director v. R.K. Ragala & Ors. (1995-11-21)",
+      "type": "judgment",
+      "pages": 1,
+      "units": 0,
+      "chunks": 1,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10322",
+      "title": "Ashwani Kumar & Ors. Etc. Etc. v. State Of Bihar & Ors. Etc. Etc. (1995-11-16)",
+      "type": "judgment",
+      "pages": 1,
+      "units": 0,
+      "chunks": 1,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10347",
+      "title": "Anokhey & Anr. v. State Of U.P.With Cri A.No. 531-32/93. 609-610/93. Crl.M.P. (1995-11-14)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 5,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10356",
+      "title": "Sita Ram Yadava v. Union Of India & Ors. (1995-11-13)",
+      "type": "judgment",
+      "pages": 4,
+      "units": 0,
+      "chunks": 6,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10391",
+      "title": "Jaipur Development Authority v. Children\u2019S Academy (1995-11-03)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 4,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10426",
+      "title": "Smt. Beli Ram Singh Chowdhry & Ors. v. State Of Assam (1995-10-31)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 3,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10439",
+      "title": "Smt. Yashomati Harsukhlal Lathia & Ors. v. Saurashtra Kutch Stock Exchange & Ors. (1995-10-30)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 2,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10442",
+      "title": "State Of Assam v. C.K. Das (1995-10-20)",
+      "type": "judgment",
+      "pages": 4,
+      "units": 0,
+      "chunks": 8,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10502",
+      "title": "Shri Narendera Kumar Agrawal v. Smt. Saroj Maloo And Ors. (1995-09-20)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 6,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10519",
+      "title": "State Of Karnataka Represented Throughchief Secretary To Gov v. Shri T.R. Dhananjaya & Anr (1995-09-14)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 2,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10520",
+      "title": "Debaraj Padhi & Others v. Steel Authority Of India Limited & Others (1995-09-14)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 3,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10548",
+      "title": "Shri Sat Pal v. The State Of Punjab (1995-09-08)",
+      "type": "judgment",
+      "pages": 4,
+      "units": 0,
+      "chunks": 8,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10557",
+      "title": "Sheela Barse v. Union Bank Of India And Ors. (1995-09-05)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 4,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10562",
+      "title": "Giani Pratap Singh v. State Of Rajasthan & Anr. (1995-09-04)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 2,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10613",
+      "title": "Superintendent Of Police (C.B.I.) v. Deepak Chowdhary & Ors (1995-08-17)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 3,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10629",
+      "title": "Special Land Acquisition Officer v. N.S. Takkalaki And Ors. (1995-08-16)",
+      "type": "judgment",
+      "pages": 1,
+      "units": 0,
+      "chunks": 1,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10637",
+      "title": "Kailash Potlia v. The State Of Andhra Pradesh (1995-08-14)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 3,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10649",
+      "title": "Baby Samuel v. Tukaram Laxman Sable & Ors. (1995-08-09)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 7,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10663",
+      "title": "Sri Kaptan Singh [Deceased]Through Lrs. v. Rajinder Singh & Anr. (1995-08-03)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 2,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10668",
+      "title": "Vithal And Others v. The State Of Maharashtra (1995-08-03)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 6,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10679",
+      "title": "Amarjit Singh v. State Of Punjab (1995-07-27)",
+      "type": "judgment",
+      "pages": 4,
+      "units": 0,
+      "chunks": 9,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10693",
+      "title": "Shri Topandas Kundanmal v. The State Through The Landacquisition Officer (1995-07-25)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 4,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10752",
+      "title": "Amalesh Chandra Chakraborty& Ors. v. Union Of India & Ors. (1995-05-10)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 4,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10762",
+      "title": "Union Of India & Ors. ...Appelants v. Dr. J. K. Goel ...Respondent (1995-05-08)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 5,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10773",
+      "title": "Hal Employees Union v. The Presiding Officer And Anr. (1995-05-01)",
+      "type": "judgment",
+      "pages": 2,
+      "units": 0,
+      "chunks": 4,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10796",
+      "title": "In Re: 1. Shri Sanjiv Datta v.  (1995-04-19)",
+      "type": "judgment",
+      "pages": 13,
+      "units": 0,
+      "chunks": 31,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10804",
+      "title": "Union Of India v. Meera Mohideen (1995-04-14)",
+      "type": "judgment",
+      "pages": 18,
+      "units": 0,
+      "chunks": 47,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10805",
+      "title": "All India Judge\u2019S Association & Ors. v. Union Of India & Ors. (1995-04-10)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 6,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10814",
+      "title": "People\u2019S Union For Civil Liberties (Pucl) v. Union Of India And Another (1995-03-30)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 6,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10818",
+      "title": "Commissioner Of Wealth Tax v. Smt. Binapani Chakravarty (1995-03-28)",
+      "type": "judgment",
+      "pages": 4,
+      "units": 0,
+      "chunks": 8,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-1082",
+      "title": "In re THE EDITOR v. Arabinda Bose And Another. (1952-12-12)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 6,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10823",
+      "title": "Koti Sarroj Anamma & Anr. v. Jonnalagada Malleswara Rao (1995-03-28)",
+      "type": "judgment",
+      "pages": 4,
+      "units": 0,
+      "chunks": 8,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10844",
+      "title": "In Re: Vinay Chandra Mishra [The Alleged Contemner] v.  (1995-03-10)",
+      "type": "judgment",
+      "pages": 31,
+      "units": 0,
+      "chunks": 83,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10857",
+      "title": "Heirs & Lrs. Of Deceased Somabhai Kanjibhai Baria v. Patel Parshottamdas Jamdas (D) & Anr. (1995-03-03)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 5,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10877",
+      "title": "The Director General v. Dr. K. Naryanaswami & Ors. (1995-02-21)",
+      "type": "judgment",
+      "pages": 4,
+      "units": 0,
+      "chunks": 7,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10886",
+      "title": "Bank Of Maharashtra v. Rice Shipping & Transport Co. Pvt. Limited & Anr. (1995-02-16)",
+      "type": "judgment",
+      "pages": 5,
+      "units": 0,
+      "chunks": 11,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-1089",
+      "title": "State Of Madras v. C. P. Sarathy And Another. (1952-12-05)",
+      "type": "judgment",
+      "pages": 11,
+      "units": 0,
+      "chunks": 28,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10892",
+      "title": "Hindustan Steel Works Construction Limited Etc. Etc. v. Hindustan Steel Works Construction Limited Employees\u2019 Union (1995-02-10)",
+      "type": "judgment",
+      "pages": 10,
+      "units": 0,
+      "chunks": 24,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10897",
+      "title": "Delhi Development Authority v. Skipper Construction And Anr. (1995-02-08)",
+      "type": "judgment",
+      "pages": 15,
+      "units": 0,
+      "chunks": 34,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10910",
+      "title": "Chabungbam Ibohal Singh v. UNION OF INDIA & ORS.Civil Appeal No. 1149 of 1987 (1995-02-02)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 6,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10924",
+      "title": "Consumer Unity & Trust Society v. Chairman & Managing Director (1995-01-31)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 6,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10933",
+      "title": "Delhi Development Authority v. Skipper Construction And Anr. (1995-01-25)",
+      "type": "judgment",
+      "pages": 7,
+      "units": 0,
+      "chunks": 15,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10937",
+      "title": "Mahadeo Savlaram Shelke & Ors. v. The Puna Municipal Corpn. & Anr. (1995-01-23)",
+      "type": "judgment",
+      "pages": 7,
+      "units": 0,
+      "chunks": 17,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-1094",
+      "title": "Thakur Pratap Singh v. Shri Krishna Gupta And Others. (1952-12-02)",
+      "type": "judgment",
+      "pages": 4,
+      "units": 0,
+      "chunks": 9,
+      "warnings": [],
+      "problems": []
+    },
+    {
+      "id": "sc-judis-10941",
+      "title": "Mrs. Mary Joyce Poonacha V. v. M/S. K.T. Plantations Pvt. Ltd. & Ors.(K Ramaswamy &N. Ven (1995-01-20)",
+      "type": "judgment",
+      "pages": 3,
+      "units": 0,
+      "chunks": 7,
+      "warnings": [],
+      "problems": []
+    }
+  ],
+  "problems": [],
+  "checks": [
+    {
+      "check": "total chunks",
+      "ok": true,
+      "detail": "5070/5070"
+    },
+    {
+      "check": "bns-2023: finds 'whoever commits murder shall be punished'",
+      "ok": true,
+      "detail": "BNS s.103"
+    },
+    {
+      "check": "bnss-2023: finds 'every information relating to the commission of a cognizable offence'",
+      "ok": true,
+      "detail": "BNSS s.169"
+    },
+    {
+      "check": "bsa-2023: finds 'any information contained in an electronic record'",
+      "ok": true,
+      "detail": "BSA s.63"
+    },
+    {
+      "check": "ipc-1860: finds 'whoever commits murder shall be punished'",
+      "ok": true,
+      "detail": "IPC s.302"
+    },
+    {
+      "check": "ipc-1860: finds 'whoever cheats and thereby dishonestly induces'",
+      "ok": true,
+      "detail": "IPC s.415"
+    },
+    {
+      "check": "crpc-1973: finds 'every information relating to the commission of a cognizable offence'",
+      "ok": true,
+      "detail": "CrPC s.150"
+    },
+    {
+      "check": "iea-1872: finds 'admissibility of electronic records'",
+      "ok": true,
+      "detail": "IEA s.65B"
+    },
+    {
+      "check": "constitution: finds 'no person shall be deprived of his life or personal liberty except according to procedure established by law'",
+      "ok": true,
+      "detail": "Constitution Art.21"
+    },
+    {
+      "check": "it-act-2000: finds 'computer related offences'",
+      "ok": true,
+      "detail": "IT Act s.66"
+    }
+  ],
+  "embedded_docs": 63,
+  "copied_docs": 0,
+  "chunks": 5070,
+  "seconds": 594.0
+}

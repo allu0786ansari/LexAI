@@ -8,3 +8,5 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+# Downloaded sources (see data/manifest.yaml); pinned by data/manifest.lock.json
+data/raw/

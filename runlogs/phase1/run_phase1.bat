@@ -127,7 +127,7 @@ goto setup_done
 >>"%LOG%" echo --- active backend\.env settings ---
 findstr /B /C:"LEXAI_" /C:"# lexai-profile" ".env" >>"%LOG%" 2>&1
 >>"%LOG%" echo.
-set "CMD=.venv\Scripts\python.exe -c "import lexai, faiss, fastapi; print('lexai', lexai.__version__, 'imports OK')"" & call :run "%LOG%"
+set "CMD=.venv\Scripts\python.exe -c "import lexai, qdrant_client, fastapi; print('lexai', lexai.__version__, 'imports OK')"" & call :run "%LOG%"
 popd
 type "%LOG%"
 goto :eof

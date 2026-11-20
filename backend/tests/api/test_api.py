@@ -11,8 +11,10 @@ import pytest
 from lexai.api.app import create_app
 from lexai.core.errors import UpstreamUnavailable
 from lexai.core.settings import Settings
-from lexai.retrieval.index import LocalIndex
+from lexai.retrieval.qdrant_store import BuildMeta, QdrantStore
 from tests.conftest import FakeEmbedder, FakeLLM, make_container
+
+Live = tuple[QdrantStore, str, BuildMeta]
 
 
 def parse_sse(body: str) -> list[tuple[str, object]]:
@@ -27,8 +29,8 @@ def client_for(app: object) -> httpx.AsyncClient:
     return httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test")  # type: ignore[arg-type]
 
 
-async def test_query_streams_citations_tokens_then_done(settings: Settings, index: LocalIndex) -> None:
-    app = create_app(settings, make_container(settings, index))
+async def test_query_streams_citations_tokens_then_done(settings: Settings, live_store: Live) -> None:
+    app = create_app(settings, make_container(settings, live_store))
     async with client_for(app) as client:
         response = await client.post("/api/query", json={"question": "What is the punishment for murder?"})
     assert response.status_code == 200
@@ -39,8 +41,13 @@ async def test_query_streams_citations_tokens_then_done(settings: Settings, inde
     assert set(kinds[1:-1]) == {"token"}
 
     citations = events[0][1]
-    assert isinstance(citations, list) and citations[0]["source_file"] == "IPC_1860.pdf"
+    assert isinstance(citations, list)
+    assert {c["label"] for c in citations[:2]} == {"IPC s.302", "BNS s.103"}
     assert citations[0]["ref"] == 1
+    ipc = next(c for c in citations if c["label"] == "IPC s.302")
+    assert ipc["unit_title"] == "Punishment for murder"
+    assert ipc["status"].startswith("repealed 2024-07-01; replaced by BNS")
+    assert ipc["sections"][0] == "IPC s.302" and ipc["page"] == 1
 
     done = events[-1][1]
     assert isinstance(done, dict)
@@ -50,9 +57,9 @@ async def test_query_streams_citations_tokens_then_done(settings: Settings, inde
     assert done["latency"]["time_to_first_token_ms"] is not None
 
 
-async def test_prompt_contains_numbered_passages_and_history(settings: Settings, index: LocalIndex) -> None:
+async def test_prompt_contains_numbered_passages_and_history(settings: Settings, live_store: Live) -> None:
     llm = FakeLLM()
-    app = create_app(settings, make_container(settings, index, llm=llm))
+    app = create_app(settings, make_container(settings, live_store, llm=llm))
     async with client_for(app) as client:
         session = (await client.post("/api/session")).json()["session_id"]
         await client.post("/api/query", json={"question": "murder punishment", "session_id": session})
@@ -62,9 +69,9 @@ async def test_prompt_contains_numbered_passages_and_history(settings: Settings,
     assert [m.role for m in rest] == ["user", "assistant", "user"]
 
 
-async def test_llm_outage_becomes_an_error_event(settings: Settings, index: LocalIndex) -> None:
+async def test_llm_outage_becomes_an_error_event(settings: Settings, live_store: Live) -> None:
     llm = FakeLLM(error=UpstreamUnavailable("connection refused"))
-    app = create_app(settings, make_container(settings, index, llm=llm))
+    app = create_app(settings, make_container(settings, live_store, llm=llm))
     async with client_for(app) as client:
         response = await client.post("/api/query", json={"question": "murder"})
     kind, data = parse_sse(response.text)[-1]
@@ -76,8 +83,8 @@ async def test_llm_outage_becomes_an_error_event(settings: Settings, index: Loca
     }
 
 
-async def test_embedder_outage_is_an_error_not_garbage(settings: Settings, index: LocalIndex) -> None:
-    app = create_app(settings, make_container(settings, index, embedder=FakeEmbedder(fail=True)))
+async def test_embedder_outage_is_an_error_not_garbage(settings: Settings, live_store: Live) -> None:
+    app = create_app(settings, make_container(settings, live_store, embedder=FakeEmbedder(fail=True)))
     async with client_for(app) as client:
         response = await client.post("/api/query", json={"question": "murder"})
     events = parse_sse(response.text)
@@ -85,15 +92,15 @@ async def test_embedder_outage_is_an_error_not_garbage(settings: Settings, index
 
 
 async def test_missing_index_returns_index_not_ready(settings: Settings) -> None:
-    app = create_app(settings, make_container(settings, index=None))
+    app = create_app(settings, make_container(settings, None))
     async with client_for(app) as client:
         response = await client.post("/api/query", json={"question": "murder"})
     kind, data = parse_sse(response.text)[-1]
     assert kind == "error" and data["code"] == "index_not_ready"  # type: ignore[index]
 
 
-async def test_readyz_is_red_when_llm_is_down(settings: Settings, index: LocalIndex) -> None:
-    app = create_app(settings, make_container(settings, index, llm=FakeLLM(healthy=False)))
+async def test_readyz_is_red_when_llm_is_down(settings: Settings, live_store: Live) -> None:
+    app = create_app(settings, make_container(settings, live_store, llm=FakeLLM(healthy=False)))
     async with client_for(app) as client:
         assert (await client.get("/healthz")).status_code == 200
         ready = await client.get("/readyz")
@@ -102,32 +109,32 @@ async def test_readyz_is_red_when_llm_is_down(settings: Settings, index: LocalIn
     assert ready.json()["checks"]["index"]["ok"] is True
 
 
-async def test_readyz_is_green_when_everything_is_up(settings: Settings, index: LocalIndex) -> None:
-    app = create_app(settings, make_container(settings, index))
+async def test_readyz_is_green_when_everything_is_up(settings: Settings, live_store: Live) -> None:
+    app = create_app(settings, make_container(settings, live_store))
     async with client_for(app) as client:
         ready = await client.get("/readyz")
     assert ready.status_code == 200 and ready.json()["ready"] is True
 
 
-async def test_request_id_is_propagated(settings: Settings, index: LocalIndex) -> None:
-    app = create_app(settings, make_container(settings, index))
+async def test_request_id_is_propagated(settings: Settings, live_store: Live) -> None:
+    app = create_app(settings, make_container(settings, live_store))
     async with client_for(app) as client:
         response = await client.get("/healthz", headers={"X-Request-ID": "abc-123"})
     assert response.headers["x-request-id"] == "abc-123"
 
 
 @pytest.mark.parametrize("question", ["", "x" * 2001])
-async def test_question_length_is_validated(settings: Settings, index: LocalIndex, question: str) -> None:
-    app = create_app(settings, make_container(settings, index))
+async def test_question_length_is_validated(settings: Settings, live_store: Live, question: str) -> None:
+    app = create_app(settings, make_container(settings, live_store))
     async with client_for(app) as client:
         response = await client.post("/api/query", json={"question": question})
     assert response.status_code == 422
 
 
-async def test_health_stays_fast_while_answers_stream(settings: Settings, index: LocalIndex) -> None:
+async def test_health_stays_fast_while_answers_stream(settings: Settings, live_store: Live) -> None:
     """The v0.1 bug: one query blocked the event loop. Ten slow streams must not slow /healthz."""
     llm = FakeLLM(tokens=["t "] * 20, delay_s=0.05)  # each answer streams for ~1 s
-    app = create_app(settings, make_container(settings, index, llm=llm))
+    app = create_app(settings, make_container(settings, live_store, llm=llm))
     async with client_for(app) as client:
 
         async def ask() -> None:
@@ -148,3 +155,24 @@ async def test_health_stays_fast_while_answers_stream(settings: Settings, index:
         await asyncio.gather(*streams)
     p95 = statistics.quantiles(timings, n=20)[-1]
     assert p95 < 200, f"/healthz p95 {p95:.1f} ms while streaming (blocking would be ~1000 ms)"
+
+
+async def test_prompt_passages_carry_act_section_and_status(settings: Settings, live_store: Live) -> None:
+    llm = FakeLLM()
+    app = create_app(settings, make_container(settings, live_store, llm=llm))
+    async with client_for(app) as client:
+        await client.post("/api/query", json={"question": "punishment for murder"})
+    system = llm.calls[0][0].content
+    assert "IPC s.302 — Punishment for murder" in system
+    assert "repealed 2024-07-01; replaced by BNS" in system
+
+
+async def test_context_respects_the_character_budget(settings: Settings, live_store: Live) -> None:
+    settings.retrieval.context_char_budget = 1000  # room for ~one sample passage
+    llm = FakeLLM()
+    app = create_app(settings, make_container(settings, live_store, llm=llm))
+    async with client_for(app) as client:
+        response = await client.post("/api/query", json={"question": "punishment for murder"})
+    citations = parse_sse(response.text)[0][1]
+    assert isinstance(citations, list) and len(citations) <= 3
+    assert "[4]" not in llm.calls[0][0].content

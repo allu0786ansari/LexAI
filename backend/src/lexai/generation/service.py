@@ -25,7 +25,14 @@ from lexai.domain.models import (
     ScoredChunk,
     StreamEvent,
 )
-from lexai.generation.prompts import HYDE_PROMPT, PROMPT_VERSION, SYSTEM_PROMPT, format_context
+from lexai.generation.prompts import (
+    HYDE_PROMPT,
+    PROMPT_VERSION,
+    SYSTEM_PROMPT,
+    format_context,
+    status_text,
+    within_budget,
+)
 from lexai.retrieval.hybrid import HybridRetriever
 from lexai.services.sessions import SessionStore
 
@@ -46,13 +53,21 @@ def build_citations(chunks: list[ScoredChunk]) -> list[Citation]:
         Citation(
             ref=n,
             chunk_id=item.chunk.chunk_id,
-            source_file=item.chunk.metadata.source_file,
-            page=item.chunk.metadata.page,
-            law_type=item.chunk.metadata.law_type,
-            sections=item.chunk.metadata.sections,
+            label=meta.label,
+            doc_id=meta.doc_id,
+            doc_title=meta.doc_title,
+            unit_label=meta.unit_label,
+            unit=meta.unit,
+            unit_title=meta.unit_title,
+            status=status_text(meta),
+            source_file=meta.source_file,
+            page=meta.page_start,
+            law_type=meta.doc_type,
+            sections=[meta.label, *meta.sections] if meta.unit else meta.sections,
             relevance_score=round(item.score, 4),
         )
         for n, item in enumerate(chunks, start=1)
+        for meta in [item.chunk.metadata]
     ]
 
 
@@ -147,19 +162,12 @@ class ChatService:
                 ranked = await self.reranker.rerank(question, [c.chunk.text for c in candidates], top_n)
             except Exception as exc:
                 raise RetrievalError(f"rerank failed: {exc!r}") from exc
-            context = [
-                ScoredChunk(
-                    chunk=candidates[i].chunk,
-                    score=score,
-                    matched_dense=candidates[i].matched_dense,
-                    matched_sparse=candidates[i].matched_sparse,
-                )
-                for i, score in ranked
-            ]
+            context = [ScoredChunk(chunk=candidates[i].chunk, score=score) for i, score in ranked]
             rerank_ms = _ms(t0)
         else:
             context = candidates[:top_n]
 
+        context = within_budget(context, self.settings.retrieval.context_char_budget)
         citations = build_citations(context)
         yield StreamEvent(event="citations", data=[c.model_dump() for c in citations])
 
