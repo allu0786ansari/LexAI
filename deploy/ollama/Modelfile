@@ -1,0 +1,17 @@
+# LexAI generator for local development: Qwen2.5-7B-Instruct, 4-bit (~5 GB VRAM).
+#
+# Build once:   ollama pull qwen2.5:7b-instruct-q4_K_M
+#               ollama create qwen2.5-7b-instruct -f deploy/ollama/Modelfile
+#
+# Why a Modelfile: Ollama defaults to a 4K context on GPUs under 24 GB, which
+# would silently cut off retrieved passages. The OpenAI-compatible endpoint
+# cannot change num_ctx per request, so it is pinned here.
+# The served name matches vLLM's --served-model-name, so the API config is the
+# same in development and production.
+
+FROM qwen2.5:7b-instruct-q4_K_M
+
+PARAMETER num_ctx 8192
+PARAMETER temperature 0.2
+PARAMETER top_p 0.8
+PARAMETER repeat_penalty 1.05
