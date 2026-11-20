@@ -1,6 +1,6 @@
 # ADR 0003 — Phase 3 query understanding, routing and grounded generation
 
-Date: 2026-11-20 · Status: proposed (pending verification on the target laptop, see runlogs/phase3/)
+Date: 2026-11-20 · Status: accepted (verified on the target laptop, see runlogs/phase3/RESULTS.md)
 
 ## Context
 

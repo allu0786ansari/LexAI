@@ -5,8 +5,8 @@ Supreme Court judgments and government manuals. It retrieves the relevant
 passages, generates an answer with **Qwen2.5-7B-Instruct**, and cites every
 claim as `[n]` so you can check the source.
 
-> **Status: Phase 3 of 6 in verification** (query understanding and grounded
-> answers; Phase 2 [verified](runlogs/phase2/RESULTS.md)). The full plan covers ingestion,
+> **Status: Phase 3 of 6 complete** (query understanding and grounded answers;
+> [verified results](runlogs/phase3/RESULTS.md)). The full plan covers ingestion,
 > retrieval, evaluation, API/UI, observability and deployment. Quality numbers
 > will be published here only once Phase 4's evaluation produces them.
 
@@ -175,7 +175,7 @@ frontend/         React + Vite chat UI
 | --- | --- | --- |
 | 1 | Foundation: async clients, Qwen2.5-7B, fail-loudly, tests | **done** ([results](runlogs/phase1/RESULTS.md)) |
 | 2 | Ingestion: corpus manifest, BNS/BNSS/BSA, legal-structure chunking, Qdrant | **done** ([results](runlogs/phase2/RESULTS.md)) |
-| 3 | Retrieval & generation: query routing, citation verification, abstention | **in verification** ([run](runlogs/phase3/README.md)) |
+| 3 | Retrieval & generation: query routing, citation verification, abstention | **done** ([results](runlogs/phase3/RESULTS.md)) |
 | 4 | Evaluation: golden set, retrieval metrics, RAGAS, CI gate | planned |
 | 5 | API v1, TypeScript UI, security, observability | planned |
 | 6 | Docker Compose, CI/CD, deployment | planned |
