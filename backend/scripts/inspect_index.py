@@ -43,7 +43,8 @@ SEARCHES = [
     ("When is an electronic record admissible as evidence?", {"BSA s.63", "IEA s.65B"}),
     ("Which article protects the right to life and personal liberty?", {"Constitution Art.21"}),
     ("When can a person get anticipatory bail?", {"BNSS s.482", "CrPC s.438"}),
-    ("What is the punishment for cheating?", {"BNS s.318", "IPC s.420"}),
+    # IPC splits cheating over s.415 (definition), s.417 (punishment) and s.420; BNS s.318 has all three.
+    ("What is the punishment for cheating?", {"BNS s.318", "IPC s.415", "IPC s.417", "IPC s.420"}),
 ]
 
 SEARCH_TOP = 10
