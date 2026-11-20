@@ -149,6 +149,25 @@ class ChatService:
             logger.warning("hyde_failed", error=str(exc))
             return None
 
+    async def _retrieve(self, plan: QueryPlan, latency: dict[str, Any]) -> Retrieved:
+        assert self.router is not None
+        extra: list[str] = []
+        if self.settings.retrieval.hyde_enabled:
+            t0 = time.perf_counter()
+            hyde_text = await self._hyde(plan.standalone)
+            latency["hyde_ms"] = _ms(t0)
+            if hyde_text:
+                extra.append(hyde_text)
+        t0 = time.perf_counter()
+        try:
+            retrieved = await self.router.retrieve(plan, extra)
+        except LexAIError:
+            raise
+        except Exception as exc:
+            raise RetrievalError(repr(exc)) from exc
+        latency["retrieval_ms"] = _ms(t0)
+        return retrieved
+
     def _should_abstain(self, retrieved: Retrieved) -> bool:
         if retrieved.found_exact:
             return False
@@ -194,22 +213,7 @@ class ChatService:
                 yield event
             return
 
-        extra: list[str] = []
-        if self.settings.retrieval.hyde_enabled:
-            t0 = time.perf_counter()
-            hyde_text = await self._hyde(plan.standalone)
-            latency["hyde_ms"] = _ms(t0)
-            if hyde_text:
-                extra.append(hyde_text)
-
-        t0 = time.perf_counter()
-        try:
-            retrieved = await self.router.retrieve(plan, extra)
-        except LexAIError:
-            raise
-        except Exception as exc:
-            raise RetrievalError(repr(exc)) from exc
-        latency["retrieval_ms"] = _ms(t0)
+        retrieved = await self._retrieve(plan, latency)
 
         if not retrieved.pinned and not retrieved.ranked:
             async for event in self._fixed_reply(
@@ -307,7 +311,8 @@ class ChatService:
             return result | {"passages": [], "notes": [], "abstain": False}
         if self.router is None or self.store is None or self.collection is None:
             raise IndexNotReady()
-        retrieved = await self.router.retrieve(plan)
+        latency: dict[str, Any] = {}
+        retrieved = await self._retrieve(plan, latency)
         exact_parents = {p.chunk.metadata.parent_id for p in retrieved.pinned}
         passages = await assemble(
             self.store,
@@ -323,6 +328,7 @@ class ChatService:
             "best_rerank": retrieved.best_rerank,
             "abstain": self._should_abstain(retrieved),
             "index_version": self.index_version,
+            "latency": latency,
         }
 
     async def _fixed_reply(

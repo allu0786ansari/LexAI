@@ -1,4 +1,5 @@
-.PHONY: requirements install lint format typecheck test check fetch ingest ingest-dry ingest-status inspect check3 serve smoke
+.PHONY: requirements install lint format typecheck test check fetch ingest ingest-dry ingest-status inspect check3 serve smoke \
+	eval-validate eval-retrieval eval-answers eval-report eval-fixture eval-gate load
 
 BACKEND := backend
 
@@ -42,6 +43,27 @@ smoke:
 
 check3:
 	cd $(BACKEND) && uv run python scripts/check_phase3.py
+
+eval-validate:
+	cd $(BACKEND) && uv run python -m lexai.evaluation validate
+
+eval-retrieval:
+	cd $(BACKEND) && uv run python -m lexai.evaluation retrieval --configs hybrid,dense,bm25,no-routing
+
+eval-answers:
+	cd $(BACKEND) && uv run python -m lexai.evaluation answers --limit 40
+
+eval-report:
+	cd $(BACKEND) && uv run python -m lexai.evaluation report
+
+eval-fixture:
+	cd $(BACKEND) && uv run python -m lexai.evaluation export-fixture
+
+eval-gate:
+	cd $(BACKEND) && uv run python -m lexai.evaluation offline
+
+load:
+	cd $(BACKEND) && uv run python scripts/load_test.py
 
 # Regenerate the pip requirement files (used on Windows without uv) from uv.lock.
 requirements:
