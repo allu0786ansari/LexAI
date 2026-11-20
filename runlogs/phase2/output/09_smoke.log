@@ -1,0 +1,45 @@
+$ .venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --concurrency 2 --server-log "C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase2\output\09_server.log"
+API starting (pid 23572), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase2\output\09_server.log
+API is up.
+readyz: {
+  "ready": false,
+  "checks": {
+    "llm": {
+      "ok": true,
+      "reachable": true,
+      "model": "qwen2.5-7b-instruct",
+      "model_available": true
+    },
+    "embedder": {
+      "ok": true,
+      "reachable": true,
+      "model": "nomic-embed-text",
+      "dimension": 768,
+      "dimension_ok": true
+    },
+    "index": {
+      "ok": false,
+      "error": "RuntimeError",
+      "detail": "no live index: run the ingestion build"
+    },
+    "reranker": {
+      "ok": true,
+      "enabled": false,
+      "model": null
+    }
+  }
+}
+[FAIL] readyz green: HTTP 503
+
+Asking: What is the punishment for murder under the Indian Penal Code?
+[FAIL] answer streamed: error={'code': 'index_not_ready', 'message': 'The search index has not been built yet. Run the ingestion job first.', 'request_id': 'a8d77c56dc344bff9e62caff845fb9e5'} events=['error']
+Running 2 concurrent questions while polling /healthz ...
+[FAIL] 2 concurrent answers completed: 0/2 finished
+[PASS] /healthz responsive during generation: 1 probes, p50 4.9 ms, p95 4.9 ms
+Disconnecting a client after its first token ...
+[PASS] server healthy after client disconnect: HTTP 200
+API stopped.
+
+SUMMARY: FAILED: ['readyz green', 'answer streamed', '2 concurrent answers completed']
+exit=1
+

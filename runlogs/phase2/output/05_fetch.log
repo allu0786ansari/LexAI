@@ -1,0 +1,118 @@
+$ .venv\Scripts\python.exe -m lexai.ingestion.cli fetch
+HTTP Request: GET https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf "HTTP/1.1 504 Gateway Time-out"
+{"doc": "bns-2023", "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf", "error": "HTTPStatusError(\"Server error '504 Gateway Time-out' for url 'https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf'\\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504\")", "event": "download_failed", "level": "warning", "timestamp": "2026-11-20T11:30:41.746647Z"}
+HTTP Request: GET https://indiacode.nic.in/bitstream/123456789/20099/3/a2023-46.pdf "HTTP/1.1 302 Moved Temporarily"
+HTTP Request: GET https://www.indiacode.nic.in/bitstream/123456789/20099/3/a2023-46.pdf "HTTP/1.1 504 Gateway Time-out"
+{"doc": "bnss-2023", "url": "https://indiacode.nic.in/bitstream/123456789/20099/3/a2023-46.pdf", "error": "HTTPStatusError(\"Server error '504 Gateway Time-out' for url 'https://www.indiacode.nic.in/bitstream/123456789/20099/3/a2023-46.pdf'\\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504\")", "event": "download_failed", "level": "warning", "timestamp": "2026-11-20T11:31:42.117703Z"}
+HTTP Request: GET https://www.indiacode.nic.in/bitstream/123456789/20063/1/aa202347.pdf "HTTP/1.1 504 Gateway Time-out"
+{"doc": "bsa-2023", "url": "https://www.indiacode.nic.in/bitstream/123456789/20063/1/aa202347.pdf", "error": "HTTPStatusError(\"Server error '504 Gateway Time-out' for url 'https://www.indiacode.nic.in/bitstream/123456789/20063/1/aa202347.pdf'\\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504\")", "event": "download_failed", "level": "warning", "timestamp": "2026-11-20T11:32:42.205066Z"}
+HTTP Request: GET https://www.iitk.ac.in/gc/pdf/IPC_186045.pdf "HTTP/1.1 200 OK"
+HTTP Request: GET https://cdn.ncw.gov.in/wp-content/uploads/2022/12/THEINDIANEVIDENCEACT1872_0.pdf "HTTP/1.1 200 OK"
+document                           status      detail
+------------------------------------------------------------------------------------------
+bns-2023                           failed      
+                                               ! https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf: HTTPStatusError("Server error '504 Gateway Time-out' for url 'https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504")
+bnss-2023                          failed      
+                                               ! https://indiacode.nic.in/bitstream/123456789/20099/3/a2023-46.pdf: HTTPStatusError("Server error '504 Gateway Time-out' for url 'https://www.indiacode.nic.in/bitstream/123456789/20099/3/a2023-46.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504")
+bsa-2023                           failed      
+                                               ! https://www.indiacode.nic.in/bitstream/123456789/20063/1/aa202347.pdf: HTTPStatusError("Server error '504 Gateway Time-out' for url 'https://www.indiacode.nic.in/bitstream/123456789/20063/1/aa202347.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504")
+ipc-1860                           downloaded  https://www.iitk.ac.in/gc/pdf/IPC_186045.pdf (1.0 MB)
+crpc-1973                          bundled-ok  
+iea-1872                           downloaded  https://cdn.ncw.gov.in/wp-content/uploads/2022/12/THEINDIANEVIDENCEACT1872_0.pdf (0.5 MB)
+constitution                       bundled-ok  
+it-act-2000                        bundled-ok  
+prisons-act-1894                   bundled-ok  
+criminal-law-amendment-2018        bundled-ok  
+mha-cybercrime-manual              bundled-ok  
+mha-cprgr-manual                   bundled-ok  
+mha-cyberfraud-instructions        bundled-ok  
+sc-judis-10166                     bundled-ok  
+sc-judis-10187                     bundled-ok  
+sc-judis-10193                     bundled-ok  
+sc-judis-10220                     bundled-ok  
+sc-judis-10290                     bundled-ok  
+sc-judis-10304                     bundled-ok  
+sc-judis-10322                     bundled-ok  
+sc-judis-10347                     bundled-ok  
+sc-judis-10356                     bundled-ok  
+sc-judis-10391                     bundled-ok  
+sc-judis-10426                     bundled-ok  
+sc-judis-10439                     bundled-ok  
+sc-judis-10442                     bundled-ok  
+sc-judis-10502                     bundled-ok  
+sc-judis-10519                     bundled-ok  
+sc-judis-10520                     bundled-ok  
+sc-judis-10548                     bundled-ok  
+sc-judis-10557                     bundled-ok  
+sc-judis-10562                     bundled-ok  
+sc-judis-10613                     bundled-ok  
+sc-judis-10629                     bundled-ok  
+sc-judis-10637                     bundled-ok  
+sc-judis-10649                     bundled-ok  
+sc-judis-10663                     bundled-ok  
+sc-judis-10668                     bundled-ok  
+sc-judis-10679                     bundled-ok  
+sc-judis-10693                     bundled-ok  
+sc-judis-10752                     bundled-ok  
+sc-judis-10762                     bundled-ok  
+sc-judis-10773                     bundled-ok  
+sc-judis-10796                     bundled-ok  
+sc-judis-10804                     bundled-ok  
+sc-judis-10805                     bundled-ok  
+sc-judis-10814                     bundled-ok  
+sc-judis-10818                     bundled-ok  
+sc-judis-1082                      bundled-ok  
+sc-judis-10823                     bundled-ok  
+sc-judis-10844                     bundled-ok  
+sc-judis-10857                     bundled-ok  
+sc-judis-10877                     bundled-ok  
+sc-judis-10886                     bundled-ok  
+sc-judis-1089                      bundled-ok  
+sc-judis-10892                     bundled-ok  
+sc-judis-10897                     bundled-ok  
+sc-judis-10910                     bundled-ok  
+sc-judis-10924                     bundled-ok  
+sc-judis-10933                     bundled-ok  
+sc-judis-10937                     bundled-ok  
+sc-judis-1094                      bundled-ok  
+sc-judis-10941                     bundled-ok  
+------------------------------------------------------------------------------------------
+FETCH FAILED for: ['bns-2023', 'bnss-2023', 'bsa-2023']
+exit=1
+
+--- data\raw ---
+ Volume in drive C has no label.
+ Volume Serial Number is C60F-2FE6
+
+ Directory of C:\Users\LENOVO\OneDrive\Desktop\LexAI\data\raw
+
+20-11-2026  17:02    <DIR>          .
+20-11-2026  17:02    <DIR>          ..
+20-11-2026  17:02            508993 iea-1872.pdf
+20-11-2026  17:02            994759 ipc-1860.pdf
+               2 File(s)        1503752 bytes
+               2 Dir(s)     48387723264 bytes free
+--- data\manifest.lock.json ---
+{
+  "comment": "Pinned downloads for data/manifest.yaml. Commit this file.",
+  "updated_at": "2026-11-20T11:32:43+00:00",
+  "documents": {
+    "iea-1872": {
+      "url": "https://cdn.ncw.gov.in/wp-content/uploads/2022/12/THEINDIANEVIDENCEACT1872_0.pdf",
+      "sha256": "20f2a08ac6e49865c542ca8926ca7a249598456a8e6437d939f387eb3088f7c2",
+      "bytes": 508993,
+      "fetched_at": "2026-11-20T11:32:43+00:00"
+    },
+    "ipc-1860": {
+      "url": "https://www.iitk.ac.in/gc/pdf/IPC_186045.pdf",
+      "sha256": "03565d4e0a4cfa4c7af8f0887c41b4b165634e5871b6cd73ff5addcb60fb3db1",
+      "bytes": 994759,
+      "fetched_at": "2026-11-20T11:32:42+00:00"
+    }
+  }
+}
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" status --short data
+?? data/manifest.lock.json
+exit=0
+

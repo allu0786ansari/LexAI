@@ -1,0 +1,18 @@
+{
+  "comment": "Pinned downloads for data/manifest.yaml. Commit this file.",
+  "updated_at": "2026-11-20T11:32:43+00:00",
+  "documents": {
+    "iea-1872": {
+      "url": "https://cdn.ncw.gov.in/wp-content/uploads/2022/12/THEINDIANEVIDENCEACT1872_0.pdf",
+      "sha256": "20f2a08ac6e49865c542ca8926ca7a249598456a8e6437d939f387eb3088f7c2",
+      "bytes": 508993,
+      "fetched_at": "2026-11-20T11:32:43+00:00"
+    },
+    "ipc-1860": {
+      "url": "https://www.iitk.ac.in/gc/pdf/IPC_186045.pdf",
+      "sha256": "03565d4e0a4cfa4c7af8f0887c41b4b165634e5871b6cd73ff5addcb60fb3db1",
+      "bytes": 994759,
+      "fetched_at": "2026-11-20T11:32:42+00:00"
+    }
+  }
+}

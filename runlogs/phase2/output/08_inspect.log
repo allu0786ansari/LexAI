@@ -1,0 +1,4 @@
+$ .venv\Scripts\python.exe scripts\inspect_index.py
+[FAIL] live index: none; run the build step
+exit=0
+

@@ -1,0 +1,6 @@
+$ .venv\Scripts\python.exe -m lexai.ingestion.cli status
+Qdrant: C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\var\qdrant
+builds: []
+live index: none (run build)
+exit=1
+
