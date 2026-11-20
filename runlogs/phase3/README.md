@@ -49,8 +49,8 @@ runlogs\phase3\run_phase3.bat
 | Step | What it does | Log |
 | --- | --- | --- |
 | `check` | Git state, Python, Ollama, GPU, RAM, port 8000 | `01_check.log` |
-| `setup` | pip install, keeps the v2 laptop profile | `02_setup.log` |
-| `quality` | ruff, format check, mypy, 137 tests | `03_quality.log` |
+| `setup` | pip install; laptop profile v3 (adds the abstention threshold; the old `.env` is saved as `.env.previous`) | `02_setup.log` |
+| `quality` | ruff, format check, mypy, 139 tests | `03_quality.log` |
 | `models` | Models present and responding | `04_models.log` |
 | `status` | The live index from Phase 2 | `05_status.log` |
 | `phase3` | Code links, exact lookups, mappings, follow-ups, calibration, checked answers, refusal, cache (~5 min) | `06_phase3.log`, `06_server.log` |
@@ -75,8 +75,15 @@ git push
 | B2. Mappings | IPC s.420 with BNS s.318; CrPC s.154 with BNSS s.173 |
 | B3. Code in force | BNS s.103 ranks before IPC s.302 |
 | B4. Follow-ups | the rewritten follow-up finds what the standalone question finds |
-| B5. Calibration | **information only**: the scores decide the "not found" threshold for your laptop, set after this run |
+| B5. Abstention | no answerable question declined (threshold 0.63 from run 1); unanswerable ones declined are reported |
 | B6. Answers | events end `verification`, `done`; BNS s.103 is `[1]`; refusal without a model call; repeat from cache |
 | | `SUMMARY: ALL PASSED` |
 
 `07_smoke.log` should still end with `SUMMARY: ALL PASSED`.
+
+## Run history
+
+| Run | Date | Result |
+| --- | --- | --- |
+| 1 | 2026-11-20 | Correspondence 42/45 (IPC→BNS 18/21, CrPC→BNSS 12/12, IEA→BSA 12/12); exact lookups 4/4; mappings 2/2; smoke all passed; time to first token 11 s (was 32 s). **Failed:** (a) the verifier missed citations written after the full stop ("fine. [1]") → coverage 0, answer not cached; (b) BNS s.103 ranked after IPC s.302 because IPC 302's top match was BNS 104 and only the top match was moved; (c) a follow-up returned one passage: two hits in the 74-piece BNSS First Schedule pulled in the whole schedule; (d) IPC 379/406/392 unmatched: the BNS merged definition and punishment into one section; (e) a cache test timed out on Windows' clock resolution. Calibration: answerable 0.687–0.849, unanswerable 0.614–0.681. Fixed all; threshold set to 0.63 (profile v3). |
+

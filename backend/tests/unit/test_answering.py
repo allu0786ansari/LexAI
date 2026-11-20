@@ -96,7 +96,9 @@ def test_fit_keeps_order_skips_what_does_not_fit_and_cuts_an_oversized_first_pas
     big = ScoredChunk(chunk=chunks[0].model_copy(update={"text": "word " * 600}), score=1)
     small = [ScoredChunk(chunk=c, score=1) for c in chunks[1:]]
     kept = fit([big, *small], char_budget=1000, max_passages=5)
-    assert kept[0].chunk.text.endswith("shortened to fit]") and len(kept) == 1
+    # the oversized first hit gets half the budget, the rest fill the other half
+    assert kept[0].chunk.text.endswith("shortened to fit]") and len(kept[0].chunk.text) <= 500 - 120
+    assert len(kept) >= 2 and sum(len(k.chunk.text) + 120 for k in kept) <= 1000
     kept = fit([*small], char_budget=520, max_passages=5)
     assert [k.chunk.metadata.label for k in kept] == ["IPC s.420", "BNS s.103"]
     assert len(fit([*small], char_budget=10_000, max_passages=2)) == 2
@@ -144,6 +146,15 @@ def test_verify_flags_an_answer_without_citations() -> None:
     assert not result.valid and result.flags[0]["kind"] == "no_citations"
 
 
+def test_verify_counts_markers_written_after_the_full_stop() -> None:
+    answer = (
+        "Section 103 of the BNS states that whoever commits murder shall be punished with death. [3]\n"
+        "Provisions: BNS s.103 [3]\nThis is legal information, not legal advice."
+    )
+    result = verify(answer, PASSAGES)
+    assert result.valid and result.coverage == 1.0 and result.answer == answer
+
+
 def test_verify_expands_marker_lists_and_ranges() -> None:
     result = verify("Both codes punish murder the same way [1, 3] and [1-2].", PASSAGES)
     assert result.answer == "Both codes punish murder the same way [1][3] and [1][2]."
@@ -160,9 +171,22 @@ async def test_memory_cache_expires_and_evicts() -> None:
     assert await cache.get("a") == {"v": 1}
     await cache.set("c", {"v": 3})  # evicts the least recently used: b
     assert await cache.get("b") is None and await cache.get("c") == {"v": 3}
-    expired = MemoryCache(max_entries=2, ttl_s=0)
-    await expired.set("a", {"v": 1})
-    assert await expired.get("a") is None
+    disabled = MemoryCache(max_entries=2, ttl_s=0)  # TTL 0 = do not cache
+    await disabled.set("a", {"v": 1})
+    assert await disabled.get("a") is None
+
+
+async def test_memory_cache_entry_expires(monkeypatch: pytest.MonkeyPatch) -> None:
+    from lexai.services import cache as cache_module
+
+    now = [1000.0]
+    monkeypatch.setattr(cache_module.time, "monotonic", lambda: now[0])
+    cache = MemoryCache(max_entries=2, ttl_s=60)
+    await cache.set("a", {"v": 1})
+    now[0] += 59
+    assert await cache.get("a") == {"v": 1}
+    now[0] += 2
+    assert await cache.get("a") is None
 
 
 def test_cache_key_ignores_case_spacing_and_trailing_punctuation() -> None:

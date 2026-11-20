@@ -32,21 +32,27 @@ question outside the corpus was answered from whatever ranked first.
 4. **The old↔new correspondence is derived, not typed.** Each IPC/CrPC/IEA
    section is matched to the BNS/BNSS/BSA section with the most similar title
    and text (TF-IDF cosine, title weighted ×3; threshold 0.35; runners-up within
-   90% kept), computed from the live index at start-up (~1 s). A hand-typed
+   90% kept), computed from the live index at start-up (~1 s). Each section is
+   also compared with every numbered sub-section of the other code's sections
+   and the better score counts, because the BNS often merged a definition and
+   its punishment (IPC 378 + 379 → BNS 303, with the punishment in 303(2)). A hand-typed
    table of ~1,000 rows would be a source of silent legal errors; the derived
    one is reproducible, carries its score, and is presented as "corresponds
    to". It reproduces 20/20 well-known CrPC→BNSS pairs; the laptop run checks
-   45 pairs across all three codes.
+   45 pairs across all three codes (run 1: 42/45 before sub-section matching).
 5. **Which code applies.** An explicit event date before 1 July 2024, "before
    July 2024", or naming only an old code selects IPC/CrPC/IEA; otherwise the
-   BNS/BNSS/BSA. The applicable code's counterpart is inserted (or moved) just
+   BNS/BNSS/BSA. The applicable code's counterparts (best match and a close
+   runner-up, e.g. IPC 302 → BNS 103 and 104) are inserted (or moved) just
    before a section of the other code in the results, and the prompt states the
    rule and the correspondences.
 6. **Abstention on a calibrated score, never on a guess.** With a reranker the
    best rerank score is used; without one (the laptop) the best dense cosine
-   similarity. The threshold is unset until measured: the laptop run prints the
-   scores of answerable and unanswerable questions and the threshold is chosen
-   from them. Questions that name a section are never abstained on. The prompt
+   similarity. The threshold is unset until measured. On the laptop
+   (nomic-embed-text) answerable questions scored 0.687–0.849 and unanswerable
+   ones 0.614–0.681; the midpoint would sit 0.003 from a real question, so the
+   laptop profile uses 0.63: it skips generation only for clearly unrelated
+   questions and leaves borderline ones to the prompt rule. Questions that name a section are never abstained on. The prompt
    also requires "The indexed sources do not answer this." when they do not.
 7. **Citations are verified after the stream.** Markers pointing to no passage
    are removed (the `done` event carries the cleaned answer); every section or
@@ -56,7 +62,9 @@ question outside the corpus was answered from whatever ranked first.
    answers are logged and not cached.
 8. **Context budget shared fairly.** Exact provisions and their counterparts
    are all kept, each cut to an equal share of the character budget if needed;
-   searched passages fill the rest. Without this a long CrPC section crowded out
+   searched passages fill the rest. A search hit inside a unit of more than four
+   pieces (a schedule, a long judgment) shows only the retrieved pieces, never
+   the whole unit. Without this a long CrPC section crowded out
    its BNSS counterpart on the laptop's 6,000-character budget.
 9. **Prompt as a versioned file** (`generation/templates/answer_v3.md`):
    short answer → explanation → "Provisions:" line; passages inside a delimited

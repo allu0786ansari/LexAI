@@ -222,16 +222,23 @@ async def check_api(base_url: str) -> None:
                 f"top-5 overlap {overlap}/5 | follow-up: {' | '.join(fl)} | standalone: {' | '.join(sl)}",
             )
 
-        print("\nB5. Abstention calibration (best dense similarity; nothing is refused on score yet)")
+        print("\nB5. Abstention (best dense similarity vs the configured threshold)")
         good, bad = [], []
+        wrongly_declined, declined = [], []
         for q in ANSWERABLE:
-            score = (await search(client, q))["best_dense"]
-            good.append(score)
-            print(f"   answerable   {score:.3f}  {q}")
+            r = await search(client, q)
+            good.append(r["best_dense"])
+            if r["abstain"]:
+                wrongly_declined.append(q)
+            print(f"   answerable   {r['best_dense']:.3f}  {'DECLINED ' if r['abstain'] else ''}{q}")
         for q in UNANSWERABLE:
-            score = (await search(client, q))["best_dense"]
-            bad.append(score)
-            print(f"   unanswerable {score:.3f}  {q}")
+            r = await search(client, q)
+            bad.append(r["best_dense"])
+            if r["abstain"]:
+                declined.append(q)
+            print(f"   unanswerable {r['best_dense']:.3f}  {'declined ' if r['abstain'] else ''}{q}")
+        report("no answerable question declined", not wrongly_declined, f"{len(wrongly_declined)} declined")
+        info("unanswerable questions declined before generation", f"{len(declined)}/{len(UNANSWERABLE)}")
         lo_good, hi_bad = min(good), max(bad)
         if lo_good > hi_bad:
             suggestion = round((lo_good + hi_bad) / 2, 3)

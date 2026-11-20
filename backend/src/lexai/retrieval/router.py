@@ -109,9 +109,7 @@ class Router:
                 out.notes.append(f"The question does not name the act for section {ref.unit}; found {names}.")
             for act, pieces in found:
                 out.pinned.extend(ScoredChunk(chunk=c, score=PINNED_SCORE) for c in pieces)
-                await self._counterparts(
-                    act, ref.unit, out, top=1 if plan.intent != "old_to_new_mapping" else 2
-                )
+                await self._counterparts(act, ref.unit, out, top=2)
 
     async def _counterparts(self, act: str, unit: str, out: Retrieved, *, top: int) -> None:
         if act not in OLD_CODES and act not in NEW_CODES:
@@ -131,8 +129,9 @@ class Router:
         self, plan: QueryPlan, ranked: list[ScoredChunk], out: Retrieved
     ) -> list[ScoredChunk]:
         """
-        Put the counterpart in the applicable code just before a section of the code
-        that does not apply: moved up if it was retrieved further down, fetched if not.
+        Put the counterparts in the applicable code (the best match and a close runner-up,
+        e.g. IPC 302 -> BNS 103 and 104) just before a section of the code that does not
+        apply: moved up if retrieved further down, fetched if not.
         """
         wrong = OLD_CODES if plan.era.era == "new" else NEW_CODES
         pinned = {c.chunk.metadata.parent_id for c in out.pinned}
@@ -143,13 +142,13 @@ class Router:
             item = remaining.pop(0)
             meta = item.chunk.metadata
             if handled < 3 and meta.short_name in wrong and meta.unit and meta.unit_label == "Section":
-                best = next(iter(self.correspondence.equivalents(meta.short_name, meta.unit)), None)
-                if best is not None:
+                matches = self.correspondence.equivalents(meta.short_name, meta.unit)[:2]
+                for best in matches:
+                    placed = {c.chunk.metadata.parent_id for c in result}
                     later = [
                         c for c in remaining
                         if c.chunk.metadata.short_name == best.act and c.chunk.metadata.unit == best.unit
                     ]  # fmt: skip
-                    placed = {c.chunk.metadata.parent_id for c in result}
                     if later:
                         remaining = [c for c in remaining if c not in later]
                         result.extend(later)
@@ -159,6 +158,7 @@ class Router:
                         if pieces and parent not in pinned and parent not in placed:
                             result.extend(ScoredChunk(chunk=c, score=item.score) for c in pieces)
                     out.notes.append(correspondence_note(meta.short_name, meta.unit, best))
+                if matches:
                     handled += 1
             result.append(item)
         return result

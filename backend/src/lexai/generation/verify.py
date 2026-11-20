@@ -82,10 +82,16 @@ def _supported(act: str | None, unit: str, passages: list[ScoredChunk]) -> bool:
     return False
 
 
+_TRAILING_MARKERS = re.compile(r"([.!?])[ \t]*((?:\[[^\]\n]{1,20}\][ \t]*)+)")
+
+
 def claim_sentences(answer: str) -> list[str]:
+    # Models often cite after the full stop ("... fine. [1]"): keep those markers with
+    # their sentence before splitting.
+    attached = _TRAILING_MARKERS.sub(lambda m: m.group(2).strip() + m.group(1), answer)
     return [
         s.strip()
-        for s in _SENTENCE.split(answer)
+        for s in _SENTENCE.split(attached)
         if len(s.strip()) >= 25 and not _DISCLAIMER.search(s.strip())
     ]
 

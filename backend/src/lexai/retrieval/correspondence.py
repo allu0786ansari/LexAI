@@ -5,9 +5,14 @@ CrPC ↔ BNSS, IEA ↔ BSA), derived from the indexed text itself.
 Most BNS/BNSS/BSA sections re-enact an old section with the same title and
 largely the same words under a new number, so each section is matched to the
 section of the other code with the most similar title and text (TF-IDF cosine,
-title weighted). This is a derived table, not an official one: every match
-carries its score, low-confidence matches are dropped, and answers present it
-as "corresponds to", never as a legal determination. Sections that were split or
+title weighted). The new codes often merged a definition and its punishment
+(IPC 378 "Theft" + 379 "Punishment for theft" -> BNS 303 "Theft", with the
+punishment in 303(2)), so a section is also compared with each sub-section of
+the other code's sections and the better score counts.
+
+This is a derived table, not an official one: every match carries its score,
+low-confidence matches are dropped, and answers present it as "corresponds
+to", never as a legal determination. Sections that were split or
 merged map to their closest counterpart, plus close runners-up.
 """
 
@@ -139,17 +144,40 @@ def _vectors(docs: list[list[str]], vocab: dict[str, int], idf: np.ndarray) -> n
     return mat / np.maximum(norms, 1e-9)
 
 
+_SUBSECTION = re.compile(r"\n\s*(?=\(\d{1,2}[A-Z]?\)\s)")
+
+
+def _subsections(text: str) -> list[str]:
+    """Numbered sub-sections "(1) ...", "(2) ..."; empty when the section has none."""
+    parts = [p.strip() for p in _SUBSECTION.split(text) if p.strip()]
+    return parts if len(parts) > 1 else []
+
+
 def _match(a: list[SectionText], b: list[SectionText]) -> dict[tuple[str, str], list[Match]]:
-    """For each section in `a`, its best matches in `b`."""
+    """For each section in `a`, its best matches in `b` (whole section or best sub-section)."""
     docs_a = [_tokens(s.title or "") * TITLE_WEIGHT + _tokens(s.text) for s in a]
     docs_b = [_tokens(s.title or "") * TITLE_WEIGHT + _tokens(s.text) for s in b]
+    # Sub-sections of b, each with its section's title (owner index kept).
+    sub_owner: list[int] = []
+    docs_sub: list[list[str]] = []
+    for j, s in enumerate(b):
+        for part in _subsections(s.text):
+            sub_owner.append(j)
+            docs_sub.append(_tokens(s.title or "") * TITLE_WEIGHT + _tokens(part))
     df: Counter[str] = Counter()
     for toks in docs_a + docs_b:
         df.update(set(toks))
     vocab = {w: i for i, w in enumerate(sorted(df))}
     n_docs = len(docs_a) + len(docs_b)
     idf = np.array([math.log((1 + n_docs) / (1 + df[w])) + 1 for w in sorted(df)], dtype=np.float32)
-    sims = _vectors(docs_a, vocab, idf) @ _vectors(docs_b, vocab, idf).T
+    vec_a = _vectors(docs_a, vocab, idf)
+    sims = vec_a @ _vectors(docs_b, vocab, idf).T
+    if docs_sub:
+        sub_sims = vec_a @ _vectors(docs_sub, vocab, idf).T
+        owners = np.array(sub_owner)
+        for j in np.unique(owners):
+            cols = np.where(owners == j)[0]
+            sims[:, j] = np.maximum(sims[:, j], sub_sims[:, cols].max(axis=1))
     result: dict[tuple[str, str], list[Match]] = {}
     for i, s in enumerate(a):
         order = np.argsort(-sims[i])[:3]

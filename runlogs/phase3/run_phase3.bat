@@ -22,7 +22,7 @@ set "BACKEND=%ROOT%\backend"
 set "OUT=%ROOT%\runlogs\phase3\output"
 set "VPY=%BACKEND%\.venv\Scripts\python.exe"
 set "PRESET=%ROOT%\deploy\env\laptop-8gb.env"
-set "PROFILE_LINE=# lexai-profile: laptop-8gb v2"
+set "PROFILE_LINE=# lexai-profile: laptop-8gb v3"
 if not exist "%OUT%" mkdir "%OUT%"
 
 set "PYTHONUTF8=1"

@@ -18,6 +18,9 @@ from lexai.retrieval.router import Retrieved
 
 HEADER_ALLOWANCE = 120  # characters per passage header in the prompt
 MIN_SHARE = 900  # never cut an exact provision shorter than this
+# A unit of more pieces than this (a schedule, a long judgment) is never fetched
+# whole for a search hit: only the retrieved pieces are shown.
+MAX_WHOLE_PARTS = 4
 TRUNCATED = "\n[… section continues; shortened to fit]"
 
 
@@ -77,7 +80,7 @@ async def assemble(
     for parent in order:
         items = groups[parent]
         meta = items[0].chunk.metadata
-        whole = parent in pinned_parents or len(items) >= 2
+        whole = parent in pinned_parents or (len(items) >= 2 and meta.parts <= MAX_WHOLE_PARTS)
         score = max(i.score for i in items)
         if whole and meta.parts > 1:
             pieces = [i.chunk for i in items]
@@ -123,8 +126,10 @@ def fit(
             break
         size = len(item.chunk.text) + HEADER_ALLOWANCE
         if not kept and size > char_budget:
-            kept.append(_cut(item, char_budget - HEADER_ALLOWANCE))
-            used = char_budget
+            # an oversized first search hit gets half the budget, leaving room for others
+            item = _cut(item, char_budget // 2 - HEADER_ALLOWANCE)
+            kept.append(item)
+            used = len(item.chunk.text) + HEADER_ALLOWANCE
             continue
         if used + size > char_budget:
             continue  # a smaller passage further down may still fit

@@ -52,7 +52,7 @@ class MemoryCache:
             if item is None:
                 return None
             expires, raw = item
-            if expires < time.monotonic():
+            if expires <= time.monotonic():
                 del self._items[key]
                 return None
             self._items.move_to_end(key)
@@ -60,7 +60,7 @@ class MemoryCache:
         return value
 
     async def set(self, key: str, value: dict[str, Any]) -> None:
-        if self._max == 0:
+        if self._max == 0 or self._ttl <= 0:  # disabled
             return
         raw = json.dumps(value, ensure_ascii=False)
         with self._lock:
