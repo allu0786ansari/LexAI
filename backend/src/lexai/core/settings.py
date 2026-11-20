@@ -16,6 +16,7 @@ from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = BACKEND_ROOT.parent
 ENV_FILE = BACKEND_ROOT / ".env"
 
 
@@ -80,27 +81,69 @@ class RerankSettings(BaseSettings):
     top_n: int = Field(default=8, gt=0, description="Chunks passed to the LLM as context.")
 
 
+def _resolve_path(v: str | Path, base: Path) -> Path:
+    path = Path(v).expanduser()
+    return path if path.is_absolute() else (base / path).resolve()
+
+
+class CorpusSettings(BaseSettings):
+    """Where the corpus is described, downloaded and bundled, and how it is chunked."""
+
+    model_config = _config("LEXAI_CORPUS_")
+
+    manifest: Path = REPO_ROOT / "data" / "manifest.yaml"
+    bundled_dir: Path = REPO_ROOT / "data" / "bundled"
+    raw_dir: Path = REPO_ROOT / "data" / "raw"
+    lock_file: Path = REPO_ROOT / "data" / "manifest.lock.json"
+    report_dir: Path = BACKEND_ROOT / "var" / "reports"
+    # Sections longer than this are split at paragraph boundaries; each piece repeats the
+    # section header. Part of the chunker config: changing it re-chunks on the next build.
+    max_chunk_chars: int = Field(default=2400, ge=600)
+    chunk_overlap_chars: int = Field(default=200, ge=0)
+    download_timeout_s: float = Field(default=120.0, gt=0)
+    verify_tls: bool = True
+
+    @field_validator("manifest", "bundled_dir", "raw_dir", "lock_file", "report_dir", mode="before")
+    @classmethod
+    def _resolve(cls, v: str | Path) -> Path:
+        return _resolve_path(v, REPO_ROOT)
+
+
+class QdrantSettings(BaseSettings):
+    """
+    Vector database. Set `url` for a Qdrant server; otherwise Qdrant runs embedded
+    in the process, storing data under `path` (no Docker needed; one process at a time).
+    """
+
+    model_config = _config("LEXAI_QDRANT_")
+
+    url: str | None = None
+    api_key: str | None = None
+    path: Path = BACKEND_ROOT / "var" / "qdrant"
+    collection_alias: str = "lexai_chunks"
+    keep_previous: int = Field(default=1, ge=0, description="Older collections kept for rollback.")
+
+    @field_validator("path", mode="before")
+    @classmethod
+    def _resolve(cls, v: str | Path) -> Path:
+        return _resolve_path(v, BACKEND_ROOT)
+
+
 class RetrievalSettings(BaseSettings):
     model_config = _config("LEXAI_RETRIEVAL_")
 
-    index_dir: Path = BACKEND_ROOT / "var" / "index"
-    data_dir: Path = BACKEND_ROOT / "Data"
     k_dense: int = Field(default=40, gt=0)
     k_sparse: int = Field(default=40, gt=0)
-    rrf_k: int = Field(default=60, gt=0)
     fused_top_n: int = Field(default=30, gt=0, description="Fused candidates sent to the reranker.")
+    context_char_budget: int = Field(
+        default=12_000,
+        ge=1000,
+        description="Max characters of passages put in the prompt (keeps small context windows safe).",
+    )
     hyde_enabled: bool = Field(
         default=False,
         description="Experimental. Adds one full LLM call per query; off until Phase 4 shows a gain.",
     )
-    chunk_size_chars: int = Field(default=1500, gt=100)
-    chunk_overlap_chars: int = Field(default=200, ge=0)
-
-    @field_validator("index_dir", "data_dir", mode="before")
-    @classmethod
-    def _resolve(cls, v: str | Path) -> Path:
-        path = Path(v).expanduser()
-        return path if path.is_absolute() else (BACKEND_ROOT / path).resolve()
 
 
 class APISettings(BaseSettings):
@@ -131,12 +174,16 @@ class Settings:
         rerank: RerankSettings | None = None,
         retrieval: RetrievalSettings | None = None,
         api: APISettings | None = None,
+        corpus: CorpusSettings | None = None,
+        qdrant: QdrantSettings | None = None,
     ) -> None:
         self.llm = llm or LLMSettings()
         self.embed = embed or EmbedSettings()
         self.rerank = rerank or RerankSettings()
         self.retrieval = retrieval or RetrievalSettings()
         self.api = api or APISettings()
+        self.corpus = corpus or CorpusSettings()
+        self.qdrant = qdrant or QdrantSettings()
 
 
 def env_profile(path: Path = ENV_FILE) -> str:

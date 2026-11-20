@@ -1,0 +1,165 @@
+# LexAI corpus manifest — the single source of truth for what gets indexed.
+#
+# Each document is either downloaded (`urls`, tried in order; the first verified
+# download is pinned in data/manifest.lock.json) or bundled in data/bundled/
+# (`file`, checked against data/bundled/SHA256SUMS).
+#
+# `expect` lists phrases the parsed text MUST contain (matched case- and
+# space-insensitively). `min_units` is the fewest sections/articles the parser
+# must find. Either check failing stops ingestion: a truncated source (like the
+# 58-page IPC in v0.1) can never be indexed silently.
+#
+# Dates are ISO (YYYY-MM-DD). `repealed_on` + `replaced_by` let answers say which
+# code applies: the old codes still govern offences committed before 1 July 2024.
+
+version: 1
+
+documents:
+  # ---------------------------------------------------------------- new codes
+  - id: bns-2023
+    title: The Bharatiya Nyaya Sanhita, 2023
+    short_name: BNS
+    doc_type: statute
+    year: 2023
+    in_force_from: 2024-07-01
+    urls:
+      - https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf
+    expect:
+      - whoever commits murder shall be punished
+    min_units: 330
+
+  - id: bnss-2023
+    title: The Bharatiya Nagarik Suraksha Sanhita, 2023
+    short_name: BNSS
+    doc_type: statute
+    year: 2023
+    in_force_from: 2024-07-01
+    urls:
+      - https://indiacode.nic.in/bitstream/123456789/20099/3/a2023-46.pdf
+    expect:
+      - every information relating to the commission of a cognizable offence
+    min_units: 500
+
+  - id: bsa-2023
+    title: The Bharatiya Sakshya Adhiniyam, 2023
+    short_name: BSA
+    doc_type: statute
+    year: 2023
+    in_force_from: 2024-07-01
+    urls:
+      - https://www.indiacode.nic.in/bitstream/123456789/20063/1/aa202347.pdf
+    expect:
+      - admissibility of electronic records
+    min_units: 160
+
+  # ------------------------------------------- codes replaced on 1 July 2024
+  - id: ipc-1860
+    title: The Indian Penal Code, 1860
+    short_name: IPC
+    doc_type: statute
+    year: 1860
+    in_force_from: 1862-01-01
+    repealed_on: 2024-07-01
+    replaced_by: bns-2023
+    urls:
+      - https://www.iitk.ac.in/gc/pdf/IPC_186045.pdf
+      - https://sherloc.unodc.org/cld/uploads/res/document/ind/penal-code_html/India_Penal_Code.pdf
+    expect:
+      - whoever commits murder shall be punished
+      - whoever cheats and thereby dishonestly induces
+    min_units: 450
+
+  - id: crpc-1973
+    title: The Code of Criminal Procedure, 1973
+    short_name: CrPC
+    doc_type: statute
+    year: 1973
+    in_force_from: 1974-04-01
+    repealed_on: 2024-07-01
+    replaced_by: bnss-2023
+    file: statutes/CrPC_1973.pdf
+    expect:
+      - every information relating to the commission of a cognizable offence
+    min_units: 450
+
+  - id: iea-1872
+    title: The Indian Evidence Act, 1872
+    short_name: IEA
+    doc_type: statute
+    year: 1872
+    in_force_from: 1872-09-01
+    repealed_on: 2024-07-01
+    replaced_by: bsa-2023
+    urls:
+      - https://cdn.ncw.gov.in/wp-content/uploads/2022/12/THEINDIANEVIDENCEACT1872_0.pdf
+    expect:
+      - admissibility of electronic records
+    min_units: 150
+
+  # ------------------------------------------------------------ other statutes
+  - id: constitution
+    title: The Constitution of India
+    short_name: Constitution
+    doc_type: constitution
+    year: 1950
+    in_force_from: 1950-01-26
+    file: statutes/Constitution_of_India.pdf
+    expect:
+      - no person shall be deprived of his life or personal liberty except according to procedure established by law
+    min_units: 380
+
+  - id: it-act-2000
+    title: The Information Technology Act, 2000
+    short_name: IT Act
+    doc_type: statute
+    year: 2000
+    in_force_from: 2000-10-17
+    file: statutes/IT_Act_2000.pdf
+    expect:
+      - computer related offences
+    min_units: 80
+
+  - id: prisons-act-1894
+    title: The Prisons Act, 1894 (Maharashtra compilation, with Bombay amendments)
+    short_name: Prisons Act
+    doc_type: statute
+    year: 1894
+    in_force_from: 1894-07-01
+    file: statutes/Prisons_Act_1894.pdf
+    min_units: 0
+
+  - id: criminal-law-amendment-2018
+    title: The Criminal Law (Amendment) Act, 2018
+    short_name: CLA 2018
+    doc_type: amendment
+    year: 2018
+    in_force_from: 2018-04-21
+    file: statutes/Criminal_Law_Amendment_2018.pdf
+    min_units: 0
+
+  # ------------------------------------------------------------------ manuals
+  - id: mha-cybercrime-manual
+    title: Ministry of Home Affairs — Cyber Crime Manual
+    short_name: MHA Cyber Crime Manual
+    doc_type: manual
+    file: manuals/MHA_CyberCrime_Manual.pdf
+
+  - id: mha-cprgr-manual
+    title: Ministry of Home Affairs — CPRGR Manual
+    short_name: MHA CPRGR Manual
+    doc_type: manual
+    file: manuals/MHA_CPRGR_Manual.pdf
+
+  - id: mha-cyberfraud-instructions
+    title: Ministry of Home Affairs — Instructions on Cyber Fraud Reporting
+    short_name: MHA Cyber Fraud Instructions
+    doc_type: manual
+    file: manuals/MHA_CyberFraud_Instructions.pdf
+
+# Supreme Court judgments from JUDIS. One document per file; the case name,
+# date, bench and citation are read from each judgment's header.
+collections:
+  - id_prefix: sc
+    doc_type: judgment
+    glob: judgments/*.pdf
+    title_prefix: Supreme Court of India
