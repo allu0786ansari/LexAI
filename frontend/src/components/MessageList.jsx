@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Scale, AlertTriangle } from "lucide-react";
+import { Scale, AlertTriangle, ShieldCheck } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { CitationsPanel } from "@/components/CitationsPanel";
 import { cn } from "@/lib/utils";
@@ -11,6 +11,33 @@ function ThinkingIndicator() {
       <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-seal [animation-delay:-0.3s]" />
       <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-seal [animation-delay:-0.15s]" />
       <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-seal" />
+    </div>
+  );
+}
+
+/** Result of the server's post-answer citation check (SSE `verification` event). */
+function VerificationNote({ verification, abstained }) {
+  if (!verification || abstained || verification.coverage == null) return null;
+  const pct = Math.round(verification.coverage * 100);
+  if (verification.valid && verification.flags.length === 0) {
+    return (
+      <p className="mt-2 flex items-center gap-1.5 text-xs text-muted-paper">
+        <ShieldCheck className="h-3.5 w-3.5" />
+        All provisions checked against the sources · {pct}% of statements cited
+      </p>
+    );
+  }
+  return (
+    <div className="mt-2 rounded border border-seal/40 bg-seal/5 px-2 py-1.5 text-xs text-seal">
+      <p className="flex items-center gap-1.5 font-medium">
+        <AlertTriangle className="h-3.5 w-3.5" />
+        Check this answer against the sources ({pct}% of statements cited)
+      </p>
+      <ul className="ml-5 list-disc">
+        {verification.flags.map((f, i) => (
+          <li key={i}>{f.detail}</li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -34,6 +61,9 @@ function AssistantMessage({ message }) {
           <div className="prose prose-sm max-w-none prose-headings:font-display prose-headings:text-text-paper prose-p:text-text-paper prose-strong:text-text-paper prose-li:text-text-paper">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
           </div>
+        )}
+        {!message.error && !message.isStreaming && (
+          <VerificationNote verification={message.verification} abstained={message.abstained} />
         )}
         {!message.error && <CitationsPanel citations={message.citations} />}
       </Card>

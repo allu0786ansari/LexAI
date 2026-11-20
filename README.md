@@ -5,8 +5,8 @@ Supreme Court judgments and government manuals. It retrieves the relevant
 passages, generates an answer with **Qwen2.5-7B-Instruct**, and cites every
 claim as `[n]` so you can check the source.
 
-> **Status: Phase 2 of 6 complete** (ingestion and index;
-> [verified results](runlogs/phase2/RESULTS.md)). The full plan covers ingestion,
+> **Status: Phase 3 of 6 in verification** (query understanding and grounded
+> answers; Phase 2 [verified](runlogs/phase2/RESULTS.md)). The full plan covers ingestion,
 > retrieval, evaluation, API/UI, observability and deployment. Quality numbers
 > will be published here only once Phase 4's evaluation produces them.
 
@@ -19,11 +19,24 @@ data/manifest.yaml ─▶ fetch (download + SHA-256 pin) ─▶ legal parser ─
 
 Browser (React) ──SSE──▶ FastAPI (async)
                            │
-                           ├─▶ Embedder  qwen3-embedding:0.6b   (Ollama /v1/embeddings)
-                           ├─▶ Hybrid search in Qdrant: dense + BM25 sparse, fused with RRF
-                           ├─▶ Reranker  BAAI/bge-reranker-v2-m3 (in-process, worker thread)
-                           └─▶ Generator qwen2.5-7b-instruct    (Ollama or vLLM, /v1/chat/completions)
+                           ├─▶ Understand  follow-up rewrite (Qwen, 2nd turn on) · references · intent ·
+                           │               which code applies · guardrails            (lexai/query)
+                           ├─▶ Retrieve    exact sections pinned + old↔new counterparts ·
+                           │               hybrid search in Qdrant (dense + BM25, RRF) ·
+                           │               reranker (server profile) · abstain on low score
+                           ├─▶ Generate    qwen2.5-7b-instruct (Ollama or vLLM), versioned prompt
+                           └─▶ Verify      citation markers, cited provisions, coverage → `verification`
 ```
+
+- **Named sections are exact.** "What does Section 103 BNS say?" fetches BNS
+  s.103 by filter and puts it first, with its IPC counterpart.
+- **Old and new codes linked.** Every IPC/CrPC/IEA section is matched to its
+  BNS/BNSS/BSA counterpart by title and text (a derived table, shown as
+  "corresponds to"). Answers follow the code that applies: the new codes unless
+  the events predate 1 July 2024 or the question asks about the old code.
+- **Checked answers.** After streaming, invalid citation markers are removed and
+  any section the answer names that is not in its sources is flagged; the UI
+  shows the result.
 
 - **Pinned, current corpus.** [`data/manifest.yaml`](data/manifest.yaml) lists
   every source: the BNS, BNSS and BSA (in force since 1 July 2024) and the IPC
@@ -95,7 +108,8 @@ API docs: http://localhost:8000/docs
 
 | Method | Path | Purpose |
 | --- | --- | --- |
-| `POST` | `/api/query` | Ask a question. Server-Sent Events: `citations` → `token`* → `done`, or `error` |
+| `POST` | `/api/query` | Ask a question. Server-Sent Events (contract v1): `meta` → `citations` → `token`* → `verification` → `done`, or `error` |
+| `POST` | `/api/search` | Retrieval only: the plan, passages, notes and scores the model would get |
 | `POST` | `/api/session` | Create a chat session id |
 | `GET` | `/healthz` | Liveness |
 | `GET` | `/readyz` | Readiness: LLM served, embedder dimension, index loaded (503 if not) |
@@ -106,7 +120,7 @@ Every response carries an `X-Request-ID` header; the same id is in the logs and 
 
 All settings are environment variables (or `backend/.env`), grouped by prefix:
 `LEXAI_LLM_*`, `LEXAI_EMBED_*`, `LEXAI_RERANK_*`, `LEXAI_RETRIEVAL_*`, `LEXAI_CORPUS_*`,
-`LEXAI_QDRANT_*`, `LEXAI_API_*`.
+`LEXAI_QDRANT_*`, `LEXAI_QUERY_*`, `LEXAI_CACHE_*`, `LEXAI_API_*`.
 See [`deploy/.env.example`](deploy/.env.example) for every option and its default.
 To serve the model with vLLM on a GPU, see [`deploy/vllm/README.md`](deploy/vllm/README.md).
 
@@ -137,12 +151,13 @@ backend/
     clients/      async LLM, embedding and reranker clients
     core/         settings, structured logging, typed errors
     domain/       Pydantic models (Chunk, Citation, SSE events)
-    generation/   prompts and the chat orchestration service
+    generation/   versioned prompt templates, context assembly, citation verifier, chat service
     ingestion/    manifest, fetch, PDF parsing, legal chunkers, index builder, `lexai-ingest` CLI
-    retrieval/    Qdrant store (dense + BM25 sparse, RRF), hybrid retriever
-    services/     session memory
+    query/        reference extraction, intent, applicable code, guardrails, follow-up rewriting
+    retrieval/    Qdrant store (dense + BM25 sparse, RRF), hybrid retriever, router, old↔new correspondence
+    services/     session memory, answer cache
   tests/          unit and API tests (no model servers needed)
-  scripts/        model check, index inspection, smoke test against a running stack
+  scripts/        model check, index inspection, smoke test, Phase 3 checks against a running stack
 data/
   manifest.yaml   every source document and its metadata
   manifest.lock.json  checksums of downloaded files (written by `fetch`)
@@ -160,7 +175,7 @@ frontend/         React + Vite chat UI
 | --- | --- | --- |
 | 1 | Foundation: async clients, Qwen2.5-7B, fail-loudly, tests | **done** ([results](runlogs/phase1/RESULTS.md)) |
 | 2 | Ingestion: corpus manifest, BNS/BNSS/BSA, legal-structure chunking, Qdrant | **done** ([results](runlogs/phase2/RESULTS.md)) |
-| 3 | Retrieval & generation: query routing, citation verification, abstention | planned |
+| 3 | Retrieval & generation: query routing, citation verification, abstention | **in verification** ([run](runlogs/phase3/README.md)) |
 | 4 | Evaluation: golden set, retrieval metrics, RAGAS, CI gate | planned |
 | 5 | API v1, TypeScript UI, security, observability | planned |
 | 6 | Docker Compose, CI/CD, deployment | planned |

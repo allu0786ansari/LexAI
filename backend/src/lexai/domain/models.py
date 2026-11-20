@@ -83,6 +83,11 @@ class QueryRequest(BaseModel):
     session_id: str | None = Field(default=None, max_length=64)
 
 
+class SearchRequest(BaseModel):
+    question: str = Field(min_length=1, max_length=2000)
+    session_id: str | None = Field(default=None, max_length=64)
+
+
 class Citation(BaseModel):
     ref: int = Field(description="The [n] marker used for this passage in the answer.")
     chunk_id: str
@@ -103,22 +108,45 @@ class Citation(BaseModel):
     law_type: str = Field(description="Document type (kept for the v0.1 frontend).")
     sections: list[str] = Field(default_factory=list)
     relevance_score: float
+    snippet: str = Field(default="", description="First ~300 characters of the passage.")
+    exact: bool = Field(default=False, description="Looked up because the question named it.")
 
 
 class LatencyBreakdown(BaseModel):
+    condense_ms: float | None = None
     hyde_ms: float | None = None
-    retrieval_ms: float
-    rerank_ms: float | None = None
+    retrieval_ms: float | None = None  # search, exact lookups and (if enabled) reranking
+    rerank_ms: float | None = None  # kept for the v0.1 frontend; included in retrieval_ms
+    context_ms: float | None = None
     time_to_first_token_ms: float | None = None
+    generation_ms: float | None = None
+    verify_ms: float | None = None
     total_ms: float
 
 
+class MetaPayload(BaseModel):
+    request_id: str
+    session_id: str
+    standalone_query: str
+    intent: str
+    references: list[str]
+    applicable_code: str
+    applicable_code_reason: str
+
+
 class DonePayload(BaseModel):
-    answer: str
+    answer: str = Field(description="Final answer; invalid [n] markers removed.")
     session_id: str
     request_id: str
     citations: list[Citation]
     latency: LatencyBreakdown
+    prompt_version: str = ""
+    index_version: str = ""
+    usage: dict[str, int] | None = None
+    cached: bool = False
+    abstained: bool = False
+    notes: list[str] = Field(default_factory=list, description="Correspondences and lookup notes.")
+    verification: dict[str, Any] | None = None
 
 
 class SessionResponse(BaseModel):
@@ -132,7 +160,10 @@ class ErrorPayload(BaseModel):
 
 
 class StreamEvent(BaseModel):
-    """One Server-Sent Event: `citations` -> `token`* -> `done`, or `error`."""
+    """
+    One Server-Sent Event (contract v1):
+    `meta` -> `citations` -> `token`* -> `verification` -> `done`, or `error`.
+    """
 
-    event: Literal["citations", "token", "done", "error"]
+    event: Literal["meta", "citations", "token", "verification", "done", "error"]
     data: Any

@@ -130,11 +130,22 @@ export function ChatInterface() {
             updateActiveMessages(sessionId, (msgs) =>
               msgs.map((m) => (m.id === assistantMessage.id ? { ...m, content: m.content + event.data.text } : m))
             );
+          } else if (event.event === "verification") {
+            updateActiveMessages(sessionId, (msgs) =>
+              msgs.map((m) => (m.id === assistantMessage.id ? { ...m, verification: event.data } : m))
+            );
           } else if (event.event === "done") {
             updateActiveMessages(sessionId, (msgs) =>
               msgs.map((m) =>
                 m.id === assistantMessage.id
-                  ? { ...m, content: event.data.answer, citations: event.data.citations, isStreaming: false }
+                  ? {
+                      ...m,
+                      content: event.data.answer,
+                      citations: event.data.citations,
+                      verification: event.data.verification ?? m.verification,
+                      abstained: event.data.abstained,
+                      isStreaming: false,
+                    }
                   : m
               )
             );

@@ -10,6 +10,7 @@ were meaningless, which silently ruined retrieval.
 from __future__ import annotations
 
 import asyncio
+from collections import OrderedDict
 from collections.abc import Sequence
 from typing import Any
 
@@ -23,8 +24,11 @@ logger = get_logger(__name__)
 
 
 class EmbeddingClient:
+    QUERY_CACHE_SIZE = 1024  # repeated questions (and follow-up checks) skip the embedding call
+
     def __init__(self, settings: EmbedSettings, http_client: httpx.AsyncClient | None = None) -> None:
         self.settings = settings
+        self._query_cache: OrderedDict[str, list[float]] = OrderedDict()
         self._client = http_client or httpx.AsyncClient(
             base_url=settings.base_url.rstrip("/") + "/",
             headers={"Authorization": f"Bearer {settings.api_key}"},
@@ -93,9 +97,16 @@ class EmbeddingClient:
         return vectors
 
     async def embed_query(self, query: str) -> list[float]:
-        """Embed a search query (the query prefix is added here)."""
-        vectors = await self._embed_batch([self.format_query(query)])
+        """Embed a search query (the query prefix is added here). Recent queries are cached."""
+        text = self.format_query(query)
+        if (hit := self._query_cache.get(text)) is not None:
+            self._query_cache.move_to_end(text)
+            return hit
+        vectors = await self._embed_batch([text])
         self._check_dimension(vectors)
+        self._query_cache[text] = vectors[0]
+        if len(self._query_cache) > self.QUERY_CACHE_SIZE:
+            self._query_cache.popitem(last=False)
         return vectors[0]
 
     def _check_dimension(self, vectors: list[list[float]]) -> None:

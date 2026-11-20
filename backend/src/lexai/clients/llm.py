@@ -85,9 +85,16 @@ class LLMClient:
         *,
         temperature: float | None = None,
         max_tokens: int | None = None,
+        usage: dict[str, int] | None = None,
     ) -> AsyncIterator[str]:
-        """Yield text deltas as the server produces them."""
+        """
+        Yield text deltas as the server produces them. If `usage` is given it is filled
+        with the server's token counts (prompt/completion/total) when it reports them.
+        """
         payload = self._payload(messages, stream=True, temperature=temperature, max_tokens=max_tokens)
+        # OpenAI-style servers (vLLM, recent Ollama) then send a final chunk with token
+        # counts; servers that do not support the option ignore it.
+        payload["stream_options"] = {"include_usage": True}
         attempt = 0
         while True:
             emitted = False
@@ -97,6 +104,8 @@ class LLMClient:
                         await response.aread()
                         response.raise_for_status()
                     async for line in response.aiter_lines():
+                        if usage is not None:
+                            _capture_usage(line, usage)
                         delta = _parse_sse_line(line)
                         if delta is None:
                             continue
@@ -153,6 +162,18 @@ class LLMClient:
 
 
 _DONE = object()
+
+
+def _capture_usage(line: str, sink: dict[str, int]) -> None:
+    if '"usage"' not in line:
+        return
+    try:
+        counts = json.loads(line.strip()[5:].strip()).get("usage") or {}
+    except (json.JSONDecodeError, AttributeError):
+        return
+    for key in ("prompt_tokens", "completion_tokens", "total_tokens"):
+        if isinstance(counts.get(key), int):
+            sink[key] = counts[key]
 
 
 def _parse_sse_line(line: str) -> object | None:

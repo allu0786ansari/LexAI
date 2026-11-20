@@ -1,6 +1,6 @@
 [project]
 name = "lexai"
-version = "0.2.0"
+version = "0.3.0"
 description = "LexAI: retrieval-augmented legal research assistant for Indian law"
 requires-python = ">=3.12,<3.14"
 dependencies = [
@@ -57,6 +57,8 @@ ignore = ["S101"]  # assert is fine in tests
 "scripts/**" = ["S"]
 # Statute text uses en/em dashes, curly quotes and section marks; the parsers must match them.
 "src/lexai/ingestion/**" = ["RUF001"]
+# Pattern tables (regexes, alias lists) read better unbroken.
+"src/lexai/query/**" = ["E501"]
 
 [tool.mypy]
 python_version = "3.12"

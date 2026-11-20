@@ -48,8 +48,8 @@ export function parseSSEFrame(frame) {
 
 /**
  * Async generator yielding {event, data} objects as they arrive.
- * event is one of: "citations" | "token" | "done" | "error" (see backend
- * app/services/qa_service.py module docstring for the contract).
+ * event is one of: "meta" | "citations" | "token" | "verification" | "done" | "error" (see
+ * backend/src/lexai/generation/service.py and domain/models.py for the contract).
  */
 export async function* streamQuery(question, sessionId, { signal } = {}) {
   const response = await fetch(`${API_BASE}/api/query`, {
