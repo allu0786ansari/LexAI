@@ -1,0 +1,129 @@
+Using Python: py -3.12
+$ .venv\Scripts\python.exe -m pip install --upgrade pip --progress-bar off
+Requirement already satisfied: pip in .\.venv\Lib\site-packages (26.3)
+exit=0
+
+$ .venv\Scripts\python.exe -m pip install -r requirements-dev.txt --progress-bar off
+Ignoring uvloop: markers 'platform_python_implementation != "PyPy" and sys_platform != "cygwin" and sys_platform != "win32"' don't match your environment
+Requirement already satisfied: annotated-doc==0.0.7 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 2)) (0.0.7)
+Requirement already satisfied: annotated-types==0.8.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 3)) (0.8.0)
+Requirement already satisfied: anyio==4.16.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 4)) (4.16.0)
+Requirement already satisfied: certifi==2026.10.23 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 5)) (2026.10.23)
+Requirement already satisfied: click==8.5.1 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 6)) (8.5.1)
+Requirement already satisfied: deprecated==3.0.1 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 7)) (3.0.1)
+Requirement already satisfied: fastapi==0.165.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 8)) (0.165.0)
+Requirement already satisfied: fonttools==4.68.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 9)) (4.68.0)
+Requirement already satisfied: grpcio==1.85.3 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 10)) (1.85.3)
+Requirement already satisfied: h11==0.16.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 11)) (0.16.0)
+Requirement already satisfied: h2==4.4.1 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 12)) (4.4.1)
+Requirement already satisfied: hpack==4.2.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 13)) (4.2.0)
+Requirement already satisfied: httpcore==1.0.9 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 14)) (1.0.9)
+Requirement already satisfied: httptools==0.9.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 15)) (0.9.0)
+Requirement already satisfied: httpx==0.28.1 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 16)) (0.28.1)
+Requirement already satisfied: hyperframe==6.1.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 17)) (6.1.0)
+Requirement already satisfied: idna==3.20 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 18)) (3.20)
+Requirement already satisfied: limits==5.8.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 19)) (5.8.0)
+Requirement already satisfied: numpy==2.5.5 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 20)) (2.5.5)
+Requirement already satisfied: opentelemetry-api==1.45.2 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 21)) (1.45.2)
+Requirement already satisfied: packaging==26.3 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 22)) (26.3)
+Requirement already satisfied: portalocker==4.4.2 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 23)) (4.4.2)
+Requirement already satisfied: protobuf==7.36.2 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 24)) (7.36.2)
+Requirement already satisfied: pydantic==2.14.4 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 25)) (2.14.4)
+Requirement already satisfied: pydantic-core==2.50.5 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 26)) (2.50.5)
+Requirement already satisfied: pydantic-settings==2.16.3 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 27)) (2.16.3)
+Requirement already satisfied: pypdf==7.1.1 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 28)) (7.1.1)
+Requirement already satisfied: python-dotenv==1.2.4 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 29)) (1.2.4)
+Requirement already satisfied: pyyaml==6.0.3 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 30)) (6.0.3)
+Requirement already satisfied: qdrant-client==1.20.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 31)) (1.20.0)
+Requirement already satisfied: slowapi==0.1.10 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 32)) (0.1.10)
+Requirement already satisfied: starlette==1.10.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 33)) (1.10.0)
+Requirement already satisfied: structlog==26.1.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 34)) (26.1.0)
+Requirement already satisfied: typing-extensions==4.16.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 35)) (4.16.0)
+Requirement already satisfied: typing-inspection==0.4.5 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 36)) (0.4.5)
+Requirement already satisfied: urllib3==2.8.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 37)) (2.8.0)
+Requirement already satisfied: uvicorn==0.54.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 38)) (0.54.0)
+Requirement already satisfied: watchfiles==1.3.0 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 40)) (1.3.0)
+Requirement already satisfied: websockets==17.4 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 41)) (17.4)
+Requirement already satisfied: wrapt==2.5.2 in .\.venv\Lib\site-packages (from -r C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\requirements.txt (line 42)) (2.5.2)
+Requirement already satisfied: ast-serialize==0.13.1 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 4)) (0.13.1)
+Requirement already satisfied: cfgv==3.5.0 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 6)) (3.5.0)
+Requirement already satisfied: colorama==0.4.6 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 7)) (0.4.6)
+Requirement already satisfied: distlib==0.4.4 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 8)) (0.4.4)
+Requirement already satisfied: filelock==4.2.12 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 9)) (4.2.12)
+Requirement already satisfied: identify==2.6.20 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 13)) (2.6.20)
+Requirement already satisfied: iniconfig==2.3.1 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 15)) (2.3.1)
+Requirement already satisfied: librt==0.17.0 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 16)) (0.17.0)
+Requirement already satisfied: mypy==2.4.1 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 17)) (2.4.1)
+Requirement already satisfied: mypy-extensions==1.2.0 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 18)) (1.2.0)
+Requirement already satisfied: nodeenv==1.12.0 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 19)) (1.12.0)
+Requirement already satisfied: pathspec==1.1.1 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 21)) (1.1.1)
+Requirement already satisfied: platformdirs==4.14.7 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 22)) (4.14.7)
+Requirement already satisfied: pluggy==1.7.0 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 23)) (1.7.0)
+Requirement already satisfied: pre-commit==4.7.0 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 24)) (4.7.0)
+Requirement already satisfied: pygments==2.21.0 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 25)) (2.21.0)
+Requirement already satisfied: pytest==9.2.0 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 26)) (9.2.0)
+Requirement already satisfied: pytest-asyncio==1.5.0 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 27)) (1.5.0)
+Requirement already satisfied: python-discovery==1.9.6 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 28)) (1.9.6)
+Requirement already satisfied: respx==0.23.1 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 30)) (0.23.1)
+Requirement already satisfied: ruff==0.17.6 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 31)) (0.17.6)
+Requirement already satisfied: virtualenv==21.15.9 in .\.venv\Lib\site-packages (from -r requirements-dev.txt (line 33)) (21.15.9)
+exit=0
+
+$ .venv\Scripts\python.exe -m pip uninstall -y faiss-cpu rank-bm25
+WARNING: Skipping faiss-cpu as it is not installed.
+WARNING: Skipping rank-bm25 as it is not installed.
+exit=0
+
+$ .venv\Scripts\python.exe -m pip install --no-deps -e . --progress-bar off
+Obtaining file:///C:/Users/LENOVO/OneDrive/Desktop/LexAI/backend
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: lexai
+  Building editable for lexai (pyproject.toml): started
+  Building editable for lexai (pyproject.toml): finished with status 'done'
+  Created wheel for lexai: filename=lexai-0.3.0-py3-none-any.whl size=1461 sha256=28809ab6161df8271dbfd341a7d3ea8cfdb4975f0bd488d0562d573d6af264c1
+  Stored in directory: C:\Users\LENOVO\AppData\Local\Temp\pip-ephem-wheel-cache-ehnss2vw\wheels\ee\bd\dc\8d2626dd50ad634da097896e6e0a4949bd83b5df6bf2297031
+Successfully built lexai
+Installing collected packages: lexai
+  Attempting uninstall: lexai
+    Found existing installation: lexai 0.3.0
+    Uninstalling lexai-0.3.0:
+      Successfully uninstalled lexai-0.3.0
+Successfully installed lexai-0.3.0
+exit=0
+
+backend\.env already has the current profile - left unchanged
+--- active backend\.env settings ---
+# lexai-profile: laptop-8gb v3
+LEXAI_LLM_BASE_URL=http://localhost:11434/v1
+LEXAI_LLM_MODEL=qwen2.5-7b-instruct
+LEXAI_LLM_MAX_TOKENS=512
+LEXAI_LLM_READ_TIMEOUT_S=600
+LEXAI_EMBED_BASE_URL=http://localhost:11434/v1
+LEXAI_EMBED_MODEL=nomic-embed-text
+LEXAI_EMBED_DIMENSION=768
+LEXAI_EMBED_QUERY_PREFIX="search_query: "
+LEXAI_EMBED_DOCUMENT_PREFIX="search_document: "
+LEXAI_EMBED_BATCH_SIZE=16
+LEXAI_EMBED_TIMEOUT_S=180
+LEXAI_RERANK_ENABLED=false
+LEXAI_RERANK_TOP_N=5
+LEXAI_CORPUS_MAX_CHUNK_CHARS=1400
+LEXAI_CORPUS_CHUNK_OVERLAP_CHARS=150
+LEXAI_QDRANT_KEEP_PREVIOUS=1
+LEXAI_RETRIEVAL_CONTEXT_CHAR_BUDGET=6000
+LEXAI_API_HISTORY_MESSAGES_IN_PROMPT=2
+LEXAI_QUERY_ABSTAIN_MIN_DENSE=0.63
+
+$ .venv\Scripts\python.exe -c "import lexai, qdrant_client, yaml, fastapi; from importlib.metadata import version; print('lexai', lexai.__version__, 'qdrant-client', version('qdrant-client'), 'imports OK')"
+lexai 0.3.0 qdrant-client 1.20.0 imports OK
+exit=0
+

@@ -145,7 +145,7 @@ class QdrantStore:
             sparse_vectors_config={SPARSE: models.SparseVectorParams(modifier=models.Modifier.IDF)},
         )
         if self.settings.url:  # payload indexes only matter on a server
-            for key in ("doc_id", "doc_type", "short_name", "unit", "unit_label"):
+            for key in ("doc_id", "doc_type", "short_name", "unit", "unit_label", "parent_id"):
                 await self._run(
                     self._client.create_payload_index, name, key, models.PayloadSchemaType.KEYWORD
                 )
@@ -340,3 +340,56 @@ class QdrantStore:
         )
         chunks = [chunk_from_payload(p.payload or {}) for p in points]
         return sorted(chunks, key=lambda c: c.metadata.part)
+
+    async def scroll_all(self, collection: str, flt: models.Filter) -> list[Chunk]:
+        """Every chunk matching `flt` (paged)."""
+        chunks: list[Chunk] = []
+        offset: Any = None
+        while True:
+            points, offset = await self._run(
+                self._client.scroll,
+                collection,
+                scroll_filter=flt,
+                limit=512,
+                offset=offset,
+                with_payload=True,
+                with_vectors=False,
+            )
+            chunks.extend(chunk_from_payload(p.payload or {}) for p in points)
+            if offset is None:
+                return chunks
+
+    async def statute_sections(self, collection: str, short_names: Sequence[str]) -> list[Chunk]:
+        """All section chunks of the given acts (for the old/new code correspondence)."""
+        flt = models.Filter(
+            must=[
+                models.FieldCondition(key="short_name", match=models.MatchAny(any=list(short_names))),
+                models.FieldCondition(key="unit_label", match=models.MatchValue(value="Section")),
+            ]
+        )
+        return await self.scroll_all(collection, flt)
+
+    async def parts_of(self, collection: str, parent_id: str) -> list[Chunk]:
+        """All pieces of one section or unit, in order."""
+        flt = models.Filter(
+            must=[models.FieldCondition(key="parent_id", match=models.MatchValue(value=parent_id))]
+        )
+        return sorted(await self.scroll_all(collection, flt), key=lambda c: c.metadata.part)
+
+    async def best_dense_score(
+        self, collection: str, vector: Sequence[float], flt: SearchFilter | None = None
+    ) -> float | None:
+        """Cosine similarity of the closest passage: the abstention signal without a reranker."""
+        try:
+            result = await self._run(
+                self._client.query_points,
+                collection,
+                query=list(vector),
+                using=DENSE,
+                limit=1,
+                query_filter=flt.to_qdrant() if flt else None,
+                with_payload=False,
+            )
+        except Exception as exc:
+            raise UpstreamUnavailable(f"Qdrant search failed: {exc!r}") from exc
+        return float(result.points[0].score) if result.points else None

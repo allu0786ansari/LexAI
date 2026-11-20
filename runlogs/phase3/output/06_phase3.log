@@ -1,0 +1,74 @@
+$ .venv\Scripts\python.exe scripts\check_phase3.py --server-log "C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase3\output\06_server.log"
+
+A. Derived correspondence (old code -> new code)
+2026-11-20 20:42:09 [info     ] correspondence_ready           sections=2271
+   2271 sections matched in 1.7s
+   IPC -> BNS: 20/21
+      miss: IPC s.379 -> ['134'] (expected BNS s.303)
+   CrPC -> BNSS: 12/12
+   IEA -> BSA: 12/12
+[PASS] correspondence anchors: 44/45 (need 80%)
+API starting (pid 18512), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase3\output\06_server.log
+API is up.
+
+B1. Exact lookups (named section is passage [1])
+[PASS] What does Section 103 BNS say?: [1] BNS s.103 | BNS s.103 | IPC s.302 | BNSS s.103 | BNS s.343 | BNSS s.108
+[PASS] What does section 438 of the CrPC provide?: [1] CrPC s.438; counterpart BNSS s.482 present | CrPC s.438 | BNSS s.482 | CrPC s.433A
+[PASS] Explain Article 21 of the Constitution: [1] Constitution Art.21 | Constitution Art.21 | Constitution Art.81 | Constitution Schedule Sixth | Constitution Art.366 | Constitution Art.368
+[PASS] What is section 65B of the Evidence Act?: [1] IEA s.65B; counterpart BSA s.63 present | IEA s.65B | BSA s.63
+
+B2. Old -> new mapping questions
+[PASS] Which BNS section replaced IPC 420?: IPC s.420 | BNS s.318 | BNSS s.440 | BNSS s.436 | BNSS s.460; notes: ['IPC s.420 corresponds to BNS s.318 (Cheating) (matched by title and text, similarity 0.78; a derived correspondence, not an official table).', 'CrPC s.420 corresponds to BNSS s.460 (Warrant with whom to be lodged) (matched by title and text, similarity 1.00; a derived correspondence, not an official table).']
+[PASS] What is the BNSS equivalent of section 154 CrPC?: CrPC s.154 | BNSS s.173; notes: ['CrPC s.154 corresponds to BNSS s.173 (Information in cognizable cases) (matched by title and text, similarity 0.73; a derived correspondence, not an official table).']
+
+B3. Code in force first when no date is given
+[PASS] BNS before IPC: BNS s.103 | IPC s.302 | BNS s.104 | IPC s.303 | BNS s.109
+   applicable code: new (no offence date given: the BNS, BNSS and BSA are in force)
+
+B4. Follow-ups retrieve like standalone questions (one real answer first, ~1 min)
+[INFO] first answer: Under the Bharatiya Nyaya Sanhita (BNS), the punishment for murder is death or imprisonment for life, which means the remainder of the person's natural life. This applies to both individuals and group
+   rewritten: 'Is the punishment for murder under the Bharatiya Nyaya Sanhita (BNS) bailable?'
+[PASS] follow-up 'Is it bailable?': answering provisions: follow-up ['BNS s.103'], standalone ['BNSS Schedule First'] | follow-up: BNS s.104 | BNS s.103 | BNS s.1 | BNS s.51 | BNS s.109 | standalone: BNS s.1 | BNSS Schedule First
+   rewritten: 'What was the old IPC section for murder?'
+[PASS] follow-up 'What was the old IPC section for it?': answering provisions: follow-up ['IPC s.302'], standalone ['IPC s.302'] | follow-up: IPC s.302 | IPC s.303 | IPC s.300 | IPC s.396 | IPC s.307 | standalone: BNS s.103 | IPC s.302 | IPC s.300 | BNS s.109 | IPC s.307
+
+B5. Abstention (best dense similarity vs the configured threshold)
+   answerable   0.787  What is the punishment for murder?
+   answerable   0.756  How is an FIR registered for a cognizable offence?
+   answerable   0.849  When is an electronic record admissible as evidence?
+   answerable   0.783  Which article protects the right to life and personal liberty?
+   answerable   0.758  When can a person get anticipatory bail?
+   answerable   0.800  What is the punishment for cheating?
+   answerable   0.814  What is dowry death?
+   answerable   0.788  What is the punishment for hacking a computer system?
+   answerable   0.687  Is a dying declaration admissible?
+   answerable   0.849  Can police arrest without a warrant?
+   unanswerable 0.614  declined What are the current GST rates on restaurant food?
+   unanswerable 0.667  How do I file my income tax return online?
+   unanswerable 0.675  What is the procedure to register a trademark?
+   unanswerable 0.651  What is the minimum wage in Karnataka?
+   unanswerable 0.681  How do I renew my passport?
+   unanswerable 0.664  What are the RERA registration rules for a real estate project?
+[PASS] no answerable question declined: 0 declined
+[INFO] unanswerable questions declined before generation: 1/6
+[INFO] calibration: separable: answerable >= 0.687, unanswerable <= 0.681; suggested LEXAI_QUERY_ABSTAIN_MIN_DENSE=0.684
+
+B6. Full answers (~2 min)
+[PASS] event order: ['meta', 'citations'] ... ['verification', 'done']
+[PASS] answer cites BNS s.103 as [1]: BNS s.103 | IPC s.302 | BNSS s.103 | BNS s.343 | BNSS s.108 | CrPC s.103 | BSA s.103
+[PASS] verification: {"valid": true, "coverage": 1.0, "flags": [], "removed_markers": []}
+   ANSWER:
+   Section 103 of the Bharatiya Nyaya Sanhita, 2023, states that whoever commits murder shall be punished with death or imprisonment for life, and shall also be liable to fine. [1]
+   
+   Provisions: BNS s.103 [1]
+   
+   This is legal information, not legal advice.
+   latency: {"condense_ms": null, "hyde_ms": null, "retrieval_ms": 323.6, "rerank_ms": null, "context_ms": 0.1, "time_to_first_token_ms": 11055.3, "generation_ms": 25032.5, "verify_ms": 2.6, "total_ms": 25362.6}; usage: {'prompt_tokens': 1412, 'completion_tokens': 71, 'total_tokens': 1483}
+[INFO] unanswerable question: abstained=True; 'The indexed sources do not answer this question. The closest passages are listed below; they may help you rephrase it or narrow it to a specific act or section.'
+[PASS] refusal without generation: I can't help with that. I can explain the law that applies — for example the offence, its punishment, or a person's righ
+[PASS] repeat question from cache: cached=True in 0.01s
+API stopped.
+
+SUMMARY: ALL PASSED
+exit=0
+

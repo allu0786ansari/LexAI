@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import os
 from collections.abc import AsyncIterator, Sequence
 from pathlib import Path
 from typing import Any
@@ -9,21 +10,21 @@ from typing import Any
 import numpy as np
 import pytest
 
-from lexai.api.container import Container
+from lexai.api.container import Container, build_chat
 from lexai.core.errors import UpstreamUnavailable
 from lexai.core.settings import (
     APISettings,
+    CacheSettings,
     CorpusSettings,
     EmbedSettings,
     LLMSettings,
     QdrantSettings,
+    QuerySettings,
     RerankSettings,
     RetrievalSettings,
     Settings,
 )
 from lexai.domain.models import ChatMessage, Chunk, ChunkMetadata
-from lexai.generation.service import ChatService
-from lexai.retrieval.hybrid import HybridRetriever
 from lexai.retrieval.qdrant_store import BuildMeta, DocBuildInfo, QdrantStore, new_collection_name
 from lexai.retrieval.sparse import SPARSE_VERSION, average_length, doc_vector, tokenize
 from lexai.services.sessions import SessionStore
@@ -76,8 +77,11 @@ class FakeLLM:
         delay_s: float = 0.0,
         error: Exception | None = None,
         healthy: bool = True,
+        completion: str = "hypothetical passage",
     ) -> None:
         self.tokens = tokens or ["Murder ", "is ", "punishable ", "with ", "death [1]."]
+        self.completion = completion
+        self.complete_calls: list[list[ChatMessage]] = []
         self.delay_s = delay_s
         self.error = error
         self.healthy = healthy
@@ -93,7 +97,8 @@ class FakeLLM:
             yield token
 
     async def complete(self, messages: Sequence[ChatMessage], **_: Any) -> str:
-        return "hypothetical passage"
+        self.complete_calls.append(list(messages))
+        return self.completion
 
     async def health(self) -> dict[str, Any]:
         if not self.healthy:
@@ -150,6 +155,22 @@ def make_chunks() -> list[Chunk]:
     return chunks
 
 
+_SETTINGS_GROUPS = (
+    LLMSettings, EmbedSettings, RerankSettings, RetrievalSettings, APISettings,
+    CorpusSettings, QdrantSettings, QuerySettings, CacheSettings,
+)  # fmt: skip
+
+
+@pytest.fixture(autouse=True)
+def _isolated_settings(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Tests never read backend/.env or LEXAI_* variables of the machine running them."""
+    for name in list(os.environ):
+        if name.upper().startswith("LEXAI_"):
+            monkeypatch.delenv(name)
+    for group in _SETTINGS_GROUPS:
+        monkeypatch.setitem(group.model_config, "env_file", None)
+
+
 @pytest.fixture
 def settings(tmp_path: Path) -> Settings:
     return Settings(
@@ -200,20 +221,16 @@ async def live_store(settings: Settings) -> AsyncIterator[tuple[QdrantStore, str
     await store.close()
 
 
-def make_container(
+async def make_container(
     settings: Settings,
     live: tuple[QdrantStore, str, BuildMeta] | None,
     llm: FakeLLM | None = None,
     embedder: FakeEmbedder | None = None,
+    cache: Any = None,
 ) -> Container:
     llm = llm or FakeLLM()
     embedder = embedder or FakeEmbedder()
     sessions = SessionStore(ttl_minutes=30, max_messages=20, max_sessions=100)
     store, collection, meta = live if live else (None, None, None)
-    retriever = (
-        HybridRetriever(store, collection, embedder, settings.retrieval)  # type: ignore[arg-type]
-        if store and collection
-        else None
-    )
-    chat = ChatService(settings, llm, retriever, None, sessions)  # type: ignore[arg-type]
-    return Container(settings, llm, embedder, None, store, collection, meta, sessions, chat)  # type: ignore[arg-type]
+    chat = await build_chat(settings, llm, embedder, None, store, collection, sessions, cache)  # type: ignore[arg-type]
+    return Container(settings, llm, embedder, None, store, collection, meta, sessions, chat, [], cache)  # type: ignore[arg-type]

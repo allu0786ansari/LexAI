@@ -1,4 +1,4 @@
-.PHONY: requirements install lint format typecheck test check fetch ingest ingest-dry ingest-status inspect serve smoke
+.PHONY: requirements install lint format typecheck test check fetch ingest ingest-dry ingest-status inspect check3 serve smoke
 
 BACKEND := backend
 
@@ -39,6 +39,9 @@ serve:
 
 smoke:
 	cd $(BACKEND) && uv run python scripts/smoke_phase1.py
+
+check3:
+	cd $(BACKEND) && uv run python scripts/check_phase3.py
 
 # Regenerate the pip requirement files (used on Windows without uv) from uv.lock.
 requirements:

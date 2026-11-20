@@ -150,6 +150,35 @@ class RetrievalSettings(BaseSettings):
     )
 
 
+class QuerySettings(BaseSettings):
+    """Query understanding, abstention and answer checking (Phase 3)."""
+
+    model_config = _config("LEXAI_QUERY_")
+
+    # Rewrite follow-ups into standalone questions with one short model call.
+    condense_enabled: bool = True
+    condense_turns: int = Field(default=3, ge=1, le=10)
+    condense_max_tokens: int = Field(default=96, gt=0)
+    max_references: int = Field(default=4, ge=1, le=10, description="Exact lookups per question.")
+    # Abstain (answer "not found", no generation) when the best passage scores below the
+    # threshold. With a reranker the rerank score is used, otherwise the dense cosine
+    # similarity. Unset = never abstain on score; calibrated per embedder/reranker.
+    abstain_min_dense: float | None = Field(default=None, ge=-1.0, le=1.0)
+    abstain_min_rerank: float | None = None
+    abstain_show_sources: int = Field(default=3, ge=0, le=10)
+
+
+class CacheSettings(BaseSettings):
+    """Answer and query-embedding cache. In-process by default; Redis when `redis_url` is set."""
+
+    model_config = _config("LEXAI_CACHE_")
+
+    enabled: bool = True
+    ttl_s: int = Field(default=86_400, ge=0)
+    max_entries: int = Field(default=512, ge=0, description="In-process cache size.")
+    redis_url: str | None = None
+
+
 class APISettings(BaseSettings):
     model_config = _config("LEXAI_API_")
 
@@ -180,6 +209,8 @@ class Settings:
         api: APISettings | None = None,
         corpus: CorpusSettings | None = None,
         qdrant: QdrantSettings | None = None,
+        query: QuerySettings | None = None,
+        cache: CacheSettings | None = None,
     ) -> None:
         self.llm = llm or LLMSettings()
         self.embed = embed or EmbedSettings()
@@ -188,6 +219,8 @@ class Settings:
         self.api = api or APISettings()
         self.corpus = corpus or CorpusSettings()
         self.qdrant = qdrant or QdrantSettings()
+        self.query = query or QuerySettings()
+        self.cache = cache or CacheSettings()
 
 
 def env_profile(path: Path = ENV_FILE) -> str:

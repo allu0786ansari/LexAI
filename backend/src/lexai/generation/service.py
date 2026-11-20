@@ -1,18 +1,22 @@
 """
-Chat orchestration: (optional HyDE) -> hybrid retrieval -> rerank -> streamed generation.
+Chat orchestration (SSE contract v1).
 
-Emits `StreamEvent`s in this order: `citations`, then `token`*, then `done`.
-Any failure ends the stream with a single `error` event carrying a stable
-code and the request id; details go to the logs only.
+    question ─▶ condense (follow-ups only) ─▶ plan (references, intent, applicable code)
+             ─▶ guardrails (refuse / redirect without searching)
+             ─▶ cache ─▶ routed retrieval ─▶ abstain? ─▶ context ─▶ stream ─▶ verify
+
+Events, in order: `meta`, `citations`, `token`*, `verification`, `done`; or a
+single `error` with a stable code and the request id (details only in logs).
 """
 
 from __future__ import annotations
 
+import re
 import time
 from collections.abc import AsyncGenerator, AsyncIterator
+from typing import Any
 
 from lexai.clients.llm import LLMClient
-from lexai.clients.reranker import Reranker
 from lexai.core.errors import IndexNotReady, LexAIError, RetrievalError
 from lexai.core.logging import get_logger
 from lexai.core.settings import Settings
@@ -22,33 +26,46 @@ from lexai.domain.models import (
     DonePayload,
     ErrorPayload,
     LatencyBreakdown,
+    MetaPayload,
     ScoredChunk,
     StreamEvent,
 )
+from lexai.generation.context import assemble
 from lexai.generation.prompts import (
     HYDE_PROMPT,
     PROMPT_VERSION,
-    SYSTEM_PROMPT,
+    applicable_law_text,
     format_context,
+    render_system_prompt,
     status_text,
-    within_budget,
 )
-from lexai.retrieval.hybrid import HybridRetriever
+from lexai.generation.verify import Verification, verify
+from lexai.query.condense import condense
+from lexai.query.understand import QueryPlan, plan_query
+from lexai.retrieval.qdrant_store import QdrantStore
+from lexai.retrieval.router import Retrieved, Router
+from lexai.services.cache import AnswerCache, cache_key, normalise
 from lexai.services.sessions import SessionStore
 
 logger = get_logger(__name__)
 
+ABSTAIN_ANSWER = (
+    "The indexed sources do not answer this question. The closest passages are listed below; "
+    "they may help you rephrase it or narrow it to a specific act or section."
+)
 NO_RESULTS_ANSWER = (
     "I couldn't find anything relevant to that question in the indexed sources. "
     "Try rephrasing, or ask about a specific statute, section or case."
 )
+SNIPPET_CHARS = 300
 
 
 def _ms(start: float) -> float:
     return round((time.perf_counter() - start) * 1000, 1)
 
 
-def build_citations(chunks: list[ScoredChunk]) -> list[Citation]:
+def build_citations(chunks: list[ScoredChunk], exact_parents: set[str] | None = None) -> list[Citation]:
+    exact_parents = exact_parents or set()
     return [
         Citation(
             ref=n,
@@ -65,6 +82,8 @@ def build_citations(chunks: list[ScoredChunk]) -> list[Citation]:
             law_type=meta.doc_type,
             sections=[meta.label, *meta.sections] if meta.unit else meta.sections,
             relevance_score=round(item.score, 4),
+            snippet=re.sub(r"\s+", " ", item.chunk.text[:SNIPPET_CHARS]).strip(),
+            exact=meta.parent_id in exact_parents,
         )
         for n, item in enumerate(chunks, start=1)
         for meta in [item.chunk.metadata]
@@ -76,15 +95,24 @@ class ChatService:
         self,
         settings: Settings,
         llm: LLMClient,
-        retriever: HybridRetriever | None,
-        reranker: Reranker | None,
+        router: Router | None,
         sessions: SessionStore,
+        *,
+        store: QdrantStore | None = None,
+        collection: str | None = None,
+        cache: AnswerCache | None = None,
     ) -> None:
         self.settings = settings
         self.llm = llm
-        self.retriever = retriever
-        self.reranker = reranker
+        self.router = router
         self.sessions = sessions
+        self.store = store
+        self.collection = collection
+        self.cache = cache
+
+    @property
+    def index_version(self) -> str:
+        return self.collection or ""
 
     async def stream_answer(
         self, question: str, session_id: str, request_id: str
@@ -121,74 +149,230 @@ class ChatService:
             logger.warning("hyde_failed", error=str(exc))
             return None
 
+    def _should_abstain(self, retrieved: Retrieved) -> bool:
+        if retrieved.found_exact:
+            return False
+        q = self.settings.query
+        if retrieved.best_rerank is not None and q.abstain_min_rerank is not None:
+            return retrieved.best_rerank < q.abstain_min_rerank
+        if retrieved.best_dense is not None and q.abstain_min_dense is not None:
+            return retrieved.best_dense < q.abstain_min_dense
+        return False
+
     async def _stream(self, question: str, session_id: str, request_id: str) -> AsyncIterator[StreamEvent]:
-        if self.retriever is None:
-            raise IndexNotReady()
         t_start = time.perf_counter()
+        latency: dict[str, Any] = {}
         history = self.sessions.history(session_id)
 
-        hyde_ms = None
+        standalone = question
+        if self.settings.query.condense_enabled and history:
+            t0 = time.perf_counter()
+            standalone = await condense(
+                self.llm,
+                question,
+                history,
+                turns=self.settings.query.condense_turns,
+                max_tokens=self.settings.query.condense_max_tokens,
+            )
+            latency["condense_ms"] = _ms(t0)
+        plan = plan_query(question, standalone)
+        meta = MetaPayload(request_id=request_id, session_id=session_id, **plan.summary())  # type: ignore[arg-type]
+        yield StreamEvent(event="meta", data=meta.model_dump())
+
+        if plan.reply is not None:  # refused or out of scope: no search, no model call
+            async for event in self._fixed_reply(plan, plan.reply, session_id, request_id, latency, t_start):
+                yield event
+            return
+        if self.router is None or self.store is None or self.collection is None:
+            raise IndexNotReady()
+
+        key = cache_key(
+            normalise(plan.standalone), self.index_version, PROMPT_VERSION, self.settings.llm.model
+        )
+        if self.cache is not None and (hit := await self.cache.get(key)):
+            async for event in self._replay(hit, question, session_id, request_id, latency, t_start):
+                yield event
+            return
+
         extra: list[str] = []
         if self.settings.retrieval.hyde_enabled:
             t0 = time.perf_counter()
-            hyde_text = await self._hyde(question)
-            hyde_ms = _ms(t0)
+            hyde_text = await self._hyde(plan.standalone)
+            latency["hyde_ms"] = _ms(t0)
             if hyde_text:
                 extra.append(hyde_text)
 
         t0 = time.perf_counter()
         try:
-            candidates = await self.retriever.retrieve(question, extra)
+            retrieved = await self.router.retrieve(plan, extra)
         except LexAIError:
             raise
         except Exception as exc:
             raise RetrievalError(repr(exc)) from exc
-        retrieval_ms = _ms(t0)
+        latency["retrieval_ms"] = _ms(t0)
 
-        if not candidates:
-            yield StreamEvent(event="citations", data=[])
-            yield StreamEvent(event="token", data={"text": NO_RESULTS_ANSWER})
-            self.sessions.append_turn(session_id, question, NO_RESULTS_ANSWER)
-            yield self._done(
-                NO_RESULTS_ANSWER, session_id, request_id, [], hyde_ms, retrieval_ms, None, None, t_start
-            )
+        if not retrieved.pinned and not retrieved.ranked:
+            async for event in self._fixed_reply(
+                plan, NO_RESULTS_ANSWER, session_id, request_id, latency, t_start, abstained=True
+            ):
+                yield event
+            return
+        if self._should_abstain(retrieved):
+            closest = [*retrieved.pinned, *retrieved.ranked][: self.settings.query.abstain_show_sources]
+            logger.info("abstained", best_dense=retrieved.best_dense, best_rerank=retrieved.best_rerank)
+            async for event in self._fixed_reply(
+                plan,
+                ABSTAIN_ANSWER,
+                session_id,
+                request_id,
+                latency,
+                t_start,
+                abstained=True,
+                sources=closest,
+            ):
+                yield event
             return
 
-        rerank_ms = None
-        top_n = self.settings.rerank.top_n
-        if self.reranker is not None:
-            t0 = time.perf_counter()
-            try:
-                ranked = await self.reranker.rerank(question, [c.chunk.text for c in candidates], top_n)
-            except Exception as exc:
-                raise RetrievalError(f"rerank failed: {exc!r}") from exc
-            context = [ScoredChunk(chunk=candidates[i].chunk, score=score) for i, score in ranked]
-            rerank_ms = _ms(t0)
-        else:
-            context = candidates[:top_n]
-
-        context = within_budget(context, self.settings.retrieval.context_char_budget)
-        citations = build_citations(context)
+        t0 = time.perf_counter()
+        exact_parents = {p.chunk.metadata.parent_id for p in retrieved.pinned}
+        passages = await assemble(
+            self.store,
+            self.collection,
+            retrieved,
+            char_budget=self.settings.retrieval.context_char_budget,
+            max_passages=len(exact_parents) + self.settings.rerank.top_n,
+        )
+        latency["context_ms"] = _ms(t0)
+        citations = build_citations(passages, exact_parents)
         yield StreamEvent(event="citations", data=[c.model_dump() for c in citations])
 
+        system = render_system_prompt(
+            format_context(passages), applicable_law_text(plan.era.era, plan.era.reason), retrieved.notes
+        )
         keep = self.settings.api.history_messages_in_prompt
-        messages = [ChatMessage(role="system", content=SYSTEM_PROMPT.format(context=format_context(context)))]
+        messages = [ChatMessage(role="system", content=system)]
         messages += history[-keep:] if keep else []
-        messages.append(ChatMessage(role="user", content=question))
+        messages.append(ChatMessage(role="user", content=plan.standalone))
 
         parts: list[str] = []
-        ttft_ms: float | None = None
-        async for delta in self.llm.stream_chat(messages):
-            if ttft_ms is None:
-                ttft_ms = _ms(t_start)
+        usage: dict[str, int] = {}
+        t0 = time.perf_counter()
+        async for delta in self.llm.stream_chat(messages, usage=usage):
+            if "time_to_first_token_ms" not in latency:
+                latency["time_to_first_token_ms"] = _ms(t_start)
             parts.append(delta)
             yield StreamEvent(event="token", data={"text": delta})
+        latency["generation_ms"] = _ms(t0)
 
-        answer = "".join(parts)
-        self.sessions.append_turn(session_id, question, answer)
-        yield self._done(
-            answer, session_id, request_id, citations, hyde_ms, retrieval_ms, rerank_ms, ttft_ms, t_start
+        t0 = time.perf_counter()
+        checked = verify("".join(parts), passages)
+        latency["verify_ms"] = _ms(t0)
+        yield StreamEvent(event="verification", data=checked.payload())
+        if checked.flags:
+            logger.warning("answer_flagged", flags=checked.flags, standalone_query=plan.standalone)
+
+        self.sessions.append_turn(session_id, question, checked.answer)
+        done = self._done(
+            checked.answer, session_id, request_id, citations, latency, t_start,
+            usage=usage or None, notes=retrieved.notes, verification=checked,
+        )  # fmt: skip
+        if self.cache is not None and checked.valid:
+            await self.cache.set(
+                key,
+                {
+                    "answer": checked.answer,
+                    "citations": [c.model_dump() for c in citations],
+                    "verification": checked.payload(),
+                    "notes": retrieved.notes,
+                },
+            )
+        yield done
+
+    async def search(self, question: str, session_id: str | None) -> dict[str, Any]:
+        """
+        Retrieval only (no answer, nothing added to the session): the plan, the passages
+        the model would see, correspondence notes and the abstention signal. For
+        debugging and evaluation.
+        """
+        history = self.sessions.history(session_id) if session_id else []
+        standalone = question
+        if self.settings.query.condense_enabled and history:
+            standalone = await condense(
+                self.llm, question, history,
+                turns=self.settings.query.condense_turns, max_tokens=self.settings.query.condense_max_tokens,
+            )  # fmt: skip
+        plan = plan_query(question, standalone)
+        result: dict[str, Any] = {"plan": plan.summary(), "reply": plan.reply}
+        if plan.reply is not None:
+            return result | {"passages": [], "notes": [], "abstain": False}
+        if self.router is None or self.store is None or self.collection is None:
+            raise IndexNotReady()
+        retrieved = await self.router.retrieve(plan)
+        exact_parents = {p.chunk.metadata.parent_id for p in retrieved.pinned}
+        passages = await assemble(
+            self.store,
+            self.collection,
+            retrieved,
+            char_budget=self.settings.retrieval.context_char_budget,
+            max_passages=len(exact_parents) + self.settings.rerank.top_n,
         )
+        return result | {
+            "passages": [c.model_dump() for c in build_citations(passages, exact_parents)],
+            "notes": retrieved.notes,
+            "best_dense": retrieved.best_dense,
+            "best_rerank": retrieved.best_rerank,
+            "abstain": self._should_abstain(retrieved),
+            "index_version": self.index_version,
+        }
+
+    async def _fixed_reply(
+        self,
+        plan: QueryPlan,
+        text: str,
+        session_id: str,
+        request_id: str,
+        latency: dict[str, Any],
+        t_start: float,
+        *,
+        abstained: bool = False,
+        sources: list[ScoredChunk] | None = None,
+    ) -> AsyncIterator[StreamEvent]:
+        citations = build_citations(sources or [])
+        yield StreamEvent(event="citations", data=[c.model_dump() for c in citations])
+        yield StreamEvent(event="token", data={"text": text})
+        checked = Verification(valid=True, coverage=None, answer=text)
+        yield StreamEvent(event="verification", data=checked.payload())
+        self.sessions.append_turn(session_id, plan.question, text)
+        yield self._done(
+            text,
+            session_id,
+            request_id,
+            citations,
+            latency,
+            t_start,
+            abstained=abstained,
+            verification=checked,
+        )
+
+    async def _replay(
+        self,
+        hit: dict[str, Any],
+        question: str,
+        session_id: str,
+        request_id: str,
+        latency: dict[str, Any],
+        t_start: float,
+    ) -> AsyncIterator[StreamEvent]:
+        citations = [Citation(**c) for c in hit["citations"]]
+        yield StreamEvent(event="citations", data=hit["citations"])
+        yield StreamEvent(event="token", data={"text": hit["answer"]})
+        yield StreamEvent(event="verification", data=hit["verification"])
+        self.sessions.append_turn(session_id, question, hit["answer"])
+        checked = Verification(**{**hit["verification"], "answer": hit["answer"]})
+        yield self._done(
+            hit["answer"], session_id, request_id, citations, latency, t_start,
+            cached=True, notes=hit.get("notes", []), verification=checked,
+        )  # fmt: skip
 
     def _done(
         self,
@@ -196,27 +380,41 @@ class ChatService:
         session_id: str,
         request_id: str,
         citations: list[Citation],
-        hyde_ms: float | None,
-        retrieval_ms: float,
-        rerank_ms: float | None,
-        ttft_ms: float | None,
+        latency: dict[str, Any],
         t_start: float,
+        *,
+        usage: dict[str, int] | None = None,
+        cached: bool = False,
+        abstained: bool = False,
+        notes: list[str] | None = None,
+        verification: Verification | None = None,
     ) -> StreamEvent:
-        latency = LatencyBreakdown(
-            hyde_ms=hyde_ms,
-            retrieval_ms=retrieval_ms,
-            rerank_ms=rerank_ms,
-            time_to_first_token_ms=ttft_ms,
-            total_ms=_ms(t_start),
-        )
+        breakdown = LatencyBreakdown(total_ms=_ms(t_start), **latency)
         logger.info(
             "query_complete",
             prompt_version=PROMPT_VERSION,
+            index_version=self.index_version,
             context_chunks=len(citations),
             answer_chars=len(answer),
-            **latency.model_dump(),
+            cached=cached,
+            abstained=abstained,
+            verified=verification.valid if verification else None,
+            coverage=verification.coverage if verification else None,
+            usage=usage,
+            **breakdown.model_dump(exclude_none=True),
         )
         payload = DonePayload(
-            answer=answer, session_id=session_id, request_id=request_id, citations=citations, latency=latency
+            answer=answer,
+            session_id=session_id,
+            request_id=request_id,
+            citations=citations,
+            latency=breakdown,
+            prompt_version=PROMPT_VERSION,
+            index_version=self.index_version,
+            usage=usage,
+            cached=cached,
+            abstained=abstained,
+            notes=notes or [],
+            verification=verification.payload() if verification else None,
         )
         return StreamEvent(event="done", data=payload.model_dump())

@@ -1,0 +1,38 @@
+$ ver
+
+Microsoft Windows [Version 10.0.26300.9818]
+exit=0
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse --abbrev-ref HEAD
+phase-3-retrieval
+exit=0
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse HEAD
+d0d9121c375343349f7d69e89951064c53103cbd
+exit=0
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" status --short
+ M runlogs/phase3/output/01_check.log
+exit=0
+
+Python chosen for LexAI: [py -3.12]
+
+$ ollama --version
+ollama version is 0.40.9
+exit=0
+
+$ curl -s http://localhost:11434/api/version
+{"version":"0.40.9"}exit=0
+
+$ nvidia-smi --query-gpu=name,memory.total,memory.used --format=csv
+name, memory.total [MiB], memory.used [MiB]
+NVIDIA GeForce GTX 1650, 4096 MiB, 0 MiB
+exit=0
+
+$ systeminfo (memory lines)
+Total Physical Memory:         7,975 MB
+Available Physical Memory:     1,764 MB
+
+$ anything listening on port 8000 (a running LexAI API locks the index)
+nothing on port 8000
+

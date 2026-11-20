@@ -10,8 +10,9 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from slowapi import Limiter
 
 from lexai.api.container import Container
+from lexai.core.errors import LexAIError
 from lexai.core.logging import bind_request_context, get_logger
-from lexai.domain.models import QueryRequest, SessionResponse, StreamEvent
+from lexai.domain.models import QueryRequest, SearchRequest, SessionResponse, StreamEvent
 
 logger = get_logger(__name__)
 
@@ -72,5 +73,20 @@ def build_router(limiter: Limiter, query_limit: str, session_limit: str) -> APIR
             media_type="text/event-stream",
             headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
         )
+
+    @router.post("/api/search")
+    @limiter.limit(query_limit)
+    async def search(request: Request, body: SearchRequest) -> JSONResponse:
+        """Retrieval only: what the model would be given for this question (no answer)."""
+        container = _container(request)
+        try:
+            result = await container.chat.search(body.question, body.session_id)
+        except LexAIError as exc:
+            status = 503 if exc.code in ("index_not_ready", "upstream_unavailable") else 500
+            return JSONResponse(
+                {"code": exc.code, "message": exc.public_message, "request_id": request.state.request_id},
+                status_code=status,
+            )
+        return JSONResponse(result)
 
     return router

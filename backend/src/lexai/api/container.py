@@ -24,9 +24,13 @@ from lexai.core.errors import ConfigurationError, IndexMismatchError, UpstreamUn
 from lexai.core.logging import get_logger
 from lexai.core.settings import Settings
 from lexai.generation.service import ChatService
+from lexai.query.references import NEW_CODES, OLD_CODES
+from lexai.retrieval.correspondence import Correspondence, sections_from_chunks
 from lexai.retrieval.hybrid import HybridRetriever
 from lexai.retrieval.qdrant_store import BuildMeta, QdrantStore
+from lexai.retrieval.router import Router
 from lexai.retrieval.sparse import SPARSE_VERSION
+from lexai.services.cache import AnswerCache, build_cache
 from lexai.services.sessions import SessionStore
 
 logger = get_logger(__name__)
@@ -47,6 +51,40 @@ def check_compatible(meta: BuildMeta, settings: Settings) -> None:
         )
 
 
+async def load_correspondence(store: QdrantStore, collection: str) -> Correspondence:
+    """Derive the old/new code correspondence from the live index (~1 s for ~3,400 chunks)."""
+    chunks = await store.statute_sections(collection, [*OLD_CODES, *NEW_CODES])
+    table = await asyncio.to_thread(Correspondence.build, sections_from_chunks(chunks))
+    logger.info("correspondence_ready", sections=len(table))
+    return table
+
+
+async def build_chat(
+    settings: Settings,
+    llm: LLMClient,
+    embedder: EmbeddingClient,
+    reranker: Reranker | None,
+    store: QdrantStore | None,
+    collection: str | None,
+    sessions: SessionStore,
+    cache: AnswerCache | None,
+) -> ChatService:
+    router = None
+    if store is not None and collection is not None:
+        router = Router(
+            store,
+            collection,
+            embedder,
+            HybridRetriever(store, collection, embedder, settings.retrieval),
+            await load_correspondence(store, collection),
+            settings.retrieval,
+            settings.query,
+            reranker,
+            settings.rerank.top_n,
+        )
+    return ChatService(settings, llm, router, sessions, store=store, collection=collection, cache=cache)
+
+
 @dataclass
 class Container:
     settings: Settings
@@ -59,6 +97,7 @@ class Container:
     sessions: SessionStore
     chat: ChatService
     notes: list[str] = field(default_factory=list)
+    cache: AnswerCache | None = None
 
     @classmethod
     async def build(cls, settings: Settings) -> Container:
@@ -94,16 +133,18 @@ class Container:
         if settings.rerank.enabled:
             reranker = await CrossEncoderReranker.load(settings.rerank)
 
-        retriever = HybridRetriever(store, collection, embedder, settings.retrieval) if collection else None
         sessions = SessionStore(
             ttl_minutes=settings.api.session_ttl_minutes,
             max_messages=settings.api.session_max_messages,
             max_sessions=settings.api.max_sessions,
         )
-        chat = ChatService(settings, llm, retriever, reranker, sessions)
-        return cls(settings, llm, embedder, reranker, store, collection, meta, sessions, chat, notes)
+        cache = build_cache(settings.cache)
+        chat = await build_chat(settings, llm, embedder, reranker, store, collection, sessions, cache)
+        return cls(settings, llm, embedder, reranker, store, collection, meta, sessions, chat, notes, cache)
 
     async def aclose(self) -> None:
+        if self.cache is not None:
+            await self.cache.aclose()
         await self.llm.aclose()
         await self.embedder.aclose()
         if self.store is not None:
