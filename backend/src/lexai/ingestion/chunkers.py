@@ -19,6 +19,10 @@ How a statute is read:
 5. A unit longer than `max_chunk_chars` is split at paragraph boundaries; each
    piece repeats the unit header and shares a `parent_id`.
 
+Gazette of India prints (see `gazette.py`) have no arrangement table and no
+dash: a section starts `103. (1) Whoever ...` and its title is the marginal
+note level with it. The same ordering rule applies; titles come from the notes.
+
 Judgments are chunked into a headnote and the judgment body, with case name,
 date, bench and citation read from the JUDIS header. Manuals are split by size.
 """
@@ -28,6 +32,7 @@ from __future__ import annotations
 import hashlib
 import re
 import uuid
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import datetime
 
@@ -35,7 +40,7 @@ from lexai.domain.models import Chunk, ChunkMetadata
 from lexai.ingestion.manifest import DocumentSpec
 from lexai.ingestion.parsing import DocumentText, extract_sections, normalize_for_match, split_text
 
-CHUNKER_VERSION = "legal-v1"
+CHUNKER_VERSION = "legal-v2"
 _NAMESPACE = uuid.UUID("5b0c8a2e-6f1d-4c7a-9a43-1f2e3d4c5b6a")
 
 _HEADING = re.compile(
@@ -51,6 +56,7 @@ _SCHEDULE = re.compile(
     r"(?P<ord>FIRST|SECOND|THIRD|FOURTH|FIFTH|SIXTH|SEVENTH|EIGHTH|NINTH|TENTH|ELEVENTH|TWELFTH)?"
     r"[ \t]*SCHEDULE[ \t]*\.?[ \t]*$"
 )
+_GAZETTE_HEADING = re.compile(r"(?m)^[ \t]*(?P<num>\d{1,3}[A-Z]{0,3})\.[ \t]+(?=\S)")
 _TOC_LINE = re.compile(r"^\s*\d{1,3}[A-Z]{0,3}\.\s+[^—–]*$")
 MAX_SECTION_GAP = 60
 
@@ -108,7 +114,40 @@ def _division_label(match: re.Match[str], text: str) -> str:
 
 
 def find_statute_units(text: str, unit_label: str) -> list[Unit]:
-    candidates = list(_HEADING.finditer(text))
+    """India Code layout: `<n>. <title>.—<text>`."""
+    return _find_units(
+        text, unit_label, list(_HEADING.finditer(text)), lambda m: _clean_title(m.group("title"))
+    )
+
+
+def find_gazette_units(doc: DocumentText, unit_label: str) -> tuple[list[Unit], int]:
+    """Gazette layout: `<n>. <text>` with the title in the margin. Returns (units, untitled)."""
+    layouts = doc.layouts or []
+    used: dict[int, set[int]] = {}
+    untitled = 0
+
+    def title(m: re.Match[str]) -> str | None:
+        nonlocal untitled
+        page = doc.page_at(m.start()) - 1
+        found = (
+            layouts[page].title_for(m.group("num"), used.setdefault(page, set()))
+            if 0 <= page < len(layouts)
+            else None
+        )
+        if found is None:
+            untitled += 1
+        return _clean_title(found) if found else None
+
+    units = _find_units(doc.text, unit_label, list(_GAZETTE_HEADING.finditer(doc.text)), title)
+    return units, untitled
+
+
+def _find_units(
+    text: str,
+    unit_label: str,
+    candidates: list[re.Match[str]],
+    title_of: Callable[[re.Match[str]], str | None],
+) -> list[Unit]:
     body_start = next((m.start() for m in candidates if m.group("num") == "1"), None)
     if body_start is None:
         return []
@@ -152,7 +191,7 @@ def find_statute_units(text: str, unit_label: str) -> list[Unit]:
             Unit(
                 unit_label,
                 m.group("num"),
-                _clean_title(m.group("title")),
+                title_of(m),
                 hierarchy_at(m.start()),
                 m.start(),
                 end,
@@ -281,7 +320,14 @@ def build_chunks(
     title = spec.title
 
     if spec.doc_type in ("statute", "constitution", "amendment"):
-        units = find_statute_units(doc.text, spec.unit_label)
+        if doc.layouts is not None:
+            units, untitled = find_gazette_units(doc, spec.unit_label)
+            if untitled:
+                warnings.append(
+                    f"Gazette print: {untitled} {spec.unit_label.lower()}(s) without a marginal title"
+                )
+        else:
+            units = find_statute_units(doc.text, spec.unit_label)
         statute_units = sum(1 for u in units if u.label == spec.unit_label)
         if statute_units < 3 and spec.min_units == 0:
             warnings.append(f"only {statute_units} numbered units found; indexed as plain text")

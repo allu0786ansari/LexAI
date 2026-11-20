@@ -164,6 +164,7 @@ def settings(tmp_path: Path) -> Settings:
             raw_dir=tmp_path / "raw",
             lock_file=tmp_path / "manifest.lock.json",
             report_dir=tmp_path / "reports",
+            download_backoff_s=0,
         ),
         qdrant=QdrantSettings(path=tmp_path / "qdrant"),
     )

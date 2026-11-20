@@ -24,7 +24,10 @@ database that can run embedded on a laptop and as a server in production.
    different checksum is refused unless `--update` is passed, so a changed
    upstream file is a reviewed change, not a silent one. Bundled files are
    checked against `data/bundled/SHA256SUMS`. Responses must be real PDFs, and
-   writes are atomic.
+   writes are atomic. Government sites are often overloaded (India Code answered
+   504 for all three new codes on the first laptop run), so 429/5xx, timeouts and
+   dropped connections are retried with backoff, each document lists fallback
+   sources, and the source that produced the pin is tried first.
 3. **Legal-structure chunking.** Statutes are split at section/article headings
    (`302. Punishment for murder.—`), with section numbers required to increase
    so the arrangement table and cross-references are not mistaken for headings.
@@ -34,11 +37,16 @@ database that can run embedded on a laptop and as a server in production.
    bench and citation from the JUDIS header. The chunker version and settings
    form a fingerprint stored with the index; changing them re-chunks on the
    next build.
-4. **Gazette-format PDFs fall back to plain chunks.** The Prisons Act 1894 and
-   the Criminal Law (Amendment) Act 2018 PDFs do not use the India Code heading
-   format. Rather than fit a second parser to two documents, a statute with
-   `min_units: 0` and fewer than three detected units is chunked as plain text,
-   with a build warning.
+4. **Gazette of India prints are parsed by position.** The Gazette print of an
+   Act has no arrangement table and no heading dash; each section's title is a
+   marginal note level with its first line, and text extraction emits those
+   notes out of order. `gazette.py` records where every text fragment is drawn,
+   matches each note to the section number at the same height (within 6
+   points), and removes notes, mastheads, running heads and legacy-font Hindi
+   from the body. This makes the PRS/MHA Gazette copies usable fallbacks for
+   BNS, BNSS and BSA, and turns the CLA 2018 print into 26 titled sections.
+   Statutes in neither layout (the Maharashtra Prisons Act compilation) are
+   chunked as plain text with a warning when `min_units` is 0.
 5. **Repeal status is data, not prose.** `repealed_on` and `replaced_by` travel
    with each chunk into the prompt header and the citation, so an IPC passage is
    presented as "repealed 2024-07-01; replaced by BNS; applies to earlier
@@ -81,6 +89,8 @@ database that can run embedded on a laptop and as a server in production.
   keeps 2,400 and 12,000.
 - Embedded Qdrant allows one process at a time: the API must be stopped while
   building. Production uses the server mode, where this does not apply.
+- The chunker version moved to `legal-v2` with the Gazette parser, so the first
+  build after it re-embeds everything.
 - Search quality is only smoke-tested in this phase (`scripts/inspect_index.py`).
   Retrieval metrics and the reranker comparison come with the evaluation set in
   Phases 3–4.

@@ -29,6 +29,8 @@ set "PYTHONUTF8=1"
 set "PYTHONIOENCODING=utf-8"
 set "LEXAI_API_ENVIRONMENT=ci"
 
+REM A failed fetch or build skips the steps that depend on it (GATE holds the reason).
+set "GATE="
 set "STEPS=%*"
 if "%STEPS%"=="" set "STEPS=check setup quality models fetch build status inspect smoke"
 
@@ -225,6 +227,7 @@ REM Downloads BNS, BNSS, BSA, IPC and the Evidence Act into data\raw and pins th
 REM SHA-256 in data\manifest.lock.json; checks every bundled file against SHA256SUMS.
 set "CMD=.venv\Scripts\python.exe -m lexai.ingestion.cli fetch" & call :tee "%LOG%"
 popd
+if not "%RC%"=="0" set "GATE=fetch failed - see 05_fetch.log"
 >>"%LOG%" echo --- data\raw ---
 dir /-c "%ROOT%\data\raw" >>"%LOG%" 2>&1
 >>"%LOG%" echo --- data\manifest.lock.json ---
@@ -240,6 +243,7 @@ REM ---------------------------------------------------------------------------
 set "LOG=%OUT%\06_build.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
+if defined GATE goto gated
 REM Free memory for the embedding model: unload the 7B generator if Ollama has it loaded.
 >>"%LOG%" echo $ ollama stop qwen2.5-7b-instruct
 ollama stop qwen2.5-7b-instruct >>"%LOG%" 2>&1
@@ -248,6 +252,7 @@ echo Parsing, chunking and embedding the corpus - this takes several minutes ...
 pushd "%BACKEND%"
 set "CMD=.venv\Scripts\python.exe -m lexai.ingestion.cli build" & call :tee "%LOG%"
 popd
+if not "%RC%"=="0" set "GATE=build failed - see 06_build.log"
 REM Keep the newest machine-readable build report with the logs.
 for /f "delims=" %%F in ('dir /b /o-d "%BACKEND%\var\reports\ingest-*.json" 2^>nul') do (
     copy /Y "%BACKEND%\var\reports\%%F" "%OUT%\06_build_report.json" >nul
@@ -276,6 +281,7 @@ REM ---------------------------------------------------------------------------
 set "LOG=%OUT%\08_inspect.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
+if defined GATE goto gated
 pushd "%BACKEND%"
 set "CMD=.venv\Scripts\python.exe scripts\inspect_index.py" & call :run "%LOG%"
 popd
@@ -288,6 +294,7 @@ REM ---------------------------------------------------------------------------
 set "LOG=%OUT%\09_smoke.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
+if defined GATE goto gated
 echo Starting the API and asking questions - the first answer can take a few minutes ...
 pushd "%BACKEND%"
 set "CMD=.venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --concurrency 2 --server-log "%OUT%\09_server.log"" & call :run "%LOG%"
@@ -317,6 +324,13 @@ goto outage_done
 start "" "%LOCALAPPDATA%\Programs\Ollama\ollama app.exe"
 >>"%LOG%" echo Ollama started again.
 :outage_done
+type "%LOG%"
+goto :eof
+
+
+REM ---------------------------------------------------------------------------
+:gated
+>>"%LOG%" echo SKIPPED: %GATE%
 type "%LOG%"
 goto :eof
 

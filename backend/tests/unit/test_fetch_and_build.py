@@ -71,6 +71,55 @@ async def test_fetch_refuses_a_changed_upstream_file_unless_updating(settings: S
     assert read_lock(settings.corpus.lock_file)["bns-2023"].sha256 == hashlib.sha256(PDF_V2).hexdigest()
 
 
+@respx.mock
+async def test_fetch_retries_gateway_timeouts_then_succeeds(settings: Settings) -> None:
+    route = respx.get("https://gov.example/bns.pdf").mock(
+        side_effect=[httpx.Response(504), httpx.Response(503), httpx.Response(200, content=PDF_V1)]
+    )
+    result = await fetch_documents([downloaded_spec("https://gov.example/bns.pdf")], settings.corpus)
+    assert result[0].status == "downloaded" and route.call_count == 3
+
+
+@respx.mock
+async def test_fetch_gives_up_on_a_url_after_its_attempts_and_uses_the_mirror(settings: Settings) -> None:
+    primary = respx.get("https://gov.example/bns.pdf").mock(return_value=httpx.Response(504))
+    respx.get("https://mirror.example/bns.pdf").mock(return_value=httpx.Response(200, content=PDF_V1))
+    result = await fetch_documents(
+        [downloaded_spec("https://gov.example/bns.pdf", "https://mirror.example/bns.pdf")], settings.corpus
+    )
+    assert primary.call_count == settings.corpus.download_attempts
+    assert result[0].status == "downloaded" and "mirror.example" in result[0].detail
+    assert result[0].errors == [
+        f"https://gov.example/bns.pdf: HTTP 504 Gateway Timeout after {settings.corpus.download_attempts}"
+        " attempts"
+    ]
+
+
+@respx.mock
+async def test_fetch_does_not_retry_a_missing_file(settings: Settings) -> None:
+    route = respx.get("https://gov.example/bns.pdf").mock(return_value=httpx.Response(404))
+    result = await fetch_documents([downloaded_spec("https://gov.example/bns.pdf")], settings.corpus)
+    assert result[0].status == "failed" and route.call_count == 1
+    assert result[0].errors == ["https://gov.example/bns.pdf: HTTP 404 Not Found"]
+
+
+@respx.mock
+async def test_fetch_tries_the_pinned_source_first(settings: Settings) -> None:
+    primary = respx.get("https://gov.example/bns.pdf").mock(return_value=httpx.Response(504))
+    mirror = respx.get("https://mirror.example/bns.pdf").mock(
+        return_value=httpx.Response(200, content=PDF_V1)
+    )
+    spec = downloaded_spec("https://gov.example/bns.pdf", "https://mirror.example/bns.pdf")
+    await fetch_documents([spec], settings.corpus)  # primary down: pins the mirror
+    (settings.corpus.raw_dir / "bns-2023.pdf").unlink()
+
+    primary.mock(return_value=httpx.Response(200, content=PDF_V2))  # primary back, different file
+    calls_before = primary.call_count
+    again = await fetch_documents([spec], settings.corpus)
+    assert again[0].status == "downloaded" and "mirror.example" in again[0].detail
+    assert primary.call_count == calls_before and mirror.call_count == 2
+
+
 # ---------------------------------------------------------------- build
 
 

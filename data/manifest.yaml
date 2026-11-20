@@ -9,6 +9,11 @@
 # must find. Either check failing stops ingestion: a truncated source (like the
 # 58-page IPC in v0.1) can never be indexed silently.
 #
+# Sources: India Code (consolidated, with an arrangement of sections) first; the
+# Gazette of India print of the Act as enacted (PRS Legislative Research, Ministry
+# of Home Affairs) as fallbacks. The parser reads both layouts; `expect` phrases
+# are taken from section bodies, not titles, so they hold in either.
+#
 # Dates are ISO (YYYY-MM-DD). `repealed_on` + `replaced_by` let answers say which
 # code applies: the old codes still govern offences committed before 1 July 2024.
 
@@ -24,6 +29,8 @@ documents:
     in_force_from: 2024-07-01
     urls:
       - https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf
+      - https://www.mha.gov.in/sites/default/files/250883_english_01042024.pdf
+      - https://www.mha.gov.in/sites/default/files/2024-04/250883_english_01042024.pdf
     expect:
       - whoever commits murder shall be punished
     min_units: 330
@@ -36,6 +43,8 @@ documents:
     in_force_from: 2024-07-01
     urls:
       - https://indiacode.nic.in/bitstream/123456789/20099/3/a2023-46.pdf
+      - https://prsindia.org/files/bills_acts/bills_parliament/2023/The%20Bharatiya%20Nagarik%20Suraksha%20Sanhita,%202023.pdf
+      - https://www.mha.gov.in/sites/default/files/2024-04/250884_2_english_01042024.pdf
     expect:
       - every information relating to the commission of a cognizable offence
     min_units: 500
@@ -48,8 +57,11 @@ documents:
     in_force_from: 2024-07-01
     urls:
       - https://www.indiacode.nic.in/bitstream/123456789/20063/1/aa202347.pdf
+      - https://prsindia.org/files/bills_acts/acts_parliament/2023/The%20Bharatiya%20Sakshya%20Bill,%202023.pdf
+      - https://www.mha.gov.in/sites/default/files/2024-04/250882_english_01042024_0.pdf
+      - https://www.mha.gov.in/sites/default/files/250882_english_01042024.pdf
     expect:
-      - admissibility of electronic records
+      - any information contained in an electronic record
     min_units: 160
 
   # ------------------------------------------- codes replaced on 1 July 2024
@@ -134,8 +146,8 @@ documents:
     doc_type: amendment
     year: 2018
     in_force_from: 2018-04-21
-    file: statutes/Criminal_Law_Amendment_2018.pdf
-    min_units: 0
+    file: statutes/Criminal_Law_Amendment_2018.pdf  # Gazette of India print
+    min_units: 20
 
   # ------------------------------------------------------------------ manuals
   - id: mha-cybercrime-manual

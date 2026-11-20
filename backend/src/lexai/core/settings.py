@@ -101,6 +101,10 @@ class CorpusSettings(BaseSettings):
     max_chunk_chars: int = Field(default=2400, ge=600)
     chunk_overlap_chars: int = Field(default=200, ge=0)
     download_timeout_s: float = Field(default=120.0, gt=0)
+    # Government sites often answer 502/503/504 under load: retry those, timeouts and
+    # connection errors with backoff (base, base*3, ...) before moving to the next URL.
+    download_attempts: int = Field(default=3, ge=1, le=10)
+    download_backoff_s: float = Field(default=10.0, ge=0)
     verify_tls: bool = True
 
     @field_validator("manifest", "bundled_dir", "raw_dir", "lock_file", "report_dir", mode="before")

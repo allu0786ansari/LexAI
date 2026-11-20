@@ -17,13 +17,14 @@ import bisect
 import logging
 import re
 import unicodedata
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from pypdf import PdfReader
 from pypdf.errors import PdfReadError
 
 from lexai.core.errors import ConfigurationError
+from lexai.ingestion.gazette import PageLayout, extract_gazette_pages, is_gazette
 
 # pypdf warns about every odd font or object it skips; keep only real errors.
 logging.getLogger("pypdf").setLevel(logging.ERROR)
@@ -48,6 +49,8 @@ _SECTION_REF = re.compile(
 class DocumentText:
     text: str
     page_starts: list[int]  # offset in `text` where each page begins; page n is index n-1
+    # Gazette prints only: section numbers and marginal-note titles per page (index n-1).
+    layouts: list[PageLayout] | None = field(default=None)
 
     def page_at(self, offset: int) -> int:
         return bisect.bisect_right(self.page_starts, offset)
@@ -57,13 +60,16 @@ class DocumentText:
         return len(self.page_starts)
 
 
-def extract_pages(path: Path) -> list[str]:
+def _reader(path: Path) -> PdfReader:
     try:
-        reader = PdfReader(str(path))
+        return PdfReader(str(path))
     except (PdfReadError, OSError) as exc:
         raise ConfigurationError(f"Cannot read PDF {path.name}: {exc}") from exc
+
+
+def extract_pages(path: Path) -> list[str]:
     pages = []
-    for page in reader.pages:
+    for page in _reader(path).pages:
         try:
             pages.append(page.extract_text() or "")
         except Exception:  # pypdf raises many parser-specific errors on malformed pages
@@ -107,15 +113,25 @@ def clean_page(text: str) -> str:
 
 
 def load_document(path: Path) -> DocumentText:
+    reader = _reader(path)
+    layouts: list[PageLayout] | None = None
+    try:
+        first = reader.pages[0].extract_text() or "" if reader.pages else ""
+    except Exception:
+        first = ""
+    if is_gazette(first):
+        raw_pages, layouts = extract_gazette_pages(list(reader.pages))
+    else:
+        raw_pages = extract_pages(path)
     parts: list[str] = []
     starts: list[int] = []
     offset = 0
-    for raw in extract_pages(path):
+    for raw in raw_pages:
         starts.append(offset)
         page = clean_page(raw)
         parts.append(page)
         offset += len(page) + 1  # the joining newline
-    return DocumentText("\n".join(parts), starts)
+    return DocumentText("\n".join(parts), starts, layouts)
 
 
 def normalize_for_match(text: str) -> str:

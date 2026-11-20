@@ -9,8 +9,11 @@ Run the steps below, then push `runlogs\phase2\output\` **and**
 ## What changed for you
 
 - **The new criminal codes are downloaded.** BNS, BNSS and BSA (in force since
-  1 July 2024) come from India Code; the full IPC and Indian Evidence Act come
-  from IIT Kanpur, UNODC and NCW mirrors. Downloads go to `data\raw\` (ignored by
+  1 July 2024) come from India Code, with the official Gazette prints (PRS India,
+  Ministry of Home Affairs) as fallbacks; the full IPC and Indian Evidence Act come
+  from IIT Kanpur, UNODC and NCW. A source that times out or answers 5xx is
+  retried (after 10 s and 30 s) before the next one is tried. If India Code is
+  down this step can take 10–15 minutes before the fallbacks are used. Downloads go to `data\raw\` (ignored by
   git). Their SHA-256 checksums are written to `data\manifest.lock.json`, which
   **you commit**: later builds refuse a file whose content changed upstream.
 - **The bundled PDFs moved** from `backend\Data\` to `data\bundled\` and are
@@ -58,7 +61,7 @@ runlogs\phase2\run_phase2.bat
 | --- | --- | --- |
 | `check` | Git state, Python, Ollama, India Code reachability, GPU, RAM, disk, port 8000 | `01_check.log` |
 | `setup` | pip install (adds qdrant-client, removes faiss/rank-bm25), writes the v2 laptop profile | `02_setup.log` |
-| `quality` | ruff, format check, mypy, 62 tests | `03_quality.log` |
+| `quality` | ruff, format check, mypy, 68 tests | `03_quality.log` |
 | `models` | Same as Phase 1: models present, embedder and generator respond | `04_models.log` |
 | `fetch` | Downloads and pins BNS, BNSS, BSA, IPC, IEA; verifies all 58 bundled files | `05_fetch.log` |
 | `build` | Parses every document into sections/articles, embeds them, builds the hybrid index, checks it, makes it live (several minutes) | `06_build.log`, `06_build_report.json` |
@@ -69,6 +72,8 @@ runlogs\phase2\run_phase2.bat
 Optional: `runlogs\phase2\run_phase2.bat outage` (same as Phase 1, log `10_outage.log`).
 
 Re-run a single step by naming it, e.g. `runlogs\phase2\run_phase2.bat fetch build`.
+If `fetch` fails, `build`, `inspect` and `smoke` are skipped (their logs say
+`SKIPPED`); if `build` fails, `inspect` and `smoke` are skipped.
 
 ## 3. Send the results
 
@@ -82,7 +87,7 @@ git push
 
 | Log | Pass |
 | --- | --- |
-| `03_quality.log` | every `exit=0`; pytest `62 passed` |
+| `03_quality.log` | every `exit=0`; 68 tests, no failures |
 | `05_fetch.log` | `FETCH: all sources present and verified`, `exit=0` |
 | `06_build.log` | `BUILD STATUS: live ...`, each document's checks `PASS`, `exit=0`; roughly 4,000–5,500 chunks |
 | `07_status.log` | live collection with `nomic-embed-text (768-dim)` and all 63 documents |
@@ -91,8 +96,9 @@ git push
 
 ## If something fails
 
-- **`fetch` fails for one document**: the log says which URL and why. Re-run
-  `fetch`; a network timeout is usually transient. If a site changed its file,
+- **`fetch` fails for one document**: the log says which URL and why, one line
+  each. Every source was tried three times, so the sites were down for minutes:
+  re-run `fetch` later; documents already downloaded are skipped. If a site changed its file,
   the log says "does not match its pinned checksum": send me the log rather than
   using `--update`.
 - **`build` says the store is locked**: a LexAI API (or another build) is still
@@ -102,3 +108,9 @@ git push
 - **`smoke` says the index does not match the configuration**: `backend\.env`
   uses a different embedding model from the one the index was built with. Re-run
   `setup` and `build`.
+
+## Run history
+
+| Run | Date | Result |
+| --- | --- | --- |
+| 1 | 2026-11-20 | **fetch failed**: India Code answered `504 Gateway Time-out` for BNS, BNSS and BSA (IPC and IEA downloaded and parsed cleanly: 548 and 179 sections, all checks passed). Build correctly refused to publish an incomplete index; the API reported "index not ready". Fixed: retries with backoff, Gazette-print fallbacks for the three codes and a parser for that layout, dependent steps skipped after a failure, `inspect` exit code. |

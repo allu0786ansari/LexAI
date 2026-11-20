@@ -125,9 +125,12 @@ async def main() -> None:
     finally:
         await embedder.aclose()
         await store.close()
-    print("\nSUMMARY:", "ALL PASSED" if not failures else f"FAILED ({len(failures)}): {failures}")
-    sys.exit(1 if failures else 0)
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except LexAIError as error:  # e.g. the embedded store is locked by a running API
+        report("index", False, str(error))
+    print("\nSUMMARY:", "ALL PASSED" if not failures else f"FAILED ({len(failures)}): {failures}")
+    sys.exit(1 if failures else 0)

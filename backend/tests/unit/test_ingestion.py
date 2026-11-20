@@ -270,6 +270,51 @@ def test_real_crpc_is_parsed_into_sections() -> None:
     assert "Subs. by" not in s154.text  # footnotes stripped
 
 
+@pytest.mark.skipif(
+    not (BUNDLED / "statutes" / "Criminal_Law_Amendment_2018.pdf").exists(), reason="corpus not present"
+)
+def test_real_gazette_print_gets_sections_titled_from_marginal_notes() -> None:
+    """The CLA 2018 PDF is a Gazette of India print, the same layout as the PRS/MHA copies of BNS/BNSS/BSA."""
+    from lexai.ingestion.parsing import load_document
+
+    spec = next(
+        d
+        for d in expand(load_manifest(REPO_ROOT / "data" / "manifest.yaml"), BUNDLED)
+        if d.id == "criminal-law-amendment-2018"
+    )
+    path = BUNDLED / str(spec.file)
+    doc = load_document(path)
+    assert doc.layouts is not None  # detected as a Gazette print
+    parsed = build_chunks(spec, doc, "sha", path.name, 2400, 200)
+    assert parsed.problems == [] and parsed.warnings == []
+    titles = {c.metadata.unit: c.metadata.unit_title for c in parsed.chunks if c.metadata.unit}
+    assert len(titles) == 26 and list(titles)[:3] == ["1", "2", "3"]
+    assert titles["1"] == "Short title and commencement"
+    assert titles["5"] == "Insertion of new section 376AB"  # not the quoted section's own note
+    assert titles["8"] == "Amendment of section 53A"  # printed out of order on its page
+    assert titles["25"] == "Amendment of section 42 of Act No.32 of 2012"
+    assert titles["26"] == "Repeal and savings"
+    # masthead, running heads, legacy-font Hindi and margin citations are not in the text
+    for noise in ("GAZETTE OF INDIA", "PUBLISHED BY AUTHORITY", "lañ", "\n45 of 1860.\n"):
+        assert noise not in doc.text
+    s2 = next(c for c in parsed.chunks if c.metadata.unit == "2")
+    assert "Amendment of" not in s2.text and s2.text.startswith("2. In the Indian Penal Code")
+
+
+def test_marginal_note_is_matched_by_height_within_tolerance() -> None:
+    from lexai.ingestion.gazette import PageLayout
+
+    layout = PageLayout(
+        marks=[("7", 611.0), ("8", 533.0), ("9", 300.0)],
+        notes=[(533.0, "Amendment of section 53A"), (613.0, "Amendment of section 376E"), (250.0, "far")],
+    )
+    used: set[int] = set()
+    assert layout.title_for("7", used) == "Amendment of section 376E"
+    assert layout.title_for("8", used) == "Amendment of section 53A"
+    assert layout.title_for("9", used) is None  # nearest note is 50 points away
+    assert layout.title_for("7", used) is None  # each mark is used once
+
+
 def test_env_profile_is_read_from_the_marker_line(tmp_path: Path) -> None:
     env = tmp_path / ".env"
     assert env_profile(env).startswith("none")
