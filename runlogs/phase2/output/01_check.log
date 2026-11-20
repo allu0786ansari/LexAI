@@ -8,12 +8,12 @@ phase-2-ingestion
 exit=0
 
 $ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse HEAD
-fc64a90672a22d6a27bb5d2a03b8fdc77ae1c02b
+d822b6447f3b7a0073d206ff1344b81ba9fdddb3
 exit=0
 
 $ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" status --short
+ M runlogs/phase2/output/01_check.log
 ?? .github/
-?? runlogs/phase2/output/
 exit=0
 
 Python chosen for LexAI: [py -3.12]
@@ -36,10 +36,10 @@ exit=0
 
 $ systeminfo (memory lines)
 Total Physical Memory:         7,975 MB
-Available Physical Memory:     989 MB
+Available Physical Memory:     1,342 MB
 
 $ free disk space on the repository drive
-48593154048 bytes free
+48378437632 bytes free
 
 $ anything listening on port 8000 (a running LexAI API locks the index)
 nothing on port 8000

@@ -1,4 +1,1 @@
-$ .venv\Scripts\python.exe scripts\inspect_index.py
-[FAIL] live index: none; run the build step
-exit=0
-
+SKIPPED: fetch failed - see 05_fetch.log
