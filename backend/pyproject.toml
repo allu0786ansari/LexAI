@@ -1,0 +1,75 @@
+[project]
+name = "lexai"
+version = "0.2.0"
+description = "LexAI: retrieval-augmented legal research assistant for Indian law"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.4",
+    "structlog>=24.1",
+    "httpx>=0.27",
+    "numpy>=1.26",
+    "faiss-cpu>=1.8",
+    "rank-bm25>=0.2.2",
+    "pypdf>=4.3",
+    "fonttools>=4.50",  # lets pypdf decode CFF fonts used in several statute PDFs
+    "slowapi>=0.1.9",
+]
+
+[project.optional-dependencies]
+# Cross-encoder reranking runs in-process in Phase 1 (moves to a TEI container in Phase 6).
+# Pulls in torch, so it is optional: `uv sync --extra rerank`.
+rerank = ["sentence-transformers>=3.0"]
+
+[project.scripts]
+lexai-ingest = "lexai.ingestion.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.2",
+    "pytest-asyncio>=0.23",
+    "respx>=0.21",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "pre-commit>=3.7",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lexai"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "ASYNC", "S", "SIM", "RUF"]
+ignore = ["S101"]  # assert is fine in tests
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S", "B011"]
+"scripts/**" = ["S"]
+
+[tool.mypy]
+python_version = "3.12"
+mypy_path = "src"
+packages = ["lexai"]
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+
+[[tool.mypy.overrides]]
+module = ["lexai.core.*", "lexai.clients.*", "lexai.domain.*"]
+strict = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+addopts = "-q"
