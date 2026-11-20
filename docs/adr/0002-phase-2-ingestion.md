@@ -43,7 +43,7 @@ database that can run embedded on a laptop and as a server in production.
    notes out of order. `gazette.py` records where every text fragment is drawn,
    matches each note to the section number at the same height (within 6
    points), and removes notes, mastheads, running heads and legacy-font Hindi
-   from the body. This makes the PRS/MHA Gazette copies usable fallbacks for
+   from the body. This makes the PRS India Gazette copies usable fallbacks for
    BNS, BNSS and BSA, and turns the CLA 2018 print into 26 titled sections.
    Statutes in neither layout (the Maharashtra Prisons Act compilation) are
    chunked as plain text with a warning when `min_units` is 0.

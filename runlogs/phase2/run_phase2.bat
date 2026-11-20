@@ -9,7 +9,7 @@ REM     runlogs\phase2\run_phase2.bat build           one step
 REM     runlogs\phase2\run_phase2.bat build inspect   several steps
 REM     runlogs\phase2\run_phase2.bat outage          stops Ollama, tests, restarts it
 REM
-REM  Steps: check setup quality models fetch build status inspect smoke outage
+REM  Steps: check setup quality models fetch parse build status inspect smoke outage
 REM  Each step writes a numbered log file in runlogs\phase2\output
 REM
 REM  The index lives in backend\var\qdrant (embedded Qdrant). Only one process
@@ -32,7 +32,7 @@ set "LEXAI_API_ENVIRONMENT=ci"
 REM A failed fetch or build skips the steps that depend on it (GATE holds the reason).
 set "GATE="
 set "STEPS=%*"
-if "%STEPS%"=="" set "STEPS=check setup quality models fetch build status inspect smoke"
+if "%STEPS%"=="" set "STEPS=check setup quality models fetch parse build status inspect smoke"
 
 for %%S in (%STEPS%) do call :dispatch %%S
 
@@ -52,12 +52,13 @@ if /I "%~1"=="setup"   goto step_setup
 if /I "%~1"=="quality" goto step_quality
 if /I "%~1"=="models"  goto step_models
 if /I "%~1"=="fetch"   goto step_fetch
+if /I "%~1"=="parse"   goto step_parse
 if /I "%~1"=="build"   goto step_build
 if /I "%~1"=="status"  goto step_status
 if /I "%~1"=="inspect" goto step_inspect
 if /I "%~1"=="smoke"   goto step_smoke
 if /I "%~1"=="outage"  goto step_outage
-echo Unknown step "%~1". Use: check setup quality models fetch build status inspect smoke outage
+echo Unknown step "%~1". Use: check setup quality models fetch parse build status inspect smoke outage
 goto :eof
 
 
@@ -239,8 +240,21 @@ goto :eof
 
 
 REM ---------------------------------------------------------------------------
+REM  Parse and chunk every document that is present (no network, no models), even
+REM  when fetch failed, and report per-document sections, titles and problems.
+:step_parse
+set "LOG=%OUT%\06_parse.log"
+type nul > "%LOG%"
+if not exist "%VPY%" goto no_venv
+pushd "%BACKEND%"
+set "CMD=.venv\Scripts\python.exe -m lexai.ingestion.cli build --dry-run" & call :tee "%LOG%"
+popd
+goto :eof
+
+
+REM ---------------------------------------------------------------------------
 :step_build
-set "LOG=%OUT%\06_build.log"
+set "LOG=%OUT%\07_build.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
 if defined GATE goto gated
@@ -252,11 +266,11 @@ echo Parsing, chunking and embedding the corpus - this takes several minutes ...
 pushd "%BACKEND%"
 set "CMD=.venv\Scripts\python.exe -m lexai.ingestion.cli build" & call :tee "%LOG%"
 popd
-if not "%RC%"=="0" set "GATE=build failed - see 06_build.log"
+if not "%RC%"=="0" set "GATE=build failed - see 07_build.log"
 REM Keep the newest machine-readable build report with the logs.
 for /f "delims=" %%F in ('dir /b /o-d "%BACKEND%\var\reports\ingest-*.json" 2^>nul') do (
-    copy /Y "%BACKEND%\var\reports\%%F" "%OUT%\06_build_report.json" >nul
-    >>"%LOG%" echo Build report copied: %%F -^> 06_build_report.json
+    copy /Y "%BACKEND%\var\reports\%%F" "%OUT%\07_build_report.json" >nul
+    >>"%LOG%" echo Build report copied: %%F -^> 07_build_report.json
     goto build_done
 )
 >>"%LOG%" echo No build report found in backend\var\reports
@@ -266,7 +280,7 @@ goto :eof
 
 REM ---------------------------------------------------------------------------
 :step_status
-set "LOG=%OUT%\07_status.log"
+set "LOG=%OUT%\08_status.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
 pushd "%BACKEND%"
@@ -278,7 +292,7 @@ goto :eof
 
 REM ---------------------------------------------------------------------------
 :step_inspect
-set "LOG=%OUT%\08_inspect.log"
+set "LOG=%OUT%\09_inspect.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
 if defined GATE goto gated
@@ -291,13 +305,13 @@ goto :eof
 
 REM ---------------------------------------------------------------------------
 :step_smoke
-set "LOG=%OUT%\09_smoke.log"
+set "LOG=%OUT%\10_smoke.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
 if defined GATE goto gated
 echo Starting the API and asking questions - the first answer can take a few minutes ...
 pushd "%BACKEND%"
-set "CMD=.venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --concurrency 2 --server-log "%OUT%\09_server.log"" & call :run "%LOG%"
+set "CMD=.venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --concurrency 2 --server-log "%OUT%\10_server.log"" & call :run "%LOG%"
 popd
 type "%LOG%"
 goto :eof
@@ -305,7 +319,7 @@ goto :eof
 
 REM ---------------------------------------------------------------------------
 :step_outage
-set "LOG=%OUT%\10_outage.log"
+set "LOG=%OUT%\11_outage.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
 echo This step stops Ollama, checks that LexAI reports the outage, then starts Ollama again.
@@ -314,7 +328,7 @@ taskkill /IM "ollama app.exe" /T /F >>"%LOG%" 2>&1
 taskkill /IM ollama.exe /T /F >>"%LOG%" 2>&1
 timeout /t 5 /nobreak >nul
 pushd "%BACKEND%"
-set "CMD=.venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --expect-down --server-log "%OUT%\10_server.log"" & call :run "%LOG%"
+set "CMD=.venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --expect-down --server-log "%OUT%\11_server.log"" & call :run "%LOG%"
 popd
 >>"%LOG%" echo Restarting Ollama ...
 if exist "%LOCALAPPDATA%\Programs\Ollama\ollama app.exe" goto outage_restart

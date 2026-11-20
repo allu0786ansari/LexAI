@@ -9,8 +9,8 @@ Run the steps below, then push `runlogs\phase2\output\` **and**
 ## What changed for you
 
 - **The new criminal codes are downloaded.** BNS, BNSS and BSA (in force since
-  1 July 2024) come from India Code, with the official Gazette prints (PRS India,
-  Ministry of Home Affairs) as fallbacks; the full IPC and Indian Evidence Act come
+  1 July 2024) come from India Code, with the official Gazette prints hosted by
+  PRS India as fallbacks; the full IPC and Indian Evidence Act come
   from IIT Kanpur, UNODC and NCW. A source that times out or answers 5xx is
   retried (after 10 s and 30 s) before the next one is tried. If India Code is
   down this step can take 10–15 minutes before the fallbacks are used. Downloads go to `data\raw\` (ignored by
@@ -64,12 +64,13 @@ runlogs\phase2\run_phase2.bat
 | `quality` | ruff, format check, mypy, 68 tests | `03_quality.log` |
 | `models` | Same as Phase 1: models present, embedder and generator respond | `04_models.log` |
 | `fetch` | Downloads and pins BNS, BNSS, BSA, IPC, IEA; verifies all 58 bundled files | `05_fetch.log` |
-| `build` | Parses every document into sections/articles, embeds them, builds the hybrid index, checks it, makes it live (several minutes) | `06_build.log`, `06_build_report.json` |
-| `status` | Shows the live index: collection, model, chunk count per document | `07_status.log` |
-| `inspect` | Looks up 8 provisions directly (e.g. BNS s.103, CrPC s.154, Art. 21) and runs 6 test searches | `08_inspect.log` |
-| `smoke` | Starts the API, asks about murder, checks streaming, citations, repeal flag, parallel answers | `09_smoke.log`, `09_server.log` |
+| `parse` | Parses every document that is present into sections/articles and reports each one (no network, no models; runs even if `fetch` failed) | `06_parse.log` |
+| `build` | Parses, embeds, builds the hybrid index, checks it, makes it live (several minutes) | `07_build.log`, `07_build_report.json` |
+| `status` | Shows the live index: collection, model, chunk count per document | `08_status.log` |
+| `inspect` | Looks up 8 provisions directly (e.g. BNS s.103, CrPC s.154, Art. 21) and runs 6 test searches | `09_inspect.log` |
+| `smoke` | Starts the API, asks about murder, checks streaming, citations, repeal flag, parallel answers | `10_smoke.log`, `10_server.log` |
 
-Optional: `runlogs\phase2\run_phase2.bat outage` (same as Phase 1, log `10_outage.log`).
+Optional: `runlogs\phase2\run_phase2.bat outage` (same as Phase 1, log `11_outage.log`).
 
 Re-run a single step by naming it, e.g. `runlogs\phase2\run_phase2.bat fetch build`.
 If `fetch` fails, `build`, `inspect` and `smoke` are skipped (their logs say
@@ -89,10 +90,11 @@ git push
 | --- | --- |
 | `03_quality.log` | every `exit=0`; 68 tests, no failures |
 | `05_fetch.log` | `FETCH: all sources present and verified`, `exit=0` |
-| `06_build.log` | `BUILD STATUS: live ...`, each document's checks `PASS`, `exit=0`; roughly 4,000–5,500 chunks |
-| `07_status.log` | live collection with `nomic-embed-text (768-dim)` and all 63 documents |
-| `08_inspect.log` | all 8 lookups `PASS`; search quality at least 4/6; `SUMMARY: ALL PASSED` |
-| `09_smoke.log` | `SUMMARY: ALL PASSED`; the murder answer cites BNS s.103 and/or IPC s.302 |
+| `06_parse.log` | `BUILD STATUS: dry run ok`; BNS ≥ 330, BNSS ≥ 500, BSA ≥ 160 sections, no `[PROBLEM]` lines |
+| `07_build.log` | `BUILD STATUS: live ...`, each document's checks `PASS`, `exit=0`; roughly 4,000–5,500 chunks |
+| `08_status.log` | live collection with `nomic-embed-text (768-dim)` and all 63 documents |
+| `09_inspect.log` | all 8 lookups `PASS`; search quality at least 4/6; `SUMMARY: ALL PASSED` |
+| `10_smoke.log` | `SUMMARY: ALL PASSED`; the murder answer cites BNS s.103 and/or IPC s.302 |
 
 ## If something fails
 
@@ -104,7 +106,7 @@ git push
 - **`build` says the store is locked**: a LexAI API (or another build) is still
   running. Close it, or restart the PC, and re-run `build`.
 - **`build` fails with source or parsing problems**: the live index is unchanged.
-  Push the logs; `06_build_report.json` lists the exact problem per document.
+  Push the logs; `07_build_report.json` lists the exact problem per document.
 - **`smoke` says the index does not match the configuration**: `backend\.env`
   uses a different embedding model from the one the index was built with. Re-run
   `setup` and `build`.
@@ -114,3 +116,4 @@ git push
 | Run | Date | Result |
 | --- | --- | --- |
 | 1 | 2026-11-20 | **fetch failed**: India Code answered `504 Gateway Time-out` for BNS, BNSS and BSA (IPC and IEA downloaded and parsed cleanly: 548 and 179 sections, all checks passed). Build correctly refused to publish an incomplete index; the API reported "index not ready". Fixed: retries with backoff, Gazette-print fallbacks for the three codes and a parser for that layout, dependent steps skipped after a failure, `inspect` exit code. |
+| 2 | 2026-11-20 | **fetch failed for BNS only.** India Code still answered 504 (three tries each); BNSS and BSA came from the PRS Gazette prints; both MHA links for BNS returned 404. Fixed: PRS Gazette print added for BNS, dead MHA links removed, new `parse` step so the parser is tested on whatever was downloaded even if a download fails. |
