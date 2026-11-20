@@ -67,11 +67,17 @@ MAPPINGS = [
     ("What is the BNSS equivalent of section 154 CrPC?", {"CrPC s.154", "BNSS s.173"}),
 ]
 FOLLOW_UP_START = "What is the punishment for murder under the BNS?"
+# (follow-up, the same question asked standalone, provisions that answer it)
 FOLLOW_UPS = [
-    ("Is it bailable?", "Is murder under the Bharatiya Nyaya Sanhita a bailable offence?"),
+    (
+        "Is it bailable?",
+        "Is murder under the Bharatiya Nyaya Sanhita a bailable offence?",
+        {"BNS s.103", "BNSS Schedule First"},
+    ),
     (
         "What was the old IPC section for it?",
         "Which IPC section corresponds to murder under BNS section 103?",
+        {"IPC s.302"},
     ),
 ]
 ANSWERABLE = [
@@ -209,17 +215,20 @@ async def check_api(base_url: str) -> None:
         session = (await client.post("/api/session")).json()["session_id"]
         first = await ask(client, FOLLOW_UP_START, session)
         info("first answer", (first.get("done") or {}).get("answer", "")[:200].replace("\n", " "))
-        for follow, standalone in FOLLOW_UPS:
+        # The follow-up must find an answering provision whenever the standalone question does.
+        for follow, standalone, answering in FOLLOW_UPS:
             f = await search(client, follow, session)
             s = await search(client, standalone)
             fl, sl = labels(f)[:5], labels(s)[:5]
-            overlap = len(set(fl) & set(sl))
-            ok = bool(fl) and (fl[0] == sl[0] or overlap >= 3)
+            f_hit, s_hit = answering & set(fl), answering & set(sl)
+            ok = bool(f_hit) or not s_hit
             print(f"   rewritten: {f['plan']['standalone_query']!r}")
             report(
                 f"follow-up {follow!r}",
                 ok,
-                f"top-5 overlap {overlap}/5 | follow-up: {' | '.join(fl)} | standalone: {' | '.join(sl)}",
+                f"answering provisions: follow-up {sorted(f_hit) or 'none'}, "
+                f"standalone {sorted(s_hit) or 'none'}"
+                f" | follow-up: {' | '.join(fl)} | standalone: {' | '.join(sl)}",
             )
 
         print("\nB5. Abstention (best dense similarity vs the configured threshold)")

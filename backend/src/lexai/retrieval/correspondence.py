@@ -115,8 +115,19 @@ class Match:
         return f"{self.act} s.{self.unit}"
 
 
+_SUFFIXES = ("ments", "ment", "ings", "ing", "ed", "s")
+
+
+def _stem(word: str) -> str:
+    """Light suffix stripping so "punishment", "punished" and "punish" match."""
+    for suffix in _SUFFIXES:
+        if word.endswith(suffix) and len(word) - len(suffix) >= 4:
+            return word[: -len(suffix)]
+    return word
+
+
 def _tokens(text: str) -> list[str]:
-    return [w for w in _WORD.findall(text.lower()) if w not in _STOP]
+    return [_stem(w) for w in _WORD.findall(text.lower()) if w not in _STOP]
 
 
 def sections_from_chunks(chunks: list[Chunk]) -> list[SectionText]:

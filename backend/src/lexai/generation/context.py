@@ -39,6 +39,27 @@ def join_pieces(texts: list[str], max_overlap: int = 400) -> str:
     return out
 
 
+GAP = "\n[…]\n"
+
+
+def merge_retrieved(pieces: list[Chunk]) -> Chunk:
+    """
+    Several retrieved pieces of a long unit (not fetched whole): one passage, in order,
+    adjacent pieces joined and gaps marked, instead of one passage per piece.
+    """
+    pieces = sorted(pieces, key=lambda c: c.metadata.part)
+    runs: list[list[Chunk]] = [[pieces[0]]]
+    for piece in pieces[1:]:
+        if piece.metadata.part == runs[-1][-1].metadata.part + 1:
+            runs[-1].append(piece)
+        else:
+            runs.append([piece])
+    text = GAP.join(join_pieces([p.text for p in run]) for run in runs)
+    first, last = pieces[0], pieces[-1]
+    meta = first.metadata.model_copy(update={"page_end": last.metadata.page_end})
+    return Chunk(chunk_id=first.chunk_id, text=text, embed_text=first.embed_text, metadata=meta)
+
+
 def merge(pieces: list[Chunk]) -> Chunk:
     pieces = sorted(pieces, key=lambda c: c.metadata.part)
     first, last = pieces[0], pieces[-1]
@@ -87,6 +108,8 @@ async def assemble(
             if len(pieces) < meta.parts:
                 pieces = await store.parts_of(collection, parent) or pieces
             passages.append(ScoredChunk(chunk=merge(pieces), score=score))
+        elif len(items) > 1:
+            passages.append(ScoredChunk(chunk=merge_retrieved([i.chunk for i in items]), score=score))
         else:
             passages.extend(items)
         if parent in pinned_parents:

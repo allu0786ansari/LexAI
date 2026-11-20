@@ -39,7 +39,8 @@ question outside the corpus was answered from whatever ranked first.
    table of ~1,000 rows would be a source of silent legal errors; the derived
    one is reproducible, carries its score, and is presented as "corresponds
    to". It reproduces 20/20 well-known CrPC→BNSS pairs; the laptop run checks
-   45 pairs across all three codes (run 1: 42/45 before sub-section matching).
+   45 pairs across all three codes (run 1: 42/45; run 2, with sub-section
+   matching: 44/45). Light suffix stemming makes "punishment"/"punished" match.
 5. **Which code applies.** An explicit event date before 1 July 2024, "before
    July 2024", or naming only an old code selects IPC/CrPC/IEA; otherwise the
    BNS/BNSS/BSA. The applicable code's counterparts (best match and a close

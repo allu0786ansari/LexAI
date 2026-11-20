@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import os
 from collections.abc import AsyncIterator, Sequence
 from pathlib import Path
 from typing import Any
@@ -13,10 +14,12 @@ from lexai.api.container import Container, build_chat
 from lexai.core.errors import UpstreamUnavailable
 from lexai.core.settings import (
     APISettings,
+    CacheSettings,
     CorpusSettings,
     EmbedSettings,
     LLMSettings,
     QdrantSettings,
+    QuerySettings,
     RerankSettings,
     RetrievalSettings,
     Settings,
@@ -150,6 +153,22 @@ def make_chunks() -> list[Chunk]:
             )
         )
     return chunks
+
+
+_SETTINGS_GROUPS = (
+    LLMSettings, EmbedSettings, RerankSettings, RetrievalSettings, APISettings,
+    CorpusSettings, QdrantSettings, QuerySettings, CacheSettings,
+)  # fmt: skip
+
+
+@pytest.fixture(autouse=True)
+def _isolated_settings(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Tests never read backend/.env or LEXAI_* variables of the machine running them."""
+    for name in list(os.environ):
+        if name.upper().startswith("LEXAI_"):
+            monkeypatch.delenv(name)
+    for group in _SETTINGS_GROUPS:
+        monkeypatch.setitem(group.model_config, "env_file", None)
 
 
 @pytest.fixture

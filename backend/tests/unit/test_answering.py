@@ -9,7 +9,7 @@ import pytest
 from lexai.core.logging import mask_pii
 from lexai.core.settings import REPO_ROOT
 from lexai.domain.models import Chunk, ScoredChunk
-from lexai.generation.context import fit, join_pieces, merge
+from lexai.generation.context import fit, join_pieces, merge, merge_retrieved
 from lexai.generation.prompts import format_context
 from lexai.generation.verify import verify
 from lexai.ingestion.parsing import split_text
@@ -89,6 +89,18 @@ def test_merge_rebuilds_one_section_from_its_pieces() -> None:
     whole = merge(pieces)
     assert whole.text == "First half and\nsecond half." and whole.chunk_id == "id1"
     assert (whole.metadata.part, whole.metadata.parts, whole.metadata.page_end) == (1, 1, 2)
+
+
+def test_retrieved_pieces_of_a_long_unit_become_one_passage() -> None:
+    base = make_chunks()[0]
+
+    def piece(part: int, text: str) -> Chunk:
+        meta = base.metadata.model_copy(update={"part": part, "parts": 9, "page_end": part})
+        return base.model_copy(update={"chunk_id": f"id{part}", "text": text, "metadata": meta})
+
+    joined = merge_retrieved([piece(5, "Five."), piece(2, "Two."), piece(3, "Three.")])
+    assert joined.text == "Two.\nThree.\n[…]\nFive." and joined.chunk_id == "id2"
+    assert (joined.metadata.part, joined.metadata.page_end) == (2, 5)
 
 
 def test_fit_keeps_order_skips_what_does_not_fit_and_cuts_an_oversized_first_passage() -> None:
