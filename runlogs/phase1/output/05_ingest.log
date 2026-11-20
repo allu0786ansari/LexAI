@@ -1,0 +1,6 @@
+$ .venv\Scripts\python.exe -m lexai.ingestion.cli
+{"files": 59, "dry_run": false, "embed_model": "qwen3-embedding:0.6b", "event": "ingestion_started", "level": "info", "timestamp": "2026-11-20T10:28:26.516672Z"}
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 404 Not Found"
+{"code": "upstream_unavailable", "error": "Embedding failed (qwen3-embedding:0.6b at http://localhost:11434/v1): HTTPStatusError(\"Client error '404 Not Found' for url 'http://localhost:11434/v1/embeddings'\\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404\")", "event": "ingestion_failed", "level": "error", "timestamp": "2026-11-20T10:28:59.327183Z"}
+exit=1
+

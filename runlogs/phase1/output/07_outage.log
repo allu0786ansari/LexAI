@@ -1,0 +1,20 @@
+Stopping Ollama ...
+SUCCESS: The process with PID 10960 (child process of PID 20508) has been terminated.
+SUCCESS: The process with PID 16872 (child process of PID 14812) has been terminated.
+SUCCESS: The process with PID 23776 (child process of PID 14812) has been terminated.
+SUCCESS: The process with PID 23784 (child process of PID 14812) has been terminated.
+SUCCESS: The process with PID 23812 (child process of PID 14812) has been terminated.
+SUCCESS: The process with PID 24052 (child process of PID 14812) has been terminated.
+SUCCESS: The process with PID 24312 (child process of PID 24304) has been terminated.
+SUCCESS: The process with PID 20508 (child process of PID 24304) has been terminated.
+SUCCESS: The process with PID 14812 (child process of PID 18136) has been terminated.
+SUCCESS: The process with PID 24304 (child process of PID 18136) has been terminated.
+SUCCESS: The process with PID 18136 (child process of PID 20940) has been terminated.
+ERROR: The process "ollama.exe" not found.
+$ .venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --expect-down --server-log "C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase1\output\07_server.log"
+API starting (pid 24756), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase1\output\07_server.log
+API exited during start-up (code 3); see C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase1\output\07_server.log
+exit=1
+
+Restarting Ollama ...
+Ollama started again.

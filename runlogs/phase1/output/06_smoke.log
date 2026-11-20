@@ -1,0 +1,5 @@
+$ .venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --concurrency 2 --server-log "C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase1\output\06_server.log"
+API starting (pid 1880), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase1\output\06_server.log
+API exited during start-up (code 3); see C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase1\output\06_server.log
+exit=1
+
