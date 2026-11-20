@@ -1,6 +1,6 @@
 # ADR 0002 — Phase 2 ingestion and index decisions
 
-Date: 2026-11-20 · Status: proposed (pending verification on the target laptop, see runlogs/phase2/)
+Date: 2026-11-20 · Status: accepted (verified on the target laptop, see runlogs/phase2/RESULTS.md)
 
 ## Context
 
