@@ -1,0 +1,52 @@
+$ .venv\Scripts\python.exe -m ruff check .
+All checks passed!
+exit=0
+
+$ .venv\Scripts\python.exe -m ruff format --check .
+59 files already formatted
+exit=0
+
+$ .venv\Scripts\python.exe -m mypy
+Success: no issues found in 43 source files
+exit=0
+
+$ .venv\Scripts\python.exe -m pytest -v
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.2.0, pluggy-1.7.0
+rootdir: C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0, platformdirs-4.14.7, asyncio-1.5.0, respx-0.23.1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 137 items
+
+tests\api\test_api.py .......................                            [ 16%]
+tests\unit\test_answering.py ..........F........                         [ 30%]
+tests\unit\test_embedder.py .......                                      [ 35%]
+tests\unit\test_fetch_and_build.py ..........                            [ 43%]
+tests\unit\test_ingestion.py ..........................                  [ 62%]
+tests\unit\test_llm_client.py ......                                     [ 66%]
+tests\unit\test_query.py ....................................            [ 92%]
+tests\unit\test_retrieval.py ..........                                  [100%]
+
+================================== FAILURES ===================================
+____________________ test_memory_cache_expires_and_evicts _____________________
+
+    async def test_memory_cache_expires_and_evicts() -> None:
+        cache = MemoryCache(max_entries=2, ttl_s=60)
+        await cache.set("a", {"v": 1})
+        await cache.set("b", {"v": 2})
+        assert await cache.get("a") == {"v": 1}
+        await cache.set("c", {"v": 3})  # evicts the least recently used: b
+        assert await cache.get("b") is None and await cache.get("c") == {"v": 3}
+        expired = MemoryCache(max_entries=2, ttl_s=0)
+        await expired.set("a", {"v": 1})
+>       assert await expired.get("a") is None
+E       AssertionError: assert {'v': 1} is None
+
+tests\unit\test_answering.py:165: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/unit/test_answering.py::test_memory_cache_expires_and_evicts - A...
+======================= 1 failed, 136 passed in 40.47s ========================
+exit=1
+

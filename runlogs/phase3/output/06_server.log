@@ -1,0 +1,85 @@
+INFO:     Started server process [15304]
+INFO:     Waiting for application startup.
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+{"collection": "lexai_chunks_20261120t133053900723", "chunks": 5070, "built_at": "2026-11-20T13:30:54+00:00", "event": "index_ready", "level": "info", "timestamp": "2026-11-20T14:40:48.573495Z"}
+{"sections": 2207, "event": "correspondence_ready", "level": "info", "timestamp": "2026-11-20T14:40:49.746778Z"}
+{"version": "0.3.0", "profile": "laptop-8gb v2", "llm": "qwen2.5-7b-instruct", "embedder": "nomic-embed-text", "notes": [], "event": "startup_complete", "level": "info", "timestamp": "2026-11-20T14:40:49.770424Z"}
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:55604 - "GET /healthz HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49683 - "POST /api/session HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49683 - "POST /api/query HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+{"flags": [{"kind": "no_citations", "detail": "the answer cites no passage"}], "standalone_query": "What is the punishment for murder under the BNS?", "event": "answer_flagged", "session_id": "b1d54d32-b476-494a-b8f9-9da678e84a86", "request_id": "37b163ce0bf8477ba66ca7def992946e", "path": "/api/query", "level": "warning", "timestamp": "2026-11-20T14:41:28.528444Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 5, "answer_chars": 370, "cached": false, "abstained": false, "verified": false, "coverage": 0.0, "usage": {"prompt_tokens": 1234, "completion_tokens": 94, "total_tokens": 1328}, "retrieval_ms": 245.5, "context_ms": 0.0, "time_to_first_token_ms": 16649.4, "generation_ms": 34684.9, "verify_ms": 8.6, "total_ms": 34944.4, "event": "query_complete", "session_id": "b1d54d32-b476-494a-b8f9-9da678e84a86", "request_id": "37b163ce0bf8477ba66ca7def992946e", "path": "/api/query", "level": "info", "timestamp": "2026-11-20T14:41:28.530832Z"}
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49683 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49683 - "POST /api/query HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+{"flags": [{"kind": "no_citations", "detail": "the answer cites no passage"}], "standalone_query": "What does Section 103 BNS say?", "event": "answer_flagged", "session_id": "9a8ac998-6418-465a-9bbe-b47a963493fa", "request_id": "e1a4b13d638d4af2a3e9d780f91e424d", "path": "/api/query", "level": "warning", "timestamp": "2026-11-20T14:42:09.335287Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 7, "answer_chars": 250, "cached": false, "abstained": false, "verified": false, "coverage": 0.0, "usage": {"prompt_tokens": 1412, "completion_tokens": 71, "total_tokens": 1483}, "retrieval_ms": 288.7, "context_ms": 0.1, "time_to_first_token_ms": 11007.8, "generation_ms": 22722.2, "verify_ms": 0.5, "total_ms": 23034.4, "event": "query_complete", "session_id": "9a8ac998-6418-465a-9bbe-b47a963493fa", "request_id": "e1a4b13d638d4af2a3e9d780f91e424d", "path": "/api/query", "level": "info", "timestamp": "2026-11-20T14:42:09.335899Z"}
+INFO:     127.0.0.1:49683 - "POST /api/query HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+{"flags": [{"kind": "no_citations", "detail": "the answer cites no passage"}], "standalone_query": "What are the current GST rates on restaurant food?", "event": "answer_flagged", "session_id": "5ed09a42-86b5-4d38-97dd-b984917abaaf", "request_id": "c591673630ef4c07b614882e8a837fb3", "path": "/api/query", "level": "warning", "timestamp": "2026-11-20T14:42:24.128428Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 5, "answer_chars": 39, "cached": false, "abstained": false, "verified": false, "coverage": 0.0, "usage": {"prompt_tokens": 1507, "completion_tokens": 9, "total_tokens": 1516}, "retrieval_ms": 260.8, "context_ms": 0.0, "time_to_first_token_ms": 13603.4, "generation_ms": 14515.9, "verify_ms": 0.4, "total_ms": 14780.4, "event": "query_complete", "session_id": "5ed09a42-86b5-4d38-97dd-b984917abaaf", "request_id": "c591673630ef4c07b614882e8a837fb3", "path": "/api/query", "level": "info", "timestamp": "2026-11-20T14:42:24.129459Z"}
+INFO:     127.0.0.1:49683 - "POST /api/query HTTP/1.1" 200 OK
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 0, "answer_chars": 170, "cached": false, "abstained": false, "verified": true, "coverage": null, "usage": null, "total_ms": 4.4, "event": "query_complete", "session_id": "9fa5e5a4-576a-4338-b2bf-35937d9d447c", "request_id": "480394ac078f452cb37072e660ba401d", "path": "/api/query", "level": "info", "timestamp": "2026-11-20T14:42:24.146407Z"}
+INFO:     127.0.0.1:49683 - "POST /api/query HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+{"flags": [{"kind": "no_citations", "detail": "the answer cites no passage"}], "standalone_query": "what does section 103 BNS say", "event": "answer_flagged", "session_id": "9a90f5b4-d540-4765-b462-96926233f348", "request_id": "a26ff238570d4213953aa740cb553c7e", "path": "/api/query", "level": "warning", "timestamp": "2026-11-20T14:42:46.792673Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 7, "answer_chars": 358, "cached": false, "abstained": false, "verified": false, "coverage": 0.0, "usage": {"prompt_tokens": 1411, "completion_tokens": 96, "total_tokens": 1507}, "retrieval_ms": 644.8, "context_ms": 0.1, "time_to_first_token_ms": 2513.6, "generation_ms": 21990.7, "verify_ms": 4.8, "total_ms": 22644.1, "event": "query_complete", "session_id": "9a90f5b4-d540-4765-b462-96926233f348", "request_id": "a26ff238570d4213953aa740cb553c7e", "path": "/api/query", "level": "info", "timestamp": "2026-11-20T14:42:46.793677Z"}
