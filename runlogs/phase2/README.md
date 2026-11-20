@@ -61,7 +61,7 @@ runlogs\phase2\run_phase2.bat
 | --- | --- | --- |
 | `check` | Git state, Python, Ollama, India Code reachability, GPU, RAM, disk, port 8000 | `01_check.log` |
 | `setup` | pip install (adds qdrant-client, removes faiss/rank-bm25), writes the v2 laptop profile | `02_setup.log` |
-| `quality` | ruff, format check, mypy, 68 tests | `03_quality.log` |
+| `quality` | ruff, format check, mypy, 72 tests (3 run on the downloaded Gazette prints) | `03_quality.log` |
 | `models` | Same as Phase 1: models present, embedder and generator respond | `04_models.log` |
 | `fetch` | Downloads and pins BNS, BNSS, BSA, IPC, IEA; verifies all 58 bundled files | `05_fetch.log` |
 | `parse` | Parses every document that is present into sections/articles and reports each one (no network, no models; runs even if `fetch` failed) | `06_parse.log` |
@@ -88,7 +88,7 @@ git push
 
 | Log | Pass |
 | --- | --- |
-| `03_quality.log` | every `exit=0`; 68 tests, no failures |
+| `03_quality.log` | every `exit=0`; 72 tests, no failures |
 | `05_fetch.log` | `FETCH: all sources present and verified`, `exit=0` |
 | `06_parse.log` | `BUILD STATUS: dry run ok`; BNS ≥ 330, BNSS ≥ 500, BSA ≥ 160 sections, no `[PROBLEM]` lines |
 | `07_build.log` | `BUILD STATUS: live ...`, each document's checks `PASS`, `exit=0`; roughly 4,000–5,500 chunks |
@@ -117,3 +117,5 @@ git push
 | --- | --- | --- |
 | 1 | 2026-11-20 | **fetch failed**: India Code answered `504 Gateway Time-out` for BNS, BNSS and BSA (IPC and IEA downloaded and parsed cleanly: 548 and 179 sections, all checks passed). Build correctly refused to publish an incomplete index; the API reported "index not ready". Fixed: retries with backoff, Gazette-print fallbacks for the three codes and a parser for that layout, dependent steps skipped after a failure, `inspect` exit code. |
 | 2 | 2026-11-20 | **fetch failed for BNS only.** India Code still answered 504 (three tries each); BNSS and BSA came from the PRS Gazette prints; both MHA links for BNS returned 404. Fixed: PRS Gazette print added for BNS, dead MHA links removed, new `parse` step so the parser is tested on whatever was downloaded even if a download fails. |
+| 3 | 2026-11-20 | **Index live; smoke ALL PASSED** (murder → IPC s.302 with repeal status; 2 parallel answers; `/healthz` p95 16 ms). BNS came from the PRS Gazette print. **Inspect failed**: about half the sections of the three Gazette prints had no title (incl. BNS s.103, BNSS s.173, BSA s.63). Cause, found on the downloaded PDFs: an invisible copy of the running head drawn off the page moved the measured body edge on even pages; also number and period drawn as separate pieces, a one-note page, and a page with a numbered list. Fixed (all 358 / 531 / 170 sections titled, verified against the Acts); printer's colophon stripped; chunker `legal-v3` so the next build re-parses. |
+

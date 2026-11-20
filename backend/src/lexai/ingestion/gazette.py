@@ -28,7 +28,7 @@ from typing import Any
 from pypdf import PageObject
 
 _MASTHEAD_TEST = re.compile(r"PUBLISHED\s+BY\s+AUTHORITY")
-_SECTION_MARK = re.compile(r"^\s*(\d{1,3}[A-Z]{0,3})\.(?:\s|$)")
+_SECTION_MARK = re.compile(r"^\s*(\d{1,3}[A-Z]{0,3})\.(?:\s|$|(?=[A-Z(“\"]))")
 _CITATION_NOTE = re.compile(r"^\s*\d{1,3}\s+of\s+\d{4}\.?\s*$")
 _RUNNING_HEAD = re.compile(
     r"^\s*(?:\d+\s+)?(?:SEC\.\s*\d+\]\s*)?THE\s+GAZETTE\s+OF\s+INDIA\s+EXTRAORDINARY.*$", re.I
@@ -52,6 +52,15 @@ _MASTHEAD_LINES = [
         r"^\s*xxxGIDHxxx",
     )
 ]
+# Printer's colophon and the signature of the Legislative Counsel at the end of the Act.
+_COLOPHON = re.compile(
+    r"^\s*(?:(?:UPLOADED|PRINTED)\s+BY\s+THE\s+MANAGER,\s+GOVERNMENT\s+OF\s+INDIA\s+PRESS"
+    r"|AND\s+PUBLISHED\s+BY\s+THE\s+CONTROLLER\s+OF\s+PUBLICATIONS"
+    r"|MGIPMRND\s*[—–-]"
+    r"|.*(?:Legislative\s+Counsel|Secretary)\s+to\s+the\s+Govt?\.?\s+of\s+India\.?\s*$)",
+    re.I,
+)
+_SIGNATORY = re.compile(r"^\s*[A-Z][A-Z .]{3,40},\s*$")
 # Legacy (Krutidev-style) Hindi extracts as Latin gibberish: letters glued to `/ ; [ ] ` @`
 # or the characters ª ñ ¼ ½. Only applied to masthead pages.
 _LEGACY_HINDI = re.compile(r"[ªñ¼½]|[A-Za-z][/;`@\[\]][A-Za-z]|[A-Za-z]\.[A-Z][a-z]?\b")
@@ -107,16 +116,44 @@ def _fragments(page: PageObject) -> tuple[str, list[Fragment]]:
 
 
 def _mode(values: list[float], bucket: float = 4.0) -> float | None:
+    """Mean of the values in the most common bucket (the bucket edge can be off by `bucket`)."""
     if not values:
         return None
-    counts = Counter(round(v / bucket) for v in values)
-    return counts.most_common(1)[0][0] * bucket
+    key = Counter(round(v / bucket) for v in values).most_common(1)[0][0]
+    members = [v for v in values if round(v / bucket) == key]
+    return sum(members) / len(members)
 
 
-def _layout(frags: list[Fragment], width: float) -> tuple[PageLayout, list[str]]:
-    """Find section marks and marginal notes; return the layout and the note lines to remove."""
+_BARE_NUMBER = re.compile(r"^\s*\d{1,3}[A-Z]{0,3}\s*$")
+
+
+def _join_split_marks(frags: list[Fragment]) -> list[Fragment]:
+    """Some prints draw a section number and its period separately: '144' then '. Whoever'."""
+    out: list[Fragment] = []
+    for f in frags:
+        prev = out[-1] if out else None
+        if (
+            prev is not None
+            and _BARE_NUMBER.match(prev.text)
+            and f.text.startswith(".")
+            and abs(prev.y - f.y) < 1.0
+        ):
+            out[-1] = Fragment(prev.x, prev.y, prev.text.strip() + f.text)
+        else:
+            out.append(f)
+    return out
+
+
+def _layout(
+    frags: list[Fragment], width: float, body_x: float | None, body_left: float | None
+) -> tuple[PageLayout, list[str]]:
+    """
+    Find section marks and marginal notes; return the layout and the note lines to remove.
+    `body_x` (where section numbers start) and `body_left` (the left edge of body text)
+    are measured over the whole document: on a single page a numbered list or a page
+    without full-width lines at the edge would mislead a per-page guess.
+    """
     mark_frags = [f for f in frags if _SECTION_MARK.match(f.text)]
-    body_x = _mode([f.x for f in mark_frags])
     marks = []
     if body_x is not None:
         for f in mark_frags:
@@ -130,16 +167,17 @@ def _layout(frags: list[Fragment], width: float) -> tuple[PageLayout, list[str]]
     def short(f: Fragment) -> bool:
         return all(len(line.strip()) <= MAX_NOTE_LINE for line in f.text.split("\n"))
 
-    # The body column starts at the left edge of its long lines; notes sit clearly left
-    # of it or past the right end of the body (body lines are ~60% of the page wide).
-    long_x = [f.x for f in frags if any(len(line) > 40 for line in f.text.split("\n"))]
-    body_left = min(long_x) if long_x else 0.2 * width
+    # Notes sit clearly left of the body or past its right end (body lines are ~60% of
+    # the page wide).
+    if body_left is None:
+        body_left = 0.2 * width
 
     def outside_body(x: float) -> bool:
         return x < body_left - 20 or x > body_left + 0.6 * width
 
     outer = [f for f in frags if outside_body(f.x) and short(f) and sum(c.isalpha() for c in f.text) >= 3]
-    columns = [x for x, n in Counter(round(f.x / 4) * 4 for f in outer).items() if n >= 2]
+    # Outside the body there is nothing but notes and citations, so one note is enough.
+    columns = list({round(f.x / 4) * 4 for f in outer})
     in_margin = [
         f
         for f in frags
@@ -176,20 +214,34 @@ def _layout(frags: list[Fragment], width: float) -> tuple[PageLayout, list[str]]
     for g in groups:
         title = ""
         for frag in g:
-            title = title[:-1] + frag.text if title.endswith("-") else f"{title} {frag.text}".strip()
+            # Gazette notes are not hyphenated by the typesetter: a line ending in "-" is a
+            # real compound ("search-/warrant", "non-/treatment"), so keep the hyphen.
+            title = title + frag.text if title.endswith("-") else f"{title} {frag.text}".strip()
         notes.append((g[0].y, title.rstrip(".").strip()))
     return PageLayout(marks, notes), removed
 
 
 def _remove_lines(text: str, remove: list[str], masthead: bool) -> str:
     budget = Counter(remove)
-    kept = []
+    kept: list[str] = []
+    after_designation = False
     for line in text.split("\n"):
         stripped = line.strip()
+        if after_designation and _SIGNATORY.match(line):  # name printed after the designation
+            after_designation = False
+            continue
+        after_designation = False
         if budget.get(stripped, 0) > 0:
             budget[stripped] -= 1
             continue
         if _RUNNING_HEAD.match(line):
+            continue
+        if _COLOPHON.match(line):
+            if re.search(r"of\s+India", line):
+                if kept and _SIGNATORY.match(kept[-1]):
+                    kept.pop()  # the officer's name above the designation
+                else:
+                    after_designation = True
             continue
         if masthead and any(p.match(line) for p in _MASTHEAD_LINES):
             continue
@@ -200,16 +252,35 @@ def _remove_lines(text: str, remove: list[str], masthead: bool) -> str:
 
 
 def extract_gazette_pages(pages: list[PageObject]) -> tuple[list[str], list[PageLayout]]:
-    texts: list[str] = []
-    layouts: list[PageLayout] = []
+    extracted: list[tuple[str, list[Fragment], float] | None] = []
     for page in pages:
         try:
             raw, frags = _fragments(page)
         except Exception:  # malformed page: keep going, the build checks catch thin documents
+            extracted.append(None)
+            continue
+        box = page.mediabox
+        left, bottom = float(box.left), float(box.bottom)
+        right, top = float(box.right), float(box.top)
+        # Some prints draw an invisible copy of the running head off the page (e.g. at
+        # y < 0); it would pull the measured body edge to x = 0. Use only what is visible.
+        visible = _join_split_marks([f for f in frags if left < f.x < right and bottom <= f.y <= top])
+        extracted.append((raw, visible, right - left))
+
+    pages_ok = [e for e in extracted if e]
+    body_x = _mode([f.x for e in pages_ok for f in e[1] if _SECTION_MARK.match(f.text)])
+    # Left edge of the body: where most full lines start. (Not the minimum: schedule tables
+    # and the masthead have wide lines starting further left.)
+    body_left = _mode([f.x for e in pages_ok for f in e[1] if any(len(ln) > 40 for ln in f.text.split("\n"))])
+    texts: list[str] = []
+    layouts: list[PageLayout] = []
+    for e in extracted:
+        if e is None:
             texts.append("")
             layouts.append(PageLayout())
             continue
-        layout, note_lines = _layout(frags, float(page.mediabox.width))
+        raw, visible, width = e
+        layout, note_lines = _layout(visible, width, body_x, body_left)
         masthead = bool(_MASTHEAD_TEST.search(raw))
         texts.append(_remove_lines(raw, note_lines, masthead))
         layouts.append(layout)

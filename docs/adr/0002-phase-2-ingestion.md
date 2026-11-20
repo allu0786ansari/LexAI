@@ -43,8 +43,13 @@ database that can run embedded on a laptop and as a server in production.
    notes out of order. `gazette.py` records where every text fragment is drawn,
    matches each note to the section number at the same height (within 6
    points), and removes notes, mastheads, running heads and legacy-font Hindi
-   from the body. This makes the PRS India Gazette copies usable fallbacks for
-   BNS, BNSS and BSA, and turns the CLA 2018 print into 26 titled sections.
+   from the body, along with the printer's colophon. Column positions (section
+   numbers, body edge) are measured over the whole document, and only fragments
+   drawn inside the page are used: the PRS prints draw an invisible copy of the
+   running head below the page, which threw off a per-page estimate on every
+   even page. This makes the PRS India Gazette copies usable fallbacks for BNS,
+   BNSS and BSA (all 358 / 531 / 170 sections titled) and turns the CLA 2018
+   print into 26 titled sections.
    Statutes in neither layout (the Maharashtra Prisons Act compilation) are
    chunked as plain text with a warning when `min_units` is 0.
 5. **Repeal status is data, not prose.** `repealed_on` and `replaced_by` travel
@@ -89,8 +94,8 @@ database that can run embedded on a laptop and as a server in production.
   keeps 2,400 and 12,000.
 - Embedded Qdrant allows one process at a time: the API must be stopped while
   building. Production uses the server mode, where this does not apply.
-- The chunker version moved to `legal-v2` with the Gazette parser, so the first
-  build after it re-embeds everything.
+- The chunker version moved to `legal-v3` with the Gazette parser, so the first
+  build after it re-parses and re-embeds everything.
 - Search quality is only smoke-tested in this phase (`scripts/inspect_index.py`).
   Retrieval metrics and the reranker comparison come with the evaluation set in
   Phases 3–4.

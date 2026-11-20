@@ -40,7 +40,7 @@ from lexai.domain.models import Chunk, ChunkMetadata
 from lexai.ingestion.manifest import DocumentSpec
 from lexai.ingestion.parsing import DocumentText, extract_sections, normalize_for_match, split_text
 
-CHUNKER_VERSION = "legal-v2"
+CHUNKER_VERSION = "legal-v3"
 _NAMESPACE = uuid.UUID("5b0c8a2e-6f1d-4c7a-9a43-1f2e3d4c5b6a")
 
 _HEADING = re.compile(
@@ -56,7 +56,10 @@ _SCHEDULE = re.compile(
     r"(?P<ord>FIRST|SECOND|THIRD|FOURTH|FIFTH|SIXTH|SEVENTH|EIGHTH|NINTH|TENTH|ELEVENTH|TWELFTH)?"
     r"[ \t]*SCHEDULE[ \t]*\.?[ \t]*$"
 )
-_GAZETTE_HEADING = re.compile(r"(?m)^[ \t]*(?P<num>\d{1,3}[A-Z]{0,3})\.[ \t]+(?=\S)")
+# `103. (1) Whoever`, also `192.Whoever` (no space) and `126.` alone on its line.
+_GAZETTE_HEADING = re.compile(
+    r"(?m)^[ \t]*(?P<num>\d{1,3}[A-Z]{0,3})\.(?:[ \t]+(?=\S)|(?=[A-Z(“\"])|[ \t]*$)"
+)
 _TOC_LINE = re.compile(r"^\s*\d{1,3}[A-Z]{0,3}\.\s+[^—–]*$")
 MAX_SECTION_GAP = 60
 

@@ -315,6 +315,75 @@ def test_marginal_note_is_matched_by_height_within_tolerance() -> None:
     assert layout.title_for("7", used) is None  # each mark is used once
 
 
+RAW = REPO_ROOT / "data" / "raw"
+GAZETTE_CODES = [
+    # (document, sections, {section: title}) - the Gazette prints from PRS India
+    (
+        "bns-2023",
+        358,
+        {
+            "1": "Short title, commencement and application",
+            "103": "Punishment for murder",
+            "144": "Exploitation of a trafficked person",
+            "192": "Wantonly giving provocation with intent to cause riot-if rioting be committed; if not committed",
+            "318": "Cheating",
+            "358": "Repeal and savings",
+        },
+    ),
+    (
+        "bnss-2023",
+        531,
+        {
+            "35": "When police may arrest without warrant",
+            "173": "Information in cognizable cases",
+            "482": "Direction for grant of bail to person apprehending arrest",
+        },
+    ),
+    (
+        "bsa-2023",
+        170,
+        {"1": "Short title, application and commencement", "63": "Admissibility of electronic records"},
+    ),
+]
+
+
+@pytest.mark.parametrize(("doc_id", "sections", "titles"), GAZETTE_CODES)
+def test_real_gazette_prints_of_the_new_codes(doc_id: str, sections: int, titles: dict[str, str]) -> None:
+    """Runs where `fetch` has downloaded the PRS Gazette prints (skipped otherwise)."""
+    from lexai.ingestion.manifest import read_lock
+    from lexai.ingestion.parsing import load_document
+
+    path = RAW / f"{doc_id}.pdf"
+    pin = read_lock(REPO_ROOT / "data" / "manifest.lock.json").get(doc_id)
+    if not path.exists() or pin is None or "prsindia" not in pin.url:
+        pytest.skip("PRS Gazette print not downloaded")
+    spec = next(
+        d for d in expand(load_manifest(REPO_ROOT / "data" / "manifest.yaml"), BUNDLED) if d.id == doc_id
+    )
+    doc = load_document(path)
+    parsed = build_chunks(spec, doc, "sha", path.name, 2400, 200)
+    assert parsed.problems == [] and parsed.warnings == []
+    found = {
+        c.metadata.unit: c.metadata.unit_title for c in parsed.chunks if c.metadata.unit_label == "Section"
+    }
+    assert len(found) == sections
+    for number, title in titles.items():
+        assert found[number] == title
+    for noise in ("GAZETTE OF INDIA", "PUBLISHED BY", "Legislative Counsel"):
+        assert noise not in doc.text
+
+
+def test_split_section_numbers_are_joined_and_column_is_the_mean() -> None:
+    from lexai.ingestion.gazette import Fragment, _join_split_marks, _mode
+
+    frags = [Fragment(142, 284, "144"), Fragment(156, 284, ". "), Fragment(160, 284, "(1) Whoever")]
+    joined = _join_split_marks(frags)
+    assert [f.text for f in joined] == ["144. ", "(1) Whoever"]
+    # the bucket edge would be 140; the marks are at ~141.7, so a mark at 147 is within tolerance
+    mode = _mode([141.7] * 20 + [147.0])
+    assert mode is not None and abs(mode - 141.7) < 0.5
+
+
 def test_env_profile_is_read_from_the_marker_line(tmp_path: Path) -> None:
     env = tmp_path / ".env"
     assert env_profile(env).startswith("none")
