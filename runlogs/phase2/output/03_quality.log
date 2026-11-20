@@ -18,15 +18,15 @@ configfile: pyproject.toml
 testpaths: tests
 plugins: anyio-4.16.0, platformdirs-4.14.7, asyncio-1.5.0, respx-0.23.1
 asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
-collected 68 items
+collected 72 items
 
-tests\api\test_api.py .............                                      [ 19%]
-tests\unit\test_embedder.py .......                                      [ 29%]
-tests\unit\test_fetch_and_build.py ..........                            [ 44%]
-tests\unit\test_ingestion.py ......................                      [ 76%]
-tests\unit\test_llm_client.py ......                                     [ 85%]
+tests\api\test_api.py .............                                      [ 18%]
+tests\unit\test_embedder.py .......                                      [ 27%]
+tests\unit\test_fetch_and_build.py ..........                            [ 41%]
+tests\unit\test_ingestion.py ..........................                  [ 77%]
+tests\unit\test_llm_client.py ......                                     [ 86%]
 tests\unit\test_retrieval.py ..........                                  [100%]
 
-============================= 68 passed in 19.21s =============================
+============================= 72 passed in 25.55s =============================
 exit=0
 

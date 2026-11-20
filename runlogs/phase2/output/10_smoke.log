@@ -1,5 +1,5 @@
 $ .venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --concurrency 2 --server-log "C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase2\output\10_server.log"
-API starting (pid 22124), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase2\output\10_server.log
+API starting (pid 6804), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase2\output\10_server.log
 API is up.
 readyz: {
   "ready": true,
@@ -19,10 +19,10 @@ readyz: {
     },
     "index": {
       "ok": true,
-      "collection": "lexai_chunks_20261120t130116516461",
-      "chunks": 5100,
+      "collection": "lexai_chunks_20261120t133053900723",
+      "chunks": 5070,
       "documents": 63,
-      "built_at": "2026-11-20T13:01:16+00:00"
+      "built_at": "2026-11-20T13:30:54+00:00"
     },
     "reranker": {
       "ok": true,
@@ -34,8 +34,8 @@ readyz: {
 [PASS] readyz green: HTTP 200
 
 Asking: What is the punishment for murder under the Indian Penal Code?
-[PASS] tokens stream incrementally: 45 token events; first at 37.08s, last at 44.10s (spread 7.01s)
-latency breakdown (ms): {"hyde_ms": null, "retrieval_ms": 337.4, "rerank_ms": null, "time_to_first_token_ms": 36998.3, "total_ms": 44304.1}
+[PASS] tokens stream incrementally: 45 token events; first at 31.66s, last at 38.98s (spread 7.32s)
+latency breakdown (ms): {"hyde_ms": null, "retrieval_ms": 309.7, "rerank_ms": null, "time_to_first_token_ms": 31626.4, "total_ms": 39167.9}
 citations:
   [1] IPC s.302 - Punishment for murder (p.72)  [repealed 2024-07-01; replaced by BNS; applies to earlier offences]
   [2] IPC s.303 - Punishment for murder by life-convict (p.72)  [repealed 2024-07-01; replaced by BNS; applies to earlier offences]
@@ -54,7 +54,7 @@ This is legal information, not legal advice.
 [PASS] repealed IPC is flagged in its citation: 'repealed 2024-07-01; replaced by BNS; applies to earlier offences'
 Running 2 concurrent questions while polling /healthz ...
 [PASS] 2 concurrent answers completed: 2/2 finished
-[PASS] /healthz responsive during generation: 278 probes, p50 4.0 ms, p95 15.7 ms
+[PASS] /healthz responsive during generation: 335 probes, p50 3.8 ms, p95 8.6 ms
 Disconnecting a client after its first token ...
 [PASS] server healthy after client disconnect: HTTP 200
 API stopped.

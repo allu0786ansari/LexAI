@@ -1,19 +1,7 @@
 $ .venv\Scripts\python.exe -m lexai.ingestion.cli fetch
-bns-2023: downloading https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf
-HTTP Request: GET https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf "HTTP/1.1 504 Gateway Time-out"
-{"url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf", "attempt": 1, "error": "HTTP 504 Gateway Time-out", "wait_s": 10.0, "event": "download_retry", "level": "warning", "timestamp": "2026-11-20T12:57:03.211907Z"}
-  https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf: HTTP 504 Gateway Time-out; retrying in 10s ...
-HTTP Request: GET https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf "HTTP/1.1 504 Gateway Time-out"
-{"url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf", "attempt": 2, "error": "HTTP 504 Gateway Time-out", "wait_s": 30.0, "event": "download_retry", "level": "warning", "timestamp": "2026-11-20T12:58:13.519336Z"}
-  https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf: HTTP 504 Gateway Time-out; retrying in 30s ...
-HTTP Request: GET https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf "HTTP/1.1 504 Gateway Time-out"
-{"doc": "bns-2023", "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf", "error": "HTTP 504 Gateway Time-out after 3 attempts", "event": "download_failed", "level": "warning", "timestamp": "2026-11-20T12:59:43.611490Z"}
-bns-2023: downloading https://prsindia.org/files/bills_acts/acts_parliament/2023/The%20Bharatiya%20Nyaya%20Sanhita,%202023.pdf
-HTTP Request: GET https://prsindia.org/files/bills_acts/acts_parliament/2023/The%20Bharatiya%20Nyaya%20Sanhita,%202023.pdf "HTTP/1.1 200 OK"
 document                           status      detail
 ------------------------------------------------------------------------------------------
-bns-2023                           downloaded  https://prsindia.org/files/bills_acts/acts_parliament/2023/The%20Bharatiya%20Nyaya%20Sanhita,%202023.pdf (1.4 MB)
-                                               ! https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf: HTTP 504 Gateway Time-out after 3 attempts
+bns-2023                           cached      https://prsindia.org/files/bills_acts/acts_parliament/2023/The%20Bharatiya%20Nyaya%20Sanhita,%202023.pdf
 bnss-2023                          cached      https://prsindia.org/files/bills_acts/bills_parliament/2023/The%20Bharatiya%20Nagarik%20Suraksha%20Sanhita,%202023.pdf
 bsa-2023                           cached      https://prsindia.org/files/bills_acts/acts_parliament/2023/The%20Bharatiya%20Sakshya%20Bill,%202023.pdf
 ipc-1860                           cached      https://www.iitk.ac.in/gc/pdf/IPC_186045.pdf
@@ -94,7 +82,7 @@ exit=0
 20-11-2026  17:02            508993 iea-1872.pdf
 20-11-2026  17:02            994759 ipc-1860.pdf
                5 File(s)        6138264 bytes
-               2 Dir(s)     47855104000 bytes free
+               2 Dir(s)     47778115584 bytes free
 --- data\manifest.lock.json ---
 {
   "comment": "Pinned downloads for data/manifest.yaml. Commit this file.",
@@ -134,6 +122,5 @@ exit=0
 }
 
 $ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" status --short data
- M data/manifest.lock.json
 exit=0
 

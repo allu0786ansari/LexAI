@@ -90,7 +90,7 @@ Building wheels for collected packages: lexai
   Building editable for lexai (pyproject.toml): started
   Building editable for lexai (pyproject.toml): finished with status 'done'
   Created wheel for lexai: filename=lexai-0.2.0-py3-none-any.whl size=1460 sha256=e29b53cd82476af7d1d4cf337cc1ddb75915d49656fab25456f6a7d9bebae286
-  Stored in directory: C:\Users\LENOVO\AppData\Local\Temp\pip-ephem-wheel-cache-7o3kmcwi\wheels\ee\bd\dc\8d2626dd50ad634da097896e6e0a4949bd83b5df6bf2297031
+  Stored in directory: C:\Users\LENOVO\AppData\Local\Temp\pip-ephem-wheel-cache-fx44x_hs\wheels\ee\bd\dc\8d2626dd50ad634da097896e6e0a4949bd83b5df6bf2297031
 Successfully built lexai
 Installing collected packages: lexai
   Attempting uninstall: lexai

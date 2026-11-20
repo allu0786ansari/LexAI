@@ -8,7 +8,7 @@ phase-2-ingestion
 exit=0
 
 $ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse HEAD
-2c1f688219e0aa5639bf378ff4419bd377af3594
+52a4c865f676cf39ad32cf592cb66f4d101ae456
 exit=0
 
 $ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" status --short
@@ -35,10 +35,10 @@ exit=0
 
 $ systeminfo (memory lines)
 Total Physical Memory:         7,975 MB
-Available Physical Memory:     1,615 MB
+Available Physical Memory:     1,766 MB
 
 $ free disk space on the repository drive
-48431861760 bytes free
+47779409920 bytes free
 
 $ anything listening on port 8000 (a running LexAI API locks the index)
 nothing on port 8000
