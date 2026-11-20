@@ -39,6 +39,9 @@ class FakeEmbedder:
     def format_query(self, query: str) -> str:
         return query
 
+    def format_document(self, text: str) -> str:
+        return text
+
     def _vec(self, text: str) -> list[float]:
         v = np.zeros(DIM, dtype=np.float32)
         for tok in tokenize(text) or ["empty"]:

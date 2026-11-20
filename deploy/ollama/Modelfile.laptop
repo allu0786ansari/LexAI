@@ -1,0 +1,16 @@
+# LexAI generator for small laptops (8 GB RAM, <= 4 GB GPU): Qwen2.5-7B-Instruct, 4-bit.
+#
+# Same model and served name as deploy/ollama/Modelfile, but a 4K context:
+# the KV cache and prompt processing are half the size, which matters when
+# part of the model runs on the CPU. The laptop profile
+# (deploy/env/laptop-8gb.env) sends at most 5 passages, which fits in 4K.
+#
+# Build once:   ollama pull qwen2.5:7b-instruct-q4_K_M
+#               ollama create qwen2.5-7b-instruct -f deploy\ollama\Modelfile.laptop
+
+FROM qwen2.5:7b-instruct-q4_K_M
+
+PARAMETER num_ctx 4096
+PARAMETER temperature 0.2
+PARAMETER top_p 0.8
+PARAMETER repeat_penalty 1.05

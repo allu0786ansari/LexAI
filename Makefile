@@ -1,4 +1,4 @@
-.PHONY: install lint format typecheck test check ingest ingest-dry serve smoke
+.PHONY: requirements install lint format typecheck test check ingest ingest-dry serve smoke
 
 BACKEND := backend
 
@@ -30,3 +30,9 @@ serve:
 
 smoke:
 	cd $(BACKEND) && uv run python scripts/smoke_phase1.py
+
+# Regenerate the pip requirement files (used on Windows without uv) from uv.lock.
+requirements:
+	cd $(BACKEND) && H="# Generated from uv.lock - do not edit. Regenerate: make requirements" && \
+	  { echo "$$H"; uv export --no-hashes --no-emit-project --no-dev --frozen -q | grep -v '^ *#'; } > requirements.txt && \
+	  { echo "$$H"; echo "-r requirements.txt"; uv export --no-hashes --no-emit-project --only-group dev --frozen -q | grep -v '^ *#'; } > requirements-dev.txt

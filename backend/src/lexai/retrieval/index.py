@@ -29,7 +29,7 @@ from lexai.retrieval.bm25 import BM25Index
 INDEX_FILE = "index.faiss"
 CHUNKS_FILE = "chunks.jsonl"
 META_FILE = "index_meta.json"
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 
 @dataclass(frozen=True)
@@ -37,6 +37,7 @@ class IndexMeta:
     schema_version: int
     embedding_model: str
     dimension: int
+    document_prefix: str
     chunk_count: int
     source_files: list[str]
     built_at: str
@@ -72,7 +73,13 @@ class LocalIndex:
     # ---- build / persist ---------------------------------------------------
 
     @classmethod
-    def build(cls, chunks: list[Chunk], vectors: list[list[float]], embedding_model: str) -> LocalIndex:
+    def build(
+        cls,
+        chunks: list[Chunk],
+        vectors: list[list[float]],
+        embedding_model: str,
+        document_prefix: str = "",
+    ) -> LocalIndex:
         if len(chunks) != len(vectors):
             raise ValueError(f"{len(chunks)} chunks but {len(vectors)} vectors")
         if not chunks:
@@ -85,6 +92,7 @@ class LocalIndex:
             schema_version=SCHEMA_VERSION,
             embedding_model=embedding_model,
             dimension=dim,
+            document_prefix=document_prefix,
             chunk_count=len(chunks),
             source_files=sorted({c.metadata.source_file for c in chunks}),
             built_at=datetime.now(UTC).isoformat(),
@@ -100,7 +108,14 @@ class LocalIndex:
         (directory / META_FILE).write_text(json.dumps(self.meta.__dict__, indent=2), encoding="utf-8")
 
     @classmethod
-    def load(cls, directory: Path, *, expected_model: str, expected_dimension: int) -> LocalIndex:
+    def load(
+        cls,
+        directory: Path,
+        *,
+        expected_model: str,
+        expected_dimension: int,
+        expected_document_prefix: str = "",
+    ) -> LocalIndex:
         if not (directory / META_FILE).exists():
             raise IndexNotReady(f"No index at {directory}. Run `lexai-ingest` first.")
         meta = IndexMeta.read(directory)
@@ -113,6 +128,11 @@ class LocalIndex:
             raise IndexMismatchError(
                 f"Index was built with {meta.embedding_model} ({meta.dimension}-dim), but the API is "
                 f"configured for {expected_model} ({expected_dimension}-dim). Re-run ingestion."
+            )
+        if meta.document_prefix != expected_document_prefix:
+            raise IndexMismatchError(
+                f"Index was embedded with document prefix {meta.document_prefix!r}, but the API is "
+                f"configured with {expected_document_prefix!r}. Re-run ingestion."
             )
         faiss_index = faiss.read_index(str(directory / INDEX_FILE))
         with open(directory / CHUNKS_FILE, encoding="utf-8") as f:

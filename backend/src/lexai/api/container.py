@@ -65,6 +65,7 @@ class Container:
                 settings.retrieval.index_dir,
                 expected_model=settings.embed.model,
                 expected_dimension=settings.embed.dimension,
+                expected_document_prefix=settings.embed.document_prefix,
             )
             logger.info("index_loaded", chunks=len(index), built_at=index.meta.built_at)
         except IndexNotReady as exc:

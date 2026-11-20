@@ -1,105 +1,94 @@
-# Phase 1 — run and report
+# Phase 1 — run and report (Windows Command Prompt)
 
-Run these on your machine, then send back the files in `runlogs/phase1/output/`
-(commit and push them on this branch, or paste them in chat). Phase 2 starts
-only after these are reviewed.
+Everything here runs in **cmd.exe** with plain Python and pip — no uv, no
+PowerShell. Run the steps below, then push `runlogs\phase1\output\` (or paste
+the files in chat). Phase 2 starts only after they are reviewed.
 
-## 0. Prerequisites
+## Your machine and the laptop profile
 
-| Tool | Check | Install |
-| --- | --- | --- |
-| git | `git --version` | — |
-| uv | `uv --version` | https://docs.astral.sh/uv/getting-started/installation/ |
-| Ollama (running) | `ollama --version` | https://ollama.com/download |
-| Disk | ~12 GB free | Qwen2.5-7B Q4 (~4.7 GB), Qwen3-Embedding-0.6B, reranker (~2.3 GB), Python deps |
+Your first run showed Windows, **8 GB RAM** and an NVIDIA GPU with **4 GB VRAM**.
+Qwen2.5-7B (4-bit, ~4.7 GB) does not fit in 4 GB of VRAM, so Ollama runs part of
+it on the GPU and the rest on the CPU. It works, but answers take longer to start.
+To leave enough memory, setup writes `backend\.env` from
+`deploy\env\laptop-8gb.env`, which:
 
-uv installs Python 3.12 by itself if needed. A GPU with 8 GB+ VRAM is
-recommended; CPU-only works but is slow (see the tips at the end).
+- builds Qwen2.5-7B with a **4K context** (`deploy\ollama\Modelfile.laptop`)
+- uses **nomic-embed-text** (already on your machine, ~0.3 GB) for embeddings
+- turns the **reranker off** (it needs torch and ~2.5 GB RAM)
+- sends 5 passages per question and allows up to 10 minutes for the first token
 
-## 1. Get the branch
+## 0. Before you start
 
-```bash
-git fetch origin
+1. **Python 3.12** must be installed (3.13 also works; 3.14 does not yet).
+   Check in cmd: `py -0p`. If 3.12 is missing, install it from
+   https://www.python.org/downloads/windows/ and tick **"Add python.exe to PATH"**.
+2. **Ollama** must be running (its icon in the system tray).
+3. **Internet for the model download.** Your last run failed with
+   `lookup registry.ollama.ai: no such host`, which means DNS could not resolve
+   Ollama's server. Check with `nslookup registry.ollama.ai`. If it fails, try
+   another network (e.g. a phone hotspot), or set your DNS to `8.8.8.8`.
+4. **Recommended:** keep the project outside OneDrive (e.g. `C:\dev\LexAI`).
+   OneDrive syncing the virtual environment and the index slows everything and
+   can lock files mid-write.
+5. Close browsers and other heavy apps while the model runs; 8 GB RAM is tight.
+
+## 1. Get the latest branch
+
+```bat
+cd /d C:\Users\LENOVO\OneDrive\Desktop\LexAI
 git checkout phase-1-foundation
 git pull
 ```
 
-## 2–6. Run everything
+## 2. Run everything
 
-**Windows (PowerShell), from the repo root:**
-
-```powershell
-powershell -ExecutionPolicy Bypass -File runlogs\phase1\run_phase1.ps1
+```bat
+runlogs\phase1\run_phase1.bat
 ```
-
-**Linux / macOS / WSL / Git Bash, from the repo root:**
-
-```bash
-bash runlogs/phase1/run_phase1.sh
-```
-
-The scripts run these steps in order; each writes its own log:
 
 | Step | What it does | Log |
 | --- | --- | --- |
-| `env` | Records branch, commit, OS, uv, Python, Ollama, GPU | `01_environment.log` |
-| `install` | `uv sync --extra rerank` (creates `backend/.venv`) | `02_install.log` |
-| `quality` | ruff, format check, mypy, 47 pytest tests | `03_quality.log` |
-| `models` | Pulls Qwen2.5-7B (Q4) and Qwen3-Embedding-0.6B, builds `qwen2.5-7b-instruct` from `deploy/ollama/Modelfile`, checks the embedding size is 1024 | `04_models.log` |
-| `ingest` | Embeds the 59 PDFs into `backend/var/index` | `05_ingest.log` |
-| `smoke` | Starts the API, runs `backend/scripts/smoke_phase1.py`, stops the API | `06_smoke.log`, `06_server.log` |
+| `check` | Windows version, Python versions, Ollama, DNS, GPU, RAM | `01_check.log` |
+| `setup` | Creates `backend\.venv` with Python 3.12, installs pinned packages with pip, writes `backend\.env` (laptop profile) | `02_setup.log` |
+| `quality` | ruff, format check, mypy, 49 tests | `03_quality.log` |
+| `models` | Downloads Qwen2.5-7B (4.7 GB) if missing, builds `qwen2.5-7b-instruct` (4K context), checks the embedder, runs a short generation and reports tokens/second and how much of the model is on the GPU | `04_models.log` |
+| `ingest` | Embeds the 59 PDFs (~2,600 chunks) into `backend\var\index`; takes several minutes | `05_ingest.log` |
+| `smoke` | Starts the API, asks real questions, checks streaming, 2 parallel answers, disconnect handling, stops the API | `06_smoke.log`, `06_server.log` |
 
-To re-run a single step: add `-Steps smoke` (PowerShell) or `smoke` (bash).
+To repeat one step: `runlogs\phase1\run_phase1.bat smoke` (or `models`, `ingest`, ...).
 
-## 7. Outage check (manual, about 2 minutes)
+## 3. Outage check
 
-This proves the API fails loudly when the model server is down.
-
-1. Start the API in one terminal:
-   ```bash
-   cd backend
-   uv run uvicorn lexai.api.app:create_app --factory --port 8000
-   ```
-2. **Stop Ollama.** Windows/macOS: quit Ollama from the tray / menu bar. Linux: `sudo systemctl stop ollama`.
-3. In a second terminal, from `backend/`:
-   ```bash
-   uv run python scripts/smoke_phase1.py --expect-down > ../runlogs/phase1/output/07_outage.log 2>&1
-   ```
-   (PowerShell: same command, then `Get-Content ..\runlogs\phase1\output\07_outage.log`.)
-4. Start Ollama again; stop the API with Ctrl+C.
-
-## 8. Optional: try the UI
-
-With Ollama and the API running (step 7.1):
-
-```bash
-cd frontend
-npm install
-npm run dev
+```bat
+runlogs\phase1\run_phase1.bat outage
 ```
 
-Open http://localhost:5173 and ask a question. Answers now cite passages as
-`[1]`, `[2]`… and stream word by word. The frontend itself changes in Phase 5.
+This **stops Ollama**, checks that LexAI reports the outage instead of
+answering, then starts Ollama again. Log: `07_outage.log`.
 
-## 9. What to send back
+## 4. Send the results
 
-- All files in `runlogs/phase1/output/`
-- Your hardware: GPU model and VRAM (or "CPU only") and RAM
-- Anything that looked wrong, even if the scripts said PASS
+```bat
+git add runlogs\phase1\output
+git commit -m "Phase 1 run logs"
+git push
+```
 
 ## What "pass" looks like
 
-- `03_quality.log`: ruff, format and mypy clean; `47 passed`.
-- `04_models.log`: `qwen2.5-7b-instruct` listed, `num_ctx 8192` in its parameters, `embedding dimension: 1024`.
-- `05_ingest.log`: about 2,600 chunks from 59 files; law types `statute`, `case_law`, `manual` (no `other`).
-- `06_smoke.log`: `SUMMARY: ALL PASSED`; the token spread shows tokens arriving over several seconds.
-- `07_outage.log`: `SUMMARY: ALL PASSED` (readyz 503, error event `upstream_unavailable`).
+- `03_quality.log`: ruff, format and mypy clean; `49 passed`.
+- `04_models.log`: `SUMMARY: ALL PASSED`, `num_ctx=4096`, embedding dimension 768,
+  and a line like `loaded: qwen2.5-7b-instruct ... NN% on GPU`.
+- `05_ingest.log`: 59 files, about 2,608 chunks; law types `statute`, `case_law`, `manual` only.
+- `06_smoke.log`: `SUMMARY: ALL PASSED`.
+- `07_outage.log`: `SUMMARY: ALL PASSED` (readyz 503, error `upstream_unavailable`).
 
-## Tips if something fails
+## If something fails
 
-- **CPU only / slow machine:** set a longer timeout and fewer parallel questions before the smoke step:
-  - PowerShell: `$env:LEXAI_LLM_READ_TIMEOUT_S="600"`, then run with `-Steps smoke -Concurrency 2`
-  - bash: `LEXAI_LLM_READ_TIMEOUT_S=600 SMOKE_CONCURRENCY=2 bash runlogs/phase1/run_phase1.sh smoke`
-- **Reranker too heavy:** set `LEXAI_RERANK_ENABLED=false` and re-run `smoke`. Say so in your report.
-- **Port 8000 busy:** `-Port 8010` (PowerShell) or `LEXAI_PORT=8010` (bash).
-- **`readyz` says model not served:** re-run the `models` step and check `ollama list`.
+- **`Python 3.12 or 3.13 was not found`**: install Python 3.12 (step 0.1), open a new cmd window, run `run_phase1.bat setup`.
+- **Model download fails**: it is a network/DNS problem (step 0.3); fix it, then run `run_phase1.bat models`.
+- **Very slow or "out of memory" with 7B**: switch to the 3B model you already have. Add this line to `backend\.env`, then re-run `smoke`:
+  `LEXAI_LLM_MODEL=qwen2.5:3b-instruct`
+  Report that you did; 7B stays the target for the GPU deployment in Phase 6.
+- **Port 8000 busy**: close the other program, or run the smoke script directly:
+  `cd backend` then `.venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --port 8010`

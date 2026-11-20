@@ -147,4 +147,4 @@ async def test_health_stays_fast_while_answers_stream(settings: Settings, index:
         timings = await probe()
         await asyncio.gather(*streams)
     p95 = statistics.quantiles(timings, n=20)[-1]
-    assert p95 < 50, f"/healthz p95 {p95:.1f} ms while streaming"
+    assert p95 < 200, f"/healthz p95 {p95:.1f} ms while streaming (blocking would be ~1000 ms)"

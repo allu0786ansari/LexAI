@@ -41,6 +41,13 @@ def test_index_refuses_a_different_embedding_model(tmp_path: Path, index: LocalI
         LocalIndex.load(tmp_path / "idx", expected_model="another-model", expected_dimension=DIM)
     with pytest.raises(IndexMismatchError):
         LocalIndex.load(tmp_path / "idx", expected_model=EMBED_MODEL, expected_dimension=DIM * 2)
+    with pytest.raises(IndexMismatchError):
+        LocalIndex.load(
+            tmp_path / "idx",
+            expected_model=EMBED_MODEL,
+            expected_dimension=DIM,
+            expected_document_prefix="search_document: ",
+        )
 
 
 def test_missing_index_is_reported(tmp_path: Path) -> None:

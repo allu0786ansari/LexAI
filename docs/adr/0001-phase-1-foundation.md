@@ -40,3 +40,19 @@ changing the retrieval design (that is Phase 2–3).
 - The existing index must be rebuilt (`lexai-ingest`); old pickle indexes are not read.
 - API paths are unchanged, so the v0.1 frontend keeps working until Phase 5.
 - Evaluation scripts were removed (their scores were not trustworthy); Phase 4 rebuilds them.
+
+## Addendum (2026-11-20, after the first run on the target laptop)
+
+The first run on the developer laptop (Windows, 8 GB RAM, 4 GB VRAM) failed:
+uv was unavailable, and the model download hit a DNS error. Changes:
+
+11. **pip is the supported install path on Windows.** `requirements*.txt` are
+    exported from `uv.lock` (`make requirements`); `run_phase1.bat` uses only
+    cmd, `py`/`python -m venv` and pip. uv remains optional.
+12. **Laptop profile** (`deploy/env/laptop-8gb.env`, `deploy/ollama/Modelfile.laptop`):
+    Qwen2.5-7B stays the generator but with a 4K context, `nomic-embed-text`
+    (768-dim) for embeddings, reranker off, 5 passages, 1 turn of history,
+    10-minute first-token timeout. The server profile is unchanged.
+13. **Embedding prefixes are configurable** (`LEXAI_EMBED_QUERY_PREFIX`,
+    `LEXAI_EMBED_DOCUMENT_PREFIX`) because each model family expects different
+    ones; the document prefix is recorded in the index (schema v3).

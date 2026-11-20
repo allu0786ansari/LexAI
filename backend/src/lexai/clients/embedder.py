@@ -35,9 +35,10 @@ class EmbeddingClient:
         await self._client.aclose()
 
     def format_query(self, query: str) -> str:
-        if not self.settings.query_instruction:
-            return query
-        return f"Instruct: {self.settings.query_instruction}\nQuery: {query}"
+        return f"{self.settings.query_prefix}{query}"
+
+    def format_document(self, text: str) -> str:
+        return f"{self.settings.document_prefix}{text}"
 
     async def _embed_batch(self, texts: Sequence[str]) -> list[list[float]]:
         attempt = 0
@@ -72,14 +73,17 @@ class EmbeddingClient:
                 raise UpstreamUnavailable(f"Malformed embedding response: {exc!r}") from exc
 
     async def embed_documents(self, texts: Sequence[str]) -> list[list[float]]:
+        """Embed passages (the document prefix is added here)."""
+        prepared = [self.format_document(t) for t in texts]
         vectors: list[list[float]] = []
         size = self.settings.batch_size
-        for start in range(0, len(texts), size):
-            vectors.extend(await self._embed_batch(texts[start : start + size]))
+        for start in range(0, len(prepared), size):
+            vectors.extend(await self._embed_batch(prepared[start : start + size]))
         self._check_dimension(vectors)
         return vectors
 
     async def embed_query(self, query: str) -> list[float]:
+        """Embed a search query (the query prefix is added here)."""
         vectors = await self._embed_batch([self.format_query(query)])
         self._check_dimension(vectors)
         return vectors[0]
@@ -94,7 +98,7 @@ class EmbeddingClient:
 
     async def health(self) -> dict[str, Any]:
         """Embed a probe string; verifies reachability and the vector dimension."""
-        vectors = await self._embed_batch(["health probe"])
+        vectors = await self._embed_batch([self.format_query("health probe")])
         dim = len(vectors[0])
         return {
             "reachable": True,

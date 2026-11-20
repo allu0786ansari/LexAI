@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Phase 1 verification for Linux / macOS / WSL / Git Bash.
+# Phase 1 verification for Linux / macOS / WSL (uses uv). On Windows use run_phase1.bat.
 #
 # Run from the repository root:
 #   bash runlogs/phase1/run_phase1.sh            # every step
@@ -12,7 +12,7 @@ set -u
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 OUT="$ROOT/runlogs/phase1/output"
 PORT="${LEXAI_PORT:-8000}"
-CONCURRENCY="${SMOKE_CONCURRENCY:-5}"   # use 2 on CPU-only machines
+CONCURRENCY="${SMOKE_CONCURRENCY:-2}"   # parallel questions in the smoke test
 mkdir -p "$OUT"
 cd "$ROOT/backend"
 
@@ -61,7 +61,7 @@ step_models() {
   log_cmd "$f" ollama list
   log_cmd "$f" ollama show qwen2.5-7b-instruct
   log_cmd "$f" curl -s http://localhost:11434/v1/models
-  log_cmd "$f" uv run python -c "import httpx; r = httpx.post('http://localhost:11434/v1/embeddings', json={'model': 'qwen3-embedding:0.6b', 'input': ['test']}, timeout=120); r.raise_for_status(); print('embedding dimension:', len(r.json()['data'][0]['embedding']))"
+  log_cmd "$f" uv run python scripts/check_models.py
 }
 
 step_ingest() {
@@ -71,18 +71,8 @@ step_ingest() {
 
 step_smoke() {
   local f="$OUT/06_smoke.log"; : > "$f"
-  local server_log="$OUT/06_server.log"; : > "$server_log"
-  uv run uvicorn lexai.api.app:create_app --factory --host 127.0.0.1 --port "$PORT" > "$server_log" 2>&1 &
-  local pid=$!
-  echo "API started (pid $pid). First start downloads the reranker model (~2 GB); waiting up to 15 min ..." | tee -a "$f"
-  for _ in $(seq 1 900); do
-    curl -sf "http://127.0.0.1:$PORT/healthz" >/dev/null 2>&1 && break
-    kill -0 "$pid" 2>/dev/null || { echo "API process exited; see 06_server.log" | tee -a "$f"; return; }
-    sleep 1
-  done
-  log_cmd "$f" uv run python scripts/smoke_phase1.py --base-url "http://127.0.0.1:$PORT" --concurrency "$CONCURRENCY"
-  kill "$pid" 2>/dev/null; wait "$pid" 2>/dev/null
-  echo "API stopped." | tee -a "$f"
+  log_cmd "$f" uv run python scripts/smoke_phase1.py --start-server --port "$PORT" \
+    --concurrency "$CONCURRENCY" --server-log "$OUT/06_server.log"
 }
 
 run_step() {

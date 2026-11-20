@@ -58,6 +58,18 @@ async def embed_with_progress(embedder: EmbeddingClient, texts: list[str]) -> li
     return vectors
 
 
+def _rename_with_retry(src: Path, dst: Path, attempts: int = 10) -> None:
+    """On Windows, OneDrive or antivirus can hold files open for a moment; retry instead of failing."""
+    for attempt in range(attempts):
+        try:
+            src.rename(dst)
+            return
+        except PermissionError:
+            if attempt == attempts - 1:
+                raise
+            time.sleep(0.5 * (attempt + 1))
+
+
 def swap_in(new_dir: Path, live_dir: Path) -> Path | None:
     """Move the live index aside (one backup kept) and the new one into place."""
     backup: Path | None = None
@@ -65,8 +77,8 @@ def swap_in(new_dir: Path, live_dir: Path) -> Path | None:
         backup = live_dir.with_name(live_dir.name + ".backup")
         if backup.exists():
             shutil.rmtree(backup)
-        live_dir.rename(backup)
-    new_dir.rename(live_dir)
+        _rename_with_retry(live_dir, backup)
+    _rename_with_retry(new_dir, live_dir)
     return backup
 
 
@@ -117,11 +129,14 @@ async def run(
     stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     building = index_dir.with_name(f".{index_dir.name}.building-{stamp}")
     try:
-        index = LocalIndex.build(all_chunks, vectors, settings.embed.model)
+        index = LocalIndex.build(all_chunks, vectors, settings.embed.model, settings.embed.document_prefix)
         index.save(building)
         # Load it back exactly as the API would before making it live.
         LocalIndex.load(
-            building, expected_model=settings.embed.model, expected_dimension=settings.embed.dimension
+            building,
+            expected_model=settings.embed.model,
+            expected_dimension=settings.embed.dimension,
+            expected_document_prefix=settings.embed.document_prefix,
         )
         report["seconds"] = round(time.perf_counter() - started, 1)
         (building / "ingestion_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")

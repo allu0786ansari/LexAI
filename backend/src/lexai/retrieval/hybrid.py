@@ -22,11 +22,12 @@ class HybridRetriever:
         `extra_dense_queries` (e.g. a HyDE passage) add their own dense ranked
         list to the fusion; they never replace the user's query.
         """
-        dense_texts = [self.embedder.format_query(query)]
-        dense_texts += [t for t in (extra_dense_queries or []) if t.strip()]
-        vectors_task = asyncio.create_task(self._embed_all(dense_texts))
+        hyde = [t for t in (extra_dense_queries or []) if t.strip()]
+        query_vec_task = asyncio.create_task(self.embedder.embed_query(query))
+        hyde_vec_task = asyncio.create_task(self.embedder.embed_documents(hyde)) if hyde else None
         sparse = await asyncio.to_thread(self.index.sparse_search, query, self.settings.k_sparse)
-        vectors = await vectors_task
+        # HyDE passages are document-like, so they get the document prefix, not the query one.
+        vectors = [await query_vec_task] + (await hyde_vec_task if hyde_vec_task else [])
 
         dense_lists = []
         for vector in vectors:
@@ -43,8 +44,3 @@ class HybridRetriever:
             )
             for h in fused[: self.settings.fused_top_n]
         ]
-
-    async def _embed_all(self, texts: list[str]) -> list[list[float]]:
-        # The first text is already query-formatted; HyDE passages are document-like, so they
-        # are embedded without the query instruction.
-        return await self.embedder.embed_documents(texts)

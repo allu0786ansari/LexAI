@@ -39,7 +39,7 @@ class CrossEncoderReranker:
         except ImportError as exc:  # pragma: no cover - depends on optional extra
             raise ConfigurationError(
                 "Reranking is enabled but sentence-transformers is not installed. "
-                "Run `uv sync --extra rerank`, or set LEXAI_RERANK_ENABLED=false."
+                "Run `pip install -r requirements-rerank.txt`, or set LEXAI_RERANK_ENABLED=false."
             ) from exc
         logger.info("reranker_loading", model=settings.model)
         model = await asyncio.to_thread(CrossEncoder, settings.model)

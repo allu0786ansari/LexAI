@@ -55,8 +55,30 @@ async def test_wrong_dimension_is_a_configuration_error() -> None:
         await client(dim=1024).embed_documents(["a"])
 
 
-def test_query_instruction_is_applied_only_to_queries() -> None:
-    c = EmbeddingClient(EmbedSettings(base_url=BASE, query_instruction="Find law"))
-    assert c.format_query("bail?") == "Instruct: Find law\nQuery: bail?"
-    no_instr = EmbeddingClient(EmbedSettings(base_url=BASE, query_instruction=""))
-    assert no_instr.format_query("bail?") == "bail?"
+def test_prefixes_are_applied_to_queries_and_documents_separately() -> None:
+    c = EmbeddingClient(
+        EmbedSettings(base_url=BASE, query_prefix="search_query: ", document_prefix="search_document: ")
+    )
+    assert c.format_query("bail?") == "search_query: bail?"
+    assert c.format_document("Section 436") == "search_document: Section 436"
+
+
+@respx.mock
+async def test_document_prefix_is_sent_to_the_server() -> None:
+    import json
+
+    route = respx.post(f"{BASE}/embeddings").mock(side_effect=reply)
+    c = EmbeddingClient(EmbedSettings(base_url=BASE, model="m", dimension=3, document_prefix="doc: "))
+    await c.embed_documents(["a"])
+    assert json.loads(route.calls[0].request.content)["input"] == ["doc: a"]
+
+
+@respx.mock
+async def test_health_probe_uses_the_query_prefix() -> None:
+    """nomic-embed-text and similar models expect a prefix on every input, probes included."""
+    import json
+
+    route = respx.post(f"{BASE}/embeddings").mock(side_effect=reply)
+    c = EmbeddingClient(EmbedSettings(base_url=BASE, model="m", dimension=3, query_prefix="search_query: "))
+    assert (await c.health())["dimension_ok"] is True
+    assert json.loads(route.calls[0].request.content)["input"] == ["search_query: health probe"]

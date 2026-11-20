@@ -57,11 +57,17 @@ class EmbedSettings(BaseSettings):
     model: str = "qwen3-embedding:0.6b"
     dimension: int = Field(default=1024, gt=0)
     batch_size: int = Field(default=32, gt=0, le=256)
-    # Qwen3-Embedding is instruction-aware: queries get a task instruction,
-    # documents are embedded as-is. Set to "" for models without instructions.
-    query_instruction: str = (
-        "Given a question about Indian law, retrieve statute sections and judgment passages that answer it"
+    # Text put in front of queries and documents before embedding. Each model
+    # family expects its own:
+    #   qwen3-embedding:  query "Instruct: <task>\nQuery: ", document ""
+    #   nomic-embed-text: query "search_query: ",           document "search_document: "
+    #   bge-m3:           both ""
+    # The document prefix is recorded in the index; changing it requires re-ingestion.
+    query_prefix: str = (
+        "Instruct: Given a question about Indian law, retrieve statute sections and judgment "
+        "passages that answer it\nQuery: "
     )
+    document_prefix: str = ""
     timeout_s: float = Field(default=60.0, gt=0)
     max_retries: int = Field(default=3, ge=0, le=6)
 

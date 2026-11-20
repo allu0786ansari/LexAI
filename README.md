@@ -33,22 +33,38 @@ Browser (React) ──SSE──▶ FastAPI (async)
 
 ## Quick start
 
-Prerequisites: [uv](https://docs.astral.sh/uv/), [Ollama](https://ollama.com), Node 18+ for the UI.
+Prerequisites: Python 3.12, [Ollama](https://ollama.com), Node 18+ for the UI.
+
+### Windows (cmd) — 8 GB laptop profile
+
+```bat
+runlogs\phase1\run_phase1.bat setup models ingest
+cd backend
+.venv\Scripts\python.exe -m uvicorn lexai.api.app:create_app --factory --port 8000
+```
+
+`setup` creates `backend\.venv` with pip and writes `backend\.env` from
+[`deploy/env/laptop-8gb.env`](deploy/env/laptop-8gb.env): Qwen2.5-7B with a 4K
+context, `nomic-embed-text` embeddings, reranker off. See
+[`runlogs/phase1/README.md`](runlogs/phase1/README.md) for details.
+
+### Linux / macOS / GPU server
 
 ```bash
-# 1. Models
-ollama pull qwen2.5:7b-instruct-q4_K_M
-ollama pull qwen3-embedding:0.6b
-ollama create qwen2.5-7b-instruct -f deploy/ollama/Modelfile   # pins an 8K context
-
-# 2. Backend
+ollama pull qwen2.5:7b-instruct-q4_K_M && ollama pull qwen3-embedding:0.6b
+ollama create qwen2.5-7b-instruct -f deploy/ollama/Modelfile     # 8K context
 cd backend
-uv sync --extra rerank            # drop --extra rerank and set LEXAI_RERANK_ENABLED=false to skip torch
-cp ../deploy/.env.example .env    # optional: every value has a default
-uv run lexai-ingest               # builds backend/var/index from backend/Data/*.pdf
-uv run uvicorn lexai.api.app:create_app --factory --port 8000
+python3.12 -m venv .venv && . .venv/bin/activate
+pip install -r requirements-dev.txt -r requirements-rerank.txt && pip install --no-deps -e .
+python -m lexai.ingestion.cli
+uvicorn lexai.api.app:create_app --factory --port 8000
+```
 
-# 3. Frontend (second terminal)
+(`uv sync --extra rerank` works too; `requirements*.txt` are exported from `uv.lock`.)
+
+### Frontend
+
+```bash
 cd frontend && npm install && npm run dev   # http://localhost:5173
 ```
 
@@ -74,15 +90,17 @@ To serve the model with vLLM on a GPU, see [`deploy/vllm/README.md`](deploy/vllm
 
 ## Development
 
+From `backend/`, with the virtual environment's Python (`.venv\Scripts\python.exe` on Windows):
+
 ```bash
-cd backend
-uv run ruff check . && uv run ruff format --check .
-uv run mypy
-uv run pytest
-uv run lexai-ingest --dry-run      # parse and chunk only, no model calls
+python -m ruff check . && python -m ruff format --check .
+python -m mypy
+python -m pytest
+python -m lexai.ingestion.cli --dry-run   # parse and chunk only, no model calls
+python scripts/check_models.py            # are the configured models served and working?
 ```
 
-Or from the repo root: `make check`. Install the git hooks with `uv run pre-commit install`.
+With uv/make: `make check`. Git hooks: `pre-commit install`.
 
 ## Project layout
 
@@ -98,9 +116,9 @@ backend/
     retrieval/    FAISS + BM25 index, RRF fusion, hybrid retriever
     services/     session memory
   tests/          unit and API tests (no model servers needed)
-  scripts/        smoke test against a running stack
+  scripts/        model check and smoke test against a running stack
   Data/           source PDFs (moves to a manifest + download script in Phase 2)
-deploy/           Ollama Modelfile, vLLM notes, .env.example
+deploy/           Ollama Modelfiles (server, laptop), env profiles, vLLM notes
 docs/adr/         architecture decision records
 runlogs/          per-phase verification scripts and their output
 frontend/         React + Vite chat UI
