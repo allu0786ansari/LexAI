@@ -23,7 +23,7 @@ qwen2.5:3b-instruct                 357c53fb659c    1.9 GB    4 months ago
 exit=0
 
 $ .venv\Scripts\python.exe scripts\check_models.py
-Config:   C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.env (profile: laptop-8gb v2)
+Config:   C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.env (profile: laptop-8gb v3)
 LLM:      qwen2.5-7b-instruct at http://localhost:11434/v1
 Embedder: nomic-embed-text (768-dim) at http://localhost:11434/v1
 Reranker: disabled
@@ -35,7 +35,7 @@ Reranker: disabled
 [PASS] embedding dimension matches config: model returns 768, LEXAI_EMBED_DIMENSION=768
 
 Generation test (the first call also loads the model into memory) ...
-[PASS] LLM generates: first token after 24.1s, 53 chunks in 32.4s (~6.4 tokens/s)
+[PASS] LLM generates: first token after 23.7s, 53 chunks in 32.7s (~5.9 tokens/s)
    reply: A First Information Report (FIR) in India is a document registered with the police based on information provided by a complainant about a cognizable offense, which then initiates an investigation. It serves as the first official record of a crime reported to the police.
    loaded: qwen2.5-7b-instruct:latest  5.2 GB total, 50% on GPU
 

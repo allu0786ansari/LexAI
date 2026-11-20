@@ -18,11 +18,11 @@ configfile: pyproject.toml
 testpaths: tests
 plugins: anyio-4.16.0, platformdirs-4.14.7, asyncio-1.5.0, respx-0.23.1
 asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
-collected 137 items
+collected 139 items
 
-tests\api\test_api.py .......................                            [ 16%]
-tests\unit\test_answering.py ..........F........                         [ 30%]
-tests\unit\test_embedder.py .......                                      [ 35%]
+tests\api\test_api.py FFF........FF.....FF...                            [ 16%]
+tests\unit\test_answering.py .....................                       [ 31%]
+tests\unit\test_embedder.py .......                                      [ 36%]
 tests\unit\test_fetch_and_build.py ..........                            [ 43%]
 tests\unit\test_ingestion.py ..........................                  [ 62%]
 tests\unit\test_llm_client.py ......                                     [ 66%]
@@ -30,23 +30,202 @@ tests\unit\test_query.py ....................................            [ 92%]
 tests\unit\test_retrieval.py ..........                                  [100%]
 
 ================================== FAILURES ===================================
-____________________ test_memory_cache_expires_and_evicts _____________________
+_________ test_query_streams_meta_citations_tokens_verification_done __________
 
-    async def test_memory_cache_expires_and_evicts() -> None:
-        cache = MemoryCache(max_entries=2, ttl_s=60)
-        await cache.set("a", {"v": 1})
-        await cache.set("b", {"v": 2})
-        assert await cache.get("a") == {"v": 1}
-        await cache.set("c", {"v": 3})  # evicts the least recently used: b
-        assert await cache.get("b") is None and await cache.get("c") == {"v": 3}
-        expired = MemoryCache(max_entries=2, ttl_s=0)
-        await expired.set("a", {"v": 1})
->       assert await expired.get("a") is None
-E       AssertionError: assert {'v': 1} is None
+settings = <lexai.core.settings.Settings object at 0x00000241700EF230>
+live_store = (<lexai.retrieval.qdrant_store.QdrantStore object at 0x0000024170320650>, 'lexai_chunks_20261120t145554054495', BuildM...tution': DocBuildInfo(sha256='x', chunks=1, title='t'), 'it-act-2000': DocBuildInfo(sha256='x', chunks=1, title='t')}))
 
-tests\unit\test_answering.py:165: AssertionError
+    async def test_query_streams_meta_citations_tokens_verification_done(
+        settings: Settings, live_store: Live
+    ) -> None:
+        app = create_app(settings, await make_container(settings, live_store))
+        async with client_for(app) as client:
+            response = await client.post("/api/query", json={"question": "What is the punishment for murder?"})
+        assert response.status_code == 200
+        events = parse_sse(response.text)
+        kinds = [kind for kind, _ in events]
+        assert kinds[:2] == ["meta", "citations"]
+        assert kinds[-2:] == ["verification", "done"]
+        assert set(kinds[2:-2]) == {"token"}
+    
+        meta = events[0][1]
+        assert isinstance(meta, dict)
+        assert meta["intent"] == "concept" and meta["applicable_code"] == "new"
+        assert meta["request_id"] == response.headers["x-request-id"]
+    
+        citations = events[1][1]
+        assert isinstance(citations, list)
+        assert {c["label"] for c in citations[:2]} == {"IPC s.302", "BNS s.103"}
+        assert citations[0]["ref"] == 1
+        ipc = next(c for c in citations if c["label"] == "IPC s.302")
+        assert ipc["unit_title"] == "Punishment for murder"
+        assert ipc["status"].startswith("repealed 2024-07-01; replaced by BNS")
+        assert ipc["sections"][0] == "IPC s.302" and ipc["page"] == 1
+    
+        done = events[-1][1]
+        assert isinstance(done, dict)
+        tokens = "".join(data["text"] for kind, data in events if kind == "token")  # type: ignore[index]
+        assert done["answer"] == tokens
+        assert done["request_id"] == response.headers["x-request-id"]
+>       assert done["latency"]["time_to_first_token_ms"] is not None
+E       assert None is not None
+
+tests\api\test_api.py:64: AssertionError
+---------------------------- Captured stdout call -----------------------------
+2026-11-20 20:25:54 [info     ] correspondence_ready           sections=2
+{"best_dense": 0.5656854333786077, "best_rerank": null, "event": "abstained", "path": "/api/query", "request_id": "6ff8920cc4f64bd694483223dcb67b1f", "session_id": "112dab3e-c4dc-40f2-b6e7-3ac7aba2815a", "level": "info", "timestamp": "2026-11-20T14:55:54.221954Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t145554054495", "context_chunks": 3, "answer_chars": 160, "cached": false, "abstained": true, "verified": true, "coverage": null, "usage": null, "retrieval_ms": 3.9, "total_ms": 5.4, "event": "query_complete", "path": "/api/query", "request_id": "6ff8920cc4f64bd694483223dcb67b1f", "session_id": "112dab3e-c4dc-40f2-b6e7-3ac7aba2815a", "level": "info", "timestamp": "2026-11-20T14:55:54.221954Z"}
+HTTP Request: POST http://test/api/query "HTTP/1.1 200 OK"
+_____________ test_prompt_contains_numbered_passages_and_history ______________
+
+settings = <lexai.core.settings.Settings object at 0x000002417056AE70>
+live_store = (<lexai.retrieval.qdrant_store.QdrantStore object at 0x0000024170650650>, 'lexai_chunks_20261120t145554451598', BuildM...tution': DocBuildInfo(sha256='x', chunks=1, title='t'), 'it-act-2000': DocBuildInfo(sha256='x', chunks=1, title='t')}))
+
+    async def test_prompt_contains_numbered_passages_and_history(settings: Settings, live_store: Live) -> None:
+        llm = FakeLLM()
+        app = create_app(settings, await make_container(settings, live_store, llm=llm))
+        async with client_for(app) as client:
+            session = (await client.post("/api/session")).json()["session_id"]
+            await client.post("/api/query", json={"question": "murder punishment", "session_id": session})
+            await client.post("/api/query", json={"question": "and for cheating?", "session_id": session})
+>       system, *rest = llm.calls[1]
+                        ^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+tests\api\test_api.py:74: IndexError
+---------------------------- Captured stdout call -----------------------------
+{"sections": 2, "event": "correspondence_ready", "level": "info", "timestamp": "2026-11-20T14:55:54.507978Z"}
+HTTP Request: POST http://test/api/session "HTTP/1.1 200 OK"
+{"best_dense": 0.5656854333786077, "best_rerank": null, "event": "abstained", "path": "/api/query", "request_id": "995da2650b4f479e861c072c2fa82c0f", "session_id": "17b64cae-d25c-4cc0-a9c5-419eaa622e2d", "level": "info", "timestamp": "2026-11-20T14:55:54.520238Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t145554451598", "context_chunks": 3, "answer_chars": 160, "cached": false, "abstained": true, "verified": true, "coverage": null, "usage": null, "retrieval_ms": 2.5, "total_ms": 3.8, "event": "query_complete", "path": "/api/query", "request_id": "995da2650b4f479e861c072c2fa82c0f", "session_id": "17b64cae-d25c-4cc0-a9c5-419eaa622e2d", "level": "info", "timestamp": "2026-11-20T14:55:54.521235Z"}
+HTTP Request: POST http://test/api/query "HTTP/1.1 200 OK"
+{"best_dense": 0.13608276455774676, "best_rerank": null, "event": "abstained", "path": "/api/query", "request_id": "a142ecca8a9e4093ba2535bfd95af424", "session_id": "17b64cae-d25c-4cc0-a9c5-419eaa622e2d", "level": "info", "timestamp": "2026-11-20T14:55:54.525235Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t145554451598", "context_chunks": 3, "answer_chars": 160, "cached": false, "abstained": true, "verified": true, "coverage": null, "usage": null, "condense_ms": 0.2, "retrieval_ms": 1.8, "total_ms": 3.4, "event": "query_complete", "path": "/api/query", "request_id": "a142ecca8a9e4093ba2535bfd95af424", "session_id": "17b64cae-d25c-4cc0-a9c5-419eaa622e2d", "level": "info", "timestamp": "2026-11-20T14:55:54.526317Z"}
+HTTP Request: POST http://test/api/query "HTTP/1.1 200 OK"
+___________________ test_llm_outage_becomes_an_error_event ____________________
+
+settings = <lexai.core.settings.Settings object at 0x00000241706502F0>
+live_store = (<lexai.retrieval.qdrant_store.QdrantStore object at 0x00000241706AE840>, 'lexai_chunks_20261120t145554559057', BuildM...tution': DocBuildInfo(sha256='x', chunks=1, title='t'), 'it-act-2000': DocBuildInfo(sha256='x', chunks=1, title='t')}))
+
+    async def test_llm_outage_becomes_an_error_event(settings: Settings, live_store: Live) -> None:
+        llm = FakeLLM(error=UpstreamUnavailable("connection refused"))
+        app = create_app(settings, await make_container(settings, live_store, llm=llm))
+        async with client_for(app) as client:
+            response = await client.post("/api/query", json={"question": "murder"})
+        kind, data = parse_sse(response.text)[-1]
+>       assert kind == "error"
+E       AssertionError: assert 'done' == 'error'
+E         
+E         - error
+E         + done
+
+tests\api\test_api.py:85: AssertionError
+---------------------------- Captured stdout call -----------------------------
+{"sections": 2, "event": "correspondence_ready", "level": "info", "timestamp": "2026-11-20T14:55:54.613079Z"}
+{"best_dense": 0.4000000059604645, "best_rerank": null, "event": "abstained", "path": "/api/query", "request_id": "cb71f4e98de64351b842d83b73a70a56", "session_id": "f4280cc6-7792-4f14-8015-2409101c4509", "level": "info", "timestamp": "2026-11-20T14:55:54.621071Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t145554559057", "context_chunks": 3, "answer_chars": 160, "cached": false, "abstained": true, "verified": true, "coverage": null, "usage": null, "retrieval_ms": 1.6, "total_ms": 2.6, "event": "query_complete", "path": "/api/query", "request_id": "cb71f4e98de64351b842d83b73a70a56", "session_id": "f4280cc6-7792-4f14-8015-2409101c4509", "level": "info", "timestamp": "2026-11-20T14:55:54.621071Z"}
+HTTP Request: POST http://test/api/query "HTTP/1.1 200 OK"
+______________ test_prompt_passages_carry_act_section_and_status ______________
+
+settings = <lexai.core.settings.Settings object at 0x000002417094B9B0>
+live_store = (<lexai.retrieval.qdrant_store.QdrantStore object at 0x00000241707D9DF0>, 'lexai_chunks_20261120t145556059036', BuildM...tution': DocBuildInfo(sha256='x', chunks=1, title='t'), 'it-act-2000': DocBuildInfo(sha256='x', chunks=1, title='t')}))
+
+    async def test_prompt_passages_carry_act_section_and_status(settings: Settings, live_store: Live) -> None:
+        llm = FakeLLM()
+        app = create_app(settings, await make_container(settings, live_store, llm=llm))
+        async with client_for(app) as client:
+            await client.post("/api/query", json={"question": "punishment for murder"})
+>       system = llm.calls[0][0].content
+                 ^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+tests\api\test_api.py:172: IndexError
+---------------------------- Captured stdout call -----------------------------
+{"sections": 2, "event": "correspondence_ready", "level": "info", "timestamp": "2026-11-20T14:55:56.133717Z"}
+{"best_dense": 0.5656854333786077, "best_rerank": null, "event": "abstained", "path": "/api/query", "request_id": "1190d7fbc501402abd70384cb7813640", "session_id": "88a1d514-bac7-44fe-be97-ebee937fd76d", "level": "info", "timestamp": "2026-11-20T14:55:56.140805Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t145556059036", "context_chunks": 3, "answer_chars": 160, "cached": false, "abstained": true, "verified": true, "coverage": null, "usage": null, "retrieval_ms": 2.8, "total_ms": 4.5, "event": "query_complete", "path": "/api/query", "request_id": "1190d7fbc501402abd70384cb7813640", "session_id": "88a1d514-bac7-44fe-be97-ebee937fd76d", "level": "info", "timestamp": "2026-11-20T14:55:56.140805Z"}
+HTTP Request: POST http://test/api/query "HTTP/1.1 200 OK"
+_________________ test_context_respects_the_character_budget __________________
+
+settings = <lexai.core.settings.Settings object at 0x0000024170890B00>
+live_store = (<lexai.retrieval.qdrant_store.QdrantStore object at 0x000002417090A150>, 'lexai_chunks_20261120t145556216003', BuildM...tution': DocBuildInfo(sha256='x', chunks=1, title='t'), 'it-act-2000': DocBuildInfo(sha256='x', chunks=1, title='t')}))
+
+    async def test_context_respects_the_character_budget(settings: Settings, live_store: Live) -> None:
+        settings.retrieval.context_char_budget = 1000  # room for ~one sample passage
+        llm = FakeLLM()
+        app = create_app(settings, await make_container(settings, live_store, llm=llm))
+        async with client_for(app) as client:
+            response = await client.post("/api/query", json={"question": "punishment for murder"})
+        citations = parse_sse(response.text)[1][1]
+        assert isinstance(citations, list) and len(citations) <= 3
+>       assert "[4]" not in llm.calls[0][0].content
+                            ^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+tests\api\test_api.py:185: IndexError
+---------------------------- Captured stdout call -----------------------------
+{"sections": 2, "event": "correspondence_ready", "level": "info", "timestamp": "2026-11-20T14:55:56.277861Z"}
+{"best_dense": 0.5656854333786077, "best_rerank": null, "event": "abstained", "path": "/api/query", "request_id": "4f7011ce97a94d73b841175ed65629f7", "session_id": "a8cc6738-2a10-45ff-8a64-f2debd0c0e27", "level": "info", "timestamp": "2026-11-20T14:55:56.277861Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t145556216003", "context_chunks": 3, "answer_chars": 160, "cached": false, "abstained": true, "verified": true, "coverage": null, "usage": null, "retrieval_ms": 1.7, "total_ms": 3.0, "event": "query_complete", "path": "/api/query", "request_id": "4f7011ce97a94d73b841175ed65629f7", "session_id": "a8cc6738-2a10-45ff-8a64-f2debd0c0e27", "level": "info", "timestamp": "2026-11-20T14:55:56.293931Z"}
+HTTP Request: POST http://test/api/query "HTTP/1.1 200 OK"
+___________ test_invalid_markers_are_removed_from_the_final_answer ____________
+
+settings = <lexai.core.settings.Settings object at 0x0000024170890290>
+live_store = (<lexai.retrieval.qdrant_store.QdrantStore object at 0x0000024170608740>, 'lexai_chunks_20261120t145557097913', BuildM...tution': DocBuildInfo(sha256='x', chunks=1, title='t'), 'it-act-2000': DocBuildInfo(sha256='x', chunks=1, title='t')}))
+
+    async def test_invalid_markers_are_removed_from_the_final_answer(
+        settings: Settings, live_store: Live
+    ) -> None:
+        llm = FakeLLM(tokens=["Murder is punished with death [1][9]."])
+        app = create_app(settings, await make_container(settings, live_store, llm=llm))
+        out = await ask(app, "What is the punishment for murder?")
+>       assert out["verification"]["removed_markers"] == [9]  # type: ignore[index]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert [] == [9]
+E         
+E         Right contains one more item: 9
+E         Use -v to get more diff
+
+tests\api\test_api.py:257: AssertionError
+---------------------------- Captured stdout call -----------------------------
+{"sections": 2, "event": "correspondence_ready", "level": "info", "timestamp": "2026-11-20T14:55:57.180483Z"}
+{"best_dense": 0.5656854333786077, "best_rerank": null, "event": "abstained", "path": "/api/query", "request_id": "503df3ddc3ce4b3894d36e6455f6dcd2", "session_id": "7b965dfc-f571-456f-a32f-675b54607eab", "level": "info", "timestamp": "2026-11-20T14:55:57.180483Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t145557097913", "context_chunks": 3, "answer_chars": 160, "cached": false, "abstained": true, "verified": true, "coverage": null, "usage": null, "retrieval_ms": 2.4, "total_ms": 3.8, "event": "query_complete", "path": "/api/query", "request_id": "503df3ddc3ce4b3894d36e6455f6dcd2", "session_id": "7b965dfc-f571-456f-a32f-675b54607eab", "level": "info", "timestamp": "2026-11-20T14:55:57.180483Z"}
+HTTP Request: POST http://test/api/query "HTTP/1.1 200 OK"
+_________________ test_repeated_question_is_served_from_cache _________________
+
+settings = <lexai.core.settings.Settings object at 0x0000024170733CE0>
+live_store = (<lexai.retrieval.qdrant_store.QdrantStore object at 0x0000024170609280>, 'lexai_chunks_20261120t145557231221', BuildM...tution': DocBuildInfo(sha256='x', chunks=1, title='t'), 'it-act-2000': DocBuildInfo(sha256='x', chunks=1, title='t')}))
+
+    async def test_repeated_question_is_served_from_cache(settings: Settings, live_store: Live) -> None:
+        from lexai.services.cache import MemoryCache
+    
+        llm = FakeLLM()
+        container = await make_container(settings, live_store, llm=llm, cache=MemoryCache(16, 60))
+        app = create_app(settings, container)
+        first = await ask(app, "What is the punishment for murder?")
+        second = await ask(app, "what is the punishment for murder")
+>       assert first["done"]["cached"] is False and second["done"]["cached"] is True  # type: ignore[index]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert (False is False and False is True)
+
+tests\api\test_api.py:270: AssertionError
+---------------------------- Captured stdout call -----------------------------
+{"sections": 2, "event": "correspondence_ready", "level": "info", "timestamp": "2026-11-20T14:55:57.331729Z"}
+{"best_dense": 0.5656854333786077, "best_rerank": null, "event": "abstained", "path": "/api/query", "request_id": "a6d1aae4bba9417d840bc199488fb266", "session_id": "67b05947-1c8e-4b94-a915-68a0e566ec02", "level": "info", "timestamp": "2026-11-20T14:55:57.339688Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t145557231221", "context_chunks": 3, "answer_chars": 160, "cached": false, "abstained": true, "verified": true, "coverage": null, "usage": null, "retrieval_ms": 2.2, "total_ms": 3.6, "event": "query_complete", "path": "/api/query", "request_id": "a6d1aae4bba9417d840bc199488fb266", "session_id": "67b05947-1c8e-4b94-a915-68a0e566ec02", "level": "info", "timestamp": "2026-11-20T14:55:57.339688Z"}
+HTTP Request: POST http://test/api/query "HTTP/1.1 200 OK"
+{"best_dense": 0.5656854333786077, "best_rerank": null, "event": "abstained", "path": "/api/query", "request_id": "dc206aaf589c4b1ebde54a502f12f2d5", "session_id": "943bf1fc-7572-4043-853a-096f826fdc3a", "level": "info", "timestamp": "2026-11-20T14:55:57.344261Z"}
+{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t145557231221", "context_chunks": 3, "answer_chars": 160, "cached": false, "abstained": true, "verified": true, "coverage": null, "usage": null, "retrieval_ms": 2.9, "total_ms": 4.3, "event": "query_complete", "path": "/api/query", "request_id": "dc206aaf589c4b1ebde54a502f12f2d5", "session_id": "943bf1fc-7572-4043-853a-096f826fdc3a", "level": "info", "timestamp": "2026-11-20T14:55:57.344261Z"}
+HTTP Request: POST http://test/api/query "HTTP/1.1 200 OK"
 =========================== short test summary info ===========================
-FAILED tests/unit/test_answering.py::test_memory_cache_expires_and_evicts - A...
-======================= 1 failed, 136 passed in 40.47s ========================
+FAILED tests/api/test_api.py::test_query_streams_meta_citations_tokens_verification_done
+FAILED tests/api/test_api.py::test_prompt_contains_numbered_passages_and_history
+FAILED tests/api/test_api.py::test_llm_outage_becomes_an_error_event - Assert...
+FAILED tests/api/test_api.py::test_prompt_passages_carry_act_section_and_status
+FAILED tests/api/test_api.py::test_context_respects_the_character_budget - In...
+FAILED tests/api/test_api.py::test_invalid_markers_are_removed_from_the_final_answer
+FAILED tests/api/test_api.py::test_repeated_question_is_served_from_cache - a...
+======================= 7 failed, 132 passed in 39.49s ========================
 exit=1
 
