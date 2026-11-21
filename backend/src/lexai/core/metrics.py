@@ -2,7 +2,7 @@
 Prometheus metrics, served at GET /metrics.
 
 Labels are bounded: routes are path templates (never raw paths), outcomes, stages
-and services are fixed sets. Dashboards: deploy/grafana/lexai.json; alerts:
+and services are fixed sets. Dashboards: deploy/grafana/dashboards/lexai.json; alerts:
 deploy/prometheus/alerts.yml.
 """
 

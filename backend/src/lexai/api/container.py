@@ -260,6 +260,17 @@ class Container:
             await self.reload()
         return report.status
 
+    async def refresh_index(self) -> bool:
+        """Switch to the live index if another process published one (ingest job, other replica)."""
+        if self.store is None:
+            return False
+        live = await self.store.live_collection()
+        if live is None or live == self.collection:
+            return False
+        logger.info("new_live_index_detected", previous=self.collection, live=live)
+        await self.reload()
+        return True
+
     async def reload(self) -> None:
         assert self.store is not None
         collection = await self.store.live_collection()

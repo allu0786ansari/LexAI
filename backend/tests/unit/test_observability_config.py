@@ -27,7 +27,9 @@ def referenced(expr: str) -> set[str]:
 
 
 def test_dashboard_queries_known_metrics() -> None:
-    dash = json.loads((REPO_ROOT / "deploy" / "grafana" / "lexai.json").read_text(encoding="utf-8"))
+    dash = json.loads(
+        (REPO_ROOT / "deploy" / "grafana" / "dashboards" / "lexai.json").read_text(encoding="utf-8")
+    )
     names = exported()
     exprs = [t["expr"] for p in dash["panels"] for t in p.get("targets", [])]
     assert len(exprs) >= 15
@@ -35,6 +37,10 @@ def test_dashboard_queries_known_metrics() -> None:
         missing = referenced(expr) - names
         assert not missing, f"dashboard queries unknown metrics {missing}: {expr}"
     assert len({p["id"] for p in dash["panels"]}) == len(dash["panels"])
+    # Provisioned dashboards pick their data source from a variable, not an import-time input.
+    text = json.dumps(dash)
+    assert "DS_PROMETHEUS" not in text and "__inputs" not in dash
+    assert [v["name"] for v in dash["templating"]["list"] if v["type"] == "datasource"] == ["datasource"]
 
 
 def test_alert_rules_query_known_metrics() -> None:
@@ -47,3 +53,12 @@ def test_alert_rules_query_known_metrics() -> None:
     for name, rule in alerts.items():
         missing = referenced(rule["expr"]) - names
         assert not missing, f"alert {name} queries unknown metrics {missing}"
+
+
+def test_prometheus_scrapes_every_api_replica() -> None:
+    config = yaml.safe_load(
+        (REPO_ROOT / "deploy" / "prometheus" / "prometheus.yml").read_text(encoding="utf-8")
+    )
+    job = next(j for j in config["scrape_configs"] if j["job_name"] == "lexai-api")
+    assert job["dns_sd_configs"][0]["names"] == ["api"] and job["dns_sd_configs"][0]["port"] == 8000
+    assert config["rule_files"] == ["alerts.yml"]

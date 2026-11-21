@@ -243,7 +243,18 @@ async def test_a_partial_build_keeps_every_other_document(settings: Settings, pa
         await store.close()
 
 
-async def test_a_partial_build_without_a_live_index_is_refused(settings: Settings, patched: Any) -> None:
+async def test_a_first_build_may_be_partial(settings: Settings, patched: Any) -> None:
+    """On an empty store there is nothing to carry over: index just the selected documents."""
     write_two_doc_corpus(settings)
+    report = await build_index(settings, only=["other-2023"])
+    assert report.status.startswith("live") and report.embedded_docs == 1 and report.copied_docs == 0
+
+
+async def test_a_partial_build_over_an_incompatible_index_is_refused(
+    settings: Settings, patched: Any
+) -> None:
+    write_two_doc_corpus(settings)
+    assert (await build_index(settings)).status.startswith("live")
+    settings.corpus.max_chunk_chars += 100  # a different chunker: the live documents cannot be reused
     with pytest.raises(ConfigurationError, match="partial rebuild"):
         await build_index(settings, only=["other-2023"])

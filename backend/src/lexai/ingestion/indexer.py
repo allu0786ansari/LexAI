@@ -169,11 +169,14 @@ async def build_index(
             and live_meta.chunker_version == fingerprint
             and live_meta.sparse_version == SPARSE_VERSION
         )
-        if carried and not reusable:
+        if carried and live and not reusable:
             raise ConfigurationError(
-                "A partial rebuild (--only) needs a live index built with the current embedder, chunker and "
-                "BM25 settings, to copy the other documents from. Run a full build."
+                "A partial rebuild (--only) needs the live index to be built with the current embedder, "
+                "chunker and BM25 settings, to copy the other documents from. Run a full build."
             )
+        if carried and not live:
+            logger.info("first_build_is_partial", documents=[d.id for d in docs])
+            carried = []  # nothing to carry over yet: this build indexes only the selected documents
         all_texts = [c.embed_text for p in parsed.values() for c in p.chunks]
         avg_len = live_meta.avg_len if reusable and live_meta else average_length(all_texts)
 

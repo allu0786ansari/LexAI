@@ -1,0 +1,51 @@
+name: Nightly evaluation
+
+# The full answer evaluation needs the real 7B model, which is too slow on GitHub's CPU
+# runners. It runs on a self-hosted GPU runner when one is configured:
+#   repository variable EVAL_RUNNER = the runner label (e.g. "gpu"), NVIDIA Container Toolkit
+#   installed. Without it the job is skipped (the PR gate in ci.yml still checks retrieval).
+on:
+  schedule:
+    - cron: "17 21 * * *"   # 02:47 IST
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evaluate:
+    if: vars.EVAL_RUNNER != ''
+    runs-on: ${{ vars.EVAL_RUNNER || 'ubuntu-latest' }}
+    timeout-minutes: 240
+    env:
+      COMPOSE: docker compose --project-directory deploy -f deploy/compose.yaml -f deploy/compose.gpu.yaml
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: |
+          cp deploy/.env.example deploy/.env
+          sed -i "s/^LEXAI_API_ADMIN_API_KEY=.*/LEXAI_API_ADMIN_API_KEY=eval-$(openssl rand -hex 16)/" deploy/.env
+          echo "LEXAI_UID=$(id -u)" >> "$GITHUB_ENV"
+          echo "LEXAI_GID=$(id -g)" >> "$GITHUB_ENV"
+          echo "LEXAI_COMMIT=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
+      - name: Start (vLLM on the GPU, Ollama for embeddings)
+        run: $COMPOSE up -d --build
+      - name: Build the full index
+        run: |
+          $COMPOSE run --rm ingest fetch
+          $COMPOSE run --rm ingest build
+      - name: Retrieval and answer evaluation
+        run: |
+          $COMPOSE run --rm -e LEXAI_COMMIT eval validate
+          $COMPOSE run --rm -e LEXAI_COMMIT eval retrieval --configs hybrid,dense,bm25,no-routing
+          $COMPOSE run --rm -e LEXAI_COMMIT eval answers --limit 40
+          $COMPOSE run --rm -e LEXAI_COMMIT eval report
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evaluation-${{ github.run_id }}
+          path: eval/reports
+          retention-days: 30
+      - name: Stop
+        if: always()
+        run: $COMPOSE down

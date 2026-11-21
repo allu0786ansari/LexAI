@@ -7,7 +7,7 @@ OpenAI-compatible API as Ollama, under the same model name, so only
 ```bash
 docker run --gpus all --rm -p 8001:8000 \
   -v ~/.cache/huggingface:/root/.cache/huggingface \
-  vllm/vllm-openai:latest \
+  vllm/vllm-openai:v0.34.0 \
   --model Qwen/Qwen2.5-7B-Instruct-AWQ \
   --served-model-name qwen2.5-7b-instruct \
   --max-model-len 8192 \
@@ -21,4 +21,5 @@ LEXAI_LLM_BASE_URL=http://localhost:8001/v1
 LEXAI_LLM_API_KEY=EMPTY
 ```
 
-Fits a 16 GB GPU (T4/L4 class). Phase 6 moves this into `deploy/compose.gpu.yaml`.
+Fits a 16 GB GPU (T4/L4 class). With Docker Compose the same setup is
+[`deploy/compose.gpu.yaml`](../compose.gpu.yaml): `make up-gpu`.

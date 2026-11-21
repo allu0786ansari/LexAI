@@ -98,7 +98,7 @@ jobs:
           docker run --rm -v "$PWD/deploy/prometheus:/etc/prometheus:ro" --entrypoint promtool \
             prom/prometheus:v3.16.0 check rules /etc/prometheus/alerts.yml
       - name: Grafana dashboard is valid JSON
-        run: python3 -m json.tool deploy/grafana/lexai.json > /dev/null
+        run: python3 -m json.tool deploy/grafana/dashboards/lexai.json > /dev/null
 
   frontend:
     name: Frontend (types, lint, unit, build, end-to-end)
@@ -129,4 +129,177 @@ jobs:
         with:
           name: playwright-report
           path: frontend/playwright-report
+          retention-days: 7
+
+  deploy:
+    name: Docker (images, scan, fresh-machine deploy, backup/restore, rollback)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      COMPOSE: docker compose --project-directory deploy -f deploy/compose.yaml --profile observability
+      LF_PK: pk-lf-lexai-change-me
+      LF_SK: sk-lf-lexai-change-me
+      GRAFANA_PW: ci-grafana-password
+    steps:
+      - uses: actions/checkout@v4
+      - name: Free disk space (Ollama, Langfuse and model images need ~15 GB)
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+      - name: Compose files are valid (base, laptop, GPU, Langfuse)
+        run: |
+          cp deploy/.env.example deploy/.env
+          docker compose version
+          docker compose --project-directory deploy -f deploy/compose.yaml --profile job --profile observability config -q
+          docker compose --project-directory deploy -f deploy/compose.yaml -f deploy/compose.gpu.yaml config -q
+          docker compose --project-directory deploy --env-file deploy/env/laptop-docker.env \
+            -f deploy/compose.yaml -f deploy/compose.laptop.yaml --profile job config -q
+          cp deploy/langfuse/.env.example deploy/langfuse/.env
+          docker compose -f deploy/langfuse/docker-compose.yml --env-file deploy/langfuse/.env config -q
+      - name: Start Langfuse (pulls in the background of the image builds)
+        run: docker compose -f deploy/langfuse/docker-compose.yml --env-file deploy/langfuse/.env up -d --quiet-pull
+
+      - uses: docker/setup-buildx-action@v3
+      - name: Build the API image
+        uses: docker/build-push-action@v6
+        with:
+          context: backend
+          tags: lexai-backend:local
+          load: true
+          cache-from: type=gha,scope=backend
+          cache-to: type=gha,scope=backend,mode=max
+      - name: Build the web image
+        uses: docker/build-push-action@v6
+        with:
+          context: frontend
+          tags: lexai-web:local
+          load: true
+          cache-from: type=gha,scope=web
+          cache-to: type=gha,scope=web,mode=max
+      - name: Image facts (size, non-root user)
+        run: |
+          docker image ls --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep lexai
+          test "$(docker image inspect -f '{{.Config.User}}' lexai-backend:local)" = "lexai"
+          docker run --rm --entrypoint id lexai-backend:local
+          docker run --rm --entrypoint id lexai-web:local
+
+      # Pinned to the commit of v0.36.0: trivy-action tags were hijacked in March 2026 (GHSA-69fq-xp46-6x23).
+      - name: Scan the API image (fail on fixable critical vulnerabilities)
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: lexai-backend:local
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+          format: table
+      - name: Scan the web image (fail on fixable critical vulnerabilities)
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: lexai-web:local
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+          format: table
+      - name: High-severity findings (report only)
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: lexai-backend:local
+          severity: HIGH
+          ignore-unfixed: true
+          exit-code: "0"
+          format: table
+          skip-setup-trivy: true
+
+      - name: Configure a fresh machine (tiny model, Langfuse traces)
+        run: |
+          set_env() { sed -i "/^$1=/d" deploy/.env; printf '%s=%s\n' "$1" "$2" >> deploy/.env; }
+          set_env OLLAMA_LLM_MODELFILE ""
+          set_env LEXAI_LLM_MODEL qwen2.5:0.5b-instruct
+          set_env LEXAI_LLM_MAX_TOKENS 256
+          set_env LEXAI_API_ADMIN_API_KEY "ci-$(openssl rand -hex 16)"
+          set_env GRAFANA_ADMIN_PASSWORD "$GRAFANA_PW"
+          set_env LEXAI_OBS_OTLP_ENDPOINT http://host.docker.internal:3000/api/public/otel/v1/traces
+          set_env LEXAI_OBS_OTLP_HEADERS "Authorization=Basic $(printf '%s:%s' "$LF_PK" "$LF_SK" | base64 -w0)"
+          echo "LEXAI_UID=$(id -u)" >> "$GITHUB_ENV"
+          echo "LEXAI_GID=$(id -g)" >> "$GITHUB_ENV"
+      - name: Start the stack (pulls the models on first start)
+        run: |
+          $COMPOSE up -d --quiet-pull
+          docker compose --project-directory deploy -f deploy/compose.yaml wait ollama-init
+          $COMPOSE ps -a
+      - name: Build the index (Constitution only)
+        run: make docker-ingest ARGS="--only constitution"
+      - name: First release (smoke test through nginx)
+        run: python3 deploy/deploy.py --tag local --no-pull --no-backup --ready-timeout 300
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Browser tests against nginx (production CSP) and the live stack
+        working-directory: frontend
+        env:
+          PW_BASE_URL: http://localhost:8080
+          PW_LIVE: "1"
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npx playwright test
+
+      - name: Metrics in Prometheus and Grafana
+        run: |
+          python3 deploy/ci/check_stack.py prometheus --replicas 1
+          python3 deploy/ci/check_stack.py grafana --password "$GRAFANA_PW"
+      - name: Traces in Langfuse
+        run: python3 deploy/ci/check_stack.py langfuse --public-key "$LF_PK" --secret-key "$LF_SK" --timeout 300
+      - name: Two API replicas share sessions and rate limits through Redis
+        run: |
+          LEXAI_API_REPLICAS=2 $COMPOSE up -d --no-deps api
+          python3 deploy/ci/check_stack.py prometheus --replicas 2
+          make smoke-release ARGS="--wait-ready 120"
+
+      - name: Back up, lose the Qdrant volume, restore
+        run: |
+          make backup
+          ls -la deploy/backups/*/
+          $COMPOSE rm -sf qdrant
+          docker volume rm lexai_qdrant-data
+          $COMPOSE up -d --wait qdrant
+          if make docker-status; then echo "::error::the index should be gone"; exit 1; fi
+          make restore
+          make docker-status
+          make smoke-release ARGS="--wait-ready 120"
+
+      - name: Deploy rehearsal - a bad release is rolled back automatically
+        run: |
+          docker build -f deploy/ci/bad-release.Dockerfile -t lexai-backend:bad deploy/ci
+          docker tag lexai-web:local lexai-web:bad
+          set +e
+          python3 deploy/deploy.py --tag bad --no-pull --ready-timeout 60
+          rc=$?
+          set -e
+          test "$rc" -eq 1 || { echo "::error::deploy.py returned $rc for a bad release"; exit 1; }
+          image=$($COMPOSE ps api --format '{{.Image}}' | sort -u)
+          echo "running API image after rollback: $image"
+          test "$image" = "lexai-backend:local"
+          python3 -c "import json; s=json.load(open('deploy/var/release.json')); print(s); assert s['current']=='local'"
+          ls deploy/var/deploy-failure-*.log
+          ls deploy/backups/  # the pre-deploy backup ran
+
+      - name: Container logs
+        if: always()
+        run: |
+          mkdir -p ci-logs
+          $COMPOSE --profile job logs --no-color > ci-logs/compose.log 2>&1 || true
+          docker compose -f deploy/langfuse/docker-compose.yml --env-file deploy/langfuse/.env logs --no-color --tail 300 > ci-logs/langfuse.log 2>&1 || true
+          cp -r deploy/var ci-logs/deploy-var 2>/dev/null || true
+          $COMPOSE ps -a > ci-logs/ps.txt 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deploy-logs
+          path: |
+            ci-logs
+            frontend/playwright-report
           retention-days: 7

@@ -4,12 +4,16 @@
     fetch   download the manifest's sources into data/raw and pin their checksums
     build   parse, chunk, embed and publish a new index (only if all checks pass)
     status  show the live index and what it contains
+    backup  snapshot the live index into a backup directory (Qdrant server only)
+    restore restore a backup and make it live
 
 Examples:
     python -m lexai.ingestion.cli fetch
     python -m lexai.ingestion.cli build --dry-run        # parse + checks only, no model calls
     python -m lexai.ingestion.cli build --only ipc-1860 --only "sc-*"
     python -m lexai.ingestion.cli status
+    python -m lexai.ingestion.cli backup --dir /backups --keep 7
+    python -m lexai.ingestion.cli restore --dir /backups latest
 """
 
 from __future__ import annotations
@@ -18,10 +22,12 @@ import argparse
 import asyncio
 import json
 import sys
+from pathlib import Path
 
 from lexai.core.errors import LexAIError
 from lexai.core.logging import configure_logging, get_logger
 from lexai.core.settings import Settings, get_settings
+from lexai.ingestion import backup as backups
 from lexai.ingestion.fetch import fetch_documents, format_results
 from lexai.ingestion.indexer import BuildReport, build_index, select_docs, write_report
 from lexai.ingestion.manifest import expand, load_manifest
@@ -71,6 +77,32 @@ async def _status(settings: Settings) -> int:
         await store.close()
 
 
+async def _backup(settings: Settings, root: Path, keep: int) -> int:
+    store = QdrantStore.connect(settings.qdrant)
+    try:
+        info = await backups.backup(store, root, keep=keep)
+    finally:
+        await store.close()
+    print(f"backup: {info.path} ({info.collection}, {info.points} points, {info.size_bytes / 1e6:.1f} MB)")
+    if info.pruned:
+        print(f"removed old backups: {', '.join(info.pruned)}")
+    return 0
+
+
+async def _restore(settings: Settings, root: Path, which: str) -> int:
+    path = backups.resolve(root, which)
+    store = QdrantStore.connect(settings.qdrant)
+    try:
+        result = await backups.restore(store, path)
+    finally:
+        await store.close()
+    print(
+        f"restored {path.name}: {result['collection']} ({result['points']} points, backed up "
+        f"{result['created']}) is live; previously live: {result['previous'] or 'none'}"
+    )
+    return 0
+
+
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="LexAI corpus and index management.")
     sub = parser.add_subparsers(dest="command")
@@ -83,6 +115,14 @@ def main(argv: list[str] | None = None) -> None:
         "--dry-run", action="store_true", help="parse and check only; no model or Qdrant calls"
     )
     sub.add_parser("status", help="show the live index")
+    p_backup = sub.add_parser("backup", help="snapshot the live index (Qdrant server only)")
+    p_backup.add_argument("--dir", type=Path, default=Path("/backups"), help="backup root directory")
+    p_backup.add_argument("--keep", type=int, default=7, help="newest backups to keep")
+    p_restore = sub.add_parser("restore", help="restore a backup and make it live")
+    p_restore.add_argument("--dir", type=Path, default=Path("/backups"), help="backup root directory")
+    p_restore.add_argument(
+        "backup", nargs="?", default="latest", help="backup name or path (default: latest)"
+    )
     args = parser.parse_args(argv)
 
     settings = get_settings()
@@ -98,6 +138,10 @@ def main(argv: list[str] | None = None) -> None:
             sys.exit(1 if any(r.status == "failed" for r in results) else 0)
         elif command == "status":
             sys.exit(asyncio.run(_status(settings)))
+        elif command == "backup":
+            sys.exit(asyncio.run(_backup(settings, args.dir, args.keep)))
+        elif command == "restore":
+            sys.exit(asyncio.run(_restore(settings, args.dir, args.backup)))
         else:
             only = getattr(args, "only", [])
             dry = getattr(args, "dry_run", False)

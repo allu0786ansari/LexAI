@@ -1,0 +1,41 @@
+# GPU overlay: the generator runs in vLLM (Qwen2.5-7B-Instruct AWQ, 4-bit, 8K context) on an
+# NVIDIA GPU with >= 16 GB (T4 / L4 class); Ollama keeps serving the small embedding model.
+# Needs the NVIDIA Container Toolkit on the host.
+#
+#   make up-gpu
+services:
+  vllm:
+    image: vllm/vllm-openai:v0.34.0
+    command:
+      - --model=Qwen/Qwen2.5-7B-Instruct-AWQ
+      - --served-model-name=${LEXAI_LLM_MODEL:-qwen2.5-7b-instruct}
+      - --max-model-len=8192
+      - --gpu-memory-utilization=0.85
+    environment:
+      HF_HUB_ENABLE_HF_TRANSFER: "0"
+    volumes: [hf-cache:/root/.cache/huggingface]
+    ipc: host
+    deploy:
+      resources:
+        reservations:
+          devices: [{driver: nvidia, count: 1, capabilities: [gpu]}]
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 60          # first start downloads ~5.5 GB of weights
+    restart: unless-stopped
+
+  ollama-init:
+    environment:
+      LLM_MODEL: ""        # embeddings only; vLLM serves the generator
+
+  api:
+    environment:
+      LEXAI_LLM_BASE_URL: http://vllm:8000/v1
+      LEXAI_LLM_API_KEY: EMPTY
+    depends_on:
+      vllm: {condition: service_healthy}
+
+volumes:
+  hf-cache:
