@@ -19,6 +19,7 @@ import time
 import urllib.parse
 import urllib.request
 from collections.abc import Callable
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 
@@ -103,10 +104,19 @@ def grafana(base: str, password: str, timeout: float) -> bool:
 
 
 def langfuse(base: str, public_key: str, secret_key: str, timeout: float) -> bool:
+    # Langfuse v4 reads through the Observations API v2 (GET /api/public/traces returns 404).
     def traces() -> tuple[bool, str]:
-        out = get(f"{base}/api/public/traces?limit=50", (public_key, secret_key))
-        names = sorted({t.get("name") or "" for t in out.get("data", [])})
-        return bool(out.get("data")), f"{len(out.get('data', []))} traces, names {names[:6]}"
+        now = datetime.now(UTC)
+        query = urllib.parse.urlencode({
+            "fromStartTime": (now - timedelta(hours=2)).isoformat(timespec="seconds").replace("+00:00", "Z"),
+            "toStartTime": (now + timedelta(minutes=5)).isoformat(timespec="seconds").replace("+00:00", "Z"),
+            "limit": 100,
+        })
+        out = get(f"{base}/api/public/v2/observations?{query}", (public_key, secret_key))
+        rows = out.get("data", [])
+        trace_ids = {r.get("traceId") for r in rows}
+        names = sorted({r.get("name") or "" for r in rows})
+        return bool(rows), f"{len(rows)} observations in {len(trace_ids)} traces, names {names[:8]}"
 
     return retry("langfuse received LexAI traces", traces, timeout)
 

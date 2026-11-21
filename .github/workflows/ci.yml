@@ -221,7 +221,7 @@ jobs:
           set_env LEXAI_API_ADMIN_API_KEY "ci-$(openssl rand -hex 16)"
           set_env GRAFANA_ADMIN_PASSWORD "$GRAFANA_PW"
           set_env LEXAI_OBS_OTLP_ENDPOINT http://host.docker.internal:3000/api/public/otel/v1/traces
-          set_env LEXAI_OBS_OTLP_HEADERS "Authorization=Basic $(printf '%s:%s' "$LF_PK" "$LF_SK" | base64 -w0)"
+          set_env LEXAI_OBS_OTLP_HEADERS "Authorization=Basic $(printf '%s:%s' "$LF_PK" "$LF_SK" | base64 -w0),x-langfuse-ingestion-version=4"
           echo "LEXAI_UID=$(id -u)" >> "$GITHUB_ENV"
           echo "LEXAI_GID=$(id -g)" >> "$GITHUB_ENV"
       - name: Start the stack (pulls the models on first start)
@@ -298,6 +298,11 @@ jobs:
           docker compose -f deploy/langfuse/docker-compose.yml --env-file deploy/langfuse/.env logs --no-color --tail 300 > ci-logs/langfuse.log 2>&1 || true
           cp -r deploy/var ci-logs/deploy-var 2>/dev/null || true
           $COMPOSE ps -a > ci-logs/ps.txt 2>&1 || true
+      - name: Logs of the failing services (also in the deploy-logs artifact)
+        if: failure()
+        run: |
+          COMPOSE_PROFILES=ollama,observability,job $COMPOSE logs --no-color --tail 60 api web ingest smoke || true
+          docker compose -f deploy/langfuse/docker-compose.yml --env-file deploy/langfuse/.env logs --no-color --tail 40 langfuse-web langfuse-worker || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
