@@ -84,6 +84,10 @@ LAPTOP := docker compose --project-directory deploy --env-file deploy/env/laptop
 export LEXAI_UID := $(shell id -u 2>/dev/null || echo 10001)
 export LEXAI_GID := $(shell id -g 2>/dev/null || echo 10001)
 ARGS ?=
+# Profiles from deploy/.env (e.g. ollama) plus observability: a --profile flag would replace them.
+comma := ,
+ENV_PROFILES := $(shell sed -n 's/^COMPOSE_PROFILES=//p' deploy/.env 2>/dev/null | tail -1)
+WITH_OBS := COMPOSE_PROFILES=$(if $(ENV_PROFILES),$(ENV_PROFILES)$(comma))observability
 
 deploy/.env:
 	@echo "deploy/.env is missing: cp deploy/.env.example deploy/.env and set the secrets"; exit 1
@@ -95,7 +99,7 @@ up: deploy/.env
 	$(COMPOSE) up -d --build
 
 up-observability: deploy/.env
-	$(COMPOSE) --profile observability up -d --build
+	$(WITH_OBS) $(COMPOSE) up -d --build
 
 up-gpu: deploy/.env
 	$(COMPOSE) -f deploy/compose.gpu.yaml up -d --build
@@ -104,13 +108,13 @@ up-laptop:
 	$(LAPTOP) up -d --build api web
 
 down:
-	$(COMPOSE) --profile observability --profile job down
+	$(WITH_OBS),job $(COMPOSE) down
 
 ps:
-	$(COMPOSE) --profile observability ps -a
+	$(WITH_OBS) $(COMPOSE) ps -a
 
 logs:
-	$(COMPOSE) --profile observability logs --tail 200 -f $(ARGS)
+	$(WITH_OBS) $(COMPOSE) logs --tail 200 -f $(ARGS)
 
 docker-ingest:  # make docker-ingest ARGS="--only constitution"
 	$(COMPOSE) run --rm ingest fetch $(ARGS) && $(COMPOSE) run --rm ingest build $(ARGS)

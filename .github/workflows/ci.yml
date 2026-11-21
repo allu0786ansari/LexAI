@@ -136,7 +136,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      COMPOSE: docker compose --project-directory deploy -f deploy/compose.yaml --profile observability
+      COMPOSE: docker compose --project-directory deploy -f deploy/compose.yaml
+      # A --profile flag would replace COMPOSE_PROFILES from deploy/.env, so profiles are set here.
+      COMPOSE_PROFILES: ollama,observability
       LF_PK: pk-lf-lexai-change-me
       LF_SK: sk-lf-lexai-change-me
       GRAFANA_PW: ci-grafana-password
@@ -225,7 +227,7 @@ jobs:
       - name: Start the stack (pulls the models on first start)
         run: |
           $COMPOSE up -d --quiet-pull
-          docker compose --project-directory deploy -f deploy/compose.yaml wait ollama-init
+          $COMPOSE wait ollama-init
           $COMPOSE ps -a
       - name: Build the index (Constitution only)
         run: make docker-ingest ARGS="--only constitution"
@@ -273,7 +275,8 @@ jobs:
 
       - name: Deploy rehearsal - a bad release is rolled back automatically
         run: |
-          docker build -f deploy/ci/bad-release.Dockerfile -t lexai-backend:bad deploy/ci
+          # the default (docker) builder sees the locally loaded lexai-backend:local image
+          docker buildx build --builder default -f deploy/ci/bad-release.Dockerfile -t lexai-backend:bad deploy/ci
           docker tag lexai-web:local lexai-web:bad
           set +e
           python3 deploy/deploy.py --tag bad --no-pull --ready-timeout 60
@@ -291,7 +294,7 @@ jobs:
         if: always()
         run: |
           mkdir -p ci-logs
-          $COMPOSE --profile job logs --no-color > ci-logs/compose.log 2>&1 || true
+          COMPOSE_PROFILES=ollama,observability,job $COMPOSE logs --no-color > ci-logs/compose.log 2>&1 || true
           docker compose -f deploy/langfuse/docker-compose.yml --env-file deploy/langfuse/.env logs --no-color --tail 300 > ci-logs/langfuse.log 2>&1 || true
           cp -r deploy/var ci-logs/deploy-var 2>/dev/null || true
           $COMPOSE ps -a > ci-logs/ps.txt 2>&1 || true
