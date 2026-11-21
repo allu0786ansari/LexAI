@@ -3,7 +3,8 @@
 #   docker build -t lexai-frontend frontend
 
 ARG NODE_IMAGE=node:22.23.5-alpine
-ARG NGINX_IMAGE=nginxinc/nginx-unprivileged:1.31.8-alpine
+# nginx moved its unprivileged images from nginxinc/ to nginx/ in October 2026 (nginxinc/ stopped at 1.31.7).
+ARG NGINX_IMAGE=nginx/nginx-unprivileged:1.31.9-alpine
 
 FROM ${NODE_IMAGE} AS build
 WORKDIR /app
