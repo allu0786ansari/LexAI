@@ -28,6 +28,8 @@ set "PY=python"
 if exist "%VPY%" set "PY=%VPY%"
 
 set "STEPS=%*"
+REM A full run starts with an empty output folder, so no log from an earlier run is left over.
+if "%STEPS%"=="" del /q "%OUT%\*.log" >nul 2>&1
 if "%STEPS%"=="" set "STEPS=check build up network models ingest deploy browser observability backup rehearsal collect"
 
 for %%S in (%STEPS%) do call :dispatch %%S
@@ -139,9 +141,19 @@ systeminfo | findstr /C:"Total Physical Memory" /C:"Available Physical Memory" >
 >>"%LOG%" echo $ type %%UserProfile%%\.wslconfig
 if exist "%UserProfile%\.wslconfig" (type "%UserProfile%\.wslconfig" >>"%LOG%") else (>>"%LOG%" echo no .wslconfig - Docker may use up to half the RAM; see runlogs\phase6\README.md)
 >>"%LOG%" echo.
->>"%LOG%" echo $ anything listening on port 8080
-netstat -ano | findstr /C:":8080 " | findstr /C:"LISTENING" >>"%LOG%" 2>&1
-if errorlevel 1 >>"%LOG%" echo nothing on port 8080
+>>"%LOG%" echo $ anything listening on port 8090 (the web UI's port; LexAI's own nginx is fine)
+netstat -ano | findstr /C:":8090 " | findstr /C:"LISTENING" >>"%LOG%" 2>&1
+if errorlevel 1 >>"%LOG%" echo nothing on port 8090
+>>"%LOG%" echo.
+>>"%LOG%" echo $ Ollama listening address (127.0.0.1 only = containers cannot reach it)
+netstat -ano | findstr /C:":11434 " | findstr /C:"LISTENING" >>"%LOG%" 2>&1
+>>"%LOG%" echo.
+>>"%LOG%" echo $ Kubernetes containers in Rancher Desktop (should be none: turn Kubernetes off)
+docker ps --format "{{.Names}}" | findstr /C:"k8s_" >>"%LOG%" 2>&1
+if errorlevel 1 >>"%LOG%" echo none
+>>"%LOG%" echo.
+>>"%LOG%" echo $ type deploy\var\host.env (how containers reach Windows; written by the network step)
+if exist "%ROOT%\deploy\var\host.env" (type "%ROOT%\deploy\var\host.env" >>"%LOG%") else (>>"%LOG%" echo not written yet - default host-gateway)
 >>"%LOG%" echo.
 type "%LOG%"
 goto :eof
