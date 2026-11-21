@@ -22,13 +22,9 @@ from __future__ import annotations
 
 import argparse
 import asyncio
-import csv
-import io
 import json
 import os
-import re
 import secrets
-import subprocess
 import sys
 import time
 from pathlib import Path
@@ -94,25 +90,15 @@ class Server:
         stop_server(self.proc)
 
 
-def memory_mb(pid: int) -> int | None:
-    """Resident memory of a process, without extra packages (tasklist on Windows, /proc on Linux)."""
+async def memory_mb(client: httpx.AsyncClient) -> int | None:
+    """The API's own memory, from /metrics (a venv's python.exe on Windows is only a launcher)."""
     try:
-        if sys.platform == "win32":
-            out = subprocess.run(
-                ["tasklist", "/FI", f"PID eq {pid}", "/FO", "CSV", "/NH"],
-                capture_output=True,
-                text=True,
-                timeout=10,
-            ).stdout
-            fields = next(csv.reader(io.StringIO(out.strip())), [])
-            digits = re.sub(r"\D", "", fields[-1]) if fields else ""
-            return int(digits) // 1024 if digits else None
-        with open(f"/proc/{pid}/status", encoding="utf-8") as f:
-            for line in f:
-                if line.startswith("VmRSS:"):
-                    return int(line.split()[1]) // 1024
-    except (OSError, subprocess.SubprocessError, ValueError):
+        text = (await client.get("/metrics")).text
+    except httpx.HTTPError:
         return None
+    for line in text.splitlines():
+        if line.startswith("lexai_process_memory_bytes "):
+            return int(float(line.split()[1]) / 2**20) or None
     return None
 
 
@@ -128,7 +114,7 @@ async def reindex(
 ) -> dict[str, Any]:
     """Start a reindex of one document and wait for it, sampling the API's memory; survives an API crash."""
     headers = {"X-API-Key": key}
-    idle = memory_mb(server.proc.pid)
+    idle = await memory_mb(client)
     peak = idle or 0
     t0 = time.perf_counter()
     job: dict[str, Any] = {"status": "failed", "detail": ""}
@@ -145,7 +131,7 @@ async def reindex(
             and time.perf_counter() - t0 < 1200
         ):
             await asyncio.sleep(3)
-            peak = max(peak, memory_mb(server.proc.pid) or 0)
+            peak = max(peak, await memory_mb(client) or 0)
             job = (await client.get(f"/api/v1/admin/reindex/{job['job_id']}", headers=headers)).json()
     except httpx.TransportError:
         await asyncio.sleep(2)

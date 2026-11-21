@@ -1,6 +1,6 @@
 # ADR 0005 — Phase 5 API v1, TypeScript UI, security and observability
 
-Date: 2026-11-21 · Status: proposed (pending the laptop run, runlogs/phase5)
+Date: 2026-11-21 · Status: accepted (verified on the target laptop, see runlogs/phase5/RESULTS.md)
 
 ## Context
 
@@ -63,6 +63,11 @@ a cited passage, counted nothing and traced nothing; the frontend rewrote every 
     (in-memory exporter), Redis paths. Vitest: SSE parser, reducer (including "no save
     per token"), citation links. Playwright: the built UI against a mocked API, desktop
     and phone.
+
+11. **Builds must survive a crash (from run 2).** Only complete builds (with metadata) are
+    kept for rollback; leftovers of interrupted builds are removed when a build starts. The
+    API runs with faulthandler and reports its own memory; the laptop check restarts it
+    after a crash and verifies the index. Refusals are decided before any model call.
 
 ## Consequences
 

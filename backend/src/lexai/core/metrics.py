@@ -8,6 +8,8 @@ deploy/prometheus/alerts.yml.
 
 from __future__ import annotations
 
+import sys
+
 from prometheus_client import CONTENT_TYPE_LATEST, REGISTRY, Counter, Gauge, Histogram, generate_latest
 
 # Answers on the laptop take tens of seconds; on a GPU server a few. Buckets cover both.
@@ -49,6 +51,54 @@ FEEDBACK = Counter("lexai_feedback_total", "User feedback", ["rating"])
 READY = Gauge("lexai_ready", "1 when model servers and the index are ready (background probe)")
 ACTIVE_SESSIONS = Gauge("lexai_active_sessions", "Sessions not yet expired")
 TOKENS = Counter("lexai_llm_tokens_total", "LLM tokens", ["kind"])
+
+
+_SIZE_FIELDS = (
+    "PeakWorkingSetSize",
+    "WorkingSetSize",
+    "QuotaPeakPagedPoolUsage",
+    "QuotaPagedPoolUsage",
+    "QuotaPeakNonPagedPoolUsage",
+    "QuotaNonPagedPoolUsage",
+    "PagefileUsage",
+    "PeakPagefileUsage",
+)  # PROCESS_MEMORY_COUNTERS (psapi.h)
+
+
+def process_memory_bytes() -> float:
+    """Resident memory of this process: working set on Windows, VmRSS on Linux (0 if unknown).
+    Read by the process itself, because on Windows a venv's python.exe is a launcher whose
+    PID is not the interpreter's."""
+    try:
+        if sys.platform == "win32":
+            import ctypes
+            from ctypes import wintypes
+
+            class Counters(ctypes.Structure):
+                _fields_ = [("cb", wintypes.DWORD), ("PageFaultCount", wintypes.DWORD)] + [
+                    (name, ctypes.c_size_t) for name in _SIZE_FIELDS
+                ]
+
+            counters = Counters()
+            counters.cb = ctypes.sizeof(Counters)
+            kernel32 = ctypes.WinDLL("kernel32")
+            kernel32.GetCurrentProcess.restype = wintypes.HANDLE
+            psapi = ctypes.WinDLL("psapi")
+            ok = psapi.GetProcessMemoryInfo(kernel32.GetCurrentProcess(), ctypes.byref(counters), counters.cb)
+            return float(counters.WorkingSetSize) if ok else 0.0
+        with open("/proc/self/status", encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("VmRSS:"):
+                    return float(line.split()[1]) * 1024
+    except (OSError, AttributeError, ValueError):
+        return 0.0
+    return 0.0
+
+
+PROCESS_MEMORY = Gauge(
+    "lexai_process_memory_bytes", "Resident memory of the API process (working set on Windows)"
+)
+PROCESS_MEMORY.set_function(process_memory_bytes)
 
 for _stage in ("condense", "retrieve", "context", "generate", "verify"):
     STAGE_DURATION.labels(stage=_stage)  # export zero series so dashboards show them from the start

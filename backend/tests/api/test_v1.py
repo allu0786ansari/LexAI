@@ -263,6 +263,8 @@ async def test_metrics_by_route_template_and_outcome(settings: Settings, live_st
         assert line in text
     assert "lexai_time_to_first_token_seconds_count" in text
     assert 'lexai_stage_duration_seconds_count{stage="retrieve"}' in text
+    memory = next(line for line in text.splitlines() if line.startswith("lexai_process_memory_bytes "))
+    assert float(memory.split()[1]) > 10 * 2**20  # this process, on Linux and on Windows (CI runs both)
 
 
 async def test_openapi_documents_the_stream_events(settings: Settings, live_store: Live) -> None:

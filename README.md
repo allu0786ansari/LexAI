@@ -5,9 +5,10 @@ Supreme Court judgments and government manuals. It retrieves the relevant
 passages, generates an answer with **Qwen2.5-7B-Instruct**, and cites every
 claim as `[n]` so you can check the source.
 
-> **Status: Phase 4 of 6 complete** (evaluation harness and CI regression gate;
-> [verified results](runlogs/phase4/RESULTS.md)). The full plan covers ingestion,
-> retrieval, evaluation, API/UI, observability and deployment.
+> **Status: Phase 5 of 6 complete** (API v1, TypeScript UI, security controls, tracing and
+> metrics; [verified results](runlogs/phase5/RESULTS.md)). Evaluation:
+> [Phase 4 results](runlogs/phase4/RESULTS.md). The full plan covers ingestion, retrieval,
+> evaluation, API/UI, observability and deployment.
 
 **Measured on an 8 GB laptop** (200-question golden set, held-out test split, Qwen2.5-7B):
 
@@ -234,7 +235,7 @@ frontend/         React + TypeScript chat UI (types from the OpenAPI schema; Vit
 | 2 | Ingestion: corpus manifest, BNS/BNSS/BSA, legal-structure chunking, Qdrant | **done** ([results](runlogs/phase2/RESULTS.md)) |
 | 3 | Retrieval & generation: query routing, citation verification, abstention | **done** ([results](runlogs/phase3/RESULTS.md)) |
 | 4 | Evaluation: golden set, retrieval/answer metrics, ablations, load test, CI gate | **done** ([results](runlogs/phase4/RESULTS.md)) |
-| 5 | API v1, TypeScript UI, security, observability | in review |
+| 5 | API v1, TypeScript UI, security, observability | **done** ([results](runlogs/phase5/RESULTS.md)) |
 | 6 | Docker Compose, CI/CD, deployment | planned |
 
 ## Disclaimer
