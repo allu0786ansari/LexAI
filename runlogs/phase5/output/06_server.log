@@ -1,86 +1,231 @@
-2026-11-21T11:22:41.853958Z [info     ] tracing_enabled                otlp=False trace_file=C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\var\check_phase5_traces.jsonl
-INFO:     Started server process [20544]
+2026-11-21T12:10:11.250505Z [info     ] tracing_enabled                otlp=False trace_file=C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\var\check_phase5_traces.jsonl
+INFO:     Started server process [20400]
 INFO:     Waiting for application startup.
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-2026-11-21T11:22:51.703447Z [info     ] index_ready                    built_at=2026-11-21T11:01:28+00:00 chunks=5070 collection=lexai_chunks_20261121t110128734352
-2026-11-21T11:22:53.170327Z [info     ] correspondence_ready           sections=2271
-2026-11-21T11:22:53.186203Z [info     ] state_backends                 cache=MemoryCache rate_limits=memory sessions=MemorySessionStore
-2026-11-21T11:22:53.186203Z [info     ] startup_complete               embedder=nomic-embed-text llm=qwen2.5-7b-instruct notes=[] profile='laptop-8gb v4' prompt=answer_v4 version=0.5.0
+2026-11-21T12:10:21.302858Z [info     ] index_ready                    built_at=2026-11-21T11:01:28+00:00 chunks=5070 collection=lexai_chunks_20261121t110128734352
+2026-11-21T12:10:22.919364Z [info     ] correspondence_ready           sections=2271
+2026-11-21T12:10:22.951589Z [info     ] state_backends                 cache=MemoryCache rate_limits=memory sessions=MemorySessionStore
+2026-11-21T12:10:22.951589Z [info     ] startup_complete               embedder=nomic-embed-text llm=qwen2.5-7b-instruct notes=[] profile='laptop-8gb v4' prompt=answer_v4 version=0.5.0
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-INFO:     127.0.0.1:53868 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62395 - "GET /healthz HTTP/1.1" 200 OK
 HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-2026-11-21T11:22:53.736412Z [warning  ] request_failed                 code=session_not_found error='Unknown or expired session. Create a new session and retry.' path=/api/v1/chat request_id=63e60cb6e3234fae819d743d84372e36 status=404
-INFO:     127.0.0.1:53881 - "POST /api/v1/chat HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:53881 - "POST /api/v1/sessions HTTP/1.1" 201 Created
-INFO:     127.0.0.1:53881 - "POST /api/v1/chat HTTP/1.1" 413 Request Entity Too Large
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents HTTP/1.1" 200 OK
-2026-11-21T11:22:53.736412Z [warning  ] request_failed                 code=forbidden error='A valid API key is required.' path=/api/v1/admin/reindex request_id=96c149d31d53447eb8786dd41d759ca5 status=401
-INFO:     127.0.0.1:53881 - "POST /api/v1/admin/reindex HTTP/1.1" 401 Unauthorized
-2026-11-21T11:22:53.736412Z [warning  ] request_failed                 code=forbidden error='A valid API key is required.' path=/api/v1/admin/reindex request_id=33e241d2d21241b7af045029b6ffe0b0 status=401
-INFO:     127.0.0.1:53881 - "POST /api/v1/admin/reindex HTTP/1.1" 401 Unauthorized
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:23:53.110053Z [info     ] query_complete                 abstained=False answer_chars=205 cached=False context_chunks=5 context_ms=0.2 coverage=1.0 generation_ms=58912.6 index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=dae65ef1c4544c34960f1d95a73bdc68 retrieval_ms=379.7 session_id=606bac6b-9a44-4a92-b495-173e7928f212 time_to_first_token_ms=48437.4 total_ms=59344.6 usage={'prompt_tokens': 1570, 'completion_tokens': 58, 'total_tokens': 1628} verified=True verify_ms=36.4
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/0be92011-0b4e-540d-8037-6ebc0f15c875 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/0a4bed87-6fc7-5871-a3e4-a0c2beee4914 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/2c23334d-ac0c-59af-9e56-dca8bb71912c HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/09c56d70-28a9-5846-b862-e58caceca98d HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/62509361-888b-5bb4-b811-5aaba37d0ed9 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:24:01.400579Z [info     ] condense_rejected              added=['act IPC'] path=/api/v1/chat request_id=9a8d748e8ce54c5195e0af29de1b1a31 rewrite='Is the punishment for murder bailable under the Indian Penal Code?' session_id=606bac6b-9a44-4a92-b495-173e7928f212
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:24:26.290299Z [info     ] query_complete                 abstained=False answer_chars=246 cached=False condense_ms=5662.3 context_chunks=5 context_ms=2.3 coverage=0.5 generation_ms=23423.1 index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=9a8d748e8ce54c5195e0af29de1b1a31 retrieval_ms=1443.5 session_id=606bac6b-9a44-4a92-b495-173e7928f212 time_to_first_token_ms=17676.4 total_ms=30549.9 usage={'prompt_tokens': 1518, 'completion_tokens': 66, 'total_tokens': 1584} verified=True verify_ms=1.8
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/0be92011-0b4e-540d-8037-6ebc0f15c875 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/0a4bed87-6fc7-5871-a3e4-a0c2beee4914 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/6d2ca300-7750-5939-b6c5-c90d008b6c9a HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/87651068-2246-58e7-9458-4163b0d9ee13 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/2c23334d-ac0c-59af-9e56-dca8bb71912c HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:10:23.393272Z [warning  ] request_failed                 code=session_not_found error='Unknown or expired session. Create a new session and retry.' path=/api/v1/chat request_id=e03a537633324d0bb07b041cd128ac98 status=404
+INFO:     127.0.0.1:62406 - "POST /api/v1/chat HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62406 - "POST /api/v1/sessions HTTP/1.1" 201 Created
+INFO:     127.0.0.1:62406 - "POST /api/v1/chat HTTP/1.1" 413 Request Entity Too Large
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents HTTP/1.1" 200 OK
+2026-11-21T12:10:23.393272Z [warning  ] request_failed                 code=forbidden error='A valid API key is required.' path=/api/v1/admin/reindex request_id=3377181d229c43f5868edb5083a6e71b status=401
+INFO:     127.0.0.1:62406 - "POST /api/v1/admin/reindex HTTP/1.1" 401 Unauthorized
+2026-11-21T12:10:23.393272Z [warning  ] request_failed                 code=forbidden error='A valid API key is required.' path=/api/v1/admin/reindex request_id=48450aaf4e7b47dbbc3d6b4d00c8499d status=401
+INFO:     127.0.0.1:62406 - "POST /api/v1/admin/reindex HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "POST /api/v1/chat HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
 HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:24:48.061075Z [info     ] query_complete                 abstained=False answer_chars=236 cached=False context_chunks=5 context_ms=0.8 coverage=1.0 generation_ms=18750.2 index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=e19c64c0e44a436fa438f4e6da1bdca4 retrieval_ms=2519.2 session_id=eb4a5709-6c61-4119-ab6a-fcd46fecd3ab time_to_first_token_ms=12249.2 total_ms=21299.6 usage={'prompt_tokens': 1260, 'completion_tokens': 50, 'total_tokens': 1310} verified=True verify_ms=11.4
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/28bb465b-d1d8-5d93-85bf-857d4289bc36 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/2041e23c-f175-5949-9d07-aeb63195dbd6 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/1dddf70f-27ba-597f-a213-89fdc54f726c HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/15ab75f1-163a-5f21-a845-715235bb0925 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/83024c0b-8f3c-5ef3-b539-91afcf96c4a6 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
-2026-11-21T11:24:51.813915Z [info     ] feedback                       feedback_request_id=dae65ef1c4544c34960f1d95a73bdc68 path=/api/v1/feedback rating=up request_id=7fc26a754c2443139769ff25badf997a
-INFO:     127.0.0.1:53881 - "POST /api/v1/feedback HTTP/1.1" 201 Created
-INFO:     127.0.0.1:53881 - "GET /metrics HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53881 - "POST /api/v1/admin/reindex HTTP/1.1" 202 Accepted
-2026-11-21T11:24:54.295917Z [info     ] document_parsed                chunks=37 doc=prisons-act-1894 pages=20 path=/api/v1/admin/reindex request_id=00a2d22de9224d00b5dd7e8356957cc5 units=0
-2026-11-21T11:24:55.167053Z [info     ] document_copied                chunks=37 doc=prisons-act-1894 path=/api/v1/admin/reindex request_id=00a2d22de9224d00b5dd7e8356957cc5
+2026-11-21T12:11:19.942607Z [info     ] query_complete                 abstained=False answer_chars=205 cached=False context_chunks=5 context_ms=0.2 coverage=1.0 generation_ms=56083.5 index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=f23b2d971ef845d198dfdde9a4b94ac6 retrieval_ms=382.9 session_id=dc05c0d3-8c17-4c90-ae5f-111151ef7ff3 time_to_first_token_ms=46084.1 total_ms=56516.2 usage={'prompt_tokens': 1570, 'completion_tokens': 58, 'total_tokens': 1628} verified=True verify_ms=28.2
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/0be92011-0b4e-540d-8037-6ebc0f15c875 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/0a4bed87-6fc7-5871-a3e4-a0c2beee4914 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/2c23334d-ac0c-59af-9e56-dca8bb71912c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/09c56d70-28a9-5846-b862-e58caceca98d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/62509361-888b-5bb4-b811-5aaba37d0ed9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "POST /api/v1/chat HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-11-21T12:11:26.668325Z [info     ] condense_rejected              added=['act IPC'] path=/api/v1/chat request_id=1c19f4b362764e1593172713d943f9cd rewrite='Is the punishment for murder bailable under the Indian Penal Code?' session_id=dc05c0d3-8c17-4c90-ae5f-111151ef7ff3
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-11-21T12:11:50.893329Z [info     ] query_complete                 abstained=False answer_chars=246 cached=False condense_ms=5519.0 context_chunks=5 context_ms=16.4 coverage=0.5 generation_ms=22787.4 index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=1c19f4b362764e1593172713d943f9cd retrieval_ms=1402.0 session_id=dc05c0d3-8c17-4c90-ae5f-111151ef7ff3 time_to_first_token_ms=17440.1 total_ms=29745.9 usage={'prompt_tokens': 1518, 'completion_tokens': 66, 'total_tokens': 1584} verified=True verify_ms=1.6
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/0be92011-0b4e-540d-8037-6ebc0f15c875 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/0a4bed87-6fc7-5871-a3e4-a0c2beee4914 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/6d2ca300-7750-5939-b6c5-c90d008b6c9a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/87651068-2246-58e7-9458-4163b0d9ee13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/2c23334d-ac0c-59af-9e56-dca8bb71912c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "POST /api/v1/chat HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-11-21T12:12:10.876686Z [info     ] query_complete                 abstained=False answer_chars=271 cached=False context_chunks=5 context_ms=0.5 coverage=1.0 generation_ms=18740.2 index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=d1ef0838e3bc4085b37030aac6f59205 retrieval_ms=889.6 session_id=841a6888-d50f-4c5a-bb93-e8082756b55a time_to_first_token_ms=9613.8 total_ms=19644.3 usage={'prompt_tokens': 1260, 'completion_tokens': 57, 'total_tokens': 1317} verified=True verify_ms=4.0
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/28bb465b-d1d8-5d93-85bf-857d4289bc36 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/2041e23c-f175-5949-9d07-aeb63195dbd6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/1dddf70f-27ba-597f-a213-89fdc54f726c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/15ab75f1-163a-5f21-a845-715235bb0925 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/chunks/83024c0b-8f3c-5ef3-b539-91afcf96c4a6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
+2026-11-21T12:12:11.895761Z [info     ] feedback                       feedback_request_id=f23b2d971ef845d198dfdde9a4b94ac6 path=/api/v1/feedback rating=up request_id=0002ede8f8bc4d98817b81f266e75b6a
+INFO:     127.0.0.1:62406 - "POST /api/v1/feedback HTTP/1.1" 201 Created
+INFO:     127.0.0.1:62406 - "GET /metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "POST /api/v1/admin/reindex HTTP/1.1" 202 Accepted
+2026-11-21T12:12:15.360564Z [info     ] document_parsed                chunks=37 doc=prisons-act-1894 pages=20 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46 units=0
+2026-11-21T12:12:15.636373Z [warning  ] removed_interrupted_build      collection=lexai_chunks_20261121t112454498036 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:12:16.366270Z [info     ] document_copied                chunks=37 doc=prisons-act-1894 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
 HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:54284 - "GET /api/v1/admin/reindex/25f2402e9c6640499b31afbfb5979ce9 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54285 - "GET /api/v1/admin/reindex/25f2402e9c6640499b31afbfb5979ce9 HTTP/1.1" 200 OK
-2026-11-21T11:25:06.675407Z [info     ] document_carried_over          chunks=490 doc=bns-2023 path=/api/v1/admin/reindex request_id=00a2d22de9224d00b5dd7e8356957cc5
-INFO:     127.0.0.1:54288 - "GET /api/v1/admin/reindex/25f2402e9c6640499b31afbfb5979ce9 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54290 - "GET /api/v1/admin/reindex/25f2402e9c6640499b31afbfb5979ce9 HTTP/1.1" 200 OK
+2026-11-21T12:12:28.160156Z [info     ] document_carried_over          chunks=490 doc=bns-2023 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+2026-11-21T12:12:48.129905Z [info     ] document_carried_over          chunks=915 doc=bnss-2023 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+2026-11-21T12:12:51.616059Z [info     ] document_carried_over          chunks=219 doc=bsa-2023 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+2026-11-21T12:13:02.253567Z [info     ] document_carried_over          chunks=626 doc=ipc-1860 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+2026-11-21T12:13:18.287788Z [info     ] document_carried_over          chunks=892 doc=crpc-1973 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+2026-11-21T12:13:22.135341Z [info     ] document_carried_over          chunks=225 doc=iea-1872 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
+2026-11-21T12:13:32.966032Z [info     ] document_carried_over          chunks=807 doc=constitution path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+2026-11-21T12:13:34.638424Z [info     ] document_carried_over          chunks=145 doc=it-act-2000 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:34.974301Z [info     ] document_carried_over          chunks=28 doc=criminal-law-amendment-2018 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+2026-11-21T12:13:36.505364Z [info     ] document_carried_over          chunks=102 doc=mha-cybercrime-manual path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:36.889258Z [info     ] document_carried_over          chunks=31 doc=mha-cprgr-manual path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:36.962221Z [info     ] document_carried_over          chunks=2 doc=mha-cyberfraud-instructions path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:37.397248Z [info     ] document_carried_over          chunks=36 doc=sc-judis-10166 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:37.461632Z [info     ] document_carried_over          chunks=2 doc=sc-judis-10187 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:38.067648Z [info     ] document_carried_over          chunks=33 doc=sc-judis-10193 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:38.338067Z [info     ] document_carried_over          chunks=11 doc=sc-judis-10220 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:38.417466Z [info     ] document_carried_over          chunks=2 doc=sc-judis-10290 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:38.465118Z [info     ] document_carried_over          chunks=1 doc=sc-judis-10304 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:38.514966Z [info     ] document_carried_over          chunks=1 doc=sc-judis-10322 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:38.673747Z [info     ] document_carried_over          chunks=5 doc=sc-judis-10347 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:38.850297Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10356 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:38.961904Z [info     ] document_carried_over          chunks=4 doc=sc-judis-10391 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:39.041693Z [info     ] document_carried_over          chunks=3 doc=sc-judis-10426 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:39.105512Z [info     ] document_carried_over          chunks=2 doc=sc-judis-10439 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+2026-11-21T12:13:39.328141Z [info     ] document_carried_over          chunks=8 doc=sc-judis-10442 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:39.455294Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10502 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:39.519391Z [info     ] document_carried_over          chunks=2 doc=sc-judis-10519 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:39.599244Z [info     ] document_carried_over          chunks=3 doc=sc-judis-10520 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:39.743557Z [info     ] document_carried_over          chunks=8 doc=sc-judis-10548 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:39.823540Z [info     ] document_carried_over          chunks=4 doc=sc-judis-10557 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:39.903255Z [info     ] document_carried_over          chunks=2 doc=sc-judis-10562 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:39.967176Z [info     ] document_carried_over          chunks=3 doc=sc-judis-10613 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:40.031019Z [info     ] document_carried_over          chunks=1 doc=sc-judis-10629 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:40.111023Z [info     ] document_carried_over          chunks=3 doc=sc-judis-10637 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:40.318186Z [info     ] document_carried_over          chunks=7 doc=sc-judis-10649 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:40.382285Z [info     ] document_carried_over          chunks=2 doc=sc-judis-10663 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:40.590541Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10668 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:40.878859Z [info     ] document_carried_over          chunks=9 doc=sc-judis-10679 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:41.006782Z [info     ] document_carried_over          chunks=4 doc=sc-judis-10693 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:41.151067Z [info     ] document_carried_over          chunks=4 doc=sc-judis-10752 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:41.358622Z [info     ] document_carried_over          chunks=5 doc=sc-judis-10762 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:41.438734Z [info     ] document_carried_over          chunks=4 doc=sc-judis-10773 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:41.885872Z [info     ] document_carried_over          chunks=31 doc=sc-judis-10796 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+2026-11-21T12:13:42.523479Z [info     ] document_carried_over          chunks=47 doc=sc-judis-10804 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:42.634984Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10805 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:42.746603Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10814 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:42.873463Z [info     ] document_carried_over          chunks=8 doc=sc-judis-10818 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:42.984886Z [info     ] document_carried_over          chunks=6 doc=sc-judis-1082 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:43.113010Z [info     ] document_carried_over          chunks=8 doc=sc-judis-10823 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:44.083542Z [info     ] document_carried_over          chunks=83 doc=sc-judis-10844 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:44.179490Z [info     ] document_carried_over          chunks=5 doc=sc-judis-10857 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:44.307736Z [info     ] document_carried_over          chunks=7 doc=sc-judis-10877 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:44.466025Z [info     ] document_carried_over          chunks=11 doc=sc-judis-10886 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:44.849848Z [info     ] document_carried_over          chunks=28 doc=sc-judis-1089 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:45.131770Z [info     ] document_carried_over          chunks=24 doc=sc-judis-10892 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:45.560862Z [info     ] document_carried_over          chunks=34 doc=sc-judis-10897 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+2026-11-21T12:13:45.691256Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10910 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:45.815092Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10924 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:46.017007Z [info     ] document_carried_over          chunks=15 doc=sc-judis-10933 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:46.254055Z [info     ] document_carried_over          chunks=17 doc=sc-judis-10937 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:46.394703Z [info     ] document_carried_over          chunks=9 doc=sc-judis-1094 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:46.520349Z [info     ] document_carried_over          chunks=7 doc=sc-judis-10941 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:48.623396Z [info     ] correspondence_ready           path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46 sections=2271
+2026-11-21T12:13:48.655334Z [info     ] index_reloaded                 chunks=5070 collection=lexai_chunks_20261121t121215596093 path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46
+2026-11-21T12:13:48.655334Z [info     ] job_finished                   detail="live: lexai_chunks_20261121t121215596093 (removed old builds: ['lexai_chunks_20261120t133053900723'])" job_id=3a75b4977cb944efa5e2b52957d61c5b path=/api/v1/admin/reindex request_id=29b13e3ec87c4e258a1ceb1851ef2e46 status=succeeded
+INFO:     127.0.0.1:62406 - "GET /api/v1/admin/reindex/3a75b4977cb944efa5e2b52957d61c5b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "GET /api/v1/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62406 - "POST /api/v1/chat HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-11-21T12:13:59.536198Z [info     ] query_complete                 abstained=False answer_chars=236 cached=False context_chunks=5 context_ms=0.2 coverage=1.0 generation_ms=10589.5 index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=9bec9cccbf2340c38103acfd9bea0dc3 retrieval_ms=160.2 session_id=fba6b2d9-35f1-4870-b084-99fb43a2e1aa time_to_first_token_ms=1035.3 total_ms=10752.6 usage={'prompt_tokens': 1260, 'completion_tokens': 50, 'total_tokens': 1310} verified=True verify_ms=0.5
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49688 - "POST /api/v1/sessions HTTP/1.1" 201 Created
+INFO:     127.0.0.1:49688 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.611407Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=2067d0eb2a1b4768a55648df22909f7f session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=3.0 usage=None verified=True
+INFO:     127.0.0.1:49689 - "POST /api/v1/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49690 - "POST /api/v1/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49688 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.645068Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=1944d000e7bb4cc8b8154e13f86f1103 session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=6.6 usage=None verified=True
+INFO:     127.0.0.1:49691 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.645068Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=d425216646d746f08bae48c304835282 session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=6.3 usage=None verified=True
+INFO:     127.0.0.1:49692 - "POST /api/v1/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49693 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.649083Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=777310f5bba44cff91c473cdb97b0923 session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=9.8 usage=None verified=True
+INFO:     127.0.0.1:49694 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.649083Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=5d595f6332c94d38b907019b3ca03830 session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=9.9 usage=None verified=True
+INFO:     127.0.0.1:49695 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.649083Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=a125e8b231f54003aedbf4f0ca69dc55 session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=9.6 usage=None verified=True
+INFO:     127.0.0.1:49696 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.658775Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=57045fde73234fca8fbbd02c9a3fec50 session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=9.1 usage=None verified=True
+INFO:     127.0.0.1:49697 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.658775Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=10202262c14f4bb0b1db5d75e615494d session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=10.3 usage=None verified=True
+INFO:     127.0.0.1:49698 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.658775Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=962dab476e284b50a1e7c61e005a45ed session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=10.7 usage=None verified=True
+INFO:     127.0.0.1:49699 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.658775Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=d9e0c273271341dc97fd491afaf69189 session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=10.6 usage=None verified=True
+INFO:     127.0.0.1:49700 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.658775Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=303d5add8e754748829f00554144c59d session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=10.7 usage=None verified=True
+INFO:     127.0.0.1:49701 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.674780Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=6af993af352e49edacf506f97c933b7e session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=10.0 usage=None verified=True
+2026-11-21T12:15:00.674780Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=5cbf28bcb90841de9e9a5da6f5bab1f3 session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=9.1 usage=None verified=True
+INFO:     127.0.0.1:49702 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.674780Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=76ac949e78fb43d5b9f7e4ace14f0ac3 session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=9.8 usage=None verified=True
+INFO:     127.0.0.1:49703 - "POST /api/v1/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49707 - "POST /api/v1/chat HTTP/1.1" 429 Too Many Requests
+2026-11-21T12:15:00.681865Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=f2b72100370c40268f1aaf65928f9050 session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=10.3 usage=None verified=True
+INFO:     127.0.0.1:49704 - "POST /api/v1/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49705 - "POST /api/v1/chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49706 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T12:15:00.684893Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=04b9d485b5ca4aeda7faa2abd326531f session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=8.1 usage=None verified=True
+2026-11-21T12:15:00.684893Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=4c05c54825744761b8e9e7c957f0a400 session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=7.3 usage=None verified=True
+2026-11-21T12:15:00.684893Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=c9e33fd87ceb4915bc04fc49a1715d6d session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=4.7 usage=None verified=True
+2026-11-21T12:15:00.684893Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=9f5e6ccc6d7f4677b61cf5c80fe24084 session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=4.3 usage=None verified=True
+2026-11-21T12:15:00.684893Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t121215596093 path=/api/v1/chat prompt_version=answer_v4 request_id=5de67ff503e446d8bb45080ff9cd62af session_id=091a88fe-77d9-41c9-ba5b-fa4e5bba1198 total_ms=4.0 usage=None verified=True
