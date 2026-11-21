@@ -10,8 +10,8 @@ B5. Tracing: the follow-up's trace has one span per stage (condense, retrieve, c
     generate, verify) with times, read from the local trace file.
 B6. Admin reindex of one small document: the job succeeds, every other document is
     kept, and the API answers from the new index without a restart.
-B7. Rate limit: the 21st chat request in a minute gets 429 with Retry-After
-    (refused questions are used: no model call).
+B7. Rate limit: of 21 chat requests sent at once, 20 are answered and one gets
+    429 with Retry-After (refused questions: no model call).
 
 Usage (from backend/, with the API NOT running): python scripts/check_phase5.py
 """
@@ -227,20 +227,18 @@ async def check(base_url: str, admin_key: str, trace_file: Path) -> None:
         after = (again.get("done") or {}).get("index_version", "")
         report("answers come from the new index", bool(after) and after != before, f"{before} -> {after}")
 
-        print("\nB7. Rate limit (refused questions: no model call)")
+        print("\nB7. Rate limit (21 refused questions at once: refused without a model call)")
         await asyncio.sleep(61)  # let earlier chat requests leave the one-minute window
         limit_session = (await client.post("/api/v1/sessions")).json()["session_id"]
-        codes = []
-        retry_after = None
-        for _ in range(21):
-            out = await chat(client, REFUSED, limit_session)
-            codes.append(out["_status"])
-            if out["_status"] == 429:
-                retry_after = out["_headers"].get("retry-after")
+        t0 = time.perf_counter()
+        outs = await asyncio.gather(*(chat(client, REFUSED, limit_session) for _ in range(21)))
+        codes = sorted(o["_status"] for o in outs)
+        retry_after = next((o["_headers"].get("retry-after") for o in outs if o["_status"] == 429), None)
         report(
             "20 allowed, the 21st refused",
-            codes[:20] == [200] * 20 and codes[20] == 429,
-            f"{codes.count(200)} x 200, then {codes[20]}; Retry-After {retry_after}",
+            codes.count(200) == 20 and codes.count(429) == 1 and retry_after is not None,
+            f"{codes.count(200)} x 200, {codes.count(429)} x 429 in {time.perf_counter() - t0:.1f} s; "
+            f"Retry-After {retry_after}",
         )
 
 

@@ -260,6 +260,9 @@ class ChatService:
     async def _plan(
         self, question: str, history: list[ChatMessage], latency: dict[str, Any], ctx: Context
     ) -> QueryPlan:
+        own = plan_query(question)
+        if own.intent == "refused":  # decided on the user's own words: no rewrite, no model call
+            return own
         standalone = question
         if self.settings.query.condense_enabled and history:
             with self._stage("condense", ctx, latency) as span:

@@ -74,6 +74,19 @@ git push
 | `06_phase5.log` | `SUMMARY: ALL PASSED` — forged session 404, 413, headers, admin 401, every citation and PDF opens, trace with all five stages, reindex succeeded with no document lost, 20 allowed then 429 |
 | `07_phase3.log`, `08_smoke.log` | `SUMMARY: ALL PASSED` |
 
+## Run 2 (after run 1)
+
+Only the parts that changed (about 10 minutes):
+
+```bat
+cd /d C:\Users\LENOVO\OneDrive\Desktop\LexAI
+git pull
+runlogs\phase5\run_phase5.bat quality phase5
+git add runlogs\phase5\output
+git commit -m "Phase 5 run 2 logs"
+git push
+```
+
 ## Optional: try the new UI
 
 With Node.js installed, in two cmd windows:
@@ -89,3 +102,10 @@ npm run dev
 ```
 
 Open http://localhost:5173, ask a question, click a `[1]`.
+
+## Run history
+
+| Run | Date | Result |
+| --- | --- | --- |
+| 1 | 2026-11-21 | Quality 187 passed, 4 skipped (Redis tests; CI runs them); frontend type check, lint, 13 unit tests, build all passed; Phase 3 checks and smoke **all passed through API v1**. Phase 5: 17/18 — forged session 404, 413, headers, admin 401, **15/15 citations and 15/15 PDF links open**, all three answers verified, metrics, a full trace with every stage, **reindex of prisons-act-1894 in 100 s with all 5,070 chunks kept and the API switched to the new index**. **Failed:** the rate-limit check — all 21 requests got 200. Not a limiter bug: each request took ~7.5 s because a refused question inside a conversation was still rewritten by the model before the refusal, so the 21 requests were spread over ~150 s and never 20 in one minute. **Fixed:** refusal is decided on the user's own words before any rewrite (no model call at all; test added); the check now sends the 21 requests at once. |
+

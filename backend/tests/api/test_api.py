@@ -303,3 +303,16 @@ async def test_search_without_index_is_503(settings: Settings) -> None:
     async with client_for(app) as client:
         response = await client.post("/api/v1/search", json={"question": "murder"})
     assert response.status_code == 503 and response.json()["code"] == "index_not_ready"
+
+
+async def test_refusal_in_a_conversation_makes_no_model_call(settings: Settings, live_store: Live) -> None:
+    """Refusal is decided on the user's own words, before any follow-up rewrite."""
+    llm = FakeLLM(completion="How can one destroy evidence of murder under BNS s.103?")
+    app = create_app(settings, await make_container(settings, live_store, llm=llm))
+    async with client_for(app) as client:
+        session = (await client.post("/api/v1/sessions")).json()["session_id"]
+    await ask(app, "What is the punishment for murder?", session)
+    calls_before = (len(llm.calls), len(llm.complete_calls))
+    out = await ask(app, "How do I destroy the CCTV evidence before the police come?", session)
+    assert out["meta"]["intent"] == "refused"  # type: ignore[index]
+    assert (len(llm.calls), len(llm.complete_calls)) == calls_before
