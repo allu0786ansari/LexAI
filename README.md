@@ -98,15 +98,16 @@ make up-observability                   # + Prometheus and Grafana
 python3 deploy/deploy.py --tag 0.6.0    # later: deploy a release, smoke-tested, rolled back on failure
 ```
 
-**The 8 GB Windows laptop** (Docker Desktop; Ollama stays on Windows with the models from
-the earlier phases):
+**The 8 GB Windows laptop** (Docker Desktop or Rancher Desktop; Ollama stays on Windows with
+the models from the earlier phases):
 
 ```bat
+deploy\ollama-for-docker.bat           & REM once: let the containers reach Ollama
 deploy\lexai.bat build
 deploy\lexai.bat up
-deploy\lexai.bat models
+deploy\lexai.bat network
 deploy\lexai.bat ingest
-start http://127.0.0.1:8080
+start http://127.0.0.1:8090
 ```
 
 GPU server: `make up-gpu` (vLLM, Qwen2.5-7B AWQ, 8K context). Operations — upgrades,

@@ -7,12 +7,12 @@ REM  From the repository folder:
 REM     runlogs\phase6\run_phase6.bat                all steps (about 60-75 minutes)
 REM     runlogs\phase6\run_phase6.bat deploy         one step
 REM
-REM  Steps: check build up models ingest deploy browser observability backup rehearsal collect
+REM  Steps: check build up network models ingest deploy browser observability backup rehearsal collect
 REM  Logs go to runlogs\phase6\output.
 REM
 REM  Ollama keeps running on Windows (models from Phase 2); Qdrant, Redis, the API and
 REM  the web UI run in Docker. Keep the laptop plugged in and awake. The stack stays up
-REM  at the end: http://127.0.0.1:8080  (stop it with: deploy\lexai.bat down)
+REM  at the end: http://127.0.0.1:8090  (stop it with: deploy\lexai.bat down)
 REM ===========================================================================
 
 cd /d "%~dp0..\.."
@@ -28,13 +28,13 @@ set "PY=python"
 if exist "%VPY%" set "PY=%VPY%"
 
 set "STEPS=%*"
-if "%STEPS%"=="" set "STEPS=check build up models ingest deploy browser observability backup rehearsal collect"
+if "%STEPS%"=="" set "STEPS=check build up network models ingest deploy browser observability backup rehearsal collect"
 
 for %%S in (%STEPS%) do call :dispatch %%S
 
 echo.
 echo Done. Logs are in runlogs\phase6\output\
-echo The stack is still running: http://127.0.0.1:8080   (deploy\lexai.bat down to stop it)
+echo The stack is still running: http://127.0.0.1:8090   (deploy\lexai.bat down to stop it)
 echo Next: commit and push runlogs\phase6\output
 endlocal
 goto :eof
@@ -47,6 +47,7 @@ echo ########## %~1 ##########
 if /I "%~1"=="check"         goto step_check
 if /I "%~1"=="build"         goto step_build
 if /I "%~1"=="up"            goto step_up
+if /I "%~1"=="network"       goto step_network
 if /I "%~1"=="models"        goto step_models
 if /I "%~1"=="ingest"        goto step_ingest
 if /I "%~1"=="deploy"        goto step_deploy
@@ -55,7 +56,16 @@ if /I "%~1"=="observability" goto step_observability
 if /I "%~1"=="backup"        goto step_backup
 if /I "%~1"=="rehearsal"     goto step_rehearsal
 if /I "%~1"=="collect"       goto step_collect
-echo Unknown step "%~1". Use: check build up models ingest deploy browser observability backup rehearsal collect
+echo Unknown step "%~1". Use: check build up network models ingest deploy browser observability backup rehearsal collect
+goto :eof
+
+REM  Steps that need the model server are skipped once `network` has failed in this run
+REM  (otherwise one cause shows up as a dozen failures).
+:need_models
+if not "%MODELS_OK%"=="0" goto :eof
+echo SKIPPED: the containers cannot reach Ollama (see 04_network.log). Fix that first:
+echo     deploy\ollama-for-docker.bat   then   runlogs\phase6\run_phase6.bat network models ingest deploy browser backup rehearsal collect
+set "SKIP=1"
 goto :eof
 
 
@@ -64,7 +74,8 @@ REM  call :run LOGFILE  - runs CMD, appends the command, its output and exit cod
 :run
 >>"%~1" echo $ %CMD%
 %CMD% >>"%~1" 2>&1
->>"%~1" echo exit=%ERRORLEVEL%
+set "RC=%ERRORLEVEL%"
+>>"%~1" echo exit=%RC%
 >>"%~1" echo.
 goto :eof
 
@@ -155,16 +166,38 @@ type nul > "%LOG%"
 set "CMD=%LEXAI% up" & call :tee "%LOG%"
 timeout /t 20 /nobreak >nul
 set "CMD=%LEXAI% ps" & call :run "%LOG%"
-set "CMD=curl -s -i http://127.0.0.1:8080/healthz" & call :run "%LOG%"
-set "CMD=curl -s -o NUL -w "metrics through nginx: %%{http_code}" http://127.0.0.1:8080/metrics" & call :run "%LOG%"
-set "CMD=curl -s -I http://127.0.0.1:8080/" & call :run "%LOG%"
+set "CMD=curl -s -i http://127.0.0.1:8090/healthz" & call :run "%LOG%"
+set "CMD=curl -s -o NUL -w "metrics through nginx: %%{http_code}" http://127.0.0.1:8090/metrics" & call :run "%LOG%"
+set "CMD=curl -s -I http://127.0.0.1:8090/" & call :run "%LOG%"
 call :stats "%LOG%"
 type "%LOG%"
 goto :eof
 
 
+:step_network
+call :ensure_ollama
+set "LOG=%OUT%\04_network.log"
+type nul > "%LOG%"
+>>"%LOG%" echo $ netstat (Ollama on Windows)
+netstat -ano | findstr /C:":11434 " | findstr /C:"LISTENING" >>"%LOG%" 2>&1
+>>"%LOG%" echo.
+echo Checking from inside a container that Ollama on Windows answers ...
+set "CMD=%LEXAI% network" & call :run "%LOG%"
+set "MODELS_OK=1"
+if not "%RC%"=="0" set "MODELS_OK=0"
+type "%LOG%"
+if "%MODELS_OK%"=="0" (
+    echo.
+    echo The containers cannot reach Ollama. Run  deploy\ollama-for-docker.bat  (as Administrator
+    echo for the firewall part^), then:  runlogs\phase6\run_phase6.bat network models ingest deploy browser backup rehearsal collect
+)
+goto :eof
+
+
 :step_models
 call :ensure_ollama
+set "SKIP=" & call :need_models
+if defined SKIP goto :eof
 set "LOG=%OUT%\04_models.log"
 type nul > "%LOG%"
 echo Checking that the containers reach Ollama on Windows (a short generation test) ...
@@ -174,6 +207,8 @@ goto :eof
 
 
 :step_ingest
+set "SKIP=" & call :need_models
+if defined SKIP goto :eof
 call :ensure_ollama
 set "LOG=%OUT%\05_ingest.log"
 type nul > "%LOG%"
@@ -186,6 +221,8 @@ goto :eof
 
 
 :step_deploy
+set "SKIP=" & call :need_models
+if defined SKIP goto :eof
 call :ensure_ollama
 set "LOG=%OUT%\06_deploy.log"
 type nul > "%LOG%"
@@ -197,6 +234,8 @@ goto :eof
 
 
 :step_browser
+set "SKIP=" & call :need_models
+if defined SKIP goto :eof
 set "LOG=%OUT%\07_browser.log"
 type nul > "%LOG%"
 where npm >nul 2>&1
@@ -208,7 +247,7 @@ if errorlevel 1 (
 pushd "%ROOT%\frontend"
 if not exist node_modules (set "CMD=call npm ci --no-audit --no-fund" & call :run "%LOG%")
 REM Microsoft Edge (installed with Windows) runs the tests against nginx: no browser download.
-set "PW_BASE_URL=http://127.0.0.1:8080"
+set "PW_BASE_URL=http://127.0.0.1:8090"
 set "PW_LIVE=1"
 set "PW_CHANNEL=msedge"
 echo Browser tests against nginx (production CSP) and one real question ...
@@ -234,6 +273,8 @@ goto :eof
 
 
 :step_backup
+set "SKIP=" & call :need_models
+if defined SKIP goto :eof
 set "LOG=%OUT%\09_backup.log"
 type nul > "%LOG%"
 echo Backup, then delete the index volume and restore it ...
@@ -252,6 +293,8 @@ goto :eof
 
 
 :step_rehearsal
+set "SKIP=" & call :need_models
+if defined SKIP goto :eof
 set "LOG=%OUT%\10_rehearsal.log"
 type nul > "%LOG%"
 echo Deploy rehearsal: a planted bad release must be rolled back automatically ...

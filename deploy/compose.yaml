@@ -56,7 +56,7 @@ x-job: &job
     - ./var:/app/backend/var
     - ${LEXAI_BACKUP_DIR:-./backups}:/backups
   depends_on: *lexai-depends
-  extra_hosts: ["host.docker.internal:host-gateway"]
+  extra_hosts: ["host.docker.internal:${LEXAI_HOST_GATEWAY:-host-gateway}"]
   restart: "no"
   logging: *logging
 
@@ -86,7 +86,7 @@ services:
     deploy:
       replicas: ${LEXAI_API_REPLICAS:-1}
     depends_on: *lexai-depends
-    extra_hosts: ["host.docker.internal:host-gateway"]
+    extra_hosts: ["host.docker.internal:${LEXAI_HOST_GATEWAY:-host-gateway}"]
     stop_grace_period: 30s          # lets streaming answers finish on deploys
     restart: unless-stopped
     logging: *logging

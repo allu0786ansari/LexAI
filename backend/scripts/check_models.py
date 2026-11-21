@@ -63,7 +63,8 @@ async def main() -> None:
             ]
         except Exception as exc:
             report("model server reachable", False, f"{s.llm.base_url}: {exc!r}. Is Ollama running?")
-            return
+            print("\nSUMMARY:", f"FAILED: {failures}")
+            sys.exit(1)
         report("model server reachable", True, f"{len(served)} models served")
 
         def is_served(name: str) -> bool:

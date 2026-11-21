@@ -49,10 +49,15 @@ Caddy, Traefik or a cloud load balancer in front, e.g. Caddy: `lexai.example.org
 reverse_proxy 127.0.0.1:8080 }` with `LEXAI_WEB_BIND=127.0.0.1` in `deploy/.env`.
 Keep the proxy's buffering off for `/api/v1/chat` (Server-Sent Events).
 
-### Windows laptop (8 GB, Docker Desktop)
+### Windows laptop (8 GB, Docker Desktop or Rancher Desktop)
 
 Ollama keeps running on Windows with the models from the earlier phases; the containers
-reach it at `host.docker.internal:11434`. Limit Docker's memory so the model keeps its
+reach it at `host.docker.internal:11434`. On WSL2 engines (Rancher Desktop in particular)
+that name points at the Windows side of the WSL network, not at 127.0.0.1, so Ollama must
+listen on all addresses and the firewall must let the WSL network in:
+`deploy\ollama-for-docker.bat` does both (the firewall part from an Administrator prompt).
+With Rancher Desktop, turn Kubernetes off (Preferences → Kubernetes) — LexAI does not use it
+and it costs memory. The web UI is on port 8090 on the laptop (8080 is often taken). Limit Docker's memory so the model keeps its
 share: `%UserProfile%\.wslconfig`
 
 ```ini
@@ -64,16 +69,18 @@ swap=4GB
 then `wsl --shutdown` and restart Docker Desktop.
 
 ```bat
+deploy\ollama-for-docker.bat    REM once
 deploy\lexai.bat build
 deploy\lexai.bat up
-deploy\lexai.bat models          REM containers can reach Ollama and the models answer
+deploy\lexai.bat network         REM containers can reach Ollama on Windows
+deploy\lexai.bat models          REM the models answer
 deploy\lexai.bat ingest          REM ~10 min; reuses data\raw downloads
 deploy\lexai.bat smoke
-start http://127.0.0.1:8080
+start http://127.0.0.1:8090
 ```
 
-If `models` cannot reach Ollama: quit Ollama from the tray, `setx OLLAMA_HOST 0.0.0.0`,
-start Ollama again, and allow it through the Windows firewall for private networks.
+If `network` still fails after `ollama-for-docker.bat`, the firewall rule is missing: run it
+again from an Administrator prompt. `deploy\ollama-for-docker.bat undo` reverts both changes.
 
 ## 3. Releases and deploys
 
