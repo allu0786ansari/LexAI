@@ -8,7 +8,7 @@ phase-6-deploy
 exit=0
 
 $ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse HEAD
-f48eded88a3eaa5e633544d0fa775ad399531d9c
+cc4c2971dd21f2afbf43df1c451f8a882ebaeb65
 exit=0
 
 $ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" status --short
@@ -28,6 +28,8 @@ $ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" status --short
  D runlogs/phase6/output/deploy-failure-20261121T171213Z.log
  D runlogs/phase6/output/deploy-failure-20261121T182757Z.log
  D runlogs/phase6/output/deploy-failure-20261121T183911Z.log
+ D runlogs/phase6/output/deploy-failure-20261121T185127Z.log
+ D runlogs/phase6/output/deploy-failure-20261121T190210Z.log
 exit=0
 
 $ docker version --format "client {{.Client.Version}} server {{.Server.Version}}"
@@ -53,7 +55,7 @@ exit=0
 $ ollama list
 NAME                                ID              SIZE      MODIFIED     
 qwen2.5-7b-instruct:latest          b57dc8ba2735    4.7 GB    8 hours ago     
-qwen2.5:7b-instruct-q4_K_M          845dbda0ea48    4.7 GB    32 hours ago    
+qwen2.5:7b-instruct-q4_K_M          845dbda0ea48    4.7 GB    33 hours ago    
 nomic-embed-text:latest             0a109f422b47    274 MB    4 weeks ago     
 bge-m3:latest                       790764642607    1.2 GB    4 weeks ago     
 agmesh-phi3.5:latest                061d2b22c7b8    2.4 GB    3 months ago    
@@ -63,7 +65,7 @@ exit=0
 
 $ systeminfo (memory lines)
 Total Physical Memory:         7,975 MB
-Available Physical Memory:     746 MB
+Available Physical Memory:     797 MB
 
 $ type %UserProfile%\.wslconfig
 [wsl2]

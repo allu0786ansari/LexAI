@@ -1,28 +1,30 @@
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" backup
  Container lexai-qdrant-1 Running 
  Container lexai-redis-1 Running 
- Container lexai-qdrant-1 Waiting 
  Container lexai-redis-1 Waiting 
+ Container lexai-qdrant-1 Waiting 
  Container lexai-qdrant-1 Healthy 
  Container lexai-redis-1 Healthy 
- Container lexai-ingest-run-e243b220ab2c Creating 
- Container lexai-ingest-run-e243b220ab2c Created 
-HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+ Container lexai-ingest-run-fb6c68f23bb3 Creating 
+ Container lexai-ingest-run-fb6c68f23bb3 Created 
 HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
 HTTP Request: POST http://qdrant:6333/collections/lexai_meta/points "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/snapshots?wait=true "HTTP/1.1 200 OK"
-HTTP Request: GET http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/snapshots/lexai_chunks_20261121t184550028465-3724221777339767-2026-11-21-18-56-46-1.snapshot "HTTP/1.1 200 OK"
-HTTP Request: DELETE http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/snapshots/lexai_chunks_20261121t184550028465-3724221777339767-2026-11-21-18-56-46-1.snapshot "HTTP/1.1 200 OK"
-{"path": "/backups/lexai-20261121T185646Z", "collection": "lexai_chunks_20261121t184550028465", "points": 5070, "pruned": [], "event": "backup_written", "level": "info", "timestamp": "2026-11-21T18:56:50.256841Z"}
-backup: /backups/lexai-20261121T185646Z (lexai_chunks_20261121t184550028465, 5070 points, 57.7 MB)
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/snapshots?wait=true "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/snapshots/lexai_chunks_20261121t191045867862-1662946699713990-2026-11-21-19-16-15-1.snapshot "HTTP/1.1 200 OK"
+HTTP Request: DELETE http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/snapshots/lexai_chunks_20261121t191045867862-1662946699713990-2026-11-21-19-16-15-1.snapshot "HTTP/1.1 200 OK"
+{"path": "/backups/lexai-20261121T191615Z", "collection": "lexai_chunks_20261121t191045867862", "points": 5070, "pruned": [], "event": "backup_written", "level": "info", "timestamp": "2026-11-21T19:16:20.010570Z"}
+backup: /backups/lexai-20261121T191615Z (lexai_chunks_20261121t191045867862, 5070 points, 57.8 MB)
 exit=0
 
 $ dir /s /b "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\backups\lexai-*"
 C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\backups\lexai-20261121T183335Z
 C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\backups\lexai-20261121T183721Z
 C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\backups\lexai-20261121T185646Z
+C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\backups\lexai-20261121T190026Z
+C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\backups\lexai-20261121T191615Z
 exit=0
 
 $ docker compose --project-directory "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy" --env-file "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\env\laptop-docker.env" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.yaml" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.laptop.yaml" rm -sf qdrant
@@ -50,16 +52,16 @@ exit=0
 
 --- the index is gone now (status must fail): ---
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" status
- Container lexai-redis-1 Running 
  Container lexai-qdrant-1 Running 
- Container lexai-redis-1 Waiting 
+ Container lexai-redis-1 Running 
  Container lexai-qdrant-1 Waiting 
- Container lexai-qdrant-1 Healthy 
+ Container lexai-redis-1 Waiting 
  Container lexai-redis-1 Healthy 
- Container lexai-ingest-run-56ec7acf7304 Creating 
- Container lexai-ingest-run-56ec7acf7304 Created 
-HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+ Container lexai-qdrant-1 Healthy 
+ Container lexai-ingest-run-6ba1c9b22102 Creating 
+ Container lexai-ingest-run-6ba1c9b22102 Created 
 HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/collections "HTTP/1.1 200 OK"
 Qdrant: http://qdrant:6333
 builds: []
@@ -72,21 +74,21 @@ $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" restore
  Container lexai-qdrant-1 Running 
  Container lexai-redis-1 Waiting 
  Container lexai-qdrant-1 Waiting 
- Container lexai-redis-1 Healthy 
  Container lexai-qdrant-1 Healthy 
- Container lexai-ingest-run-ee26236dfbbe Creating 
- Container lexai-ingest-run-ee26236dfbbe Created 
+ Container lexai-redis-1 Healthy 
+ Container lexai-ingest-run-1911a5af8c2e Creating 
+ Container lexai-ingest-run-1911a5af8c2e Created 
 HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/snapshots/upload?priority=snapshot&wait=true "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/snapshots/upload?priority=snapshot&wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
 HTTP Request: PUT http://qdrant:6333/collections/lexai_meta "HTTP/1.1 200 OK"
 HTTP Request: PUT http://qdrant:6333/collections/lexai_meta/points?wait=true "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
 HTTP Request: POST http://qdrant:6333/collections/aliases "HTTP/1.1 200 OK"
-{"path": "/backups/lexai-20261121T185646Z", "collection": "lexai_chunks_20261121t184550028465", "previous": null, "event": "backup_restored", "level": "info", "timestamp": "2026-11-21T18:57:10.751872Z"}
-restored lexai-20261121T185646Z: lexai_chunks_20261121t184550028465 (5070 points, backed up 2026-11-21T18:56:50+00:00) is live; previously live: none
+{"path": "/backups/lexai-20261121T191615Z", "collection": "lexai_chunks_20261121t191045867862", "previous": null, "event": "backup_restored", "level": "info", "timestamp": "2026-11-21T19:16:44.543531Z"}
+restored lexai-20261121T191615Z: lexai_chunks_20261121t191045867862 (5070 points, backed up 2026-11-21T19:16:19+00:00) is live; previously live: none
 exit=0
 
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" status
@@ -96,26 +98,26 @@ $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" status
  Container lexai-qdrant-1 Waiting 
  Container lexai-qdrant-1 Healthy 
  Container lexai-redis-1 Healthy 
- Container lexai-ingest-run-cf7fcf69c985 Creating 
- Container lexai-ingest-run-cf7fcf69c985 Created 
-HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+ Container lexai-ingest-run-a932a7bab6d0 Creating 
+ Container lexai-ingest-run-a932a7bab6d0 Created 
 HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/collections "HTTP/1.1 200 OK"
 Qdrant: http://qdrant:6333
-builds: ['lexai_chunks_20261121t184550028465']
+builds: ['lexai_chunks_20261121t191045867862']
 HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
 HTTP Request: POST http://qdrant:6333/collections/lexai_meta/points "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
-live index: lexai_chunks_20261121t184550028465 (5070 chunks)
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+live index: lexai_chunks_20261121t191045867862 (5070 chunks)
 {
-  "collection": "lexai_chunks_20261121t184550028465",
+  "collection": "lexai_chunks_20261121t191045867862",
   "embedding_model": "nomic-embed-text",
   "dimension": 768,
   "document_prefix": "search_document: ",
   "chunker_version": "legal-v3-max1400-ov150",
   "sparse_version": "bm25-crc32-v1",
   "avg_len": 96.61065088757395,
-  "built_at": "2026-11-21T18:45:52+00:00"
+  "built_at": "2026-11-21T19:10:48+00:00"
 }
 documents: 63
   bns-2023                             490  The Bharatiya Nyaya Sanhita, 2023
@@ -184,10 +186,15 @@ documents: 63
 exit=0
 
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" smoke --questions 2 --wait-ready 180
- Container lexai-smoke-run-9afa08865f28 Creating 
- Container lexai-smoke-run-9afa08865f28 Created 
-[FAIL] ready -> {"ready": false, "checks": {"llm": {"ok": false, "error": "ConnectError", "detail": "All connection attempts failed"}, "embedder": {"ok": false, "error": "TimeoutError", "detail": ""}, "index": {"ok": true, "collection": "lexai_chunks_20261121t184550028465", "chunks": 5070, "documents": 63, "built_at": "2026-11-21T18:45:52+00:00"}, "reranker": {"ok": true, "enabled": false, "model": null}}}
-SMOKE: FAIL
-
-exit=1
+ Container lexai-smoke-run-6131cb6caab3 Creating 
+ Container lexai-smoke-run-6131cb6caab3 Created 
+[PASS] ready
+[PASS] web UI served with CSP -> 200
+[PASS] metrics not public -> 404
+[PASS] session -> 201
+[PASS] answer: What does Article 21 of the Constitution protect? -> 0 s, 5 passages, 5 cited
+[PASS] answer: What does Article 14 of the Constitution guarantee? -> 0 s, 5 passages, 5 cited
+[PASS] answers citing a source >= 0 -> 2/2
+SMOKE: PASS
+exit=0
 

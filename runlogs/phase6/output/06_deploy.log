@@ -1,6 +1,7 @@
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" deploy local --min-cited 4 --no-backup --ready-timeout 300
-[deploy 18:46:13] deploying local (now running: local; rollback target: none)
-[deploy 18:46:13] starting api + web at local
+[deploy 19:11:20] host address from host.env: LEXAI_HOST_GATEWAY=192.168.127.254
+[deploy 19:11:20] deploying local (now running: local; rollback target: none)
+[deploy 19:11:20] starting api + web at local
  Container lexai-api-1 Recreate 
  Container lexai-api-1 Recreated 
  Container lexai-web-1 Recreate 
@@ -9,34 +10,49 @@ $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" deploy local --
  Container lexai-api-1 Started 
  Container lexai-web-1 Starting 
  Container lexai-web-1 Started 
-[deploy 18:46:19] smoke test of local (waiting up to 300 s for readiness)
- Container lexai-smoke-run-9f163cd90e22 Creating 
- Container lexai-smoke-run-9f163cd90e22 Created 
-[FAIL] ready -> {"ready": false, "checks": {"llm": {"ok": false, "error": "ConnectError", "detail": "All connection attempts failed"}, "embedder": {"ok": false, "error": "TimeoutError", "detail": ""}, "index": {"ok": true, "collection": "lexai_chunks_20261121t184550028465", "chunks": 5070, "documents": 63, "built_at": "2026-11-21T18:45:52+00:00"}, "reranker": {"ok": true, "enabled": false, "model": null}}}
-SMOKE: FAIL
-
-[deploy 18:51:27] local FAILED its checks; container logs saved to C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\var\deploy-failure-20261121T185127Z.log
-[deploy 18:51:27] no previous release to roll back to; the failed release is still running
-exit=1
+[deploy 19:11:31] smoke test of local (waiting up to 300 s for readiness)
+ Container lexai-smoke-run-2790b72c0d15 Creating 
+ Container lexai-smoke-run-2790b72c0d15 Created 
+[PASS] ready
+[PASS] web UI served with CSP -> 200
+[PASS] metrics not public -> 404
+[PASS] session -> 201
+[PASS] answer: What does Article 21 of the Constitution protect? -> 29 s, 5 passages, 5 cited
+[PASS] answer: What does Article 14 of the Constitution guarantee? -> 25 s, 5 passages, 5 cited
+[PASS] answer: Which freedoms does Article 19 of the Constitution give citizens? -> 41 s, 4 passages, 4 cited
+[PASS] answer: What remedy does Article 32 of the Constitution provide? -> 45 s, 5 passages, 5 cited
+[PASS] answer: What does Article 17 of the Constitution abolish? -> 42 s, 5 passages, 5 cited
+[PASS] answers citing a source >= 4 -> 5/5
+SMOKE: PASS
+[deploy 19:14:43] DEPLOYED local in 203 s
+exit=0
 
 $ type "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\var\release.json"
-The system cannot find the file specified.
-exit=1
+{
+  "current": "local",
+  "previous": null,
+  "history": [
+    {
+      "tag": "local",
+      "at": "2026-11-21T19:14:43+00:00"
+    }
+  ]
+}exit=0
 
 $ docker stats --no-stream
 NAME                                                                                                                    MEM USAGE / LIMIT     CPU %
-lexai-web-1                                                                                                             5.82MiB / 5.788GiB    0.00%
-lexai-api-1                                                                                                             146.1MiB / 5.788GiB   0.22%
-lexai-qdrant-1                                                                                                          77.65MiB / 5.788GiB   3.49%
-lexai-grafana-1                                                                                                         306.7MiB / 5.788GiB   2.43%
-lexai-prometheus-1                                                                                                      33.39MiB / 5.788GiB   0.37%
-lexai-redis-1                                                                                                           4.535MiB / 5.788GiB   4.09%
-k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  64.3MiB / 5.788GiB    0.14%
+lexai-web-1                                                                                                             5.105MiB / 5.788GiB   0.00%
+lexai-api-1                                                                                                             147.1MiB / 5.788GiB   5.53%
+lexai-qdrant-1                                                                                                          82.17MiB / 5.788GiB   0.15%
+lexai-grafana-1                                                                                                         310.4MiB / 5.788GiB   3.32%
+lexai-prometheus-1                                                                                                      33.59MiB / 5.788GiB   1.76%
+lexai-redis-1                                                                                                           4.672MiB / 5.788GiB   0.44%
+k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  65.32MiB / 5.788GiB   0.65%
 k8s_lb-tcp-443_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                          344KiB / 5.788GiB     0.00%
 k8s_POD_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_1                                      312KiB / 5.788GiB     0.00%
-k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 29.37MiB / 170MiB     0.32%
-k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   38.86MiB / 5.788GiB   0.96%
-k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   18.9MiB / 5.788GiB    0.92%
+k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 30.13MiB / 170MiB     0.40%
+k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   38.87MiB / 5.788GiB   0.24%
+k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   19.29MiB / 5.788GiB   0.00%
 k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                           1.777MiB / 5.788GiB   0.00%
 k8s_POD_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                                 304KiB / 5.788GiB     0.00%
 k8s_POD_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                     344KiB / 5.788GiB     0.00%

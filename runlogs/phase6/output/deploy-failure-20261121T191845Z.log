@@ -1,0 +1,219 @@
+web-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+web-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+web-1  | 10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf is not a file or does not exist
+web-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+web-1  | 20-envsubst-on-templates.sh: Running envsubst on /etc/nginx/templates/default.conf.template to /etc/nginx/conf.d/default.conf
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+web-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+web-1  | 2026/11/21 19:17:09 [notice] 1#1: using the "epoll" event method
+web-1  | 2026/11/21 19:17:09 [notice] 1#1: nginx/1.31.9
+web-1  | 2026/11/21 19:17:09 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) 
+web-1  | 2026/11/21 19:17:09 [notice] 1#1: OS: Linux 6.6.114.1-microsoft-standard-WSL2
+web-1  | 2026/11/21 19:17:09 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+web-1  | 2026/11/21 19:17:09 [notice] 1#1: start worker processes
+web-1  | 2026/11/21 19:17:09 [notice] 1#1: start worker process 26
+web-1  | 2026/11/21 19:17:09 [notice] 1#1: start worker process 27
+web-1  | 2026/11/21 19:17:09 [notice] 1#1: start worker process 28
+web-1  | 2026/11/21 19:17:09 [notice] 1#1: start worker process 29
+web-1  | 2026/11/21 19:17:11 [error] 26#26: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.8, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:11 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:14 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:17 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:20 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:24 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:27 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:30 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:33 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:36 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:39 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:42 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:45 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:48 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:51 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:55 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:17:58 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:01 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:04 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:07 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:10 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:13 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:16 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:19 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:22 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:26 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:29 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:32 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:35 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:38 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:41 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:19:18:44 +0000] "GET /readyz HTTP/1.1" 503 484 "-" "python-httpx/0.28.1" "-"
+api-1  | {"otlp": false, "trace_file": "/app/backend/var/traces.jsonl", "event": "tracing_enabled", "level": "info", "timestamp": "2026-11-21T19:17:12.006916Z"}
+api-1  | INFO:     Started server process [1]
+api-1  | INFO:     Waiting for application startup.
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_meta/points "HTTP/1.1 200 OK"
+api-1  | {"collection": "lexai_chunks_20261121t191045867862", "chunks": 5070, "built_at": "2026-11-21T19:10:48+00:00", "event": "index_ready", "level": "info", "timestamp": "2026-11-21T19:17:12.276905Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | {"sections": 2271, "event": "correspondence_ready", "level": "info", "timestamp": "2026-11-21T19:17:13.723160Z"}
+api-1  | {"sessions": "RedisSessionStore", "rate_limits": "redis", "cache": "RedisCache", "event": "state_backends", "level": "info", "timestamp": "2026-11-21T19:17:13.896020Z"}
+api-1  | {"version": "0.6.0", "profile": "none (no backend/.env; built-in defaults)", "llm": "does-not-exist-in-this-release", "embedder": "nomic-embed-text", "prompt": "answer_v4", "notes": [], "event": "startup_complete", "level": "info", "timestamp": "2026-11-21T19:17:13.896267Z"}
+api-1  | INFO:     Application startup complete.
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:54760 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     172.18.0.6:37142 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:55142 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     172.18.0.6:37802 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:37524 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     172.18.0.6:59138 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:57794 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     172.18.0.6:52868 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:44422 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     172.18.0.6:48116 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:33722 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     172.18.0.6:50350 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable

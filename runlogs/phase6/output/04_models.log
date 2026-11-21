@@ -1,6 +1,6 @@
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" models
- Container lexai-ingest-run-8ee431c4b2ac Creating 
- Container lexai-ingest-run-8ee431c4b2ac Created 
+ Container lexai-ingest-run-1372c984cec2 Creating 
+ Container lexai-ingest-run-1372c984cec2 Created 
 Config:   /app/backend/.env (profile: none (no backend/.env; built-in defaults))
 LLM:      qwen2.5-7b-instruct at http://host.docker.internal:11434/v1
 Embedder: nomic-embed-text (768-dim) at http://host.docker.internal:11434/v1
@@ -13,8 +13,8 @@ Reranker: disabled
 [PASS] embedding dimension matches config: model returns 768, LEXAI_EMBED_DIMENSION=768
 
 Generation test (the first call also loads the model into memory) ...
-[PASS] LLM generates: first token after 53.4s, 53 chunks in 64.5s (~4.8 tokens/s)
-   reply: A First Information Report (FIR) in India is a document registered with the police based on information provided by a complainant about a cognizable offense, which then initiates an investigation. It serves as the first official record of the complaint made to the police.
+[PASS] LLM generates: first token after 50.0s, 55 chunks in 60.2s (~5.4 tokens/s)
+   reply: A First Information Report (FIR) in India is an official record of a crime reported to the police, and it is filed by anyone who has knowledge of the commission of a cognizable offense. This report triggers the police to take immediate action under the Criminal Procedure Code.
    loaded: qwen2.5-7b-instruct:latest  5.2 GB total, 50% on GPU
 
 SUMMARY: ALL PASSED

@@ -2,28 +2,28 @@ $ call npx playwright test --reporter=list
 
 Running 22 tests using 4 workers
 
-  ✓   3 [mobile] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (4.2s)
-  ✓   5 [mobile] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (2.7s)
-  ✓   1 [desktop] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (8.0s)
-  ✓   4 [desktop] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (8.8s)
-  ✓   6 [mobile] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (8.2s)
-  ✓   7 [desktop] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (8.0s)
-  ✓   8 [mobile] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (1.5s)
-  ✓   9 [desktop] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (2.9s)
-  ✓  10 [mobile] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (3.0s)
-  ✓  11 [desktop] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (1.4s)
-  ✓  12 [mobile] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (1.2s)
-  ✓  13 [desktop] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (1.9s)
-  ✓  14 [mobile] › e2e\chat.spec.ts:98:1 › filters are sent with the question (1.7s)
-  ✓  16 [mobile] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (1.3s)
-  ✓  15 [desktop] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (1.4s)
-  ✓  17 [mobile] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat (1.6s)
-  ✓  18 [desktop] › e2e\chat.spec.ts:98:1 › filters are sent with the question (1.6s)
-  ✓  20 [desktop] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (2.0s)
-  -  21 [desktop] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat
-  ✘   2 [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (23.6s)
-  ✓  22 [mobile] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (2.3s)
-  ✘  19 [mobile] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (14.6s)
+  ✓   4 [desktop] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (19.1s)
+  ✓   2 [mobile] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (21.7s)
+  ✓   3 [desktop] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (22.4s)
+  ✓   5 [desktop] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (6.0s)
+  ✓   6 [mobile] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (5.0s)
+  ✓   7 [desktop] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (3.8s)
+  ✓   8 [mobile] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (2.6s)
+  ✓   9 [desktop] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (1.8s)
+  ✓  10 [mobile] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (1.8s)
+  ✓  11 [desktop] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (1.9s)
+  ✓  13 [desktop] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (1.5s)
+  ✓  12 [mobile] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (3.4s)
+  ✓  14 [desktop] › e2e\chat.spec.ts:98:1 › filters are sent with the question (1.4s)
+  ✓  15 [mobile] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (1.2s)
+  ✓  16 [desktop] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (1.0s)
+  ✓  17 [mobile] › e2e\chat.spec.ts:98:1 › filters are sent with the question (1.3s)
+  -  18 [desktop] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat
+  ✓  19 [mobile] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (1.3s)
+  ✓  20 [mobile] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat (2.9s)
+  ✘   1 [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (31.7s)
+  ✓  21 [mobile] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (3.9s)
+  ✓  22 [mobile] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (5.1s)
 
 
   1) [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ───
@@ -61,45 +61,9 @@ Running 22 tests using 4 workers
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  2) [mobile] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ────
-
-    Error: expect(locator).toHaveCount(expected) failed
-
-    Locator:  locator('article').last().getByRole('alert')
-    Expected: 0
-    Received: 1
-    Timeout:  5000ms
-
-    Call log:
-      - Expect "toHaveCount" locator('article').last().getByRole('alert') with timeout 5000ms
-      - waiting for locator('article').last().getByRole('alert')
-        14 × locator resolved to 1 element
-           - unexpected value "1"
-
-
-      13 |   const answer = page.locator("article").last();
-      14 |   await expect(answer).toHaveAttribute("aria-busy", "false", { timeout: 200_000 });
-    > 15 |   await expect(answer.getByRole("alert")).toHaveCount(0);
-         |                                           ^
-      16 |   expect((await answer.innerText()).trim().length).toBeGreaterThan(20);
-      17 |   // The passages behind the answer can be opened, with the passage text from the index.
-      18 |   const sources = answer.getByRole("region", { name: "Sources" }).getByRole("button");
-        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\live.spec.ts:15:43
-
-    Error Context: test-results\live-a-real-question-is-an-1eabf-rom-the-index-through-nginx-mobile\error-context.md
-
-    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
-    test-results\live-a-real-question-is-an-1eabf-rom-the-index-through-nginx-mobile\trace.zip
-    Usage:
-
-        npx playwright show-trace test-results\live-a-real-question-is-an-1eabf-rom-the-index-through-nginx-mobile\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-  2 failed
+  1 failed
     [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ────
-    [mobile] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ─────
   1 skipped
-  19 passed (45.0s)
+  20 passed (58.4s)
 exit=1
 
