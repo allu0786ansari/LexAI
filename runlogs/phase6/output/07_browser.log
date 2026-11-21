@@ -2,68 +2,311 @@ $ call npx playwright test --reporter=list
 
 Running 22 tests using 4 workers
 
-  ✓   4 [desktop] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (19.1s)
-  ✓   2 [mobile] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (21.7s)
-  ✓   3 [desktop] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (22.4s)
-  ✓   5 [desktop] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (6.0s)
-  ✓   6 [mobile] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (5.0s)
-  ✓   7 [desktop] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (3.8s)
-  ✓   8 [mobile] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (2.6s)
-  ✓   9 [desktop] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (1.8s)
-  ✓  10 [mobile] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (1.8s)
-  ✓  11 [desktop] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (1.9s)
-  ✓  13 [desktop] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (1.5s)
-  ✓  12 [mobile] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (3.4s)
-  ✓  14 [desktop] › e2e\chat.spec.ts:98:1 › filters are sent with the question (1.4s)
-  ✓  15 [mobile] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (1.2s)
-  ✓  16 [desktop] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (1.0s)
-  ✓  17 [mobile] › e2e\chat.spec.ts:98:1 › filters are sent with the question (1.3s)
-  -  18 [desktop] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat
-  ✓  19 [mobile] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (1.3s)
-  ✓  20 [mobile] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat (2.9s)
-  ✘   1 [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (31.7s)
-  ✓  21 [mobile] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (3.9s)
-  ✓  22 [mobile] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (5.1s)
+  ✓   1 [desktop] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (26.9s)
+  ✓   4 [mobile] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (27.2s)
+  ✓   3 [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (30.1s)
+  ✓   5 [desktop] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (5.1s)
+  ✓   6 [mobile] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (4.8s)
+  ✓   7 [desktop] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (1.8s)
+  ✓   8 [mobile] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (2.1s)
+  ✓   9 [desktop] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (1.4s)
+  ✓  10 [mobile] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (1.7s)
+  ✘   2 [desktop] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (27.8s)
+  ✓  11 [desktop] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (3.2s)
+  -  15 [mobile] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx
+  ✓  13 [desktop] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (8.6s)
+  ✓  12 [mobile] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (12.0s)
+  ✓  14 [mobile] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (20.1s)
+  ✓  16 [desktop] › e2e\chat.spec.ts:98:1 › filters are sent with the question (14.1s)
+  ✓  17 [mobile] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (13.4s)
+  ✓  19 [mobile] › e2e\chat.spec.ts:98:1 › filters are sent with the question (5.5s)
+  ✓  18 [desktop] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (5.9s)
+  -  21 [desktop] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat
+  ✓  20 [mobile] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (3.7s)
+  ✓  22 [mobile] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat (3.9s)
 
 
-  1) [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ───
+  1) [desktop] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations ─────
 
-    Error: expect(locator).toHaveCount(expected) failed
+    Error: expect(locator).toContainText(expected) failed
 
-    Locator:  locator('article').last().getByRole('alert')
-    Expected: 0
-    Received: 1
-    Timeout:  5000ms
+    Locator: locator('article').last()
+    Expected substring: "imprisonment for life"
+    Received string:    "LexAISearching the sources…"
+    Timeout: 5000ms
 
     Call log:
-      - Expect "toHaveCount" locator('article').last().getByRole('alert') with timeout 5000ms
-      - waiting for locator('article').last().getByRole('alert')
-        13 × locator resolved to 1 element
-           - unexpected value "1"
+      - Expect "toContainText" locator('article').last() with timeout 5000ms
+      - waiting for locator('article').last()
 
 
-      13 |   const answer = page.locator("article").last();
-      14 |   await expect(answer).toHaveAttribute("aria-busy", "false", { timeout: 200_000 });
-    > 15 |   await expect(answer.getByRole("alert")).toHaveCount(0);
-         |                                           ^
-      16 |   expect((await answer.innerText()).trim().length).toBeGreaterThan(20);
-      17 |   // The passages behind the answer can be opened, with the passage text from the index.
-      18 |   const sources = answer.getByRole("region", { name: "Sources" }).getByRole("button");
-        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\live.spec.ts:15:43
+      12 |   await page.getByLabel("Your question about Indian law").fill("What is the punishment for murder?");
+      13 |   await page.keyboard.press("Enter");
+    > 14 |   await expect(page.locator("article").last()).toContainText("imprisonment for life");
+         |                                                ^
+      15 |   await page.getByRole("button", { name: "Open source 1" }).click();
+      16 |   await expect(page.getByRole("dialog")).toContainText("full text");
+      17 |   expect(violations).toEqual([]);
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\csp.spec.ts:14:48
 
-    Error Context: test-results\live-a-real-question-is-an-1eabf-rom-the-index-through-nginx-desktop\error-context.md
+    Error Context: test-results\csp-the-app-runs-without-Content-Security-Policy-violations-desktop\error-context.md
 
     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
-    test-results\live-a-real-question-is-an-1eabf-rom-the-index-through-nginx-desktop\trace.zip
+    test-results\csp-the-app-runs-without-Content-Security-Policy-violations-desktop\trace.zip
     Usage:
 
-        npx playwright show-trace test-results\live-a-real-question-is-an-1eabf-rom-the-index-through-nginx-desktop\trace.zip
+        npx playwright show-trace test-results\csp-the-app-runs-without-Content-Security-Policy-violations-desktop\trace.zip
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   1 failed
-    [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ────
-  1 skipped
-  20 passed (58.4s)
+    [desktop] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations ──────
+  2 skipped
+  19 passed (1.4m)
 exit=1
+
+$ docker compose --project-directory "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy" --env-file "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\env\laptop-docker.env" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.yaml" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.laptop.yaml" logs --no-color --since 15m api
+api-1  | {"otlp": false, "trace_file": "/app/backend/var/traces.jsonl", "event": "tracing_enabled", "level": "info", "timestamp": "2026-11-21T19:18:52.181775Z"}
+api-1  | INFO:     Started server process [1]
+api-1  | INFO:     Waiting for application startup.
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_meta/points "HTTP/1.1 200 OK"
+api-1  | {"collection": "lexai_chunks_20261121t191045867862", "chunks": 5070, "built_at": "2026-11-21T19:10:48+00:00", "event": "index_ready", "level": "info", "timestamp": "2026-11-21T19:18:52.461757Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | {"sections": 2271, "event": "correspondence_ready", "level": "info", "timestamp": "2026-11-21T19:18:53.991095Z"}
+api-1  | {"sessions": "RedisSessionStore", "rate_limits": "redis", "cache": "RedisCache", "event": "state_backends", "level": "info", "timestamp": "2026-11-21T19:18:54.168693Z"}
+api-1  | {"version": "0.6.0", "profile": "none (no backend/.env; built-in defaults)", "llm": "qwen2.5-7b-instruct", "embedder": "nomic-embed-text", "prompt": "answer_v4", "notes": [], "event": "startup_complete", "level": "info", "timestamp": "2026-11-21T19:18:54.169023Z"}
+api-1  | INFO:     Application startup complete.
+api-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:46910 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:33436 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.8:0 - "POST /api/v1/sessions HTTP/1.1" 201 Created
+api-1  | INFO:     172.18.0.8:0 - "POST /api/v1/chat HTTP/1.1" 200 OK
+api-1  | {"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261121t191045867862", "context_chunks": 5, "answer_chars": 236, "cached": true, "abstained": false, "verified": true, "coverage": 1.0, "usage": null, "total_ms": 8.6, "event": "query_complete", "session_id": "b282c78e-2653-4703-b73d-a2dc207b99f3", "path": "/api/v1/chat", "request_id": "94b45d4be1cb5db241bb96ba2aff7fc2", "level": "info", "timestamp": "2026-11-21T19:18:55.206602Z"}
+api-1  | INFO:     172.18.0.8:0 - "POST /api/v1/chat HTTP/1.1" 200 OK
+api-1  | {"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261121t191045867862", "context_chunks": 5, "answer_chars": 262, "cached": true, "abstained": false, "verified": true, "coverage": 1.0, "usage": null, "condense_ms": 0.2, "total_ms": 3.3, "event": "query_complete", "session_id": "b282c78e-2653-4703-b73d-a2dc207b99f3", "path": "/api/v1/chat", "request_id": "a025b9758a444c7fc87fa42c52e62754", "level": "info", "timestamp": "2026-11-21T19:18:55.218211Z"}
+api-1  | INFO:     172.18.0.8:0 - "POST /api/v1/chat HTTP/1.1" 200 OK
+api-1  | {"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261121t191045867862", "context_chunks": 4, "answer_chars": 499, "cached": true, "abstained": false, "verified": true, "coverage": 0.5, "usage": null, "condense_ms": 0.2, "total_ms": 3.3, "event": "query_complete", "session_id": "b282c78e-2653-4703-b73d-a2dc207b99f3", "path": "/api/v1/chat", "request_id": "2cef0c8a61bc955584b3e4fb022ed256", "level": "info", "timestamp": "2026-11-21T19:18:55.226483Z"}
+api-1  | INFO:     172.18.0.8:0 - "POST /api/v1/chat HTTP/1.1" 200 OK
+api-1  | {"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261121t191045867862", "context_chunks": 5, "answer_chars": 548, "cached": true, "abstained": false, "verified": true, "coverage": 0.5, "usage": null, "condense_ms": 0.2, "total_ms": 3.0, "event": "query_complete", "session_id": "b282c78e-2653-4703-b73d-a2dc207b99f3", "path": "/api/v1/chat", "request_id": "b5e42e1cdfba8b6a3dce0264257f93ce", "level": "info", "timestamp": "2026-11-21T19:18:55.234750Z"}
+api-1  | INFO:     172.18.0.8:0 - "POST /api/v1/chat HTTP/1.1" 200 OK
+api-1  | {"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261121t191045867862", "context_chunks": 5, "answer_chars": 292, "cached": true, "abstained": false, "verified": true, "coverage": 0.5, "usage": null, "condense_ms": 0.1, "total_ms": 2.9, "event": "query_complete", "session_id": "b282c78e-2653-4703-b73d-a2dc207b99f3", "path": "/api/v1/chat", "request_id": "94d527810b6a14f1aae8f925dbffea99", "level": "info", "timestamp": "2026-11-21T19:18:55.242466Z"}
+api-1  | INFO:     172.18.0.6:60866 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:51122 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:59444 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:50458 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     192.168.127.1:0 - "POST /api/v1/sessions HTTP/1.1" 201 Created
+api-1  | INFO:     192.168.127.1:0 - "POST /api/v1/chat HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/query "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/query "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:53156 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:50190 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:41574 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:36754 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:44516 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:46964 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:47996 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:46596 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/chat/completions "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:34612 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:55590 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:56358 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:44470 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:51938 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:39068 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:46598 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:56266 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:58710 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:54288 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:48978 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:34174 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:33424 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:43314 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:40944 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:34652 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:38888 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:49790 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:48832 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     192.168.127.1:0 - "POST /api/v1/sessions HTTP/1.1" 201 Created
+api-1  | INFO:     192.168.127.1:0 - "POST /api/v1/chat HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/query "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/query "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/chat/completions "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:37784 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:50340 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:57460 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:60318 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:49112 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:42432 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261121t191045867862", "context_chunks": 5, "answer_chars": 187, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1351, "completion_tokens": 47, "total_tokens": 1398}, "retrieval_ms": 465.7, "context_ms": 1.0, "time_to_first_token_ms": 6369.4, "generation_ms": 49942.1, "verify_ms": 117.9, "total_ms": 50679.6, "event": "query_complete", "session_id": "fb8ac2b3-1fc0-4b8f-8d25-e6873c12be24", "path": "/api/v1/chat", "request_id": "3e393fa920db2bb5bd44594c86782605", "level": "info", "timestamp": "2026-11-21T19:24:09.127553Z"}
+api-1  | INFO:     172.18.0.6:54404 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:60806 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:49178 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     192.168.127.1:0 - "POST /api/v1/chat HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:60670 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:35750 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/chat/completions "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/query "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/query "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:55236 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:42456 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:36304 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/chat/completions "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:37334 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:58018 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | {"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261121t191045867862", "context_chunks": 5, "answer_chars": 187, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1536, "completion_tokens": 46, "total_tokens": 1582}, "condense_ms": 12411.5, "retrieval_ms": 4970.6, "context_ms": 2.3, "time_to_first_token_ms": 42358.9, "generation_ms": 35440.9, "verify_ms": 457.2, "total_ms": 55235.9, "event": "query_complete", "session_id": "fb8ac2b3-1fc0-4b8f-8d25-e6873c12be24", "path": "/api/v1/chat", "request_id": "edfb9748ca390673d10161506105f2e5", "level": "info", "timestamp": "2026-11-21T19:25:27.655315Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:40954 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:42764 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:35692 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:57268 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:38030 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     192.168.127.1:0 - "POST /api/v1/chat HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/chat/completions "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:33074 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/query "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/query "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:55614 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:59420 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/chat/completions "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:39850 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:35888 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | {"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261121t191045867862", "context_chunks": 5, "answer_chars": 244, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1683, "completion_tokens": 59, "total_tokens": 1742}, "condense_ms": 8159.7, "retrieval_ms": 1524.7, "context_ms": 2.5, "time_to_first_token_ms": 29828.9, "generation_ms": 34211.5, "verify_ms": 20.6, "total_ms": 44081.1, "event": "query_complete", "session_id": "fb8ac2b3-1fc0-4b8f-8d25-e6873c12be24", "path": "/api/v1/chat", "request_id": "2bccdfd11ef0fd56ba424ba2ba54aead", "level": "info", "timestamp": "2026-11-21T19:26:45.079284Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | INFO:     192.168.127.1:0 - "GET /api/v1/chunks/43b4d04f-1b6c-52df-a1c9-0253b14fc792 HTTP/1.1" 200 OK
+api-1  | INFO:     192.168.127.1:0 - "GET /api/v1/chunks/d5d825d5-d2a1-57ca-9f43-9e5447badeae HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:38794 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:55990 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:57130 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:58686 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:52238 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:44698 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:48722 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:56076 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:34462 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:45768 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:60528 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:51510 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:36758 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:39936 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:35466 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:40534 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:37328 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     127.0.0.1:45998 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:53270 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:40586 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     192.168.127.1:0 - "POST /api/v1/sessions HTTP/1.1" 201 Created
+api-1  | INFO:     192.168.127.1:0 - "POST /api/v1/chat HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:49458 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | {"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261121t191045867862", "context_chunks": 5, "answer_chars": 236, "cached": true, "abstained": false, "verified": true, "coverage": 1.0, "usage": null, "total_ms": 3194.2, "event": "query_complete", "session_id": "f68ec875-4b56-40ea-b66f-5880bad008f4", "path": "/api/v1/chat", "request_id": "d43ca01db47c07b55556a578024fe126", "level": "info", "timestamp": "2026-11-21T19:29:41.350138Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/scroll "HTTP/1.1 200 OK"
+api-1  | INFO:     192.168.127.1:0 - "POST /api/v1/chat HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:53266 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:59350 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://host.docker.internal:11434/v1/models "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:38942 - "GET /metrics HTTP/1.1" 200 OK
+exit=0
 
