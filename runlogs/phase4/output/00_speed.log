@@ -31,3 +31,109 @@ time=2026-11-21T06:35:58.339+05:30 level=INFO source=updater.go:133 msg="New upd
 time=2026-11-21T06:35:58.684+05:30 level=INFO source=updater.go:198 msg="update already downloaded" bundle=C:\Users\LENOVO\AppData\Local\Ollama\updates_v2\ebc82afa4f90fff4c778d67b5487f6653937e2f443d31150c9eed61d1c73f97e\OllamaSetup.exe
 NAME    ID    SIZE    PROCESSOR    CONTEXT    RUNNER    UNTIL 
 time=2026-11-21T07:06:27.126+05:30 level=ERROR source=server.go:224 msg="ollama exited" err="exit status 0x40010004"
+===================== 21-11-2026 14:30:40.60 =====================
+$ powercfg /getactivescheme
+Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)exit=0
+
+$ powershell -NoProfile -Command "$b = Get-CimInstance Win32_Battery; 'BatteryStatus=' + $b.BatteryStatus + ' charge=' + $b.EstimatedChargeRemaining"
+BatteryStatus=2 charge=98
+exit=0
+
+(BatteryStatus 2 = plugged in, 1 = on battery)
+$ powershell -NoProfile -Command "$o = Get-CimInstance Win32_OperatingSystem; 'free RAM MB=' + [int]($o.FreePhysicalMemory/1024) + ' free virtual MB=' + [int]($o.FreeVirtualMemory/1024)"
+free RAM MB=917 free virtual MB=9149
+exit=0
+
+$ powershell -NoProfile -Command "$c = Get-CimInstance Win32_Processor; 'CPU MHz=' + $c.CurrentClockSpeed + ' of ' + $c.MaxClockSpeed + ' load=' + $c.LoadPercentage"
+CPU MHz=3110 of 3110 load=12
+exit=0
+
+$ nvidia-smi --query-gpu=temperature.gpu,clocks.sm,clocks.max.sm,power.draw,utilization.gpu,memory.used,clocks_throttle_reasons.active --format=csv
+temperature.gpu, clocks.current.sm [MHz], clocks.max.sm [MHz], power.draw [W], utilization.gpu [%], memory.used [MiB], clocks_throttle_reasons.active
+42, 300 MHz, 1785 MHz, 5.14 W, 0 %, 0 MiB, 0x0000000000000001
+exit=0
+
+$ ollama ps
+NAME    ID    SIZE    PROCESSOR    CONTEXT    RUNNER    UNTIL 
+exit=0
+
+$ .venv\Scripts\python.exe scripts\check_models.py
+Config:   C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.env (profile: laptop-8gb v3)
+LLM:      qwen2.5-7b-instruct at http://localhost:11434/v1
+Embedder: nomic-embed-text (768-dim) at http://localhost:11434/v1
+Reranker: disabled
+
+[PASS] model server reachable: 7 models served
+[PASS] LLM model served: qwen2.5-7b-instruct
+[PASS] embedding model served: nomic-embed-text
+[PASS] LLM context length pinned: num_ctx=4096
+[PASS] embedding dimension matches config: model returns 768, LEXAI_EMBED_DIMENSION=768
+
+Generation test (the first call also loads the model into memory) ...
+[PASS] LLM generates: first token after 49.5s, 59 chunks in 61.1s (~5.1 tokens/s)
+   reply: A First Information Report (FIR) in India is a document registered with the police when a cognizable offense has been committed, based on information provided by a victim or any other person, which initiates an investigation. It serves as the first official record of a crime reported to the police.
+   loaded: qwen2.5-7b-instruct:latest  5.2 GB total, 50% on GPU
+
+SUMMARY: ALL PASSED
+exit=0
+
+$ ollama ps
+NAME                          ID              SIZE      PROCESSOR          CONTEXT    RUNNER      UNTIL              
+qwen2.5-7b-instruct:latest    b57dc8ba2735    5.2 GB    50%/50% CPU/GPU    4096       llamacpp    4 minutes from now    
+exit=0
+
+===================== 21-11-2026 15:14:04.28 =====================
+$ powercfg /getactivescheme
+Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)exit=0
+
+$ powershell -NoProfile -Command "$b = Get-CimInstance Win32_Battery; 'BatteryStatus=' + $b.BatteryStatus + ' charge=' + $b.EstimatedChargeRemaining"
+BatteryStatus=2 charge=98
+exit=0
+
+(BatteryStatus 2 = plugged in, 1 = on battery)
+$ powershell -NoProfile -Command "$o = Get-CimInstance Win32_OperatingSystem; 'free RAM MB=' + [int]($o.FreePhysicalMemory/1024) + ' free virtual MB=' + [int]($o.FreeVirtualMemory/1024)"
+free RAM MB=219 free virtual MB=3968
+exit=0
+
+$ powershell -NoProfile -Command "$c = Get-CimInstance Win32_Processor; 'CPU MHz=' + $c.CurrentClockSpeed + ' of ' + $c.MaxClockSpeed + ' load=' + $c.LoadPercentage"
+CPU MHz=3110 of 3110 load=13
+exit=0
+
+$ nvidia-smi --query-gpu=temperature.gpu,clocks.sm,clocks.max.sm,power.draw,utilization.gpu,memory.used,clocks_throttle_reasons.active --format=csv
+temperature.gpu, clocks.current.sm [MHz], clocks.max.sm [MHz], power.draw [W], utilization.gpu [%], memory.used [MiB], clocks_throttle_reasons.active
+57, 300 MHz, 1785 MHz, 1.65 W, 0 %, 2845 MiB, 0x0000000000000001
+exit=0
+
+$ ollama ps
+NAME                          ID              SIZE      PROCESSOR          CONTEXT    RUNNER      UNTIL                   
+qwen2.5-7b-instruct:latest    b57dc8ba2735    5.2 GB    50%/50% CPU/GPU    4096       llamacpp    4 minutes from now         
+nomic-embed-text:latest       0a109f422b47    335 MB    100% GPU           2048       llamacpp    About a minute from now    
+exit=0
+
+$ .venv\Scripts\python.exe scripts\check_models.py
+Config:   C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.env (profile: laptop-8gb v3)
+LLM:      qwen2.5-7b-instruct at http://localhost:11434/v1
+Embedder: nomic-embed-text (768-dim) at http://localhost:11434/v1
+Reranker: disabled
+
+[PASS] model server reachable: 7 models served
+[PASS] LLM model served: qwen2.5-7b-instruct
+[PASS] embedding model served: nomic-embed-text
+[PASS] LLM context length pinned: num_ctx=4096
+[PASS] embedding dimension matches config: model returns 768, LEXAI_EMBED_DIMENSION=768
+
+Generation test (the first call also loads the model into memory) ...
+[PASS] LLM generates: first token after 3.0s, 48 chunks in 15.2s (~3.9 tokens/s)
+   reply: A First Information Report (FIR) in India is an official record of a crime reported to the police, and it is filed by anyone who has knowledge of the commission of a cognizable offense, marking the initiation of a criminal proceeding.
+   loaded: qwen2.5-7b-instruct:latest  5.2 GB total, 50% on GPU
+   loaded: nomic-embed-text:latest  0.3 GB total, 100% on GPU
+
+SUMMARY: ALL PASSED
+exit=0
+
+$ ollama ps
+NAME                          ID              SIZE      PROCESSOR          CONTEXT    RUNNER      UNTIL              
+qwen2.5-7b-instruct:latest    b57dc8ba2735    5.2 GB    50%/50% CPU/GPU    4096       llamacpp    4 minutes from now    
+nomic-embed-text:latest       0a109f422b47    335 MB    100% GPU           2048       llamacpp    4 minutes from now    
+exit=0
+

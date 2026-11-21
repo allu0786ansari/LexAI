@@ -1,201 +1,199 @@
-INFO:     Started server process [27552]
+INFO:     Started server process [12012]
 INFO:     Waiting for application startup.
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-{"collection": "lexai_chunks_20261120t133053900723", "chunks": 5070, "built_at": "2026-11-20T13:30:54+00:00", "event": "index_ready", "level": "info", "timestamp": "2026-11-20T20:04:29.345515Z"}
-{"sections": 2271, "event": "correspondence_ready", "level": "info", "timestamp": "2026-11-20T20:04:31.010397Z"}
-{"version": "0.3.0", "profile": "laptop-8gb v3", "llm": "qwen2.5-7b-instruct", "embedder": "nomic-embed-text", "notes": [], "event": "startup_complete", "level": "info", "timestamp": "2026-11-20T20:04:31.026165Z"}
+{"collection": "lexai_chunks_20261120t133053900723", "chunks": 5070, "built_at": "2026-11-20T13:30:54+00:00", "event": "index_ready", "level": "info", "timestamp": "2026-11-21T09:38:34.290436Z"}
+{"sections": 2271, "event": "correspondence_ready", "level": "info", "timestamp": "2026-11-21T09:38:36.508892Z"}
+{"version": "0.3.0", "profile": "laptop-8gb v3", "llm": "qwen2.5-7b-instruct", "embedder": "nomic-embed-text", "notes": [], "event": "startup_complete", "level": "info", "timestamp": "2026-11-21T09:38:36.522745Z"}
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-INFO:     127.0.0.1:62814 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53883 - "GET /healthz HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62905 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62905 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62906 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62903 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62904 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62905 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62904 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62905 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62906 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62903 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62904 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62903 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62903 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62903 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62904 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62905 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62892 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62906 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62893 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62891 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62903 - "POST /api/search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62817 - "POST /api/query HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 2, "answer_chars": 598, "cached": false, "abstained": false, "verified": true, "coverage": 0.5, "usage": {"prompt_tokens": 1639, "completion_tokens": 128, "total_tokens": 1767}, "retrieval_ms": 598.2, "context_ms": 0.1, "time_to_first_token_ms": 49296.1, "generation_ms": 494953.8, "verify_ms": 8.4, "total_ms": 495570.6, "event": "query_complete", "path": "/api/query", "request_id": "6891fe755587453688b395ad7ed9c213", "session_id": "395c2079-c54a-44fc-b3a9-e6c5549fc538", "level": "info", "timestamp": "2026-11-20T20:13:20.715959Z"}
-INFO:     127.0.0.1:62817 - "POST /api/query HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 6, "answer_chars": 262, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1735, "completion_tokens": 97, "total_tokens": 1832}, "retrieval_ms": 433.5, "context_ms": 0.8, "time_to_first_token_ms": 39583.4, "generation_ms": 387043.5, "verify_ms": 7.5, "total_ms": 387495.8, "event": "query_complete", "path": "/api/query", "request_id": "66711666db4e4fe5af3f0019cf79faf4", "session_id": "e2edb356-ea04-4842-9365-e4bd014c33e7", "level": "info", "timestamp": "2026-11-20T20:19:48.529529Z"}
-INFO:     127.0.0.1:62817 - "POST /api/query HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-{"flags": [{"kind": "no_citations", "detail": "the answer cites no passage"}], "standalone_query": "What does Article 21 of the Constitution protect?", "event": "answer_flagged", "path": "/api/query", "request_id": "324b0e6fbe1f403dbb24960ed16a48f1", "session_id": "8eea63db-f13a-4de3-b86b-6971503b5ab2", "level": "warning", "timestamp": "2026-11-20T20:23:05.059763Z"}
-{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 5, "answer_chars": 247, "cached": false, "abstained": false, "verified": false, "coverage": 0.0, "usage": {"prompt_tokens": 1143, "completion_tokens": 50, "total_tokens": 1193}, "retrieval_ms": 408.8, "context_ms": 0.1, "time_to_first_token_ms": 25032.9, "generation_ms": 196028.9, "verify_ms": 7.0, "total_ms": 196458.2, "event": "query_complete", "path": "/api/query", "request_id": "324b0e6fbe1f403dbb24960ed16a48f1", "session_id": "8eea63db-f13a-4de3-b86b-6971503b5ab2", "level": "info", "timestamp": "2026-11-20T20:23:05.059763Z"}
-INFO:     127.0.0.1:62817 - "POST /api/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53966 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53966 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53967 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53964 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53965 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53964 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53965 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53966 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53965 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53964 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53967 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53966 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53964 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53965 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53965 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53965 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53964 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53967 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53966 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53963 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53965 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53961 - "POST /api/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "POST /api/query HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-{"flags": [{"kind": "no_citations", "detail": "the answer cites no passage"}], "standalone_query": "What is the punishment for murder under BNS?", "event": "answer_flagged", "path": "/api/query", "request_id": "697d07470ffd4bdd980ade7c33a42d24", "session_id": "9d64414c-bcae-42ce-a33b-5c135d0f8798", "level": "warning", "timestamp": "2026-11-20T20:28:20.225175Z"}
-{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 5, "answer_chars": 320, "cached": false, "abstained": false, "verified": false, "coverage": 0.0, "usage": {"prompt_tokens": 1233, "completion_tokens": 80, "total_tokens": 1313}, "retrieval_ms": 2401.5, "context_ms": 0.1, "time_to_first_token_ms": 28785.4, "generation_ms": 312677.4, "verify_ms": 8.5, "total_ms": 315109.0, "event": "query_complete", "path": "/api/query", "request_id": "697d07470ffd4bdd980ade7c33a42d24", "session_id": "9d64414c-bcae-42ce-a33b-5c135d0f8798", "level": "info", "timestamp": "2026-11-20T20:28:20.230171Z"}
-INFO:     127.0.0.1:62817 - "POST /api/query HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50138 - "POST /api/query HTTP/1.1" 200 OK
+{"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 2, "answer_chars": 393, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1756, "completion_tokens": 81, "total_tokens": 1837}, "retrieval_ms": 647.2, "context_ms": 0.4, "time_to_first_token_ms": 25662.9, "generation_ms": 40120.2, "verify_ms": 4.7, "total_ms": 40778.2, "event": "query_complete", "path": "/api/query", "session_id": "7116da1f-4a51-4d7e-b5fd-daef0b08e6f5", "request_id": "7e16bea3332e4cf3874d1b19035ce920", "level": "info", "timestamp": "2026-11-21T09:39:55.876721Z"}
+INFO:     127.0.0.1:53886 - "POST /api/query HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+{"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 6, "answer_chars": 175, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1852, "completion_tokens": 65, "total_tokens": 1917}, "retrieval_ms": 516.8, "context_ms": 2.1, "time_to_first_token_ms": 15361.2, "generation_ms": 28528.7, "verify_ms": 5.5, "total_ms": 29060.1, "event": "query_complete", "path": "/api/query", "session_id": "e7416357-7afd-4bd3-aa41-94ec19b0aa85", "request_id": "20199786ce7544f0b7180676c23bdf3a", "level": "info", "timestamp": "2026-11-21T09:40:24.968499Z"}
+INFO:     127.0.0.1:53886 - "POST /api/query HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+{"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 5, "answer_chars": 236, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1260, "completion_tokens": 50, "total_tokens": 1310}, "retrieval_ms": 488.1, "context_ms": 0.1, "time_to_first_token_ms": 10960.3, "generation_ms": 19214.5, "verify_ms": 6.1, "total_ms": 19714.1, "event": "query_complete", "path": "/api/query", "session_id": "060c491f-a69c-479d-a472-247f18ed8c34", "request_id": "4d9ac6cdf[phone]c03c5a747d5a7", "level": "info", "timestamp": "2026-11-21T09:40:44.715410Z"}
+INFO:     127.0.0.1:53886 - "POST /api/query HTTP/1.1" 200 OK
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+{"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 5, "answer_chars": 187, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1350, "completion_tokens": 47, "total_tokens": 1397}, "retrieval_ms": 950.9, "context_ms": 0.1, "time_to_first_token_ms": 10800.6, "generation_ms": 18045.9, "verify_ms": 6.4, "total_ms": 19013.7, "event": "query_complete", "path": "/api/query", "session_id": "7871b33e-44c8-4e7c-81dc-8f35bac1057a", "request_id": "e9fa0fdba6bf430a96dcade824785f58", "level": "info", "timestamp": "2026-11-21T09:41:03.762760Z"}
+INFO:     127.0.0.1:53886 - "POST /api/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62065 - "POST /api/query HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 5, "answer_chars": 290, "cached": false, "abstained": false, "verified": true, "coverage": 0.5, "usage": {"prompt_tokens": 1442, "completion_tokens": 71, "total_tokens": 1513}, "retrieval_ms": 2620.0, "context_ms": 0.1, "time_to_first_token_ms": 33269.0, "generation_ms": 277922.6, "verify_ms": 9.1, "total_ms": 280563.1, "event": "query_complete", "path": "/api/query", "request_id": "fafe1eb49e3d433cb63c2ce711c91b46", "session_id": "af591e11-5c05-49d0-8431-efd9a4b03579", "level": "info", "timestamp": "2026-11-20T20:33:00.865265Z"}
-INFO:     127.0.0.1:50138 - "POST /api/query HTTP/1.1" 200 OK
+{"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 5, "answer_chars": 217, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1559, "completion_tokens": 58, "total_tokens": 1617}, "retrieval_ms": 856.3, "context_ms": 0.1, "time_to_first_token_ms": 15600.4, "generation_ms": 24185.7, "verify_ms": 6.2, "total_ms": 25061.1, "event": "query_complete", "path": "/api/query", "session_id": "a4e0ca58-1431-4162-b5e2-9b1de0af037d", "request_id": "42a72006659e49cdbaaac6e1a2393c70", "level": "info", "timestamp": "2026-11-21T09:41:28.883182Z"}
+INFO:     127.0.0.1:62065 - "POST /api/query HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 5, "answer_chars": 402, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1100, "completion_tokens": 102, "total_tokens": 1202}, "retrieval_ms": 2791.1, "context_ms": 0.0, "time_to_first_token_ms": 305003.3, "generation_ms": 644673.7, "verify_ms": 11.7, "total_ms": 647492.2, "event": "query_complete", "path": "/api/query", "request_id": "41306fbfc1b6420faeee42b18b60e4f8", "session_id": "2124a2a8-acc1-4ff2-a5b4-e621c36c4109", "level": "info", "timestamp": "2026-11-20T20:39:07.779650Z"}
-INFO:     127.0.0.1:62817 - "POST /api/query HTTP/1.1" 200 OK
+{"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 5, "answer_chars": 1547, "cached": false, "abstained": false, "verified": true, "coverage": 0.57, "usage": {"prompt_tokens": 1217, "completion_tokens": 336, "total_tokens": 1553}, "retrieval_ms": 1003.1, "context_ms": 0.0, "time_to_first_token_ms": 34735.5, "generation_ms": 133034.6, "verify_ms": 14.2, "total_ms": 134062.5, "event": "query_complete", "path": "/api/query", "session_id": "1ac9b11e-6fae-4499-a7b6-33de0672fbe4", "request_id": "9c41d6e658d74c6c81e2857955499630", "level": "info", "timestamp": "2026-11-21T09:43:17.882882Z"}
+INFO:     127.0.0.1:53886 - "POST /api/query HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 2, "answer_chars": 520, "cached": false, "abstained": false, "verified": true, "coverage": 0.5, "usage": {"prompt_tokens": 1639, "completion_tokens": 108, "total_tokens": 1747}, "retrieval_ms": 409.4, "context_ms": 0.6, "time_to_first_token_ms": 371508.2, "generation_ms": 732034.4, "verify_ms": 4.5, "total_ms": 732465.2, "event": "query_complete", "path": "/api/query", "request_id": "eee937df95af40d0be23bc23af12e03f", "session_id": "44067d83-2538-43c2-874f-e72132decf06", "level": "info", "timestamp": "2026-11-20T20:45:13.386907Z"}
+{"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 2, "answer_chars": 377, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1756, "completion_tokens": 76, "total_tokens": 1832}, "retrieval_ms": 382.5, "context_ms": 0.5, "time_to_first_token_ms": 110162.4, "generation_ms": 130589.5, "verify_ms": 3.4, "total_ms": 130986.9, "event": "query_complete", "path": "/api/query", "session_id": "e05602bf-496c-4e00-8182-5b65f3cf61b3", "request_id": "22ced3f45a9043a5b542947eed0b6b4f", "level": "info", "timestamp": "2026-11-21T09:43:39.915821Z"}
 HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-{"prompt_version": "answer_v3", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 6, "answer_chars": 262, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1735, "completion_tokens": 97, "total_tokens": 1832}, "retrieval_ms": 528.2, "context_ms": 2.0, "time_to_first_token_ms": 369356.0, "generation_ms": 697042.0, "verify_ms": 3.9, "total_ms": 697593.0, "event": "query_complete", "path": "/api/query", "request_id": "743380c661574aa8916739cf6a4584bf", "session_id": "46bcbbfa-66e2-4d7a-a528-0feebbf4fc94", "level": "info", "timestamp": "2026-11-20T20:50:45.480664Z"}
+{"prompt_version": "answer_v4", "index_version": "lexai_chunks_20261120t133053900723", "context_chunks": 6, "answer_chars": 175, "cached": false, "abstained": false, "verified": true, "coverage": 1.0, "usage": {"prompt_tokens": 1852, "completion_tokens": 65, "total_tokens": 1917}, "retrieval_ms": 1075.1, "context_ms": 1.4, "time_to_first_token_ms": 22865.6, "generation_ms": 44906.6, "verify_ms": 7.7, "total_ms": 46009.9, "event": "query_complete", "path": "/api/query", "session_id": "20a26335-f358-4d0d-8502-e49e295fea88", "request_id": "b8e7881fcfb14c15b8a8dc19ef2e1cc3", "level": "info", "timestamp": "2026-11-21T09:44:03.972037Z"}
