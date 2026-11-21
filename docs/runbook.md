@@ -11,8 +11,8 @@ machine). Commands run from the repository root; `make` targets are for Linux/ma
 | `web` | `lexai-web` (nginx, unprivileged) | **8080** (the only public port) | none |
 | `api` | `lexai-backend` (FastAPI, 1 uvicorn worker per replica) | internal 8000 | `api-var` volume: feedback SQLite, reports |
 | `qdrant` | `qdrant/qdrant:v1.20.2` | internal 6333 | `qdrant-data` (the index), `qdrant-snapshots` |
-| `redis` | `redis:7.4.8-alpine` | internal 6379 | `redis-data`: sessions, rate limits, answer cache |
-| `ollama` (+ `ollama-init`) | `ollama/ollama:0.40.17` | internal 11434 | `ollama-models` (~5 GB) |
+| `redis` | `redis:7.4.11-alpine` | internal 6379 | `redis-data`: sessions, rate limits, answer cache |
+| `ollama` (+ `ollama-init`) | `ollama/ollama:0.40.16` | internal 11434 | `ollama-models` (~5 GB) |
 | `vllm` (GPU overlay) | `vllm/vllm-openai:v0.34.0` | internal 8000 | `hf-cache` |
 | `prometheus` | `prom/prometheus:v3.16.0` | 127.0.0.1:9095 | `prometheus-data` (15 days) |
 | `grafana` | `grafana/grafana:13.3.1` | 127.0.0.1:3001 | `grafana-data` |

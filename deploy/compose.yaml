@@ -108,7 +108,7 @@ services:
     logging: *logging
 
   redis:
-    image: redis:7.4.8-alpine
+    image: redis:7.4.11-alpine
     read_only: true                 # the entrypoint drops to the redis user itself
     security_opt: ["no-new-privileges:true"]
     # Sessions, rate limits and the answer cache. Sessions survive restarts (RDB snapshot).
@@ -123,7 +123,7 @@ services:
     logging: *logging
 
   ollama:
-    image: ollama/ollama:0.40.17
+    image: ollama/ollama:0.40.16
     profiles: [ollama]
     environment:
       OLLAMA_KEEP_ALIVE: 30m
@@ -137,7 +137,7 @@ services:
     logging: *logging
 
   ollama-init:
-    image: ollama/ollama:0.40.17
+    image: ollama/ollama:0.40.16
     profiles: [ollama]
     entrypoint: ["/bin/sh", "/modelfiles/init.sh"]
     environment:

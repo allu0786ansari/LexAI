@@ -3,7 +3,7 @@
 #   docker build -t lexai-frontend frontend
 
 ARG NODE_IMAGE=node:22.23.5-alpine
-ARG NGINX_IMAGE=nginxinc/nginx-unprivileged:1.31.9-alpine
+ARG NGINX_IMAGE=nginxinc/nginx-unprivileged:1.31.8-alpine
 
 FROM ${NODE_IMAGE} AS build
 WORKDIR /app
