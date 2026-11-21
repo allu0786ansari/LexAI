@@ -83,14 +83,19 @@ def process_memory_bytes() -> float:
             counters.cb = ctypes.sizeof(Counters)
             kernel32 = ctypes.WinDLL("kernel32")
             kernel32.GetCurrentProcess.restype = wintypes.HANDLE
-            psapi = ctypes.WinDLL("psapi")
-            ok = psapi.GetProcessMemoryInfo(kernel32.GetCurrentProcess(), ctypes.byref(counters), counters.cb)
+            kernel32.GetCurrentProcess.argtypes = []
+            # K32GetProcessMemoryInfo (kernel32, Windows 7+); without argtypes ctypes would pass the
+            # 64-bit pseudo-handle as a C int and overflow.
+            get_info = kernel32.K32GetProcessMemoryInfo
+            get_info.argtypes = [wintypes.HANDLE, ctypes.POINTER(Counters), wintypes.DWORD]
+            get_info.restype = wintypes.BOOL
+            ok = get_info(kernel32.GetCurrentProcess(), ctypes.byref(counters), counters.cb)
             return float(counters.WorkingSetSize) if ok else 0.0
         with open("/proc/self/status", encoding="utf-8") as f:
             for line in f:
                 if line.startswith("VmRSS:"):
                     return float(line.split()[1]) * 1024
-    except (OSError, AttributeError, ValueError):
+    except Exception:  # a gauge must never break /metrics
         return 0.0
     return 0.0
 
