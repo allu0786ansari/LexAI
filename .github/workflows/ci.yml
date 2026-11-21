@@ -227,7 +227,7 @@ jobs:
       - name: Start the stack (pulls the models on first start)
         run: |
           $COMPOSE up -d --quiet-pull
-          $COMPOSE wait ollama-init
+          $COMPOSE logs ollama-init   # up waited for it: the API depends on its successful completion
           $COMPOSE ps -a
       - name: Build the index (Constitution only)
         run: make docker-ingest ARGS="--only constitution"
