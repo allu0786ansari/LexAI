@@ -42,10 +42,15 @@ def env_file_value(path: Path, key: str) -> str | None:
     return None
 
 
+HOST_ENV = DEPLOY / "var" / "host.env"  # how containers reach the host (lexai.bat network writes it)
+
+
 class Compose:
     def __init__(self, env_file: Path, overlays: list[str]) -> None:
-        self.base = ["docker", "compose", "--project-directory", str(DEPLOY), "--env-file", str(env_file),
-                     "-f", str(DEPLOY / "compose.yaml")]
+        self.base = ["docker", "compose", "--project-directory", str(DEPLOY), "--env-file", str(env_file)]
+        if HOST_ENV.is_file():  # must match lexai.bat, or recreated containers lose the host address
+            self.base += ["--env-file", str(HOST_ENV)]
+        self.base += ["-f", str(DEPLOY / "compose.yaml")]
         for overlay in overlays:
             self.base += ["-f", str(DEPLOY / overlay)]
         self.env = dict(os.environ)
@@ -120,6 +125,8 @@ def main() -> int:
         log(f"{env_file} not found: copy deploy/.env.example to deploy/.env and edit it")
         return 2
     compose = Compose(env_file, args.overlay)
+    if HOST_ENV.is_file():
+        log(f"host address from {HOST_ENV.name}: {HOST_ENV.read_text(encoding='utf-8').strip()}")
     state = read_state()
     current = str(state.get("current") or env_file_value(env_file, "LEXAI_IMAGE_TAG") or "")
     if args.rollback:
