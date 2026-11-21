@@ -4,7 +4,7 @@ import pytest
 
 from lexai.core.errors import UpstreamUnavailable
 from lexai.domain.models import ChatMessage
-from lexai.query.condense import condense, needs_condensing
+from lexai.query.condense import condense, needs_condensing, ungrounded
 from lexai.query.references import extract_references
 from lexai.query.understand import plan_query
 from tests.conftest import FakeLLM
@@ -97,3 +97,46 @@ async def test_condense_falls_back_to_the_question_when_the_model_fails() -> Non
             raise UpstreamUnavailable("down")
 
     assert await condense(Down(), "and is it bailable?", HISTORY) == "and is it bailable?"  # type: ignore[arg-type]
+
+
+BNS_ONLY = [
+    ChatMessage(role="user", content="What is the punishment for murder under the BNS?"),
+    ChatMessage(role="assistant", content="Section 103 BNS: death or imprisonment for life [1]."),
+]
+
+
+@pytest.mark.parametrize(
+    ("rewrite", "added"),
+    [
+        # Seen on the laptop (Phase 4 run): the model swaps in the old code or invents an act.
+        (
+            "What is the bail status of murder under Section 302 of the Indian Penal Code?",
+            ["act IPC", "IPC Section 302"],
+        ),
+        (
+            "Is murder bailable under the Bureau of Investigation Act?",
+            ["unknown act 'Bureau of Investigation Act'"],
+        ),
+        ("Is murder under the BNS bailable?", []),
+        (
+            "Is the offence under section 103 of the BNS bailable?",
+            [],
+        ),  # in the assistant's answer, act named by the user
+    ],
+)
+def test_rewrite_may_only_name_what_the_conversation_named(rewrite: str, added: list[str]) -> None:
+    assert ungrounded(rewrite, "Is it bailable?", BNS_ONLY) == added
+
+
+async def test_an_ungrounded_rewrite_is_replaced_by_the_verbatim_conversation() -> None:
+    llm = FakeLLM(completion="Is murder under Section 302 of the Indian Penal Code bailable?")
+    out = await condense(llm, "Is it bailable?", BNS_ONLY)  # type: ignore[arg-type]
+    assert out == "What is the punishment for murder under the BNS? Is it bailable?"
+    assert plan_query("Is it bailable?", out).era.era == "new"
+
+
+def test_the_users_own_era_outranks_the_rewrite() -> None:
+    rewrite = "Under which section of the Criminal Procedure Code are the inherent powers of the High Court?"
+    plan = plan_query("Under which section of the new code are they now?", rewrite)
+    assert plan.era.era == "new"
+    assert plan_query(rewrite).era.era == "old"

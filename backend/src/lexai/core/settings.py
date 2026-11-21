@@ -46,6 +46,11 @@ class LLMSettings(BaseSettings):
     # while to process a long prompt before the first token appears.
     read_timeout_s: float = Field(default=120.0, gt=0)
     max_retries: int = Field(default=2, ge=0, le=5)
+    prompt_version: str = Field(
+        default="answer_v4",
+        pattern=r"^answer_v\d+$",
+        description="Answer prompt template (generation/templates/<version>.md).",
+    )
 
 
 class EmbedSettings(BaseSettings):

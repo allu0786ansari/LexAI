@@ -89,6 +89,11 @@ def answer_scores(item: GoldenItem, events: dict[str, Any]) -> dict[str, float |
     cited_keys = {passage_key(c) for c in citations if c.get("ref") in cited_refs}
     gold = gold_keys(item)
     abstained = predicted_abstain(done)
+    latency = done.get("latency") or {}
+    usage = done.get("usage") or {}
+    ttft, gen = latency.get("time_to_first_token_ms"), latency.get("generation_ms")
+    completion, prompt = usage.get("completion_tokens"), usage.get("prompt_tokens")
+    decode = gen - ttft if gen and ttft else None
     markers = len(_MARKER.findall(answer)) + len(verification.get("removed_markers") or [])
 
     scores: dict[str, float | None] = {
@@ -114,8 +119,11 @@ def answer_scores(item: GoldenItem, events: dict[str, Any]) -> dict[str, float |
         "code_correct": (
             float(meta.get("applicable_code") == item.applicable_code) if item.applicable_code else None
         ),
-        "ttft_ms": (done.get("latency") or {}).get("time_to_first_token_ms"),
-        "total_ms": (done.get("latency") or {}).get("total_ms"),
+        "ttft_ms": ttft,
+        "total_ms": latency.get("total_ms"),
+        # Machine speed, to tell a slow laptop from a slow pipeline.
+        "prompt_tok_s": round(prompt / (ttft / 1000), 1) if prompt and ttft else None,
+        "decode_tok_s": round(completion / (decode / 1000), 2) if completion and decode else None,
     }
     return scores
 

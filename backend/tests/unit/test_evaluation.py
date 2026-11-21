@@ -89,7 +89,8 @@ def test_answer_scores_citations_mentions_and_code() -> None:
                 {"ref": 2, "label": "IPC s.302", "law_type": "statute", "doc_id": "ipc-1860"},
             ],
             "verification": {"valid": False, "coverage": 1.0, "removed_markers": [7]},
-            "latency": {"time_to_first_token_ms": 900, "total_ms": 4000},
+            "latency": {"time_to_first_token_ms": 900, "generation_ms": 3900, "total_ms": 4000},
+            "usage": {"prompt_tokens": 1800, "completion_tokens": 60},
         },
     }
     s = answer_scores(gold, events)
@@ -99,6 +100,7 @@ def test_answer_scores_citations_mentions_and_code() -> None:
     assert s["must_mention"] == 0.5
     assert s["code_correct"] == 1.0
     assert s["ttft_ms"] == 900
+    assert s["prompt_tok_s"] == 2000.0 and s["decode_tok_s"] == 20.0
 
 
 def test_abstention_is_read_from_the_flag_or_the_wording() -> None:

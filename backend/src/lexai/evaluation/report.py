@@ -131,6 +131,8 @@ def write(directory: Path) -> Path:
             f"| abstention recall | {_f(ab['abstention_recall'])} | |",
             f"| time to first token (ms, mean) | {_f(o.get('ttft_ms'))} | |",
             f"| total time (ms, mean) | {_f(o.get('total_ms'))} | |",
+            f"| prompt processing (tokens/s, mean) | {_f(o.get('prompt_tok_s'))} | |",
+            f"| generation (tokens/s, mean) | {_f(o.get('decode_tok_s'))} | |",
             "",
             f"Errors: {a['summary']['errors']}.",
             "",

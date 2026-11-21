@@ -80,6 +80,35 @@ git push
 The fixture is roughly 10–20 MB (the index's vectors at half precision and its
 text); it is what lets CI test retrieval without Ollama.
 
+## Run 2 (after the run 1 fixes)
+
+Run 1 found three problems, fixed on this branch (see Run history). Run 2
+re-measures what they affect. Before starting: **plug the laptop in, set
+Windows to the "Best performance" power mode, and close other programs
+(browser, OneDrive sync if possible)**. Run 1's answers were generated ~10×
+slower than Phase 3 on the same questions; the new `speed` step records power,
+memory, GPU clocks and the model's speed before and after, so a slow machine is
+visible in the log instead of looking like a slow pipeline.
+
+```bat
+cd /d C:\Users\LENOVO\OneDrive\Desktop\LexAI
+git pull
+runlogs\phase4\run_phase4.bat speed setup quality models retrieval-quick test answers fixture load speed report
+```
+
+About 50 minutes at normal speed (`retrieval-quick` skips HyDE: run 1 measured
+it, +0.004 MRR for ~29 s per question). If the first `speed` block in
+`00_speed.log` shows generation under 2 tokens/s, stop (Ctrl+C), restart the
+laptop, and run the same command again.
+
+Then send the results:
+
+```bat
+git add runlogs\phase4\output eval\reports eval\fixtures eval\baselines
+git commit -m "Phase 4 run 2 logs"
+git push
+```
+
 ## What "pass" looks like
 
 | Log | Pass |
@@ -93,3 +122,10 @@ text); it is what lets CI test retrieval without Ollama.
 
 The numbers themselves are the result: they go into `RESULTS.md` and the ADR,
 including the weak spots.
+
+## Run history
+
+| Run | Date | Result |
+| --- | --- | --- |
+| 1 | 2026-11-20 | Quality 153 passed; **200/200 items valid**. Retrieval (dev, hybrid): Hit@1 0.798, Hit@5 0.936, Recall@8 0.915, MRR@10 0.858; routing is worth +0.21 MRR (no-routing 0.646); dense 0.841, BM25 0.803, HyDE 0.862 (+0.004 for ~29 s/question). Test split: Hit@1 0.892, MRR@10 0.905. Gate: baseline passes, routing-off fails; Linux reproduces the Windows numbers exactly. Answers (40): gold provision cited 0.85, key phrases 0.76, code applied 1.00, injection resisted 3/3, refusal recall 1.00. **Found:** (a) follow-ups: Hit@1 0.08 on dev — the 7B rewrite inserted old-code sections and even invented acts ("Is it bailable?" → "...Section 302 of the Indian Penal Code"; "Bureau of Investigation Act"), which the router pinned first; (b) 11 of 30 answers cited only in the "Provisions:" footer, never inline (coverage 0.39); correct abstentions were flagged "no citations"; (c) answers were generated at ~0.3 tokens/s, ~10× slower than Phase 3 on identical prompts (HyDE earlier in the same run was at normal speed): the laptop slowed down mid-run, so run 1 latency figures are invalid. **Fixed:** rewrites may only name acts the user named and sections in the conversation, else the previous question + follow-up are searched verbatim (replayed on run 1's 20 rewrites: the 14 hallucinated ones rejected, the 6 grounded kept); the user's own era words outrank the rewrite; prompt `answer_v4` with a worked citation example and an injection rule; abstentions not flagged; `speed` diagnostics; token rates in the report; test split locked. |
+

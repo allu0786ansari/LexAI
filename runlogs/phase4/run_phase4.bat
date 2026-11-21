@@ -8,6 +8,8 @@ REM     runlogs\phase4\run_phase4.bat                 all steps (about 45-60 min
 REM     runlogs\phase4\run_phase4.bat retrieval       one step
 REM
 REM  Steps: check setup quality models validate retrieval test answers fixture load report
+REM  Extra: speed (machine and model speed diagnostics, appended to 00_speed.log)
+REM         retrieval-quick (the retrieval step without HyDE, about 8 minutes)
 REM  Logs go to runlogs\phase4\output; results to eval\reports\<commit>, the CI
 REM  fixture to eval\fixtures and the gate baseline to eval\baselines.
 REM
@@ -52,12 +54,14 @@ if /I "%~1"=="quality"   goto step_quality
 if /I "%~1"=="models"    goto step_models
 if /I "%~1"=="validate"  goto step_validate
 if /I "%~1"=="retrieval" goto step_retrieval
+if /I "%~1"=="retrieval-quick" goto step_retrieval_quick
+if /I "%~1"=="speed"     goto step_speed
 if /I "%~1"=="test"      goto step_test
 if /I "%~1"=="answers"   goto step_answers
 if /I "%~1"=="fixture"   goto step_fixture
 if /I "%~1"=="load"      goto step_load
 if /I "%~1"=="report"    goto step_report
-echo Unknown step "%~1". Use: check setup quality models validate retrieval test answers fixture load report
+echo Unknown step "%~1". Use: check setup quality models validate retrieval retrieval-quick test answers fixture load speed report
 goto :eof
 
 
@@ -234,6 +238,41 @@ echo Retrieval on the dev split, 5 configurations - about 20 minutes ...
 pushd "%BACKEND%"
 set "CMD=%EVAL% retrieval --split dev --configs hybrid,dense,bm25,no-routing,hyde" & call :tee "%LOG%"
 popd
+goto :eof
+
+
+REM ---------------------------------------------------------------------------
+:step_retrieval_quick
+set "LOG=%OUT%\06_retrieval_dev.log"
+type nul > "%LOG%"
+if not exist "%VPY%" goto no_venv
+echo Retrieval on the dev split, 4 configurations - about 8 minutes ...
+pushd "%BACKEND%"
+set "CMD=%EVAL% retrieval --split dev --configs hybrid,dense,bm25,no-routing" & call :tee "%LOG%"
+popd
+goto :eof
+
+
+REM ---------------------------------------------------------------------------
+REM  Power, memory, GPU clocks and the model's generation speed. Appends, so
+REM  running it before and after the long steps shows whether the laptop slowed down.
+:step_speed
+set "LOG=%OUT%\00_speed.log"
+>>"%LOG%" echo ===================== %DATE% %TIME% =====================
+set "CMD=powercfg /getactivescheme" & call :run "%LOG%"
+set "CMD=powershell -NoProfile -Command "$b = Get-CimInstance Win32_Battery; 'BatteryStatus=' + $b.BatteryStatus + ' charge=' + $b.EstimatedChargeRemaining"" & call :run "%LOG%"
+>>"%LOG%" echo (BatteryStatus 2 = plugged in, 1 = on battery)
+set "CMD=powershell -NoProfile -Command "$o = Get-CimInstance Win32_OperatingSystem; 'free RAM MB=' + [int]($o.FreePhysicalMemory/1024) + ' free virtual MB=' + [int]($o.FreeVirtualMemory/1024)"" & call :run "%LOG%"
+set "CMD=powershell -NoProfile -Command "$c = Get-CimInstance Win32_Processor; 'CPU MHz=' + $c.CurrentClockSpeed + ' of ' + $c.MaxClockSpeed + ' load=' + $c.LoadPercentage"" & call :run "%LOG%"
+set "CMD=nvidia-smi --query-gpu=temperature.gpu,clocks.sm,clocks.max.sm,power.draw,utilization.gpu,memory.used,clocks_throttle_reasons.active --format=csv" & call :run "%LOG%"
+set "CMD=ollama ps" & call :run "%LOG%"
+if not exist "%VPY%" goto speed_done
+pushd "%BACKEND%"
+set "CMD=.venv\Scripts\python.exe scripts\check_models.py" & call :run "%LOG%"
+popd
+:speed_done
+set "CMD=ollama ps" & call :run "%LOG%"
+type "%LOG%"
 goto :eof
 
 

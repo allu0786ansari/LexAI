@@ -1,0 +1,6 @@
+{
+  "dataset": "golden_v1.jsonl",
+  "test_items": 87,
+  "test_sha256": "c7497406f369fc52a2aec2f8327af2032495da43e1d42211fbac6d9bddcbf4f1",
+  "note": "The test split is reported once per release; do not edit or tune on it."
+}

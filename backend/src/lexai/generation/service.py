@@ -33,7 +33,6 @@ from lexai.domain.models import (
 from lexai.generation.context import assemble
 from lexai.generation.prompts import (
     HYDE_PROMPT,
-    PROMPT_VERSION,
     applicable_law_text,
     format_context,
     render_system_prompt,
@@ -206,7 +205,10 @@ class ChatService:
             raise IndexNotReady()
 
         key = cache_key(
-            normalise(plan.standalone), self.index_version, PROMPT_VERSION, self.settings.llm.model
+            normalise(plan.standalone),
+            self.index_version,
+            self.settings.llm.prompt_version,
+            self.settings.llm.model,
         )
         if self.cache is not None and (hit := await self.cache.get(key)):
             async for event in self._replay(hit, question, session_id, request_id, latency, t_start):
@@ -251,7 +253,10 @@ class ChatService:
         yield StreamEvent(event="citations", data=[c.model_dump() for c in citations])
 
         system = render_system_prompt(
-            format_context(passages), applicable_law_text(plan.era.era, plan.era.reason), retrieved.notes
+            format_context(passages),
+            applicable_law_text(plan.era.era, plan.era.reason),
+            retrieved.notes,
+            self.settings.llm.prompt_version,
         )
         keep = self.settings.api.history_messages_in_prompt
         messages = [ChatMessage(role="system", content=system)]
@@ -398,7 +403,7 @@ class ChatService:
         breakdown = LatencyBreakdown(total_ms=_ms(t_start), **latency)
         logger.info(
             "query_complete",
-            prompt_version=PROMPT_VERSION,
+            prompt_version=self.settings.llm.prompt_version,
             index_version=self.index_version,
             context_chunks=len(citations),
             answer_chars=len(answer),
@@ -415,7 +420,7 @@ class ChatService:
             request_id=request_id,
             citations=citations,
             latency=breakdown,
-            prompt_version=PROMPT_VERSION,
+            prompt_version=self.settings.llm.prompt_version,
             index_version=self.index_version,
             usage=usage,
             cached=cached,

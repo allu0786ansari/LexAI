@@ -23,6 +23,7 @@ from lexai.clients.reranker import CrossEncoderReranker, Reranker
 from lexai.core.errors import ConfigurationError, IndexMismatchError, UpstreamUnavailable
 from lexai.core.logging import get_logger
 from lexai.core.settings import Settings
+from lexai.generation.prompts import answer_template
 from lexai.generation.service import ChatService
 from lexai.query.references import NEW_CODES, OLD_CODES
 from lexai.retrieval.correspondence import Correspondence, sections_from_chunks
@@ -69,6 +70,7 @@ async def build_chat(
     sessions: SessionStore,
     cache: AnswerCache | None,
 ) -> ChatService:
+    answer_template(settings.llm.prompt_version)  # fail at start-up on an unknown prompt version
     router = None
     if store is not None and collection is not None:
         router = Router(

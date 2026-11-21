@@ -61,6 +61,19 @@ gate that blocks regressions in pull requests.
    latency at 1/4/8 concurrent clients and answer latency at 1/2. Many-user tests
    (Locust) need the GPU server and belong to the deployment phase.
 
+9. **Follow-up rewrites are checked, not trusted (from run 1).** The 7B
+   rewrite regularly added old-code sections or invented acts, and the router
+   pinned them. A rewrite may now name only acts the user named and sections
+   that appear in the conversation; otherwise the previous user question and
+   the follow-up are searched verbatim. An explicit era in the user's own words
+   ("...of the new code?") outranks the rewrite.
+10. **Prompt `answer_v4`, selectable (from run 1).** v3 answers often cited only
+   in the "Provisions:" footer. v4 adds a two-sentence worked example of inline
+   citation (~140 tokens) and tells the model to answer only the legal part of a
+   message that tries to override its rules. `LEXAI_LLM_PROMPT_VERSION` selects
+   the template (v3 kept for comparison); the version is part of the cache key
+   and of every result. An abstention is no longer flagged "no citations".
+
 ## Consequences
 
 - Every PR is checked for retrieval regressions without Ollama, a GPU or the

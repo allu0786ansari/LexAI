@@ -68,6 +68,7 @@ def _session(sessions: SessionStore, item: GoldenItem) -> str | None:
 def describe_settings(settings: Settings) -> dict[str, Any]:
     return {
         "llm": settings.llm.model,
+        "prompt": settings.llm.prompt_version,
         "embedder": settings.embed.model,
         "reranker": settings.rerank.model if settings.rerank.enabled else None,
         "mode": settings.retrieval.mode,

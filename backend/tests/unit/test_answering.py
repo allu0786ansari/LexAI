@@ -6,11 +6,12 @@ from pathlib import Path
 
 import pytest
 
+from lexai.core.errors import ConfigurationError
 from lexai.core.logging import mask_pii
 from lexai.core.settings import REPO_ROOT
 from lexai.domain.models import Chunk, ScoredChunk
 from lexai.generation.context import fit, join_pieces, merge, merge_retrieved
-from lexai.generation.prompts import format_context
+from lexai.generation.prompts import answer_template, format_context, render_system_prompt
 from lexai.generation.verify import verify
 from lexai.ingestion.parsing import split_text
 from lexai.retrieval.correspondence import Correspondence, SectionText, sections_from_chunks
@@ -156,6 +157,35 @@ def test_verify_removes_invalid_markers_and_flags_unsupported_provisions() -> No
 def test_verify_flags_an_answer_without_citations() -> None:
     result = verify("Murder is punished with death or life imprisonment under the code.", PASSAGES)
     assert not result.valid and result.flags[0]["kind"] == "no_citations"
+
+
+def test_verify_does_not_flag_an_abstention_but_still_checks_provisions() -> None:
+    clean = verify(
+        "The indexed sources do not answer this.\n\nThis is legal information, not legal advice.", PASSAGES
+    )
+    assert clean.valid and clean.flags == []
+    invented = verify(
+        "Bail under section 437 of the CrPC is not addressed here. The indexed sources do not answer this.",
+        PASSAGES,
+    )
+    assert not invented.valid and [f["kind"] for f in invented.flags] == ["unsupported_provision"]
+
+
+def test_verify_footer_only_citations_are_still_flagged() -> None:
+    answer = (
+        "The minimum punishment for dowry death is imprisonment for seven years.\n\nProvisions: IPC s.302 [1]"
+    )
+    result = verify(answer, PASSAGES)
+    assert not result.valid and result.coverage == 0.0 and result.flags[0]["kind"] == "no_citations"
+
+
+def test_prompt_versions() -> None:
+    v3 = render_system_prompt("CTX", "LAW", [], "answer_v3")
+    v4 = render_system_prompt("CTX", "LAW", ["note"])
+    assert "CTX" in v3 and "LAW" in v3 and "Write the answer like this example" not in v3
+    assert "Write the answer like this example" in v4 and "- note" in v4
+    with pytest.raises(ConfigurationError, match="available: answer_v3, answer_v4"):
+        answer_template("answer_v9")
 
 
 def test_verify_counts_markers_written_after_the_full_stop() -> None:
