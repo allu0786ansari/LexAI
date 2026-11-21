@@ -1,0 +1,69 @@
+$ .venv\Scripts\python.exe scripts\check_phase5.py --server-log "C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase5\output\06_server.log"
+API starting (pid 7156), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase5\output\06_server.log
+API is up.
+
+B1. Sessions
+[PASS] forged session refused: 404 session_not_found
+[PASS] server-issued session: expires in 1800 s
+
+B2. Security controls
+[PASS] 20 KB body refused: 413 request_too_large
+[PASS] security headers
+[PASS] admin needs the key: 401/401
+
+B3. Sources: every citation opens its passage and PDF page
+[PASS] corpus list: 63 documents, 63 with a PDF on disk
+   'What is the punishment for murder?': 5 citations, 28 s, verified=True
+   'Is it bailable?': 5 citations, 29 s, verified=True
+   'What does Article 21 of the Constitution protect?': 5 citations, 20 s, verified=True
+[PASS] every citation opens its passage: 15/15
+[PASS] every PDF link opens: 15/15 (citations whose source PDF is on disk)
+
+B4. Feedback and metrics
+[PASS] feedback stored: id 1
+[PASS] answers counted: 3
+[PASS] time to first token recorded
+[PASS] stage latency recorded
+[PASS] route templates, not paths
+
+B5. One question traced from request to verified answer
+[PASS] trace has every stage: trace e027c6471807de25…, 7 spans
+   POST /api/v1/chat                               28541.2 ms
+     lexai.chat                                    28541.2 ms
+         intent: concept
+         applicable_code: new
+         outcome: answered
+         prompt_version: answer_v4
+         question: Is it bailable?
+       lexai.condense                               5488.8 ms
+           standalone_query: What is the punishment for murder? Is it bailable?
+       lexai.retrieve                                449.9 ms
+           labels: [BNS s.103, IPC s.302, BNS s.105, IPC s.304, BNS s.104, IPC s.303, BNSS Schedule First]
+           scores: [0.667, 0.667, 0.527, 0.417, 0.417, 0.417, 0.367]
+           best_dense: 0.7716319155749036
+       lexai.context                                   0.0 ms
+           passages: [BNS s.103, IPC s.302, BNS s.105, IPC s.304, BNS s.104]
+           chars: 2175
+       lexai.generate                              22598.8 ms
+           model: qwen2.5-7b-instruct
+           time_to_first_token_ms: 16003.5
+           input_tokens: 1518
+           output_tokens: 66
+       lexai.verify                                    0.0 ms
+           valid: True
+           coverage: 0.5
+           flags: []
+
+B6. Admin reindex (one document; the others are carried over)
+   reindexing prisons-act-1894 (37 chunks): job 64998ce64c3349738b6e298963c0ff04
+[PASS] reindex job succeeded: live: lexai_chunks_20261121t110128734352 (removed old builds: ['lexai_chunks_20261120t130116516461']) (100 s)
+[PASS] no document lost: 5070/5070 chunks
+[PASS] answers come from the new index: lexai_chunks_20261120t133053900723 -> lexai_chunks_20261121t110128734352
+
+B7. Rate limit (refused questions: no model call)
+[FAIL] 20 allowed, the 21st refused: 21 x 200, then 200; Retry-After None
+API stopped.
+
+SUMMARY: FAILED (1): ['20 allowed, the 21st refused']
+exit=1
+

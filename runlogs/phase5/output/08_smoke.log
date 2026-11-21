@@ -1,0 +1,65 @@
+$ .venv\Scripts\python.exe scripts\smoke_phase1.py --start-server --concurrency 2 --server-log "C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase5\output\08_server.log"
+API starting (pid 17404), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase5\output\08_server.log
+API is up.
+readyz: {
+  "ready": true,
+  "checks": {
+    "llm": {
+      "ok": true,
+      "reachable": true,
+      "model": "qwen2.5-7b-instruct",
+      "model_available": true
+    },
+    "embedder": {
+      "ok": true,
+      "reachable": true,
+      "model": "nomic-embed-text",
+      "dimension": 768,
+      "dimension_ok": true
+    },
+    "index": {
+      "ok": true,
+      "collection": "lexai_chunks_20261121t110128734352",
+      "chunks": 5070,
+      "documents": 63,
+      "built_at": "2026-11-21T11:01:28+00:00"
+    },
+    "reranker": {
+      "ok": true,
+      "enabled": false,
+      "model": null
+    }
+  }
+}
+[PASS] readyz green: HTTP 200
+
+Asking: What is the punishment for murder under the Indian Penal Code?
+[PASS] tokens stream incrementally: 45 token events; first at 14.02s, last at 22.39s (spread 8.36s)
+latency breakdown (ms): {"condense_ms": null, "hyde_ms": null, "retrieval_ms": 314.8, "context_ms": 0.1, "time_to_first_token_ms": 14002.1, "generation_ms": 22265.3, "verify_ms": 1.5, "total_ms": 22584.3}
+citations:
+  [1] IPC s.302 - Punishment for murder (p.72)  [repealed 2024-07-01; replaced by BNS; applies to earlier offences]
+  [2] IPC s.303 - Punishment for murder by life-convict (p.72)  [repealed 2024-07-01; replaced by BNS; applies to earlier offences]
+  [3] IPC s.304 - Punishment for culpable homicide not amounting to murder (p.72)  [repealed 2024-07-01; replaced by BNS; applies to earlier offences]
+  [4] IPC s.307 - Attempt to murder (p.72)  [repealed 2024-07-01; replaced by BNS; applies to earlier offences]
+  [5] IPC s.300 - Murder (p.71)  [repealed 2024-07-01; replaced by BNS; applies to earlier offences]
+
+ANSWER:
+Whoever commits murder shall be punished with death or imprisonment for life, and shall also be liable to fine [1].
+
+Provisions: IPC s.302 [1]
+This is legal information, not legal advice.
+
+[PASS] answer has citations: 5
+[PASS] citations name the provision: IPC s.302, IPC s.303, IPC s.304, IPC s.307, IPC s.300
+[PASS] murder question cites IPC s.302 or BNS s.103: IPC s.302
+[PASS] repealed IPC is flagged in its citation: 'repealed 2024-07-01; replaced by BNS; applies to earlier offences'
+Running 2 concurrent questions while polling /healthz ...
+[PASS] 2 concurrent answers completed: 2/2 finished
+[PASS] /healthz responsive during generation: 495 probes, p50 4.0 ms, p95 7.7 ms
+Disconnecting a client after its first token ...
+[PASS] server healthy after client disconnect: HTTP 200
+API stopped.
+
+SUMMARY: ALL PASSED
+exit=0
+

@@ -1,0 +1,56 @@
+model qwen2.5:7b-instruct-q4_K_M: already downloaded
+model nomic-embed-text: already downloaded
+$ ollama create qwen2.5-7b-instruct -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\ollama\Modelfile.laptop"
+[?2026h[?25l[1Ggathering model components [K[?25h[?2026l[?2026h[?25l[1Ggathering model components [K[?25h[?2026l[?2026h[?25l[1Ggathering model components [K
+using existing layer sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730 [K
+using existing layer sha256:66b9ea09bd5b7099cbb4fc820f31b575c0366fa439b08245566692c6784e281e [K
+using existing layer sha256:eb4402837c7829a690fa845de4d7f3fd842c2adee476d5341da8a46ea9255175 [K
+using existing layer sha256:832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e [K
+using existing layer sha256:22d7aa72d0ee6c7a07405d36e2d224c1bf70efeff5bf812b110220223f4b196b [K
+writing manifest ⠋ [K[?25h[?2026l[?2026h[?25l[A[A[A[A[A[A[1Ggathering model components [K
+using existing layer sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730 [K
+using existing layer sha256:66b9ea09bd5b7099cbb4fc820f31b575c0366fa439b08245566692c6784e281e [K
+using existing layer sha256:eb4402837c7829a690fa845de4d7f3fd842c2adee476d5341da8a46ea9255175 [K
+using existing layer sha256:832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e [K
+using existing layer sha256:22d7aa72d0ee6c7a07405d36e2d224c1bf70efeff5bf812b110220223f4b196b [K
+writing manifest ⠙ [K[?25h[?2026l[?2026h[?25l[A[A[A[A[A[A[1Ggathering model components [K
+using existing layer sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730 [K
+using existing layer sha256:66b9ea09bd5b7099cbb4fc820f31b575c0366fa439b08245566692c6784e281e [K
+using existing layer sha256:eb4402837c7829a690fa845de4d7f3fd842c2adee476d5341da8a46ea9255175 [K
+using existing layer sha256:832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e [K
+using existing layer sha256:22d7aa72d0ee6c7a07405d36e2d224c1bf70efeff5bf812b110220223f4b196b [K
+writing manifest [K
+success [K[?25h[?2026l
+exit=0
+
+$ ollama list
+NAME                                ID              SIZE      MODIFIED               
+qwen2.5-7b-instruct:latest          b57dc8ba2735    4.7 GB    Less than a second ago    
+qwen2.5:7b-instruct-q4_K_M          845dbda0ea48    4.7 GB    25 hours ago              
+nomic-embed-text:latest             0a109f422b47    274 MB    4 weeks ago               
+bge-m3:latest                       790764642607    1.2 GB    4 weeks ago               
+agmesh-phi3.5:latest                061d2b22c7b8    2.4 GB    3 months ago              
+phi3.5:3.8b-mini-instruct-q4_K_M    570961596984    2.4 GB    3 months ago              
+qwen2.5:3b-instruct                 357c53fb659c    1.9 GB    4 months ago              
+exit=0
+
+$ .venv\Scripts\python.exe scripts\check_models.py
+Config:   C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.env (profile: laptop-8gb v4)
+LLM:      qwen2.5-7b-instruct at http://localhost:11434/v1
+Embedder: nomic-embed-text (768-dim) at http://localhost:11434/v1
+Reranker: disabled
+
+[PASS] model server reachable: 7 models served
+[PASS] LLM model served: qwen2.5-7b-instruct
+[PASS] embedding model served: nomic-embed-text
+[PASS] LLM context length pinned: num_ctx=4096
+[PASS] embedding dimension matches config: model returns 768, LEXAI_EMBED_DIMENSION=768
+
+Generation test (the first call also loads the model into memory) ...
+[PASS] LLM generates: first token after 32.1s, 53 chunks in 40.7s (~6.2 tokens/s)
+   reply: A First Information Report (FIR) in India is an official record of a crime reported to the police, and it is filed by anyone who has knowledge of the commission of a cognizable offense. It triggers the police to take immediate action to investigate the crime.
+   loaded: qwen2.5-7b-instruct:latest  5.2 GB total, 50% on GPU
+
+SUMMARY: ALL PASSED
+exit=0
+
