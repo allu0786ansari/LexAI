@@ -109,6 +109,28 @@ git commit -m "Phase 4 run 2 logs"
 git push
 ```
 
+## Run 3 (finish run 2)
+
+Run 2's retrieval steps completed; the run stopped during the answers step
+(see Run history). Run 3 does only the remaining steps. The answers step now
+saves each answer as it finishes, so if it is interrupted again, running the
+same command continues where it stopped.
+
+```bat
+cd /d C:\Users\LENOVO\OneDrive\Desktop\LexAI
+git pull
+runlogs\phase4\run_phase4.bat speed answers fixture load speed report
+```
+
+About 35 minutes. Keep the window open and the laptop plugged in and awake
+until it prints "Done." Then:
+
+```bat
+git add runlogs\phase4\output eval\reports eval\fixtures eval\baselines
+git commit -m "Phase 4 run 3 logs"
+git push
+```
+
 ## What "pass" looks like
 
 | Log | Pass |
@@ -128,4 +150,5 @@ including the weak spots.
 | Run | Date | Result |
 | --- | --- | --- |
 | 1 | 2026-11-20 | Quality 153 passed; **200/200 items valid**. Retrieval (dev, hybrid): Hit@1 0.798, Hit@5 0.936, Recall@8 0.915, MRR@10 0.858; routing is worth +0.21 MRR (no-routing 0.646); dense 0.841, BM25 0.803, HyDE 0.862 (+0.004 for ~29 s/question). Test split: Hit@1 0.892, MRR@10 0.905. Gate: baseline passes, routing-off fails; Linux reproduces the Windows numbers exactly. Answers (40): gold provision cited 0.85, key phrases 0.76, code applied 1.00, injection resisted 3/3, refusal recall 1.00. **Found:** (a) follow-ups: Hit@1 0.08 on dev — the 7B rewrite inserted old-code sections and even invented acts ("Is it bailable?" → "...Section 302 of the Indian Penal Code"; "Bureau of Investigation Act"), which the router pinned first; (b) 11 of 30 answers cited only in the "Provisions:" footer, never inline (coverage 0.39); correct abstentions were flagged "no citations"; (c) answers were generated at ~0.3 tokens/s, ~10× slower than Phase 3 on identical prompts (HyDE earlier in the same run was at normal speed): the laptop slowed down mid-run, so run 1 latency figures are invalid. **Fixed:** rewrites may only name acts the user named and sections in the conversation, else the previous question + follow-up are searched verbatim (replayed on run 1's 20 rewrites: the 14 hallucinated ones rejected, the 6 grounded kept); the user's own era words outrank the rewrite; prompt `answer_v4` with a worked citation example and an injection rule; abstentions not flagged; `speed` diagnostics; token rates in the report; test split locked. |
+| 2 | 2026-11-21 | Quality 163 passed; model at 6.4 tokens/s (normal). Retrieval improved where the fix applied and nowhere else: follow-ups Hit@1 **0.083 → 0.583** (dev) and **0.375 → 0.875** (test); overall dev Hit@1 0.798 → **0.862**, MRR@10 0.858 → **0.892**; test Hit@1 0.892 → **0.946**, MRR@10 0.905 → **0.953**; every other category unchanged. Answers were back to normal speed (first token 10–28 s, 4–6 tokens/s, 15–58 s per answer; run 1's slowness was the machine). **Interrupted:** at 07:06, after 37 of 40 answers, the answers step and Ollama both ended with code 0x40010004 (the console was closed, or Windows logged off or restarted); nothing after it ran, and the answers were lost because they were saved only at the end. Also, `ollama ps` in the `speed` step had started the Ollama server inside the script's console (Ollama was not running), which held `00_speed.log` open (later writes to it were lost) and tied Ollama to that window. **Fixed:** answers are saved one by one and a rerun resumes; Ollama is started in its own window before any step that uses it. |
 

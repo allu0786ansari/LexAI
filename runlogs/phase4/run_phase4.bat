@@ -90,6 +90,31 @@ goto :eof
 
 
 REM ---------------------------------------------------------------------------
+REM  Starts Ollama in its own window if it is not answering. An "ollama" command run
+REM  while the server is down starts the server inside this script's console: it then
+REM  holds the log file open and stops when this window closes.
+:ensure_ollama
+curl -s -m 3 http://localhost:11434/api/version >nul 2>&1
+if not errorlevel 1 goto :eof
+echo Ollama is not running - starting it in its own window ...
+if exist "%LOCALAPPDATA%\Programs\Ollama\ollama app.exe" goto ensure_app
+start "Ollama" /MIN ollama serve
+goto ensure_wait_init
+:ensure_app
+start "" "%LOCALAPPDATA%\Programs\Ollama\ollama app.exe"
+:ensure_wait_init
+set /a "TRIES=0"
+:ensure_wait
+timeout /t 2 /nobreak >nul
+curl -s -m 3 http://localhost:11434/api/version >nul 2>&1
+if not errorlevel 1 goto :eof
+set /a "TRIES+=1"
+if %TRIES% LSS 30 goto ensure_wait
+echo WARNING: Ollama did not answer within a minute.
+goto :eof
+
+
+REM ---------------------------------------------------------------------------
 REM  Sets PY to a Python 3.12 or 3.13 launcher command, or leaves it empty.
 :find_python
 set "PY="
@@ -188,6 +213,7 @@ goto :eof
 
 
 :step_models
+call :ensure_ollama
 set "LOG=%OUT%\04_models.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
@@ -218,6 +244,7 @@ REM ---------------------------------------------------------------------------
 REM  Every golden item is checked against the indexed text (gold provisions exist,
 REM  key phrases appear in them). Failures are listed and excluded from scoring.
 :step_validate
+call :ensure_ollama
 set "LOG=%OUT%\05_validate.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
@@ -231,6 +258,7 @@ REM ---------------------------------------------------------------------------
 REM  Retrieval on the dev split: the default pipeline and four ablations.
 REM  hyde makes one model call per question (about 15 minutes of the total).
 :step_retrieval
+call :ensure_ollama
 set "LOG=%OUT%\06_retrieval_dev.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
@@ -243,6 +271,7 @@ goto :eof
 
 REM ---------------------------------------------------------------------------
 :step_retrieval_quick
+call :ensure_ollama
 set "LOG=%OUT%\06_retrieval_dev.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
@@ -257,6 +286,7 @@ REM ---------------------------------------------------------------------------
 REM  Power, memory, GPU clocks and the model's generation speed. Appends, so
 REM  running it before and after the long steps shows whether the laptop slowed down.
 :step_speed
+call :ensure_ollama
 set "LOG=%OUT%\00_speed.log"
 >>"%LOG%" echo ===================== %DATE% %TIME% =====================
 set "CMD=powercfg /getactivescheme" & call :run "%LOG%"
@@ -279,6 +309,7 @@ goto :eof
 REM ---------------------------------------------------------------------------
 REM  The held-out test split, default pipeline only. Run once per release.
 :step_test
+call :ensure_ollama
 set "LOG=%OUT%\07_retrieval_test.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
@@ -291,10 +322,11 @@ goto :eof
 REM ---------------------------------------------------------------------------
 REM  Full answers for 40 dev questions spread over all categories (about 20 minutes).
 :step_answers
+call :ensure_ollama
 set "LOG=%OUT%\08_answers.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
-echo Generating 40 full answers - about 20 minutes ...
+echo Generating 40 full answers - about 25 minutes. If interrupted, run the step again: it resumes.
 pushd "%BACKEND%"
 set "CMD=%EVAL% answers --split dev --limit 40" & call :tee "%LOG%"
 popd
@@ -305,6 +337,7 @@ REM ---------------------------------------------------------------------------
 REM  Exports the index and the smoke queries for the offline CI gate, writes the
 REM  baseline, then checks the gate passes and that a planted regression fails.
 :step_fixture
+call :ensure_ollama
 set "LOG=%OUT%\09_fixture.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv
@@ -322,6 +355,7 @@ goto :eof
 
 REM ---------------------------------------------------------------------------
 :step_load
+call :ensure_ollama
 set "LOG=%OUT%\10_load.log"
 type nul > "%LOG%"
 if not exist "%VPY%" goto no_venv

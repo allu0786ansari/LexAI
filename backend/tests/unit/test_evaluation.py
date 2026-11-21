@@ -30,10 +30,11 @@ from lexai.evaluation.metrics import (
     ranked_keys,
     retrieval_scores,
 )
+from lexai.evaluation.runner import run_answers
 from lexai.evaluation.sources import IndexTextSource
 from lexai.retrieval.qdrant_store import BuildMeta, QdrantStore
 from lexai.retrieval.sparse import query_vector
-from tests.conftest import FakeEmbedder, FakeLLM
+from tests.conftest import FakeEmbedder, FakeLLM, make_container
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 GOLDEN = REPO_ROOT / "eval" / "datasets" / "golden_v1.jsonl"
@@ -296,3 +297,29 @@ async def test_offline_gate_against_the_committed_baseline() -> None:
     assert cli.gate(run.summary, baseline) == []
     regressed = await cli.offline_run("no-routing")
     assert cli.gate(regressed.summary, baseline), "removing routing must fail the gate"
+
+
+async def test_answers_resume_from_the_checkpoint(
+    live_store: Live, settings: Settings, tmp_path: Path
+) -> None:
+    items = [
+        item(id="sl-1", question="What does Section 103 BNS say?", gold=["BNS s.103"]),
+        item(
+            id="sl-2", question="What does Article 21 of the Constitution say?", gold=["Constitution Art.21"]
+        ),
+    ]
+    llm = FakeLLM(tokens=["Murder ", "is ", "punished [1]."])
+    container = await make_container(settings, live_store, llm=llm)
+    checkpoint = tmp_path / "answers-dev.partial.jsonl"
+    first = await run_answers(
+        container.chat, container.sessions, items[:1], "dev", None, checkpoint, {"v": 1}
+    )
+    assert len(llm.calls) == 1 and len(checkpoint.read_text().splitlines()) == 2  # header + one answer
+
+    both = await run_answers(container.chat, container.sessions, items, "dev", None, checkpoint, {"v": 1})
+    assert len(llm.calls) == 2, "the saved answer is not generated again"
+    assert both.summary["resumed"] == 1 and both.summary["items"] == 2
+    assert both.results[0].scores == first.results[0].scores
+
+    await run_answers(container.chat, container.sessions, items, "dev", None, checkpoint, {"v": 2})
+    assert len(llm.calls) == 4, "a checkpoint from other settings is discarded"

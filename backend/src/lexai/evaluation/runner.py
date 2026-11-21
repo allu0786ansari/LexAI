@@ -12,10 +12,12 @@ follow-up is rewritten exactly as it would be in a conversation.
 
 from __future__ import annotations
 
+import json
 import time
 import uuid
 from collections import Counter
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any
 
 from lexai.core.settings import Settings
@@ -135,12 +137,60 @@ def summarise_retrieval(results: list[ItemResult]) -> dict[str, Any]:
     }
 
 
+def _load_checkpoint(path: Path, items: list[GoldenItem], settings: dict[str, Any]) -> dict[str, ItemResult]:
+    """Answers already saved by an interrupted run with the same settings."""
+    if not path.exists():
+        return {}
+    lines = path.read_text(encoding="utf-8").splitlines()
+    if not lines or json.loads(lines[0]).get("settings") != settings:
+        print(f"ignoring {path.name}: written with other settings")
+        path.unlink()
+        return {}
+    by_id = {i.id: i for i in items}
+    done: dict[str, ItemResult] = {}
+    for line in lines[1:]:
+        try:
+            rec = json.loads(line)
+        except json.JSONDecodeError:  # a line cut off by the interruption
+            continue
+        if rec["id"] in by_id:
+            done[rec["id"]] = ItemResult(by_id[rec["id"]], rec["keys"], rec["scores"], rec["info"])
+    return done
+
+
+def _start_checkpoint(path: Path, settings: dict[str, Any]) -> None:
+    path.write_text(json.dumps({"settings": settings}) + "\n", encoding="utf-8")
+
+
+def _append_checkpoint(path: Path, r: ItemResult) -> None:
+    rec = {"id": r.item.id, "keys": r.keys, "scores": r.scores, "info": r.info}
+    with path.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(rec, ensure_ascii=False, default=str) + "\n")
+
+
 async def run_answers(
-    chat: ChatService, sessions: SessionStore, items: list[GoldenItem], split: str, judge: Judge | None = None
+    chat: ChatService,
+    sessions: SessionStore,
+    items: list[GoldenItem],
+    split: str,
+    judge: Judge | None = None,
+    checkpoint: Path | None = None,
+    settings: dict[str, Any] | None = None,
 ) -> RunResult:
+    """Answer every item. With `checkpoint`, each answer is saved as it completes and a
+    rerun with the same settings continues where an interrupted run stopped."""
     start = time.perf_counter()
+    saved = _load_checkpoint(checkpoint, items, settings or {}) if checkpoint else {}
+    if saved:
+        print(f"resuming: {len(saved)} of {len(items)} answers already saved in {checkpoint}")
+    if checkpoint and not saved:
+        _start_checkpoint(checkpoint, settings or {})
     results: list[ItemResult] = []
-    for item in items:
+    for n, item in enumerate(items, start=1):
+        if item.id in saved:
+            results.append(saved[item.id])
+            continue
+        t0 = time.perf_counter()
         session = _session(sessions, item) or sessions.create()
         events: dict[str, Any] = {}
         async for event in chat.stream_answer(item.question, session, uuid.uuid4().hex):
@@ -159,6 +209,9 @@ async def run_answers(
             "standalone": (events.get("meta") or {}).get("standalone_query"),
         }
         results.append(r)
+        if checkpoint:
+            _append_checkpoint(checkpoint, r)
+        print(f"  [{n}/{len(items)}] {item.id} {time.perf_counter() - t0:.0f}s", flush=True)
     rows = [r.scores for r in results]
     summary: dict[str, Any] = {"items": len(results), "overall": metrics.summarise_answers(rows)}
     summary["abstention"] = metrics.abstention_pr(
@@ -171,4 +224,5 @@ async def run_answers(
     summary["by_category"] = {c: metrics.summarise_answers(v) for c, v in sorted(by_cat.items())}
     summary["errors"] = sum(1 for r in results if r.info["error"])
     summary["judge"] = judge.name if judge else None
+    summary["resumed"] = len(saved)
     return RunResult("answers", split, results, summary, round(time.perf_counter() - start, 1))

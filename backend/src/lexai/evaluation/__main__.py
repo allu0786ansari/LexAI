@@ -187,10 +187,24 @@ async def cmd_answers(args: argparse.Namespace) -> int:
         print(
             f"answering {len(good)} items; judge: {judge.name if judge else 'none (judged metrics not run)'}"
         )
-        run = await run_answers(container.chat, container.sessions, good, args.split, judge)
+        checkpoint = reports_dir() / f"answers-{args.split}.partial.jsonl"
+        run = await run_answers(
+            container.chat,
+            container.sessions,
+            good,
+            args.split,
+            judge,
+            checkpoint=checkpoint,
+            settings={
+                **describe_settings(settings),
+                "limit": args.limit,
+                "judge": judge.name if judge else None,
+            },
+        )
     finally:
         await container.aclose()
     path = save(run, f"answers-{args.split}", settings, {"excluded": bad, "limit": args.limit})
+    checkpoint.unlink(missing_ok=True)
     print(json.dumps(run.summary["overall"], indent=2))
     print(f"-> {path}")
     return 0
