@@ -1,0 +1,204 @@
+$ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" ingest
+ Container lexai-redis-1 Running 
+ Container lexai-qdrant-1 Running 
+ Container lexai-redis-1 Waiting 
+ Container lexai-qdrant-1 Waiting 
+ Container lexai-redis-1 Healthy 
+ Container lexai-qdrant-1 Healthy 
+ Container lexai-ingest-run-0602f479b7b0 Creating 
+ Container lexai-ingest-run-0602f479b7b0 Created 
+document                           status      detail
+------------------------------------------------------------------------------------------
+bns-2023                           cached      https://prsindia.org/files/bills_acts/acts_parliament/2023/The%20Bharatiya%20Nyaya%20Sanhita,%202023.pdf
+bnss-2023                          cached      https://prsindia.org/files/bills_acts/bills_parliament/2023/The%20Bharatiya%20Nagarik%20Suraksha%20Sanhita,%202023.pdf
+bsa-2023                           cached      https://prsindia.org/files/bills_acts/acts_parliament/2023/The%20Bharatiya%20Sakshya%20Bill,%202023.pdf
+ipc-1860                           cached      https://www.iitk.ac.in/gc/pdf/IPC_186045.pdf
+crpc-1973                          bundled-ok  
+iea-1872                           cached      https://cdn.ncw.gov.in/wp-content/uploads/2022/12/THEINDIANEVIDENCEACT1872_0.pdf
+constitution                       bundled-ok  
+it-act-2000                        bundled-ok  
+prisons-act-1894                   bundled-ok  
+criminal-law-amendment-2018        bundled-ok  
+mha-cybercrime-manual              bundled-ok  
+mha-cprgr-manual                   bundled-ok  
+mha-cyberfraud-instructions        bundled-ok  
+sc-judis-10166                     bundled-ok  
+sc-judis-10187                     bundled-ok  
+sc-judis-10193                     bundled-ok  
+sc-judis-10220                     bundled-ok  
+sc-judis-10290                     bundled-ok  
+sc-judis-10304                     bundled-ok  
+sc-judis-10322                     bundled-ok  
+sc-judis-10347                     bundled-ok  
+sc-judis-10356                     bundled-ok  
+sc-judis-10391                     bundled-ok  
+sc-judis-10426                     bundled-ok  
+sc-judis-10439                     bundled-ok  
+sc-judis-10442                     bundled-ok  
+sc-judis-10502                     bundled-ok  
+sc-judis-10519                     bundled-ok  
+sc-judis-10520                     bundled-ok  
+sc-judis-10548                     bundled-ok  
+sc-judis-10557                     bundled-ok  
+sc-judis-10562                     bundled-ok  
+sc-judis-10613                     bundled-ok  
+sc-judis-10629                     bundled-ok  
+sc-judis-10637                     bundled-ok  
+sc-judis-10649                     bundled-ok  
+sc-judis-10663                     bundled-ok  
+sc-judis-10668                     bundled-ok  
+sc-judis-10679                     bundled-ok  
+sc-judis-10693                     bundled-ok  
+sc-judis-10752                     bundled-ok  
+sc-judis-10762                     bundled-ok  
+sc-judis-10773                     bundled-ok  
+sc-judis-10796                     bundled-ok  
+sc-judis-10804                     bundled-ok  
+sc-judis-10805                     bundled-ok  
+sc-judis-10814                     bundled-ok  
+sc-judis-10818                     bundled-ok  
+sc-judis-1082                      bundled-ok  
+sc-judis-10823                     bundled-ok  
+sc-judis-10844                     bundled-ok  
+sc-judis-10857                     bundled-ok  
+sc-judis-10877                     bundled-ok  
+sc-judis-10886                     bundled-ok  
+sc-judis-1089                      bundled-ok  
+sc-judis-10892                     bundled-ok  
+sc-judis-10897                     bundled-ok  
+sc-judis-10910                     bundled-ok  
+sc-judis-10924                     bundled-ok  
+sc-judis-10933                     bundled-ok  
+sc-judis-10937                     bundled-ok  
+sc-judis-1094                      bundled-ok  
+sc-judis-10941                     bundled-ok  
+------------------------------------------------------------------------------------------
+FETCH: all sources present and verified
+ Container lexai-redis-1 Running 
+ Container lexai-qdrant-1 Running 
+ Container lexai-qdrant-1 Waiting 
+ Container lexai-redis-1 Waiting 
+ Container lexai-redis-1 Healthy 
+ Container lexai-qdrant-1 Healthy 
+ Container lexai-ingest-run-87dd9671d47f Creating 
+ Container lexai-ingest-run-87dd9671d47f Created 
+{"doc": "bns-2023", "pages": 102, "units": 358, "chunks": 490, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:04:34.393251Z"}
+{"doc": "bnss-2023", "pages": 249, "units": 531, "chunks": 915, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:04:37.533872Z"}
+{"doc": "bsa-2023", "pages": 47, "units": 170, "chunks": 219, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:04:38.872648Z"}
+{"doc": "ipc-1860", "pages": 112, "units": 548, "chunks": 626, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:04:43.279780Z"}
+{"doc": "crpc-1973", "pages": 263, "units": 532, "chunks": 892, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:04:53.416693Z"}
+{"doc": "iea-1872", "pages": 60, "units": 179, "chunks": 225, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:04:55.688106Z"}
+{"doc": "constitution", "pages": 404, "units": 486, "chunks": 807, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:09.932685Z"}
+{"doc": "it-act-2000", "pages": 36, "units": 110, "chunks": 145, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:11.366074Z"}
+{"doc": "prisons-act-1894", "pages": 20, "units": 0, "chunks": 37, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:11.469857Z"}
+{"doc": "criminal-law-amendment-2018", "pages": 7, "units": 26, "chunks": 28, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:11.545399Z"}
+{"doc": "mha-cybercrime-manual", "pages": 92, "units": 0, "chunks": 102, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:14.165916Z"}
+{"doc": "mha-cprgr-manual", "pages": 41, "units": 0, "chunks": 31, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.068379Z"}
+{"doc": "mha-cyberfraud-instructions", "pages": 1, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.204460Z"}
+{"doc": "sc-judis-10166", "pages": 14, "units": 0, "chunks": 36, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.356444Z"}
+{"doc": "sc-judis-10187", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.384556Z"}
+{"doc": "sc-judis-10193", "pages": 14, "units": 0, "chunks": 33, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.475936Z"}
+{"doc": "sc-judis-10220", "pages": 5, "units": 0, "chunks": 11, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.520214Z"}
+{"doc": "sc-judis-10290", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.546701Z"}
+{"doc": "sc-judis-10304", "pages": 1, "units": 0, "chunks": 1, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.569530Z"}
+{"doc": "sc-judis-10322", "pages": 1, "units": 0, "chunks": 1, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.594840Z"}
+{"doc": "sc-judis-10347", "pages": 3, "units": 0, "chunks": 5, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.625092Z"}
+{"doc": "sc-judis-10356", "pages": 4, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.660443Z"}
+{"doc": "sc-judis-10391", "pages": 3, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.690926Z"}
+{"doc": "sc-judis-10426", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.718976Z"}
+{"doc": "sc-judis-10439", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.745757Z"}
+{"doc": "sc-judis-10442", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.780801Z"}
+{"doc": "sc-judis-10502", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.814773Z"}
+{"doc": "sc-judis-10519", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.843884Z"}
+{"doc": "sc-judis-10520", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.872050Z"}
+{"doc": "sc-judis-10548", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.909458Z"}
+{"doc": "sc-judis-10557", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.940078Z"}
+{"doc": "sc-judis-10562", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.966321Z"}
+{"doc": "sc-judis-10613", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:15.993605Z"}
+{"doc": "sc-judis-10629", "pages": 1, "units": 0, "chunks": 1, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.016313Z"}
+{"doc": "sc-judis-10637", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.041390Z"}
+{"doc": "sc-judis-10649", "pages": 3, "units": 0, "chunks": 7, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.076236Z"}
+{"doc": "sc-judis-10663", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.102209Z"}
+{"doc": "sc-judis-10668", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.133412Z"}
+{"doc": "sc-judis-10679", "pages": 4, "units": 0, "chunks": 9, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.172728Z"}
+{"doc": "sc-judis-10693", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.204747Z"}
+{"doc": "sc-judis-10752", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.242776Z"}
+{"doc": "sc-judis-10762", "pages": 3, "units": 0, "chunks": 5, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.273981Z"}
+{"doc": "sc-judis-10773", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.303066Z"}
+{"doc": "sc-judis-10796", "pages": 13, "units": 0, "chunks": 31, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.386060Z"}
+{"doc": "sc-judis-10804", "pages": 18, "units": 0, "chunks": 47, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.497966Z"}
+{"doc": "sc-judis-10805", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.531836Z"}
+{"doc": "sc-judis-10814", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.564907Z"}
+{"doc": "sc-judis-10818", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.603699Z"}
+{"doc": "sc-judis-1082", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.638165Z"}
+{"doc": "sc-judis-10823", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.676063Z"}
+{"doc": "sc-judis-10844", "pages": 31, "units": 0, "chunks": 83, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.849249Z"}
+{"doc": "sc-judis-10857", "pages": 3, "units": 0, "chunks": 5, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.881585Z"}
+{"doc": "sc-judis-10877", "pages": 4, "units": 0, "chunks": 7, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.917401Z"}
+{"doc": "sc-judis-10886", "pages": 5, "units": 0, "chunks": 11, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:16.959090Z"}
+{"doc": "sc-judis-1089", "pages": 11, "units": 0, "chunks": 28, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:17.031068Z"}
+{"doc": "sc-judis-10892", "pages": 10, "units": 0, "chunks": 24, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:17.098526Z"}
+{"doc": "sc-judis-10897", "pages": 15, "units": 0, "chunks": 34, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:17.193289Z"}
+{"doc": "sc-judis-10910", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:17.225067Z"}
+{"doc": "sc-judis-10924", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:17.261159Z"}
+{"doc": "sc-judis-10933", "pages": 7, "units": 0, "chunks": 15, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:17.376279Z"}
+{"doc": "sc-judis-10937", "pages": 7, "units": 0, "chunks": 17, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:17.432673Z"}
+{"doc": "sc-judis-1094", "pages": 4, "units": 0, "chunks": 9, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:17.476223Z"}
+{"doc": "sc-judis-10941", "pages": 3, "units": 0, "chunks": 7, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T16:05:17.509771Z"}
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t160517556309 "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t160517556309/index?wait=true "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t160517556309/index?wait=true "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t160517556309/index?wait=true "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t160517556309/index?wait=true "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t160517556309/index?wait=true "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t160517556309/index?wait=true "HTTP/1.1 200 OK"
+{"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:05:19.814083Z"}
+{"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:05:20.817679Z"}
+{"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:05:22.822799Z"}
+HTTP Request: GET http://qdrant:6333/collections/lexai_chunks_20261121t160517556309/exists "HTTP/1.1 200 OK"
+HTTP Request: DELETE http://qdrant:6333/collections/lexai_chunks_20261121t160517556309 "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
+{"code": "upstream_unavailable", "error": "Embedding failed (nomic-embed-text at http://host.docker.internal:11434/v1): ConnectError('All connection attempts failed')", "event": "ingest_failed", "level": "error", "timestamp": "2026-11-21T16:05:26.857025Z"}
+ERROR: Embedding failed (nomic-embed-text at http://host.docker.internal:11434/v1): ConnectError('All connection attempts failed')
+
+exit=1
+
+$ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" status
+ Container lexai-redis-1 Running 
+ Container lexai-qdrant-1 Running 
+ Container lexai-redis-1 Waiting 
+ Container lexai-qdrant-1 Waiting 
+ Container lexai-qdrant-1 Healthy 
+ Container lexai-redis-1 Healthy 
+ Container lexai-ingest-run-f88f4dd4dc0f Creating 
+ Container lexai-ingest-run-f88f4dd4dc0f Created 
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections "HTTP/1.1 200 OK"
+Qdrant: http://qdrant:6333
+builds: []
+live index: none (run build)
+
+exit=1
+
+$ docker stats --no-stream
+NAME                                                                                                                    MEM USAGE / LIMIT     CPU %
+lexai-web-1                                                                                                             4.84MiB / 5.788GiB    0.00%
+lexai-api-1                                                                                                             105.5MiB / 5.788GiB   0.14%
+lexai-redis-1                                                                                                           3.211MiB / 5.788GiB   0.42%
+lexai-qdrant-1                                                                                                          25.83MiB / 5.788GiB   0.06%
+k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  21MiB / 5.788GiB      0.07%
+k8s_lb-tcp-443_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                          344KiB / 5.788GiB     0.00%
+k8s_POD_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_1                                      312KiB / 5.788GiB     0.00%
+k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 13.18MiB / 170MiB     0.26%
+k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   21.62MiB / 5.788GiB   0.37%
+k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   7.762MiB / 5.788GiB   0.00%
+k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                           1.848MiB / 5.788GiB   0.00%
+k8s_POD_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                                 304KiB / 5.788GiB     0.00%
+k8s_POD_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                     344KiB / 5.788GiB     0.00%
+k8s_POD_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                              312KiB / 5.788GiB     0.00%
+k8s_POD_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1                      308KiB / 5.788GiB     0.00%
+

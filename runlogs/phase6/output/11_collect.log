@@ -1,0 +1,209 @@
+$ docker compose --project-directory "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy" --env-file "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\env\laptop-docker.env" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.yaml" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.laptop.yaml" --profile observability ps -a
+NAME                 IMAGE                     COMMAND                  SERVICE      CREATED              STATUS                        PORTS
+lexai-api-1          lexai-backend:local       "uvicorn lexai.api.a…"   api          About a minute ago   Up About a minute (healthy)   8000/tcp
+lexai-grafana-1      grafana/grafana:13.3.1    "/run.sh"                grafana      11 minutes ago       Up 11 minutes                 127.0.0.1:3001->3000/tcp
+lexai-prometheus-1   prom/prometheus:v3.16.0   "/bin/prometheus --c…"   prometheus   11 minutes ago       Up 11 minutes                 127.0.0.1:9095->9090/tcp
+lexai-qdrant-1       qdrant/qdrant:v1.20.2     "./entrypoint.sh"        qdrant       6 minutes ago        Up 6 minutes (healthy)        6333-6334/tcp
+lexai-redis-1        redis:7.4.11-alpine       "docker-entrypoint.s…"   redis        About an hour ago    Up About an hour (healthy)    6379/tcp
+lexai-web-1          lexai-web:local           "/docker-entrypoint.…"   web          About a minute ago   Up About a minute (healthy)   127.0.0.1:8080->8080/tcp
+exit=0
+
+$ docker stats --no-stream
+NAME                                                                                                                    MEM USAGE / LIMIT     CPU %
+lexai-web-1                                                                                                             4.867MiB / 5.788GiB   0.00%
+lexai-api-1                                                                                                             105.5MiB / 5.788GiB   0.14%
+lexai-qdrant-1                                                                                                          25.13MiB / 5.788GiB   3.22%
+lexai-grafana-1                                                                                                         280.6MiB / 5.788GiB   1.71%
+lexai-prometheus-1                                                                                                      27.47MiB / 5.788GiB   0.38%
+lexai-redis-1                                                                                                           3.98MiB / 5.788GiB    0.46%
+k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  57.53MiB / 5.788GiB   0.06%
+k8s_lb-tcp-443_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                          344KiB / 5.788GiB     0.00%
+k8s_POD_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_1                                      312KiB / 5.788GiB     0.00%
+k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 23.7MiB / 170MiB      0.09%
+k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   31.84MiB / 5.788GiB   0.47%
+k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   13.86MiB / 5.788GiB   0.00%
+k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                           1.844MiB / 5.788GiB   0.00%
+k8s_POD_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                                 304KiB / 5.788GiB     0.00%
+k8s_POD_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                     344KiB / 5.788GiB     0.00%
+k8s_POD_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                              312KiB / 5.788GiB     0.00%
+k8s_POD_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1                      308KiB / 5.788GiB     0.00%
+
+$ docker compose --project-directory "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy" --env-file "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\env\laptop-docker.env" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.yaml" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.laptop.yaml" logs --no-color --tail 80 api web qdrant redis
+qdrant-1  |            _                 _    
+api-1     | INFO:     Waiting for application startup.
+qdrant-1  |   __ _  __| |_ __ __ _ _ __ | |_  
+qdrant-1  |  / _` |/ _` | '__/ _` | '_ \| __| 
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T17:12:19.092544Z"}
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T17:12:20.095932Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T17:12:22.098659Z"}
+qdrant-1  | | (_| | (_| | | | (_| | | | | |_  
+qdrant-1  |  \__, |\__,_|_|  \__,_|_| |_|\__| 
+qdrant-1  |     |_|                           
+qdrant-1  | 
+qdrant-1  | Version: 1.20.2, build: 23065a0b
+qdrant-1  | Access web UI at http://localhost:6333/dashboard
+qdrant-1  | Agentic Skills: https://skills.qdrant.tech/
+qdrant-1  | 
+api-1     | {"error": "Embedding failed (nomic-embed-text at http://host.docker.internal:11434/v1): ConnectError('All connection attempts failed')", "event": "embedder_unreachable_at_startup", "level": "warning", "timestamp": "2026-11-21T17:12:26.104063Z"}
+api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1     | {"qdrant": "http://qdrant:6333", "event": "index_missing", "level": "warning", "timestamp": "2026-11-21T17:12:26.128962Z"}
+api-1     | HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+api-1     | {"sessions": "RedisSessionStore", "rate_limits": "redis", "cache": "RedisCache", "event": "state_backends", "level": "info", "timestamp": "2026-11-21T17:12:26.379305Z"}
+qdrant-1  | 2026-11-21T17:07:02.587048Z  INFO storage::content_manager::consensus::persistent: Initializing new raft state at ./storage/raft_state.json
+qdrant-1  | 2026-11-21T17:07:02.624672Z  INFO qdrant: Distributed mode disabled
+qdrant-1  | 2026-11-21T17:07:02.626117Z  INFO qdrant: Telemetry reporting disabled
+qdrant-1  | 2026-11-21T17:07:02.672622Z  INFO qdrant::actix: REST transport settings: keep_alive=5s, client_request_timeout=5s, client_disconnect_timeout=5s
+api-1     | {"version": "0.6.0", "profile": "none (no backend/.env; built-in defaults)", "llm": "qwen2.5-7b-instruct", "embedder": "nomic-embed-text", "prompt": "answer_v4", "notes": ["embedder unreachable at start-up", "no live index: run the ingestion build"], "event": "startup_complete", "level": "info", "timestamp": "2026-11-21T17:12:26.379582Z"}
+api-1     | INFO:     Application startup complete.
+qdrant-1  | 2026-11-21T17:07:02.672792Z  INFO qdrant::actix: TLS disabled for REST API
+qdrant-1  | 2026-11-21T17:07:02.672998Z  INFO qdrant::actix: Qdrant HTTP listening on 6333
+api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1     | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T17:12:26.384951Z"}
+qdrant-1  | 2026-11-21T17:07:02.673440Z  INFO actix_server::builder: starting 3 workers
+qdrant-1  | 2026-11-21T17:07:02.673835Z  INFO actix_server::server: Actix runtime found; starting in Actix runtime
+qdrant-1  | 2026-11-21T17:07:02.673896Z  INFO actix_server::server: starting service: "actix-web-service-0.0.0.0:6333", workers: 3, listening on: 0.0.0.0:6333
+qdrant-1  | 2026-11-21T17:07:02.683160Z  INFO qdrant::tonic: Qdrant gRPC listening on 6334
+api-1     | INFO:     127.0.0.1:50524 - "GET /healthz HTTP/1.1" 200 OK
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T17:12:27.388515Z"}
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "37a2b9c5fcc52937ea2bfbd3792a282b", "level": "warning", "timestamp": "2026-11-21T17:12:27.907348Z"}
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "37a2b9c5fcc52937ea2bfbd3792a282b", "level": "warning", "timestamp": "2026-11-21T17:12:28.911649Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T17:12:29.392822Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "37a2b9c5fcc52937ea2bfbd3792a282b", "level": "warning", "timestamp": "2026-11-21T17:12:30.915922Z"}
+qdrant-1  | 2026-11-21T17:07:02.683386Z  INFO qdrant::tonic: TLS disabled for gRPC API
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "b53b8e48735cdca2df78db959725ecb1", "level": "warning", "timestamp": "2026-11-21T17:12:35.916295Z"}
+qdrant-1  | 2026-11-21T17:07:06.357543Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001500
+qdrant-1  | 2026-11-21T17:07:11.901129Z  INFO actix_web::middleware::logger: 172.18.0.8 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001270
+qdrant-1  | 2026-11-21T17:07:11.910308Z  INFO actix_web::middleware::logger: 172.18.0.8 "GET /collections HTTP/1.1" 200 85 "-" "python-client/1.20.0 python/3.12.16" 0.003193
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "b53b8e48735cdca2df78db959725ecb1", "level": "warning", "timestamp": "2026-11-21T17:12:36.921020Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "b53b8e48735cdca2df78db959725ecb1", "level": "warning", "timestamp": "2026-11-21T17:12:38.922472Z"}
+api-1     | INFO:     172.18.0.6:38342 - "GET /metrics HTTP/1.1" 200 OK
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | INFO:     127.0.0.1:60224 - "GET /healthz HTTP/1.1" 200 OK
+qdrant-1  | 2026-11-21T17:07:20.376431Z  INFO actix_web::middleware::logger: 172.18.0.8 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000179
+qdrant-1  | 2026-11-21T17:07:20.379322Z  INFO actix_web::middleware::logger: 172.18.0.8 "GET /collections HTTP/1.1" 200 82 "-" "python-client/1.20.0 python/3.12.16" 0.000160
+qdrant-1  | 2026-11-21T17:07:41.430428Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000473
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "badc2c54075adf9136e9d730cae8ecc6", "level": "warning", "timestamp": "2026-11-21T17:12:43.926380Z"}
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "badc2c54075adf9136e9d730cae8ecc6", "level": "warning", "timestamp": "2026-11-21T17:12:44.928260Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "badc2c54075adf9136e9d730cae8ecc6", "level": "warning", "timestamp": "2026-11-21T17:12:46.931126Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+qdrant-1  | 2026-11-21T17:08:16.447654Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001114
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "055924e2d9e2722f009043be0078a684", "level": "warning", "timestamp": "2026-11-21T17:12:51.932074Z"}
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "055924e2d9e2722f009043be0078a684", "level": "warning", "timestamp": "2026-11-21T17:12:52.935311Z"}
+api-1     | INFO:     172.18.0.6:44452 - "GET /metrics HTTP/1.1" 200 OK
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "055924e2d9e2722f009043be0078a684", "level": "warning", "timestamp": "2026-11-21T17:12:54.938633Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+qdrant-1  | 2026-11-21T17:08:51.459400Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000983
+qdrant-1  | 2026-11-21T17:09:26.473592Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000460
+qdrant-1  | 2026-11-21T17:10:01.480815Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.001590
+api-1     | INFO:     127.0.0.1:53924 - "GET /healthz HTTP/1.1" 200 OK
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "3e0ae0c2c0b7fb5355a8a56af27a7bad", "level": "warning", "timestamp": "2026-11-21T17:12:59.938371Z"}
+qdrant-1  | 2026-11-21T17:10:32.246178Z  INFO actix_web::middleware::logger: 172.18.0.8 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.002317
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "3e0ae0c2c0b7fb5355a8a56af27a7bad", "level": "warning", "timestamp": "2026-11-21T17:13:00.941850Z"}
+api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+qdrant-1  | 2026-11-21T17:10:45.939095Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.001422
+qdrant-1  | 2026-11-21T17:10:46.235086Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000314
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T17:13:01.403855Z"}
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T17:13:02.408772Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "3e0ae0c2c0b7fb5355a8a56af27a7bad", "level": "warning", "timestamp": "2026-11-21T17:13:02.944156Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T17:13:04.412124Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "4ab8c432fd540a32bfde5e9719cb554b", "level": "warning", "timestamp": "2026-11-21T17:13:07.950256Z"}
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "4ab8c432fd540a32bfde5e9719cb554b", "level": "warning", "timestamp": "2026-11-21T17:13:08.952450Z"}
+api-1     | INFO:     172.18.0.6:37402 - "GET /metrics HTTP/1.1" 200 OK
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "4ab8c432fd540a32bfde5e9719cb554b", "level": "warning", "timestamp": "2026-11-21T17:13:10.954781Z"}
+api-1     | INFO:     127.0.0.1:57676 - "GET /healthz HTTP/1.1" 200 OK
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+qdrant-1  | 2026-11-21T17:11:21.268370Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.002755
+qdrant-1  | 2026-11-21T17:11:56.286695Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000456
+qdrant-1  | 2026-11-21T17:12:26.126322Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000465
+qdrant-1  | 2026-11-21T17:12:26.380949Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000220
+qdrant-1  | 2026-11-21T17:13:01.399195Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000558
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "c992a16d12c59e2d78d0851d918aea73", "level": "warning", "timestamp": "2026-11-21T17:13:15.954913Z"}
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "c992a16d12c59e2d78d0851d918aea73", "level": "warning", "timestamp": "2026-11-21T17:13:16.958255Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "c992a16d12c59e2d78d0851d918aea73", "level": "warning", "timestamp": "2026-11-21T17:13:18.960873Z"}
+qdrant-1  | 2026-11-21T17:13:36.404590Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000339
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "408160709a84b196ab70f9004dfe6c71", "level": "warning", "timestamp": "2026-11-21T17:13:23.965670Z"}
+api-1     | INFO:     172.18.0.6:44044 - "GET /metrics HTTP/1.1" 200 OK
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "408160709a84b196ab70f9004dfe6c71", "level": "warning", "timestamp": "2026-11-21T17:13:24.967988Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "408160709a84b196ab70f9004dfe6c71", "level": "warning", "timestamp": "2026-11-21T17:13:26.971054Z"}
+api-1     | INFO:     127.0.0.1:59630 - "GET /healthz HTTP/1.1" 200 OK
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "c8eb5a6d3a2747340c6ceeff948cc669", "level": "warning", "timestamp": "2026-11-21T17:13:31.976634Z"}
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "c8eb5a6d3a2747340c6ceeff948cc669", "level": "warning", "timestamp": "2026-11-21T17:13:32.979026Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "c8eb5a6d3a2747340c6ceeff948cc669", "level": "warning", "timestamp": "2026-11-21T17:13:34.983095Z"}
+api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T17:13:36.407336Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T17:13:37.411293Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T17:13:39.412870Z"}
+api-1     | INFO:     172.18.0.6:45884 - "GET /metrics HTTP/1.1" 200 OK
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "927d20b8b60ca7cbddd1cf25eb0f2f3d", "level": "warning", "timestamp": "2026-11-21T17:13:39.990204Z"}
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "927d20b8b60ca7cbddd1cf25eb0f2f3d", "level": "warning", "timestamp": "2026-11-21T17:13:40.993849Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "927d20b8b60ca7cbddd1cf25eb0f2f3d", "level": "warning", "timestamp": "2026-11-21T17:13:42.998152Z"}
+api-1     | INFO:     127.0.0.1:41266 - "GET /healthz HTTP/1.1" 200 OK
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "7e3e2b6dab8bcfd806436d315b514769", "level": "warning", "timestamp": "2026-11-21T17:13:47.994116Z"}
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "7e3e2b6dab8bcfd806436d315b514769", "level": "warning", "timestamp": "2026-11-21T17:13:48.997628Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "7e3e2b6dab8bcfd806436d315b514769", "level": "warning", "timestamp": "2026-11-21T17:13:51.000740Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | INFO:     172.18.0.6:37218 - "GET /metrics HTTP/1.1" 200 OK
+web-1     | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+web-1     | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+web-1     | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+web-1     | 10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf is not a file or does not exist
+web-1     | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+web-1     | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+web-1     | 20-envsubst-on-templates.sh: Running envsubst on /etc/nginx/templates/default.conf.template to /etc/nginx/conf.d/default.conf
+web-1     | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+web-1     | /docker-entrypoint.sh: Configuration complete; ready for start up
+web-1     | 2026/11/21 17:12:16 [notice] 1#1: using the "epoll" event method
+web-1     | 2026/11/21 17:12:16 [notice] 1#1: nginx/1.31.9
+web-1     | 2026/11/21 17:12:16 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) 
+web-1     | 2026/11/21 17:12:16 [notice] 1#1: OS: Linux 6.6.114.1-microsoft-standard-WSL2
+web-1     | 2026/11/21 17:12:16 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+web-1     | 2026/11/21 17:12:16 [notice] 1#1: start worker processes
+web-1     | 2026/11/21 17:12:16 [notice] 1#1: start worker process 26
+web-1     | 2026/11/21 17:12:16 [notice] 1#1: start worker process 27
+web-1     | 2026/11/21 17:12:16 [notice] 1#1: start worker process 28
+web-1     | 2026/11/21 17:12:16 [notice] 1#1: start worker process 29
+web-1     | 2026/11/21 17:12:18 [error] 26#26: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.8, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:12:18 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:12:21 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1     | 2026/11/21 17:12:21 [error] 26#26: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.8, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1     | 2026/11/21 17:12:24 [error] 26#26: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.8, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:12:24 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:12:32 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:12:40 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:12:48 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:12:56 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:13:04 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:13:12 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:13:20 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:13:28 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:13:36 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:13:44 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1     | 172.18.0.8 - - [21/Nov/2026:17:13:52 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+redis-1   | 1:C 21 Nov 2026 16:03:51.753 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1   | 1:C 21 Nov 2026 16:03:51.753 * Redis version=7.4.11, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1   | 1:C 21 Nov 2026 16:03:51.753 * Configuration loaded
+redis-1   | 1:M 21 Nov 2026 16:03:51.753 * monotonic clock: POSIX clock_gettime
+redis-1   | 1:M 21 Nov 2026 16:03:51.754 * Running mode=standalone, port=6379.
+redis-1   | 1:M 21 Nov 2026 16:03:51.754 * Server initialized
+redis-1   | 1:M 21 Nov 2026 16:03:51.755 * Ready to accept connections tcp
+exit=0
+
+$ docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          17        13        6.304GB   347MB (5%)
+Containers      32        17        581.6kB   299kB (51%)
+Local Volumes   7         6         350.7MB   434.2kB (0%)
+Build Cache     71        0         2.68GB    1.832GB
+exit=0
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse HEAD
+90a38fa1c0272a65a15e32b2c7657c5d365216a7
+exit=0
+

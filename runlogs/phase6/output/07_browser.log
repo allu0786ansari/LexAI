@@ -1,0 +1,656 @@
+$ call npx playwright test --reporter=list
+
+Running 22 tests using 4 workers
+
+  ✘   1 [desktop] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (30.2s)
+  ✘   2 [mobile] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (30.2s)
+  ✘   4 [desktop] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (30.2s)
+  ✘   5 [mobile] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (30.6s)
+  ✘   7 [mobile] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (30.6s)
+  ✘   6 [desktop] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (30.6s)
+  ✘  10 [mobile] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (30.1s)
+  ✘   9 [desktop] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (30.1s)
+  ✘  11 [mobile] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (30.1s)
+  ✘  12 [desktop] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (30.1s)
+  ✘  13 [mobile] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (30.1s)
+  ✘  14 [desktop] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (30.2s)
+  ✘  15 [mobile] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (30.1s)
+  ✘  16 [desktop] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (30.1s)
+  ✘  17 [mobile] › e2e\chat.spec.ts:98:1 › filters are sent with the question (30.1s)
+  ✘  18 [desktop] › e2e\chat.spec.ts:98:1 › filters are sent with the question (30.2s)
+  ✘   3 [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (4.0m)
+  ✘  19 [mobile] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (30.1s)
+  ✘  20 [desktop] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (30.1s)
+  -  22 [desktop] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat
+  ✘  21 [mobile] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat (30.1s)
+  ✘   8 [mobile] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (4.0m)
+
+
+  1) [desktop] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:14:9
+
+    Error Context: test-results\chat-an-answer-streams-wit-5585e--citation-opens-its-passage-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-an-answer-streams-wit-5585e--citation-opens-its-passage-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-an-answer-streams-wit-5585e--citation-opens-its-passage-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop] › e2e\chat.spec.ts:35:1 › stop cancels a running answer ─────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:38:9
+
+    Error Context: test-results\chat-stop-cancels-a-running-answer-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-stop-cancels-a-running-answer-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-stop-cancels-a-running-answer-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:52:9
+
+    Error Context: test-results\chat-an-expired-session-is-74570-nd-the-question-asked-again-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-an-expired-session-is-74570-nd-the-question-asked-again-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-an-expired-session-is-74570-nd-the-question-asked-again-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [desktop] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again ──────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:63:9
+
+    Error Context: test-results\chat-a-rate-limit-shows-when-to-try-again-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-a-rate-limit-shows-when-to-try-again-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-a-rate-limit-shows-when-to-try-again-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [desktop] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once ─────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:70:9
+
+    Error Context: test-results\chat-conversations-survive-a-reload-feedback-is-sent-once-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-conversations-survive-a-reload-feedback-is-sent-once-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-conversations-survive-a-reload-feedback-is-sent-once-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [desktop] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links ───────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:90:9
+
+    Error Context: test-results\chat-model-output-cannot-inject-HTML-or-script-links-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-model-output-cannot-inject-HTML-or-script-links-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-model-output-cannot-inject-HTML-or-script-links-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [desktop] › e2e\chat.spec.ts:98:1 › filters are sent with the question ────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Filters' })
+
+
+       99 |   const calls = await mockApi(page);
+      100 |   await page.goto("/");
+    > 101 |   await page.getByRole("button", { name: "Filters" }).click();
+          |                                                       ^
+      102 |   await page.getByLabel(/In force only/).check();
+      103 |   await page.getByLabel("BNS").check();
+      104 |   await page.keyboard.press("Escape");
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:101:55
+
+    Error Context: test-results\chat-filters-are-sent-with-the-question-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-filters-are-sent-with-the-question-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-filters-are-sent-with-the-question-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [desktop] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer ───────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:119:9
+
+    Error Context: test-results\chat-verification-flags-are-shown-on-the-answer-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-verification-flags-are-shown-on-the-answer-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-verification-flags-are-shown-on-the-answer-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [desktop] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations ─────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+      10 |   await mockApi(page);
+      11 |   await page.goto("/");
+    > 12 |   await page.getByLabel("Your question about Indian law").fill("What is the punishment for murder?");
+         |                                                           ^
+      13 |   await page.keyboard.press("Enter");
+      14 |   await expect(page.locator("article").last()).toContainText("imprisonment for life");
+      15 |   await page.getByRole("button", { name: "Open source 1" }).click();
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\csp.spec.ts:12:59
+
+    Error Context: test-results\csp-the-app-runs-without-Content-Security-Policy-violations-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\csp-the-app-runs-without-Content-Security-Policy-violations-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\csp-the-app-runs-without-Content-Security-Policy-violations-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ──
+
+    Test timeout of 240000ms exceeded.
+
+    Error: locator.fill: Test timeout of 240000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       9 |   await page.goto("/");
+      10 |   const input = page.getByLabel("Your question about Indian law");
+    > 11 |   await input.fill("What does Article 21 of the Constitution protect?");
+         |               ^
+      12 |   await input.press("Enter");
+      13 |   const answer = page.locator("article").last();
+      14 |   await expect(answer).toHaveAttribute("aria-busy", "false", { timeout: 200_000 });
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\live.spec.ts:11:15
+
+    Error Context: test-results\live-a-real-question-is-an-1eabf-rom-the-index-through-nginx-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\live-a-real-question-is-an-1eabf-rom-the-index-through-nginx-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\live-a-real-question-is-an-1eabf-rom-the-index-through-nginx-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [mobile] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:14:9
+
+    Error Context: test-results\chat-an-answer-streams-wit-5585e--citation-opens-its-passage-mobile\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-an-answer-streams-wit-5585e--citation-opens-its-passage-mobile\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-an-answer-streams-wit-5585e--citation-opens-its-passage-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) [mobile] › e2e\chat.spec.ts:35:1 › stop cancels a running answer ─────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:38:9
+
+    Error Context: test-results\chat-stop-cancels-a-running-answer-mobile\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-stop-cancels-a-running-answer-mobile\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-stop-cancels-a-running-answer-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13) [mobile] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:52:9
+
+    Error Context: test-results\chat-an-expired-session-is-74570-nd-the-question-asked-again-mobile\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-an-expired-session-is-74570-nd-the-question-asked-again-mobile\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-an-expired-session-is-74570-nd-the-question-asked-again-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  14) [mobile] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again ──────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:63:9
+
+    Error Context: test-results\chat-a-rate-limit-shows-when-to-try-again-mobile\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-a-rate-limit-shows-when-to-try-again-mobile\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-a-rate-limit-shows-when-to-try-again-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  15) [mobile] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once ─────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:70:9
+
+    Error Context: test-results\chat-conversations-survive-a-reload-feedback-is-sent-once-mobile\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-conversations-survive-a-reload-feedback-is-sent-once-mobile\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-conversations-survive-a-reload-feedback-is-sent-once-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  16) [mobile] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links ───────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:90:9
+
+    Error Context: test-results\chat-model-output-cannot-inject-HTML-or-script-links-mobile\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-model-output-cannot-inject-HTML-or-script-links-mobile\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-model-output-cannot-inject-HTML-or-script-links-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  17) [mobile] › e2e\chat.spec.ts:98:1 › filters are sent with the question ────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Filters' })
+
+
+       99 |   const calls = await mockApi(page);
+      100 |   await page.goto("/");
+    > 101 |   await page.getByRole("button", { name: "Filters" }).click();
+          |                                                       ^
+      102 |   await page.getByLabel(/In force only/).check();
+      103 |   await page.getByLabel("BNS").check();
+      104 |   await page.keyboard.press("Escape");
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:101:55
+
+    Error Context: test-results\chat-filters-are-sent-with-the-question-mobile\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-filters-are-sent-with-the-question-mobile\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-filters-are-sent-with-the-question-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  18) [mobile] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer ───────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:119:9
+
+    Error Context: test-results\chat-verification-flags-are-shown-on-the-answer-mobile\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-verification-flags-are-shown-on-the-answer-mobile\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-verification-flags-are-shown-on-the-answer-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  19) [mobile] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat ────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       5 |
+       6 | async function ask(page: import("@playwright/test").Page, question = ASK) {
+    >  7 |   await page.getByLabel("Your question about Indian law").fill(question);
+         |                                                           ^
+       8 |   await page.getByLabel("Your question about Indian law").press("Enter");
+       9 | }
+      10 |
+        at ask (C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:7:59)
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\chat.spec.ts:127:9
+
+    Error Context: test-results\chat-on-a-phone-the-drawer-holds-the-history-and-New-chat-mobile\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\chat-on-a-phone-the-drawer-holds-the-history-and-New-chat-mobile\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\chat-on-a-phone-the-drawer-holds-the-history-and-New-chat-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  20) [mobile] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations ─────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+      10 |   await mockApi(page);
+      11 |   await page.goto("/");
+    > 12 |   await page.getByLabel("Your question about Indian law").fill("What is the punishment for murder?");
+         |                                                           ^
+      13 |   await page.keyboard.press("Enter");
+      14 |   await expect(page.locator("article").last()).toContainText("imprisonment for life");
+      15 |   await page.getByRole("button", { name: "Open source 1" }).click();
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\csp.spec.ts:12:59
+
+    Error Context: test-results\csp-the-app-runs-without-Content-Security-Policy-violations-mobile\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\csp-the-app-runs-without-Content-Security-Policy-violations-mobile\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\csp-the-app-runs-without-Content-Security-Policy-violations-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  21) [mobile] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ───
+
+    Test timeout of 240000ms exceeded.
+
+    Error: locator.fill: Test timeout of 240000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Your question about Indian law')
+
+
+       9 |   await page.goto("/");
+      10 |   const input = page.getByLabel("Your question about Indian law");
+    > 11 |   await input.fill("What does Article 21 of the Constitution protect?");
+         |               ^
+      12 |   await input.press("Enter");
+      13 |   const answer = page.locator("article").last();
+      14 |   await expect(answer).toHaveAttribute("aria-busy", "false", { timeout: 200_000 });
+        at C:\Users\LENOVO\OneDrive\Desktop\LexAI\frontend\e2e\live.spec.ts:11:15
+
+    Error Context: test-results\live-a-real-question-is-an-1eabf-rom-the-index-through-nginx-mobile\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\live-a-real-question-is-an-1eabf-rom-the-index-through-nginx-mobile\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\live-a-real-question-is-an-1eabf-rom-the-index-through-nginx-mobile\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  21 failed
+    [desktop] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage 
+    [desktop] › e2e\chat.spec.ts:35:1 › stop cancels a running answer ──────────────────────────────
+    [desktop] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again 
+    [desktop] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again ───────────────────────
+    [desktop] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once ──────
+    [desktop] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links ────────────
+    [desktop] › e2e\chat.spec.ts:98:1 › filters are sent with the question ─────────────────────────
+    [desktop] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer ────────────────
+    [desktop] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations ──────
+    [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ────
+    [mobile] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage 
+    [mobile] › e2e\chat.spec.ts:35:1 › stop cancels a running answer ───────────────────────────────
+    [mobile] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again ─
+    [mobile] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again ────────────────────────
+    [mobile] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once ───────
+    [mobile] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links ─────────────
+    [mobile] › e2e\chat.spec.ts:98:1 › filters are sent with the question ──────────────────────────
+    [mobile] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer ─────────────────
+    [mobile] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat ──────
+    [mobile] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations ───────
+    [mobile] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ─────
+  1 skipped
+exit=1
+

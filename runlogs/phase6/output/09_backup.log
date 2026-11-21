@@ -1,0 +1,101 @@
+$ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" backup
+ Container lexai-redis-1 Running 
+ Container lexai-qdrant-1 Running 
+ Container lexai-redis-1 Waiting 
+ Container lexai-qdrant-1 Waiting 
+ Container lexai-redis-1 Healthy 
+ Container lexai-qdrant-1 Healthy 
+ Container lexai-ingest-run-d7ef1ee13b0a Creating 
+ Container lexai-ingest-run-d7ef1ee13b0a Created 
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+{"code": "backup_failed", "error": "there is no live index to back up (run `lexai-ingest build` first)", "event": "ingest_failed", "level": "error", "timestamp": "2026-11-21T17:07:00.162489Z"}
+ERROR: there is no live index to back up (run `lexai-ingest build` first)
+
+exit=1
+
+$ dir /s /b "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\backups\lexai-*"
+File Not Found
+exit=1
+
+$ docker compose --project-directory "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy" --env-file "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\env\laptop-docker.env" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.yaml" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.laptop.yaml" rm -sf qdrant
+ Container lexai-qdrant-1 Stopping 
+ Container lexai-qdrant-1 Stopped 
+Going to remove lexai-qdrant-1
+ Container lexai-qdrant-1 Removing 
+ Container lexai-qdrant-1 Removed 
+exit=0
+
+$ docker volume rm lexai_qdrant-data
+lexai_qdrant-data
+exit=0
+
+$ docker compose --project-directory "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy" --env-file "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\env\laptop-docker.env" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.yaml" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.laptop.yaml" up -d --wait qdrant
+ Volume lexai_qdrant-data Creating 
+ Volume lexai_qdrant-data Created 
+ Container lexai-qdrant-1 Creating 
+ Container lexai-qdrant-1 Created 
+ Container lexai-qdrant-1 Starting 
+ Container lexai-qdrant-1 Started 
+ Container lexai-qdrant-1 Waiting 
+ Container lexai-qdrant-1 Healthy 
+exit=0
+
+--- the index is gone now (status must fail): ---
+$ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" status
+ Container lexai-qdrant-1 Running 
+ Container lexai-redis-1 Running 
+ Container lexai-redis-1 Waiting 
+ Container lexai-qdrant-1 Waiting 
+ Container lexai-redis-1 Healthy 
+ Container lexai-qdrant-1 Healthy 
+ Container lexai-ingest-run-a2635238bdb6 Creating 
+ Container lexai-ingest-run-a2635238bdb6 Created 
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+Qdrant: http://qdrant:6333
+builds: []
+live index: none (run build)
+
+exit=1
+
+$ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" restore
+ Container lexai-redis-1 Running 
+ Container lexai-qdrant-1 Running 
+ Container lexai-qdrant-1 Waiting 
+ Container lexai-redis-1 Waiting 
+ Container lexai-redis-1 Healthy 
+ Container lexai-qdrant-1 Healthy 
+ Container lexai-ingest-run-282da32ecc38 Creating 
+ Container lexai-ingest-run-282da32ecc38 Created 
+{"code": "backup_failed", "error": "no backups in /backups", "event": "ingest_failed", "level": "error", "timestamp": "2026-11-21T17:07:16.252347Z"}
+ERROR: no backups in /backups
+
+exit=1
+
+$ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" status
+ Container lexai-qdrant-1 Running 
+ Container lexai-redis-1 Running 
+ Container lexai-qdrant-1 Waiting 
+ Container lexai-redis-1 Waiting 
+ Container lexai-qdrant-1 Healthy 
+ Container lexai-redis-1 Healthy 
+ Container lexai-ingest-run-d3b606b965f4 Creating 
+ Container lexai-ingest-run-d3b606b965f4 Created 
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections "HTTP/1.1 200 OK"
+Qdrant: http://qdrant:6333
+builds: []
+live index: none (run build)
+
+exit=1
+
+$ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" smoke --questions 2 --wait-ready 180
+ Container lexai-smoke-run-c269ac169c88 Creating 
+ Container lexai-smoke-run-c269ac169c88 Created 
+[FAIL] ready -> {"ready": false, "checks": {"llm": {"ok": false, "error": "ConnectError", "detail": "All connection attempts failed"}, "embedder": {"ok": false, "error": "TimeoutError", "detail": ""}, "index": {"ok": false, "error": "RuntimeError", "detail": "no live index: run the ingestion build"}, "reranker": {"ok": true, "enabled": false, "model": null}}}
+SMOKE: FAIL
+
+exit=1
+

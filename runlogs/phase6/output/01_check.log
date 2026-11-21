@@ -1,0 +1,62 @@
+$ ver
+
+Microsoft Windows [Version 10.0.26300.10075]
+exit=0
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse --abbrev-ref HEAD
+phase-6-deploy
+exit=0
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse HEAD
+90a38fa1c0272a65a15e32b2c7657c5d365216a7
+exit=0
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" status --short
+?? runlogs/phase6/output/
+exit=0
+
+$ docker version --format "client {{.Client.Version}} server {{.Server.Version}}"
+client 29.6.2-rd server 29.5.3
+exit=0
+
+$ docker compose version
+Docker Compose version v5.3.1
+exit=0
+
+$ docker info --format "cpus={{.NCPU}} memory={{.MemTotal}} os={{.OperatingSystem}}"
+cpus=4 memory=6215036928 os=Rancher Desktop WSL Distribution
+exit=0
+
+$ C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Scripts\python.exe --version
+Python 3.12.4
+exit=0
+
+$ ollama --version
+ollama version is 0.40.16
+exit=0
+
+$ ollama list
+NAME                                ID              SIZE      MODIFIED     
+qwen2.5-7b-instruct:latest          b57dc8ba2735    4.7 GB    5 hours ago     
+qwen2.5:7b-instruct-q4_K_M          845dbda0ea48    4.7 GB    29 hours ago    
+nomic-embed-text:latest             0a109f422b47    274 MB    4 weeks ago     
+bge-m3:latest                       790764642607    1.2 GB    4 weeks ago     
+agmesh-phi3.5:latest                061d2b22c7b8    2.4 GB    3 months ago    
+phi3.5:3.8b-mini-instruct-q4_K_M    570961596984    2.4 GB    3 months ago    
+qwen2.5:3b-instruct                 357c53fb659c    1.9 GB    4 months ago    
+exit=0
+
+$ systeminfo (memory lines)
+Total Physical Memory:         7,975 MB
+Available Physical Memory:     861 MB
+
+$ type %UserProfile%\.wslconfig
+[wsl2]
+memory=6GB
+processors=4
+swap=4GB
+autoProxy=false
+
+$ anything listening on port 8080
+  TCP    0.0.0.0:8080           0.0.0.0:0              LISTENING       4840
+

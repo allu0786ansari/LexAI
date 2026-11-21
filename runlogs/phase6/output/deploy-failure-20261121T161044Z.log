@@ -1,0 +1,262 @@
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "f975f92d9608f8c883c8d522e35123e8", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:05:50.824908Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "f975f92d9608f8c883c8d522e35123e8", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:05:51.828987Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:05:52.251283Z"}
+web-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "f975f92d9608f8c883c8d522e35123e8", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:05:53.833252Z"}
+web-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+web-1  | 10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf is not a file or does not exist
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "8c6d596866b53eb49eff201cdbdc515c", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:05:58.835455Z"}
+web-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+web-1  | 20-envsubst-on-templates.sh: Running envsubst on /etc/nginx/templates/default.conf.template to /etc/nginx/conf.d/default.conf
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "8c6d596866b53eb49eff201cdbdc515c", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:05:59.838588Z"}
+web-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+web-1  | 2026/11/21 16:05:39 [notice] 1#1: using the "epoll" event method
+web-1  | 2026/11/21 16:05:39 [notice] 1#1: nginx/1.31.9
+web-1  | 2026/11/21 16:05:39 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) 
+web-1  | 2026/11/21 16:05:39 [notice] 1#1: OS: Linux 6.6.114.1-microsoft-standard-WSL2
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "8c6d596866b53eb49eff201cdbdc515c", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:01.841403Z"}
+web-1  | 2026/11/21 16:05:39 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:46268 - "GET /healthz HTTP/1.1" 200 OK
+web-1  | 2026/11/21 16:05:39 [notice] 1#1: start worker processes
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "d86121b1551012e40894a23f310dad2f", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:06.847859Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "d86121b1551012e40894a23f310dad2f", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:07.852762Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "d86121b1551012e40894a23f310dad2f", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:09.855340Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+web-1  | 2026/11/21 16:05:39 [notice] 1#1: start worker process 26
+web-1  | 2026/11/21 16:05:39 [notice] 1#1: start worker process 27
+web-1  | 2026/11/21 16:05:39 [notice] 1#1: start worker process 28
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "966b42c7a29cf9141e23f1e12ec65b8b", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:14.857659Z"}
+web-1  | 2026/11/21 16:05:39 [notice] 1#1: start worker process 29
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "966b42c7a29cf9141e23f1e12ec65b8b", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:15.862978Z"}
+web-1  | 2026/11/21 16:05:41 [error] 27#27: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.6, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:05:41 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:05:44 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "966b42c7a29cf9141e23f1e12ec65b8b", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:17.864933Z"}
+web-1  | 2026/11/21 16:05:44 [error] 27#27: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.6, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1  | 2026/11/21 16:05:47 [error] 27#27: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.6, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:05:47 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:05:55 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:06:03 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:56196 - "GET /healthz HTTP/1.1" 200 OK
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:06:11 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:06:19 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:06:27 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "1429a39a74f0312d35f736c4ef6a7571", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:22.868018Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:06:35 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:06:43 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:06:51 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "1429a39a74f0312d35f736c4ef6a7571", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:23.872460Z"}
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:06:24.261776Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:06:25.265735Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:06:59 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:07:07 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "1429a39a74f0312d35f736c4ef6a7571", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:25.874798Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:07:15 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:06:27.267657Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:07:23 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:07:31 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:07:39 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:07:47 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "904c2f[phone]afb73350aee8b8be", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:30.875420Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:07:55 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "904c2f[phone]afb73350aee8b8be", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:31.879874Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:08:03 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "904c2f[phone]afb73350aee8b8be", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:33.884036Z"}
+api-1  | INFO:     127.0.0.1:55302 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "44dfd4843d5181c9210cfba230600f7f", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:38.878300Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:08:11 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:08:19 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "44dfd4843d5181c9210cfba230600f7f", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:39.881828Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:08:28 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:08:36 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "44dfd4843d5181c9210cfba230600f7f", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:41.885984Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:08:44 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:08:52 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "a09d1a9b9d662e29f652f11bced72d73", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:46.892045Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:09:00 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "a09d1a9b9d662e29f652f11bced72d73", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:47.895588Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "a09d1a9b9d662e29f652f11bced72d73", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:49.899906Z"}
+api-1  | INFO:     127.0.0.1:56172 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "9e7f4d5e0c0eac0d6d25ecc0c431a790", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:54.904364Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:09:08 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:09:16 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "9e7f4d5e0c0eac0d6d25ecc0c431a790", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:55.908541Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "9e7f4d5e0c0eac0d6d25ecc0c431a790", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:06:57.913334Z"}
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:09:24 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:09:32 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:09:40 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:06:59.264366Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:07:00.265743Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:07:02.270093Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:09:48 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "b115e9abb26109e098171d825c98baab", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:02.913193Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:09:56 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:10:04 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:10:12 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:10:20 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:10:28 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "b115e9abb26109e098171d825c98baab", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:03.914671Z"}
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:10:36 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.6 - - [21/Nov/2026:16:10:44 +0000] "GET /readyz HTTP/1.1" 503 315 "-" "python-httpx/0.28.1" "-"
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "b115e9abb26109e098171d825c98baab", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:05.916978Z"}
+api-1  | INFO:     127.0.0.1:43844 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "78dbd937f09e786760739ff1320cd482", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:10.924803Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "78dbd937f09e786760739ff1320cd482", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:11.927124Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "78dbd937f09e786760739ff1320cd482", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:13.931244Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "4fce72c811552c2ca7f4515e9dc254b0", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:18.930484Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "4fce72c811552c2ca7f4515e9dc254b0", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:19.933905Z"}
+api-1  | INFO:     127.0.0.1:43304 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "4fce72c811552c2ca7f4515e9dc254b0", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:21.938414Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "4cf3a62742556a0868bb59775ba3491f", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:26.938321Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "4cf3a62742556a0868bb59775ba3491f", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:27.941542Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "4cf3a62742556a0868bb59775ba3491f", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:29.944647Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:07:34.271426Z"}
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "ae11340ae8db5f57c08ff1a871ea7895", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:34.947295Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:07:35.273235Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "ae11340ae8db5f57c08ff1a871ea7895", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:35.949336Z"}
+api-1  | INFO:     127.0.0.1:42912 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:07:37.274935Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "ae11340ae8db5f57c08ff1a871ea7895", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:37.951886Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "8713a4cec4e967f3dd500ba1e636c1e1", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:42.955743Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "8713a4cec4e967f3dd500ba1e636c1e1", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:43.959800Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "8713a4cec4e967f3dd500ba1e636c1e1", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:45.963499Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "f9f1f2f86fadac2c01d0ac45ae967d8d", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:50.965623Z"}
+api-1  | INFO:     127.0.0.1:43290 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "f9f1f2f86fadac2c01d0ac45ae967d8d", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:51.967492Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "f9f1f2f86fadac2c01d0ac45ae967d8d", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:53.969416Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "3502aca2d7857e466d31fa910d58e6f3", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:58.975617Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "3502aca2d7857e466d31fa910d58e6f3", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:07:59.979435Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "3502aca2d7857e466d31fa910d58e6f3", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:01.983444Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "f9c68dcd89b90715df48c006fdc50187", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:06.982362Z"}
+api-1  | INFO:     127.0.0.1:34326 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "f9c68dcd89b90715df48c006fdc50187", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:07.984168Z"}
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:08:09.282398Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "f9c68dcd89b90715df48c006fdc50187", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:09.986013Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:08:10.283708Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:08:12.287452Z"}
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "04c9b5138c7b3cbc194e3c384f525473", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:14.996139Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "04c9b5138c7b3cbc194e3c384f525473", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:15.997241Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "04c9b5138c7b3cbc194e3c384f525473", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:18.000356Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:54600 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "2bdfe7ccf61032543052cbbf95c1dcc7", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:23.008090Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "2bdfe7ccf61032543052cbbf95c1dcc7", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:24.010423Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "2bdfe7ccf61032543052cbbf95c1dcc7", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:26.014039Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "9cde2562bf46bd0d5ca7db536174472b", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:31.020754Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "9cde2562bf46bd0d5ca7db536174472b", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:32.025267Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "9cde2562bf46bd0d5ca7db536174472b", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:34.027513Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:44640 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "1f070d35a4c28eb2492926a91ac5992b", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:39.033717Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "1f070d35a4c28eb2492926a91ac5992b", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:40.037254Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "1f070d35a4c28eb2492926a91ac5992b", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:42.040794Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:08:44.289711Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:08:45.292092Z"}
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "47518745c52bd7faab0dad6e5b73aa83", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:47.042914Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:08:47.295703Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "47518745c52bd7faab0dad6e5b73aa83", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:48.045064Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "47518745c52bd7faab0dad6e5b73aa83", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:50.047162Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:49426 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "c95362b033cd5953da649b3ec5f020ac", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:55.054224Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "c95362b033cd5953da649b3ec5f020ac", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:56.057999Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "c95362b033cd5953da649b3ec5f020ac", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:08:58.062185Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "dc4807178ce7edffe3efc5c74e01d4d6", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:03.067013Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "dc4807178ce7edffe3efc5c74e01d4d6", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:04.070000Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "dc4807178ce7edffe3efc5c74e01d4d6", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:06.074243Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:57256 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "d1594e5d18d3e78b9443db9b80e5a82f", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:11.075824Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "d1594e5d18d3e78b9443db9b80e5a82f", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:12.077489Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "d1594e5d18d3e78b9443db9b80e5a82f", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:14.079797Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "3d6e48bb2ba97ae90940a7fb0f790326", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:19.083774Z"}
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:09:19.297488Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "3d6e48bb2ba97ae90940a7fb0f790326", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:20.088390Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:09:20.300930Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "3d6e48bb2ba97ae90940a7fb0f790326", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:22.091862Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:09:22.304201Z"}
+api-1  | INFO:     127.0.0.1:38508 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "d20043205766a69f74f4602180c74d01", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:27.093021Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "d20043205766a69f74f4602180c74d01", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:28.096673Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "d20043205766a69f74f4602180c74d01", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:30.099537Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "862f6601416ddfb3885aa9bb03f9e2f1", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:35.107887Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "862f6601416ddfb3885aa9bb03f9e2f1", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:36.112279Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "862f6601416ddfb3885aa9bb03f9e2f1", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:38.115278Z"}
+api-1  | INFO:     127.0.0.1:52368 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "6a29a068200c2b2f532ebad6a851c602", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:43.117972Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "6a29a068200c2b2f532ebad6a851c602", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:44.121462Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "6a29a068200c2b2f532ebad6a851c602", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:46.126630Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "74f0ac16ab0caa88b8bd9cea2401df87", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:51.129968Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "74f0ac16ab0caa88b8bd9cea2401df87", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:52.134428Z"}
+api-1  | INFO:     127.0.0.1:56084 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "74f0ac16ab0caa88b8bd9cea2401df87", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:54.138900Z"}
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:09:54.302519Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:09:55.305531Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:09:57.309620Z"}
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "fd5de9242b944912f75c3d98527db6e8", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:09:59.138520Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "fd5de9242b944912f75c3d98527db6e8", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:00.140527Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "fd5de9242b944912f75c3d98527db6e8", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:02.142988Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "21fc18f57dc3419fe852b04c2c045b75", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:07.146363Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "21fc18f57dc3419fe852b04c2c045b75", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:08.149971Z"}
+api-1  | INFO:     127.0.0.1:52888 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "21fc18f57dc3419fe852b04c2c045b75", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:10.152969Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "0c4743d9ea23703e1f62633fa6837972", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:15.157957Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "0c4743d9ea23703e1f62633fa6837972", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:16.161908Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "0c4743d9ea23703e1f62633fa6837972", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:18.165067Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "bb81e65b8d8a57bfc223148ef8462ade", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:23.173241Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "bb81e65b8d8a57bfc223148ef8462ade", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:24.174789Z"}
+api-1  | INFO:     127.0.0.1:41156 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "bb81e65b8d8a57bfc223148ef8462ade", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:26.176915Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:10:29.309794Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:10:30.312520Z"}
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "709745b8e472af6c9bb91f032d06b115", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:31.179367Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "709745b8e472af6c9bb91f032d06b115", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:32.182522Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T16:10:32.315493Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "709745b8e472af6c9bb91f032d06b115", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:34.185339Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "11a197e7dfcccf8fce554fa776cc87b3", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:39.190623Z"}
+api-1  | INFO:     127.0.0.1:56022 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "11a197e7dfcccf8fce554fa776cc87b3", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:40.194142Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "11a197e7dfcccf8fce554fa776cc87b3", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T16:10:42.611957Z"}
+api-1  | INFO:     172.18.0.6:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable

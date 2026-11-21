@@ -1,0 +1,11 @@
+$ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" models
+ Container lexai-ingest-run-99a28c599d45 Creating 
+ Container lexai-ingest-run-99a28c599d45 Created 
+Config:   /app/backend/.env (profile: none (no backend/.env; built-in defaults))
+LLM:      qwen2.5-7b-instruct at http://host.docker.internal:11434/v1
+Embedder: nomic-embed-text (768-dim) at http://host.docker.internal:11434/v1
+Reranker: disabled
+
+[FAIL] model server reachable: http://host.docker.internal:11434/v1: ConnectError('All connection attempts failed'). Is Ollama running?
+exit=0
+
