@@ -1,5 +1,5 @@
 $ .venv\Scripts\python.exe scripts\check_phase5.py --server-log "C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase5\output\06_server.log"
-API starting (pid 7156), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase5\output\06_server.log
+API starting (pid 12220), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase5\output\06_server.log
 API is up.
 
 B1. Sessions
@@ -13,57 +13,118 @@ B2. Security controls
 
 B3. Sources: every citation opens its passage and PDF page
 [PASS] corpus list: 63 documents, 63 with a PDF on disk
-   'What is the punishment for murder?': 5 citations, 28 s, verified=True
-   'Is it bailable?': 5 citations, 29 s, verified=True
-   'What does Article 21 of the Constitution protect?': 5 citations, 20 s, verified=True
+   'What is the punishment for murder?': 5 citations, 59 s, verified=True
+   'Is it bailable?': 5 citations, 31 s, verified=True
+   'What does Article 21 of the Constitution protect?': 5 citations, 21 s, verified=True
 [PASS] every citation opens its passage: 15/15
 [PASS] every PDF link opens: 15/15 (citations whose source PDF is on disk)
 
 B4. Feedback and metrics
-[PASS] feedback stored: id 1
+[PASS] feedback stored: id 2
 [PASS] answers counted: 3
 [PASS] time to first token recorded
 [PASS] stage latency recorded
 [PASS] route templates, not paths
 
 B5. One question traced from request to verified answer
-[PASS] trace has every stage: trace e027c6471807de25…, 7 spans
-   POST /api/v1/chat                               28541.2 ms
-     lexai.chat                                    28541.2 ms
+[PASS] trace has every stage: trace 6744d4ad8bc3b68e…, 7 spans
+   POST /api/v1/chat                               30573.1 ms
+     lexai.chat                                    30557.4 ms
          intent: concept
          applicable_code: new
          outcome: answered
          prompt_version: answer_v4
          question: Is it bailable?
-       lexai.condense                               5488.8 ms
+       lexai.condense                               5665.6 ms
            standalone_query: What is the punishment for murder? Is it bailable?
-       lexai.retrieve                                449.9 ms
+       lexai.retrieve                               1435.3 ms
            labels: [BNS s.103, IPC s.302, BNS s.105, IPC s.304, BNS s.104, IPC s.303, BNSS Schedule First]
            scores: [0.667, 0.667, 0.527, 0.417, 0.417, 0.417, 0.367]
            best_dense: 0.7716319155749036
        lexai.context                                   0.0 ms
            passages: [BNS s.103, IPC s.302, BNS s.105, IPC s.304, BNS s.104]
            chars: 2175
-       lexai.generate                              22598.8 ms
+       lexai.generate                              23426.0 ms
            model: qwen2.5-7b-instruct
-           time_to_first_token_ms: 16003.5
+           time_to_first_token_ms: 17676.4
            input_tokens: 1518
            output_tokens: 66
-       lexai.verify                                    0.0 ms
+       lexai.verify                                    1.0 ms
            valid: True
            coverage: 0.5
            flags: []
 
 B6. Admin reindex (one document; the others are carried over)
-   reindexing prisons-act-1894 (37 chunks): job 64998ce64c3349738b6e298963c0ff04
-[PASS] reindex job succeeded: live: lexai_chunks_20261121t110128734352 (removed old builds: ['lexai_chunks_20261120t130116516461']) (100 s)
-[PASS] no document lost: 5070/5070 chunks
-[PASS] answers come from the new index: lexai_chunks_20261120t133053900723 -> lexai_chunks_20261121t110128734352
-
-B7. Rate limit (refused questions: no model call)
-[FAIL] 20 allowed, the 21st refused: 21 x 200, then 200; Retry-After None
+   reindexing prisons-act-1894 (37 chunks): job 25f2402e9c6640499b31afbfb5979ce9
 API stopped.
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpcore\_async\connection.py", line 103, in handle_async_request
+    return await self._connection.handle_async_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpcore\_async\http11.py", line 136, in handle_async_request
+    raise exc
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpcore\_async\http11.py", line 106, in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpcore\_async\http11.py", line 177, in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpcore\_async\http11.py", line 231, in _receive_event
+    raise RemoteProtocolError(msg)
+httpcore.RemoteProtocolError: Server disconnected without sending a response.
 
-SUMMARY: FAILED (1): ['20 allowed, the 21st refused']
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\scripts\check_phase5.py", line 266, in <module>
+    main()
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\scripts\check_phase5.py", line 258, in main
+    asyncio.run(check(f"http://127.0.0.1:{args.port}", admin_key, trace_file))
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\scripts\check_phase5.py", line 216, in check
+    await client.get(f"/api/v1/admin/reindex/{job['job_id']}", headers={"X-API-Key": admin_key})
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpx\_client.py", line 1768, in get
+    return await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpx\_client.py", line 1540, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+  File "C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Lib\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.RemoteProtocolError: Server disconnected without sending a response.
 exit=1
 

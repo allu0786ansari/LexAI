@@ -1,274 +1,86 @@
-2026-11-21T10:59:55.482951Z [info     ] tracing_enabled                otlp=False trace_file=C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\var\check_phase5_traces.jsonl
-INFO:     Started server process [18212]
+2026-11-21T11:22:41.853958Z [info     ] tracing_enabled                otlp=False trace_file=C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\var\check_phase5_traces.jsonl
+INFO:     Started server process [20544]
 INFO:     Waiting for application startup.
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-2026-11-21T11:00:07.339095Z [info     ] index_ready                    built_at=2026-11-20T13:30:54+00:00 chunks=5070 collection=lexai_chunks_20261120t133053900723
-2026-11-21T11:00:08.947149Z [info     ] correspondence_ready           sections=2271
-2026-11-21T11:00:09.004712Z [info     ] state_backends                 cache=MemoryCache rate_limits=memory sessions=MemorySessionStore
-2026-11-21T11:00:09.004712Z [info     ] startup_complete               embedder=nomic-embed-text llm=qwen2.5-7b-instruct notes=[] profile='laptop-8gb v4' prompt=answer_v4 version=0.5.0
+2026-11-21T11:22:51.703447Z [info     ] index_ready                    built_at=2026-11-21T11:01:28+00:00 chunks=5070 collection=lexai_chunks_20261121t110128734352
+2026-11-21T11:22:53.170327Z [info     ] correspondence_ready           sections=2271
+2026-11-21T11:22:53.186203Z [info     ] state_backends                 cache=MemoryCache rate_limits=memory sessions=MemorySessionStore
+2026-11-21T11:22:53.186203Z [info     ] startup_complete               embedder=nomic-embed-text llm=qwen2.5-7b-instruct notes=[] profile='laptop-8gb v4' prompt=answer_v4 version=0.5.0
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-INFO:     127.0.0.1:58823 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53868 - "GET /healthz HTTP/1.1" 200 OK
 HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-2026-11-21T11:00:09.478911Z [warning  ] request_failed                 code=session_not_found error='Unknown or expired session. Create a new session and retry.' path=/api/v1/chat request_id=7a47bd4c215548f0b043c504ca62ca56 status=404
-INFO:     127.0.0.1:58834 - "POST /api/v1/chat HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:58834 - "POST /api/v1/sessions HTTP/1.1" 201 Created
-INFO:     127.0.0.1:58834 - "POST /api/v1/chat HTTP/1.1" 413 Request Entity Too Large
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents HTTP/1.1" 200 OK
-2026-11-21T11:00:09.497210Z [warning  ] request_failed                 code=forbidden error='A valid API key is required.' path=/api/v1/admin/reindex request_id=fa4c036bafe2430f822cdd2965974246 status=401
-INFO:     127.0.0.1:58834 - "POST /api/v1/admin/reindex HTTP/1.1" 401 Unauthorized
-2026-11-21T11:00:09.500159Z [warning  ] request_failed                 code=forbidden error='A valid API key is required.' path=/api/v1/admin/reindex request_id=3aa1240f6d134836a979ccda877a891c status=401
-INFO:     127.0.0.1:58834 - "POST /api/v1/admin/reindex HTTP/1.1" 401 Unauthorized
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:00:37.378890Z [info     ] query_complete                 abstained=False answer_chars=205 cached=False context_chunks=5 context_ms=0.2 coverage=1.0 generation_ms=27465.9 index_version=lexai_chunks_20261120t133053900723 path=/api/v1/chat prompt_version=answer_v4 request_id=615d5f2b2f284750be7128dea7580dcd retrieval_ms=400.7 session_id=f2fc1747-459d-4f84-8406-df9ba254b91f time_to_first_token_ms=17351.4 total_ms=27872.7 usage={'prompt_tokens': 1570, 'completion_tokens': 58, 'total_tokens': 1628} verified=True verify_ms=2.3
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/0be92011-0b4e-540d-8037-6ebc0f15c875 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/0a4bed87-6fc7-5871-a3e4-a0c2beee4914 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/2c23334d-ac0c-59af-9e56-dca8bb71912c HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/09c56d70-28a9-5846-b862-e58caceca98d HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/62509361-888b-5bb4-b811-5aaba37d0ed9 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:00:43.315616Z [info     ] condense_rejected              added=['act IPC'] path=/api/v1/chat request_id=0fac228ee04742ad9f79fa156ee141f1 rewrite='Is the punishment for murder bailable under the Indian Penal Code?' session_id=f2fc1747-459d-4f84-8406-df9ba254b91f
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:01:06.366919Z [info     ] query_complete                 abstained=False answer_chars=246 cached=False condense_ms=5487.6 context_chunks=5 context_ms=0.3 coverage=0.5 generation_ms=22588.6 index_version=lexai_chunks_20261120t133053900723 path=/api/v1/chat prompt_version=answer_v4 request_id=0fac228ee04742ad9f79fa156ee141f1 retrieval_ms=458.8 session_id=f2fc1747-459d-4f84-8406-df9ba254b91f time_to_first_token_ms=16003.5 total_ms=28538.3 usage={'prompt_tokens': 1518, 'completion_tokens': 66, 'total_tokens': 1584} verified=True verify_ms=0.4
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/0be92011-0b4e-540d-8037-6ebc0f15c875 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/0a4bed87-6fc7-5871-a3e4-a0c2beee4914 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/6d2ca300-7750-5939-b6c5-c90d008b6c9a HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/87651068-2246-58e7-9458-4163b0d9ee13 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/2c23334d-ac0c-59af-9e56-dca8bb71912c HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:01:26.355312Z [info     ] query_complete                 abstained=False answer_chars=271 cached=False context_chunks=5 context_ms=0.2 coverage=1.0 generation_ms=19058.5 index_version=lexai_chunks_20261120t133053900723 path=/api/v1/chat prompt_version=answer_v4 request_id=ca25c44be41e4f4383ccf1bc76b301a9 retrieval_ms=591.0 session_id=6020eabb-ee37-461b-a5a2-a7a1d76bac7e time_to_first_token_ms=9238.0 total_ms=19656.0 usage={'prompt_tokens': 1260, 'completion_tokens': 57, 'total_tokens': 1317} verified=True verify_ms=3.2
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/28bb465b-d1d8-5d93-85bf-857d4289bc36 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/2041e23c-f175-5949-9d07-aeb63195dbd6 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/1dddf70f-27ba-597f-a213-89fdc54f726c HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/15ab75f1-163a-5f21-a845-715235bb0925 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/chunks/83024c0b-8f3c-5ef3-b539-91afcf96c4a6 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
-2026-11-21T11:01:27.111961Z [info     ] feedback                       feedback_request_id=615d5f2b2f284750be7128dea7580dcd path=/api/v1/feedback rating=up request_id=def060d7a07e4fe29703535de9c21e50
-INFO:     127.0.0.1:58834 - "POST /api/v1/feedback HTTP/1.1" 201 Created
-INFO:     127.0.0.1:58834 - "GET /metrics HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58834 - "POST /api/v1/admin/reindex HTTP/1.1" 202 Accepted
-2026-11-21T11:01:28.555764Z [info     ] document_parsed                chunks=37 doc=prisons-act-1894 pages=20 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093 units=0
-2026-11-21T11:01:29.636649Z [info     ] document_copied                chunks=37 doc=prisons-act-1894 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-INFO:     127.0.0.1:63608 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63440 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:63449 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-2026-11-21T11:01:43.341286Z [info     ] document_carried_over          chunks=490 doc=bns-2023 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-INFO:     127.0.0.1:63452 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63456 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63457 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63458 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-2026-11-21T11:02:04.176280Z [info     ] document_carried_over          chunks=915 doc=bnss-2023 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-INFO:     127.0.0.1:63460 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-2026-11-21T11:02:08.368058Z [info     ] document_carried_over          chunks=219 doc=bsa-2023 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-INFO:     127.0.0.1:63460 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:63471 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-2026-11-21T11:02:19.086466Z [info     ] document_carried_over          chunks=626 doc=ipc-1860 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-INFO:     127.0.0.1:63473 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63474 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63475 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-2026-11-21T11:02:34.490281Z [info     ] document_carried_over          chunks=892 doc=crpc-1973 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:37.707295Z [info     ] document_carried_over          chunks=225 doc=iea-1872 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-INFO:     127.0.0.1:63476 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63477 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:63487 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-2026-11-21T11:02:50.205091Z [info     ] document_carried_over          chunks=807 doc=constitution path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:52.037035Z [info     ] document_carried_over          chunks=145 doc=it-act-2000 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:52.681734Z [info     ] document_carried_over          chunks=28 doc=criminal-law-amendment-2018 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-INFO:     127.0.0.1:63490 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-2026-11-21T11:02:54.445453Z [info     ] document_carried_over          chunks=102 doc=mha-cybercrime-manual path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:54.859367Z [info     ] document_carried_over          chunks=31 doc=mha-cprgr-manual path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:54.923248Z [info     ] document_carried_over          chunks=2 doc=mha-cyberfraud-instructions path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:55.370019Z [info     ] document_carried_over          chunks=36 doc=sc-judis-10166 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:55.433535Z [info     ] document_carried_over          chunks=2 doc=sc-judis-10187 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:55.862660Z [info     ] document_carried_over          chunks=33 doc=sc-judis-10193 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:56.021998Z [info     ] document_carried_over          chunks=11 doc=sc-judis-10220 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:56.101901Z [info     ] document_carried_over          chunks=2 doc=sc-judis-10290 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:56.149690Z [info     ] document_carried_over          chunks=1 doc=sc-judis-10304 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:56.214379Z [info     ] document_carried_over          chunks=1 doc=sc-judis-10322 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:56.309563Z [info     ] document_carried_over          chunks=5 doc=sc-judis-10347 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:56.420986Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10356 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:56.517070Z [info     ] document_carried_over          chunks=4 doc=sc-judis-10391 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:56.596035Z [info     ] document_carried_over          chunks=3 doc=sc-judis-10426 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:56.660091Z [info     ] document_carried_over          chunks=2 doc=sc-judis-10439 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:56.803684Z [info     ] document_carried_over          chunks=8 doc=sc-judis-10442 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:56.915045Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10502 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:56.994575Z [info     ] document_carried_over          chunks=2 doc=sc-judis-10519 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:57.074400Z [info     ] document_carried_over          chunks=3 doc=sc-judis-10520 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:57.265544Z [info     ] document_carried_over          chunks=8 doc=sc-judis-10548 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:57.361523Z [info     ] document_carried_over          chunks=4 doc=sc-judis-10557 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:57.425121Z [info     ] document_carried_over          chunks=2 doc=sc-judis-10562 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:57.521163Z [info     ] document_carried_over          chunks=3 doc=sc-judis-10613 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:57.569254Z [info     ] document_carried_over          chunks=1 doc=sc-judis-10629 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:57.648920Z [info     ] document_carried_over          chunks=3 doc=sc-judis-10637 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:57.775761Z [info     ] document_carried_over          chunks=7 doc=sc-judis-10649 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:57.839149Z [info     ] document_carried_over          chunks=2 doc=sc-judis-10663 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:57.950497Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10668 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:58.124696Z [info     ] document_carried_over          chunks=9 doc=sc-judis-10679 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:58.236536Z [info     ] document_carried_over          chunks=4 doc=sc-judis-10693 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-INFO:     127.0.0.1:63490 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-2026-11-21T11:02:58.331359Z [info     ] document_carried_over          chunks=4 doc=sc-judis-10752 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:58.426615Z [info     ] document_carried_over          chunks=5 doc=sc-judis-10762 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:58.522463Z [info     ] document_carried_over          chunks=4 doc=sc-judis-10773 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:58.937586Z [info     ] document_carried_over          chunks=31 doc=sc-judis-10796 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:02:59.654290Z [info     ] document_carried_over          chunks=47 doc=sc-judis-10804 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:00.280516Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10805 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:00.406652Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10814 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:00.533918Z [info     ] document_carried_over          chunks=8 doc=sc-judis-10818 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:00.660660Z [info     ] document_carried_over          chunks=6 doc=sc-judis-1082 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:00.822355Z [info     ] document_carried_over          chunks=8 doc=sc-judis-10823 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:01.870829Z [info     ] document_carried_over          chunks=83 doc=sc-judis-10844 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:01.965844Z [info     ] document_carried_over          chunks=5 doc=sc-judis-10857 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:02.109022Z [info     ] document_carried_over          chunks=7 doc=sc-judis-10877 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:02.299633Z [info     ] document_carried_over          chunks=11 doc=sc-judis-10886 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:02.616990Z [info     ] document_carried_over          chunks=28 doc=sc-judis-1089 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:02.937389Z [info     ] document_carried_over          chunks=24 doc=sc-judis-10892 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-INFO:     127.0.0.1:63491 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-2026-11-21T11:03:03.336236Z [info     ] document_carried_over          chunks=34 doc=sc-judis-10897 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:03.462998Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10910 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:03.574683Z [info     ] document_carried_over          chunks=6 doc=sc-judis-10924 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:03.894558Z [info     ] document_carried_over          chunks=15 doc=sc-judis-10933 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:04.196869Z [info     ] document_carried_over          chunks=17 doc=sc-judis-10937 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:04.340272Z [info     ] document_carried_over          chunks=9 doc=sc-judis-1094 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:04.467015Z [info     ] document_carried_over          chunks=7 doc=sc-judis-10941 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:06.536228Z [info     ] correspondence_ready           path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093 sections=2271
-2026-11-21T11:03:06.579284Z [info     ] index_reloaded                 chunks=5070 collection=lexai_chunks_20261121t110128734352 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093
-2026-11-21T11:03:06.580278Z [info     ] job_finished                   detail="live: lexai_chunks_20261121t110128734352 (removed old builds: ['lexai_chunks_20261120t130116516461'])" job_id=64998ce64c3349738b6e298963c0ff04 path=/api/v1/admin/reindex request_id=658a21df940f4ff496723e1fa7c17093 status=succeeded
-INFO:     127.0.0.1:63491 - "GET /api/v1/admin/reindex/64998ce64c3349738b6e298963c0ff04 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63491 - "GET /api/v1/documents HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63491 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-2026-11-21T11:03:20.038088Z [info     ] query_complete                 abstained=False answer_chars=271 cached=False context_chunks=5 context_ms=0.1 coverage=1.0 generation_ms=11522.1 index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=69b942d326ae4affa9ca6cdad081af37 retrieval_ms=169.9 session_id=14217da7-edb0-45ce-a3e4-cd9579106ec5 time_to_first_token_ms=1077.1 total_ms=11694.7 usage={'prompt_tokens': 1260, 'completion_tokens': 57, 'total_tokens': 1317} verified=True verify_ms=0.3
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
+2026-11-21T11:22:53.736412Z [warning  ] request_failed                 code=session_not_found error='Unknown or expired session. Create a new session and retry.' path=/api/v1/chat request_id=63e60cb6e3234fae819d743d84372e36 status=404
+INFO:     127.0.0.1:53881 - "POST /api/v1/chat HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53881 - "POST /api/v1/sessions HTTP/1.1" 201 Created
+INFO:     127.0.0.1:53881 - "POST /api/v1/chat HTTP/1.1" 413 Request Entity Too Large
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents HTTP/1.1" 200 OK
+2026-11-21T11:22:53.736412Z [warning  ] request_failed                 code=forbidden error='A valid API key is required.' path=/api/v1/admin/reindex request_id=96c149d31d53447eb8786dd41d759ca5 status=401
+INFO:     127.0.0.1:53881 - "POST /api/v1/admin/reindex HTTP/1.1" 401 Unauthorized
+2026-11-21T11:22:53.736412Z [warning  ] request_failed                 code=forbidden error='A valid API key is required.' path=/api/v1/admin/reindex request_id=33e241d2d21241b7af045029b6ffe0b0 status=401
+INFO:     127.0.0.1:53881 - "POST /api/v1/admin/reindex HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "POST /api/v1/chat HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
 HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-INFO:     127.0.0.1:63536 - "POST /api/v1/sessions HTTP/1.1" 201 Created
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-2026-11-21T11:04:21.078156Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=1c65d5c045e043e7a3c29ba0f92b35ec session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=2.4 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
-2026-11-21T11:05:08.307133Z [info     ] query_complete                 abstained=False answer_chars=513 cached=False condense_ms=5065.1 context_chunks=3 context_ms=0.5 coverage=1.0 generation_ms=41457.9 index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=bc60c051fa0e4099b47333ddfd11ff99 retrieval_ms=693.8 session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 time_to_first_token_ms=21672.9 total_ms=47223.6 usage={'prompt_tokens': 2018, 'completion_tokens': 125, 'total_tokens': 2143} verified=True verify_ms=2.6
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:05:16.260459Z [info     ] condense_rejected              added=['act BNS', 'act IPC'] path=/api/v1/chat request_id=81de9d588e0b403093342144aa1f6dfc rewrite='What is the offence under BNS s.238 and IPC s.201 for destroying CCTV evidence before the police arrive?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:05:16.262542Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7947.3 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=81de9d588e0b403093342144aa1f6dfc session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7949.1 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T11:23:53.110053Z [info     ] query_complete                 abstained=False answer_chars=205 cached=False context_chunks=5 context_ms=0.2 coverage=1.0 generation_ms=58912.6 index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=dae65ef1c4544c34960f1d95a73bdc68 retrieval_ms=379.7 session_id=606bac6b-9a44-4a92-b495-173e7928f212 time_to_first_token_ms=48437.4 total_ms=59344.6 usage={'prompt_tokens': 1570, 'completion_tokens': 58, 'total_tokens': 1628} verified=True verify_ms=36.4
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/0be92011-0b4e-540d-8037-6ebc0f15c875 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/0a4bed87-6fc7-5871-a3e4-a0c2beee4914 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/2c23334d-ac0c-59af-9e56-dca8bb71912c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/09c56d70-28a9-5846-b862-e58caceca98d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/62509361-888b-5bb4-b811-5aaba37d0ed9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "POST /api/v1/chat HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
 HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:05:23.160651Z [info     ] condense_rejected              added=['act BNS', 'act IPC'] path=/api/v1/chat request_id=6beb3980ccf84485b85e0b588a4c95d5 rewrite='What is the potential legal consequence under BNS s.238 and IPC s.201 for destroying CCTV evidence before the police arrive?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:05:23.162752Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=6889.1 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=6beb3980ccf84485b85e0b588a4c95d5 session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=6890.5 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:05:30.699274Z [info     ] condense_rejected              added=['act BNS', 'act IPC'] path=/api/v1/chat request_id=56dca20a9908489fb58ef5d601d68c29 rewrite='What is the offence under BNS s.238 and IPC s.201 for destroying CCTV evidence before the police arrive?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:05:30.700909Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7531.2 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=56dca20a9908489fb58ef5d601d68c29 session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7532.5 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:05:38.615015Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=3f31ab91a24a4957a2211f330b4cd763 rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:05:38.617088Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7909.3 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=3f31ab91a24a4957a2211f330b4cd763 session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7910.5 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:05:45.928695Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=864b5445444646af932ce009fc7b5bd3 rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:05:45.930332Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7307.5 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=864b5445444646af932ce009fc7b5bd3 session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7308.8 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T11:24:01.400579Z [info     ] condense_rejected              added=['act IPC'] path=/api/v1/chat request_id=9a8d748e8ce54c5195e0af29de1b1a31 rewrite='Is the punishment for murder bailable under the Indian Penal Code?' session_id=606bac6b-9a44-4a92-b495-173e7928f212
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:05:53.922308Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=1dc5842b3bd94bfbae54bd92ee5ec974 rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:05:53.924497Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7986.9 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=1dc5842b3bd94bfbae54bd92ee5ec974 session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7988.5 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:06:01.667336Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=7d4fad300904416197aa01f0f8a6defb rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:06:01.669907Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7737.7 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=7d4fad300904416197aa01f0f8a6defb session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7739.3 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:06:09.373882Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=175240faae4f496bb228e22b9ad60677 rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:06:09.375888Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7699.6 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=175240faae4f496bb228e22b9ad60677 session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7700.7 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:06:16.856507Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=70ee314bebf046d1ad48b7fcb4b9ef4d rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:06:16.858584Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7475.6 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=70ee314bebf046d1ad48b7fcb4b9ef4d session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7477.0 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
+2026-11-21T11:24:26.290299Z [info     ] query_complete                 abstained=False answer_chars=246 cached=False condense_ms=5662.3 context_chunks=5 context_ms=2.3 coverage=0.5 generation_ms=23423.1 index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=9a8d748e8ce54c5195e0af29de1b1a31 retrieval_ms=1443.5 session_id=606bac6b-9a44-4a92-b495-173e7928f212 time_to_first_token_ms=17676.4 total_ms=30549.9 usage={'prompt_tokens': 1518, 'completion_tokens': 66, 'total_tokens': 1584} verified=True verify_ms=1.8
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/0be92011-0b4e-540d-8037-6ebc0f15c875 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/0a4bed87-6fc7-5871-a3e4-a0c2beee4914 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/6d2ca300-7750-5939-b6c5-c90d008b6c9a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/87651068-2246-58e7-9458-4163b0d9ee13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/ipc-1860/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/2c23334d-ac0c-59af-9e56-dca8bb71912c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/bns-2023/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "POST /api/v1/chat HTTP/1.1" 200 OK
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:06:24.257765Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=aa6d3fdb95d24711aa39d663ed3b49ec rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:06:24.259845Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7394.5 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=aa6d3fdb95d24711aa39d663ed3b49ec session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7395.8 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:06:31.826411Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=0612dcb0a23e47a291c570de5a81c300 rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:06:31.827981Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7562.7 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=0612dcb0a23e47a291c570de5a81c300 session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7564.1 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:06:39.213365Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=88335084c27b460b96f2264520e6c37b rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:06:39.214925Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7380.1 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=88335084c27b460b96f2264520e6c37b session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7381.3 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:06:46.354159Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=f454747aaf13485fbac24faf41d99b3a rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:06:46.356081Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7134.8 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=f454747aaf13485fbac24faf41d99b3a session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7136.3 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:06:54.173532Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=53993652e97d4f919d5802e184bcdfc4 rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:06:54.176274Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7811.4 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=53993652e97d4f919d5802e184bcdfc4 session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7813.3 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:07:01.775222Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=64909dd16a5f42f6b9dd320b6c2e0e95 rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:07:01.776792Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7592.9 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=64909dd16a5f42f6b9dd320b6c2e0e95 session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7593.9 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:07:09.403659Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=ddda[phone]a9a0986dd1349d32d6 rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:07:09.405393Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7623.0 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=ddda[phone]a9a0986dd1349d32d6 session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7624.4 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:07:16.838202Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=8b7a83e937c34ef6892b024ca28cc73d rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:07:16.840805Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7428.8 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=8b7a83e937c34ef6892b024ca28cc73d session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7430.7 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
 HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
 HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:07:24.354321Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=ee4568c60a704c4f8fbe63749ac9234e rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:07:24.356447Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7508.7 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=ee4568c60a704c4f8fbe63749ac9234e session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7510.1 usage=None verified=True
-INFO:     127.0.0.1:63536 - "POST /api/v1/chat HTTP/1.1" 200 OK
-HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2026-11-21T11:07:31.940920Z [info     ] condense_rejected              added=['act IPC', 'IPC Section 203'] path=/api/v1/chat request_id=1737a7d358f848379436b61f1b4f375e rewrite='What is the legal consequence under the Indian Penal Code, 1860, Section 203, for destroying evidence with the intention to prevent a criminal proceeding?' session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641
-2026-11-21T11:07:31.942499Z [info     ] query_complete                 abstained=False answer_chars=170 cached=False condense_ms=7579.2 context_chunks=0 coverage=None index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=1737a7d358f848379436b61f1b4f375e session_id=6249a7c1-ec8e-42d4-b70d-37a5565d1641 total_ms=7580.6 usage=None verified=True
+2026-11-21T11:24:48.061075Z [info     ] query_complete                 abstained=False answer_chars=236 cached=False context_chunks=5 context_ms=0.8 coverage=1.0 generation_ms=18750.2 index_version=lexai_chunks_20261121t110128734352 path=/api/v1/chat prompt_version=answer_v4 request_id=e19c64c0e44a436fa438f4e6da1bdca4 retrieval_ms=2519.2 session_id=eb4a5709-6c61-4119-ab6a-fcd46fecd3ab time_to_first_token_ms=12249.2 total_ms=21299.6 usage={'prompt_tokens': 1260, 'completion_tokens': 50, 'total_tokens': 1310} verified=True verify_ms=11.4
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/28bb465b-d1d8-5d93-85bf-857d4289bc36 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/2041e23c-f175-5949-9d07-aeb63195dbd6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/1dddf70f-27ba-597f-a213-89fdc54f726c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/15ab75f1-163a-5f21-a845-715235bb0925 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/chunks/83024c0b-8f3c-5ef3-b539-91afcf96c4a6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "GET /api/v1/documents/constitution/pdf HTTP/1.1" 200 OK
+2026-11-21T11:24:51.813915Z [info     ] feedback                       feedback_request_id=dae65ef1c4544c34960f1d95a73bdc68 path=/api/v1/feedback rating=up request_id=7fc26a754c2443139769ff25badf997a
+INFO:     127.0.0.1:53881 - "POST /api/v1/feedback HTTP/1.1" 201 Created
+INFO:     127.0.0.1:53881 - "GET /metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53881 - "POST /api/v1/admin/reindex HTTP/1.1" 202 Accepted
+2026-11-21T11:24:54.295917Z [info     ] document_parsed                chunks=37 doc=prisons-act-1894 pages=20 path=/api/v1/admin/reindex request_id=00a2d22de9224d00b5dd7e8356957cc5 units=0
+2026-11-21T11:24:55.167053Z [info     ] document_copied                chunks=37 doc=prisons-act-1894 path=/api/v1/admin/reindex request_id=00a2d22de9224d00b5dd7e8356957cc5
+HTTP Request: GET http://localhost:11434/v1/models "HTTP/1.1 200 OK"
+HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54284 - "GET /api/v1/admin/reindex/25f2402e9c6640499b31afbfb5979ce9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54285 - "GET /api/v1/admin/reindex/25f2402e9c6640499b31afbfb5979ce9 HTTP/1.1" 200 OK
+2026-11-21T11:25:06.675407Z [info     ] document_carried_over          chunks=490 doc=bns-2023 path=/api/v1/admin/reindex request_id=00a2d22de9224d00b5dd7e8356957cc5
+INFO:     127.0.0.1:54288 - "GET /api/v1/admin/reindex/25f2402e9c6640499b31afbfb5979ce9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54290 - "GET /api/v1/admin/reindex/25f2402e9c6640499b31afbfb5979ce9 HTTP/1.1" 200 OK
