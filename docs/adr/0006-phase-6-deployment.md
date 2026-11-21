@@ -1,6 +1,6 @@
 # ADR 0006 — Phase 6 containers, CI/CD, deployment and recovery
 
-Date: 2026-11-21 · Status: proposed (CI verified; laptop run pending, see runlogs/phase6)
+Date: 2026-11-21 · Status: accepted (verified in CI and on the target laptop, see runlogs/phase6/RESULTS.md)
 
 ## Context
 
@@ -57,3 +57,7 @@ yet: the deployment has to be proven without one and be ready for a VM later.
 - No admission control yet: under load, answers queue in the model server.
 - Image and model versions are pinned by tag, not digest.
 - Langfuse needs ~4 GB of RAM, so on the 8 GB laptop it is verified in CI rather than locally.
+- Container networking to the host differs by engine: Docker Desktop resolves
+  `host.docker.internal` itself; Rancher Desktop reaches Windows through its tunnel address,
+  and Docker's `host-gateway` is the Linux VM. `lexai.bat network` detects the working address
+  and saves it (`LEXAI_HOST_GATEWAY`), and Ollama must listen beyond 127.0.0.1.

@@ -5,8 +5,10 @@ Supreme Court judgments and government manuals. It retrieves the relevant
 passages, generates an answer with **Qwen2.5-7B-Instruct**, and cites every
 claim as `[n]` so you can check the source.
 
-> **Status: Phase 6 of 6 in verification** (Docker Compose deployment, image scanning,
-> releases to GHCR, deploys with automatic rollback, backups; [runbook](docs/runbook.md)).
+> **Status: Phases 1–6 verified** on the 8 GB laptop and in CI: Docker Compose deployment,
+> image scanning, releases to GHCR, deploys with automatic rollback, backups
+> ([results](runlogs/phase6/RESULTS.md), [runbook](docs/runbook.md)). Not yet: a server with a
+> public HTTPS demo.
 > Earlier phases: [API, UI, security, observability](runlogs/phase5/RESULTS.md) ·
 > [evaluation](runlogs/phase4/RESULTS.md).
 
@@ -279,7 +281,7 @@ frontend/         React + TypeScript chat UI (types from the OpenAPI schema; Vit
 | 3 | Retrieval & generation: query routing, citation verification, abstention | **done** ([results](runlogs/phase3/RESULTS.md)) |
 | 4 | Evaluation: golden set, retrieval/answer metrics, ablations, load test, CI gate | **done** ([results](runlogs/phase4/RESULTS.md)) |
 | 5 | API v1, TypeScript UI, security, observability | **done** ([results](runlogs/phase5/RESULTS.md)) |
-| 6 | Docker Compose, CI/CD, deployment, backups, runbook | in verification ([runbook](docs/runbook.md)) |
+| 6 | Docker Compose, CI/CD, deployment, backups, runbook | **done** ([results](runlogs/phase6/RESULTS.md)); public demo server pending |
 
 ## Disclaimer
 
