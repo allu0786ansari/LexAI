@@ -3,8 +3,8 @@ $ netstat (Ollama on Windows)
   TCP    [::]:11434             [::]:0                 LISTENING       13156
 
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" network
- Container lexai-ingest-run-d06084035773 Creating 
- Container lexai-ingest-run-d06084035773 Created 
+ Container lexai-ingest-run-a8835239c9c1 Creating 
+ Container lexai-ingest-run-a8835239c9c1 Created 
 model server URL: http://host.docker.internal:11434/v1
   host.docker.internal (configured)          -> 192.168.127.254 port 11434: open
   host.rancher-desktop.internal              -> 192.168.127.254 port 11434: (same address as above)

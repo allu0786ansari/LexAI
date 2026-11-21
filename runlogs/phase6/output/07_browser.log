@@ -2,28 +2,28 @@ $ call npx playwright test --reporter=list
 
 Running 22 tests using 4 workers
 
-  ✓   2 [desktop] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (14.3s)
-  ✓   1 [mobile] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (14.6s)
-  ✓   3 [desktop] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (16.0s)
-  ✓   5 [mobile] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (13.3s)
-  ✓   6 [desktop] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (13.9s)
-  ✓   8 [desktop] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (2.9s)
-  ✓   7 [mobile] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (5.1s)
-  ✓   9 [desktop] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (1.2s)
-  ✓  10 [mobile] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (1.0s)
-  ✓  11 [desktop] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (2.1s)
-  ✓  12 [mobile] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (2.3s)
-  ✓  14 [mobile] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (1.6s)
-  ✓  13 [desktop] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (1.8s)
-  ✓  15 [mobile] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (2.6s)
-  ✓  17 [desktop] › e2e\chat.spec.ts:98:1 › filters are sent with the question (2.4s)
-  ✓  16 [mobile] › e2e\chat.spec.ts:98:1 › filters are sent with the question (3.4s)
-  ✓  20 [mobile] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (2.3s)
-  ✓  19 [desktop] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (4.0s)
-  -  22 [desktop] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat
-  ✓  21 [mobile] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat (4.7s)
-  ✘   4 [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (47.9s)
-  ✘  18 [mobile] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (17.0s)
+  ✓   3 [mobile] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (4.2s)
+  ✓   5 [mobile] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (2.7s)
+  ✓   1 [desktop] › e2e\chat.spec.ts:11:1 › an answer streams with its sources, and every citation opens its passage (8.0s)
+  ✓   4 [desktop] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (8.8s)
+  ✓   6 [mobile] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (8.2s)
+  ✓   7 [desktop] › e2e\chat.spec.ts:35:1 › stop cancels a running answer (8.0s)
+  ✓   8 [mobile] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (1.5s)
+  ✓   9 [desktop] › e2e\chat.spec.ts:45:1 › an expired session is replaced and the question asked again (2.9s)
+  ✓  10 [mobile] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (3.0s)
+  ✓  11 [desktop] › e2e\chat.spec.ts:58:1 › a rate limit shows when to try again (1.4s)
+  ✓  12 [mobile] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (1.2s)
+  ✓  13 [desktop] › e2e\chat.spec.ts:67:1 › conversations survive a reload; feedback is sent once (1.9s)
+  ✓  14 [mobile] › e2e\chat.spec.ts:98:1 › filters are sent with the question (1.7s)
+  ✓  16 [mobile] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (1.3s)
+  ✓  15 [desktop] › e2e\chat.spec.ts:81:1 › model output cannot inject HTML or script links (1.4s)
+  ✓  17 [mobile] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat (1.6s)
+  ✓  18 [desktop] › e2e\chat.spec.ts:98:1 › filters are sent with the question (1.6s)
+  ✓  20 [desktop] › e2e\chat.spec.ts:110:1 › verification flags are shown on the answer (2.0s)
+  -  21 [desktop] › e2e\chat.spec.ts:123:1 › on a phone, the drawer holds the history and New chat
+  ✘   2 [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (23.6s)
+  ✓  22 [mobile] › e2e\csp.spec.ts:5:1 › the app runs without Content-Security-Policy violations (2.3s)
+  ✘  19 [mobile] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx (14.6s)
 
 
   1) [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ───
@@ -100,6 +100,6 @@ Running 22 tests using 4 workers
     [desktop] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ────
     [mobile] › e2e\live.spec.ts:8:1 › a real question is answered from the index through nginx ─────
   1 skipped
-  19 passed (1.0m)
+  19 passed (45.0s)
 exit=1
 

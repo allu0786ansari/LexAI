@@ -5,136 +5,129 @@ $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" build
 #1 reading from stdin 1.01kB done
 #1 DONE 0.0s
 
-#2 [api internal] load build definition from Dockerfile
-#2 transferring dockerfile: 2.40kB 0.0s done
+#2 [web internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.16kB 0.0s done
 #2 DONE 0.1s
 
-#3 [web internal] load build definition from Dockerfile
-#3 transferring dockerfile: 1.16kB 0.0s done
+#3 [api internal] load build definition from Dockerfile
+#3 transferring dockerfile: 2.40kB 0.0s done
 #3 DONE 0.1s
 
-#4 [web] resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#4 [api] resolve image config for docker-image://docker.io/docker/dockerfile:1.7
 #4 ...
 
 #5 [auth] docker/dockerfile:pull token for registry-1.docker.io
 #5 DONE 0.0s
 
-#4 [web] resolve image config for docker-image://docker.io/docker/dockerfile:1.7
-#4 DONE 9.5s
+#4 [api] resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#4 DONE 2.6s
 
-#6 [web] docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
-#6 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.0s done
+#6 [api] docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#6 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e 0.1s done
 #6 CACHED
 
-#7 [api internal] load metadata for ghcr.io/astral-sh/uv:0.11.32
+#7 [api internal] load metadata for docker.io/library/python:3.12.16-slim
 #7 ...
 
-#8 [auth] nginx/nginx-unprivileged:pull token for registry-1.docker.io
+#8 [auth] library/node:pull token for registry-1.docker.io
 #8 DONE 0.0s
 
-#9 [api internal] load metadata for docker.io/library/python:3.12.16-slim
-#9 ...
+#9 [api internal] load metadata for ghcr.io/astral-sh/uv:0.11.32
+#9 DONE 1.7s
 
-#10 [auth] library/python:pull token for registry-1.docker.io
-#10 DONE 0.0s
+#10 [web internal] load metadata for docker.io/library/node:22.23.5-alpine
+#10 DONE 2.9s
 
 #11 [web internal] load metadata for docker.io/nginx/nginx-unprivileged:1.31.9-alpine
-#11 DONE 1.7s
+#11 ...
 
-#12 [web internal] load metadata for docker.io/library/node:22.23.5-alpine
-#12 ...
+#12 [auth] library/python:pull token for registry-1.docker.io
+#12 DONE 0.0s
 
-#7 [api internal] load metadata for ghcr.io/astral-sh/uv:0.11.32
-#7 DONE 2.0s
+#7 [api internal] load metadata for docker.io/library/python:3.12.16-slim
+#7 DONE 5.3s
 
-#12 [web internal] load metadata for docker.io/library/node:22.23.5-alpine
-#12 ...
-
-#9 [api internal] load metadata for docker.io/library/python:3.12.16-slim
-#9 DONE 3.6s
+#11 [web internal] load metadata for docker.io/nginx/nginx-unprivileged:1.31.9-alpine
+#11 ...
 
 #13 [api internal] load .dockerignore
 #13 transferring context: 159B done
-#13 DONE 0.1s
-
-#12 [web internal] load metadata for docker.io/library/node:22.23.5-alpine
-#12 ...
+#13 DONE 0.0s
 
 #14 [api internal] load build context
 #14 DONE 0.0s
 
-#15 [api builder 1/7] FROM docker.io/library/python:3.12.16-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
-#15 resolve docker.io/library/python:3.12.16-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.1s done
+#15 [api uv 1/1] FROM ghcr.io/astral-sh/uv:0.11.32@sha256:df4cae8f3a96d175e2e5f992e597550000edbe78fdc2594d5cd8de1a217f504c
+#15 resolve ghcr.io/astral-sh/uv:0.11.32@sha256:df4cae8f3a96d175e2e5f992e597550000edbe78fdc2594d5cd8de1a217f504c 0.1s done
 #15 DONE 0.1s
 
-#16 [api uv 1/1] FROM ghcr.io/astral-sh/uv:0.11.32@sha256:df4cae8f3a96d175e2e5f992e597550000edbe78fdc2594d5cd8de1a217f504c
-#16 resolve ghcr.io/astral-sh/uv:0.11.32@sha256:df4cae8f3a96d175e2e5f992e597550000edbe78fdc2594d5cd8de1a217f504c 0.1s done
+#16 [api builder 1/7] FROM docker.io/library/python:3.12.16-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#16 resolve docker.io/library/python:3.12.16-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.1s done
 #16 DONE 0.1s
 
 #14 [api internal] load build context
 #14 transferring context: 3.87kB done
-#14 DONE 0.1s
+#14 DONE 0.0s
 
-#17 [api builder 2/7] COPY --from=uv /uv /uvx /bin/
+#17 [api builder 5/7] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-install-project
 #17 CACHED
 
-#18 [api builder 7/7] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev
+#18 [api runtime 2/6] RUN groupadd --system --gid 10001 lexai  && useradd --system --uid 10001 --gid lexai --home-dir /app --no-create-home lexai
 #18 CACHED
 
-#19 [api builder 5/7] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-install-project
+#19 [api builder 3/7] WORKDIR /app/backend
 #19 CACHED
 
 #20 [api runtime 4/6] COPY --from=builder --chown=lexai:lexai /app/backend /app/backend
 #20 CACHED
 
-#21 [api runtime 2/6] RUN groupadd --system --gid 10001 lexai  && useradd --system --uid 10001 --gid lexai --home-dir /app --no-create-home lexai
+#21 [api builder 6/7] COPY src ./src
 #21 CACHED
 
 #22 [api runtime 5/6] COPY --chown=lexai:lexai scripts ./scripts
 #22 CACHED
 
-#23 [api builder 3/7] WORKDIR /app/backend
+#23 [api builder 2/7] COPY --from=uv /uv /uvx /bin/
 #23 CACHED
 
-#24 [api runtime 3/6] WORKDIR /app/backend
+#24 [api builder 7/7] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev
 #24 CACHED
 
 #25 [api builder 4/7] COPY pyproject.toml uv.lock ./
 #25 CACHED
 
-#26 [api builder 6/7] COPY src ./src
+#26 [api runtime 3/6] WORKDIR /app/backend
 #26 CACHED
 
 #27 [api runtime 6/6] RUN mkdir -p /app/backend/var /app/data /app/eval && chown lexai:lexai /app/backend/var /app/data /app/eval
 #27 CACHED
 
 #28 [api] exporting to image
-#28 exporting layers
 #28 exporting layers done
-#28 exporting manifest sha256:ab618e96dd88ab3b137f7ccbe21b526759925fa9761e61b110e986e12f361266 0.0s done
-#28 exporting config sha256:5c1ccfee7f3d0b76ecf8db915bc3fc41b0964bd8db7edd81603dc53e429d9b31 0.0s done
-#28 exporting attestation manifest sha256:16983b232c75b63bc70cd3d2d4b13ab687f33cf08d39ece95eebdc379171ca67
-#28 exporting attestation manifest sha256:16983b232c75b63bc70cd3d2d4b13ab687f33cf08d39ece95eebdc379171ca67 0.1s done
-#28 exporting manifest list sha256:43cb5960ff2b6ccf42629cec6a5652699029ffebf132fb6482d272cfec2be51a
-#28 exporting manifest list sha256:43cb5960ff2b6ccf42629cec6a5652699029ffebf132fb6482d272cfec2be51a 0.1s done
+#28 exporting manifest sha256:ab618e96dd88ab3b137f7ccbe21b526759925fa9761e61b110e986e12f361266 done
+#28 exporting config sha256:5c1ccfee7f3d0b76ecf8db915bc3fc41b0964bd8db7edd81603dc53e429d9b31 done
+#28 exporting attestation manifest sha256:df6128da84526e067fc242f53f93b0286349ed5db492fedae2d91888988fe322
+#28 exporting attestation manifest sha256:df6128da84526e067fc242f53f93b0286349ed5db492fedae2d91888988fe322 0.2s done
+#28 exporting manifest list sha256:aaf28e454b1d2e3ece1a777eb94f40c3e92d276fb408a41df488a1da2c5ace95
+#28 exporting manifest list sha256:aaf28e454b1d2e3ece1a777eb94f40c3e92d276fb408a41df488a1da2c5ace95 0.1s done
 #28 naming to docker.io/library/lexai-backend:local done
 #28 unpacking to docker.io/library/lexai-backend:local 0.0s done
-#28 DONE 0.3s
+#28 DONE 0.4s
 
-#12 [web internal] load metadata for docker.io/library/node:22.23.5-alpine
-#12 ...
+#11 [web internal] load metadata for docker.io/nginx/nginx-unprivileged:1.31.9-alpine
+#11 ...
 
 #29 [api] resolving provenance for metadata file
 #29 DONE 0.1s
 
-#12 [web internal] load metadata for docker.io/library/node:22.23.5-alpine
-#12 ...
+#11 [web internal] load metadata for docker.io/nginx/nginx-unprivileged:1.31.9-alpine
+#11 ...
 
-#30 [auth] library/node:pull token for registry-1.docker.io
+#30 [auth] nginx/nginx-unprivileged:pull token for registry-1.docker.io
 #30 DONE 0.0s
 
-#12 [web internal] load metadata for docker.io/library/node:22.23.5-alpine
-#12 DONE 22.0s
+#11 [web internal] load metadata for docker.io/nginx/nginx-unprivileged:1.31.9-alpine
+#11 DONE 44.2s
 
 #31 [web internal] load .dockerignore
 #31 transferring context: 120B done
@@ -143,34 +136,35 @@ $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" build
 #32 [web internal] load build context
 #32 DONE 0.0s
 
-#33 [web runtime 1/3] FROM docker.io/nginx/nginx-unprivileged:1.31.9-alpine@sha256:60214a103e6f38e953ff957f34b1f2e97a9db801ab2df3821da955d0fe6cadd6
-#33 resolve docker.io/nginx/nginx-unprivileged:1.31.9-alpine@sha256:60214a103e6f38e953ff957f34b1f2e97a9db801ab2df3821da955d0fe6cadd6 0.1s done
+#33 [web build 1/6] FROM docker.io/library/node:22.23.5-alpine@sha256:1314fb30ec37592d5845e5a160d522c0e680972aa534549940b8d73bde88481a
+#33 resolve docker.io/library/node:22.23.5-alpine@sha256:1314fb30ec37592d5845e5a160d522c0e680972aa534549940b8d73bde88481a
+#33 resolve docker.io/library/node:22.23.5-alpine@sha256:1314fb30ec37592d5845e5a160d522c0e680972aa534549940b8d73bde88481a 0.1s done
 #33 DONE 0.1s
 
-#34 [web build 1/6] FROM docker.io/library/node:22.23.5-alpine@sha256:1314fb30ec37592d5845e5a160d522c0e680972aa534549940b8d73bde88481a
-#34 resolve docker.io/library/node:22.23.5-alpine@sha256:1314fb30ec37592d5845e5a160d522c0e680972aa534549940b8d73bde88481a 0.1s done
-#34 DONE 0.2s
+#34 [web runtime 1/3] FROM docker.io/nginx/nginx-unprivileged:1.31.9-alpine@sha256:60214a103e6f38e953ff957f34b1f2e97a9db801ab2df3821da955d0fe6cadd6
+#34 resolve docker.io/nginx/nginx-unprivileged:1.31.9-alpine@sha256:60214a103e6f38e953ff957f34b1f2e97a9db801ab2df3821da955d0fe6cadd6 0.1s done
+#34 DONE 0.1s
 
 #32 [web internal] load build context
 #32 transferring context: 1.75kB done
 #32 DONE 0.0s
 
-#35 [web build 3/6] COPY package.json package-lock.json ./
+#35 [web runtime 2/3] COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
 #35 CACHED
 
-#36 [web build 4/6] RUN --mount=type=cache,target=/root/.npm npm ci --no-audit --no-fund
+#36 [web build 3/6] COPY package.json package-lock.json ./
 #36 CACHED
 
-#37 [web build 2/6] WORKDIR /app
+#37 [web build 6/6] RUN npm run build
 #37 CACHED
 
-#38 [web build 5/6] COPY . .
+#38 [web build 2/6] WORKDIR /app
 #38 CACHED
 
-#39 [web build 6/6] RUN npm run build
+#39 [web build 4/6] RUN --mount=type=cache,target=/root/.npm npm ci --no-audit --no-fund
 #39 CACHED
 
-#40 [web runtime 2/3] COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
+#40 [web build 5/6] COPY . .
 #40 CACHED
 
 #41 [web runtime 3/3] COPY --from=build /app/dist /usr/share/nginx/html
@@ -179,25 +173,26 @@ $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" build
 #42 [web] exporting to image
 #42 exporting layers done
 #42 exporting manifest sha256:8d4d4b8e6f5f9340f4e55910135d01211491b23f8ebf3098055146f18a82f60f done
-#42 exporting config sha256:01d6a0253bee804eb1e1e068ef6cea02d7c8ad0be2a031316854426215374bb9 0.0s done
-#42 exporting attestation manifest sha256:d2351c0d4b8ed4f0e0538269464c699f14632a1e94d8006471cb4a4352701918
-#42 exporting attestation manifest sha256:d2351c0d4b8ed4f0e0538269464c699f14632a1e94d8006471cb4a4352701918 0.1s done
-#42 exporting manifest list sha256:85dc3832a35c09f204d1fac5ec00fd64fa20ae2be01e00d551ba753e7194e405 0.1s done
+#42 exporting config sha256:01d6a0253bee804eb1e1e068ef6cea02d7c8ad0be2a031316854426215374bb9 done
+#42 exporting attestation manifest sha256:8a09fd412b55d4b9ec119460b5d14cf8cd95f5922d8d33a0a64f55d047eb020c
+#42 exporting attestation manifest sha256:8a09fd412b55d4b9ec119460b5d14cf8cd95f5922d8d33a0a64f55d047eb020c 0.1s done
+#42 exporting manifest list sha256:c6c845a98a0861558232fb9534d4a88c192f77cbfd269af0818836486def12c4
+#42 exporting manifest list sha256:c6c845a98a0861558232fb9534d4a88c192f77cbfd269af0818836486def12c4 0.1s done
 #42 naming to docker.io/library/lexai-web:local done
 #42 unpacking to docker.io/library/lexai-web:local 0.0s done
 #42 DONE 0.3s
 
 #43 [web] resolving provenance for metadata file
 #43 DONE 0.0s
- Image lexai-backend:local Built 
  Image lexai-web:local Built 
+ Image lexai-backend:local Built 
 exit=0
 
 $ docker image ls --format "{{.Repository}}:{{.Tag}} {{.Size}}" --filter reference=lexai-*
-lexai-backend:local 436MB
 lexai-backend:bad 436MB
-lexai-web:bad 84MB
+lexai-backend:local 436MB
 lexai-web:local 84MB
+lexai-web:bad 84MB
 exit=0
 
 $ docker run --rm --entrypoint id lexai-backend:local

@@ -3,56 +3,56 @@ $ docker build -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\ci\bad-release.
 
 #1 [internal] load build definition from bad-release.Dockerfile
 #1 transferring dockerfile: 612B 0.0s done
-#1 DONE 0.1s
+#1 DONE 0.0s
 
 #2 [internal] load metadata for docker.io/library/lexai-backend:local
 #2 DONE 0.1s
 
 #3 [internal] load .dockerignore
-#3 transferring context: 2B 0.1s done
-#3 DONE 0.1s
+#3 transferring context: 2B done
+#3 DONE 0.0s
 
-#4 [1/1] FROM docker.io/library/lexai-backend:local@sha256:43cb5960ff2b6ccf42629cec6a5652699029ffebf132fb6482d272cfec2be51a
-#4 resolve docker.io/library/lexai-backend:local@sha256:43cb5960ff2b6ccf42629cec6a5652699029ffebf132fb6482d272cfec2be51a 0.1s done
-#4 DONE 0.3s
+#4 [1/1] FROM docker.io/library/lexai-backend:local@sha256:aaf28e454b1d2e3ece1a777eb94f40c3e92d276fb408a41df488a1da2c5ace95
+#4 resolve docker.io/library/lexai-backend:local@sha256:aaf28e454b1d2e3ece1a777eb94f40c3e92d276fb408a41df488a1da2c5ace95 0.0s done
+#4 CACHED
 
 #5 exporting to image
 #5 exporting layers done
-#5 exporting manifest sha256:b9ecd6c7b7d5b0e7b09544121fc71c8bc51b08e0e1a08a9df42fa351b39794a0 0.1s done
-#5 exporting config sha256:2e5c4d5b20ad17e5826c47d3553e86218869224e7ef187c5d808b8f3cf32591a 0.1s done
-#5 exporting attestation manifest sha256:3a15ab0aed16799c479d06e174ab5aee38c1e3468ac59820014712213489708b 0.1s done
-#5 exporting manifest list sha256:2f733996a4abaef0b8891a7400649efd4ef3a909c2f31dd0bcc291b333fdd28d
-#5 exporting manifest list sha256:2f733996a4abaef0b8891a7400649efd4ef3a909c2f31dd0bcc291b333fdd28d 0.1s done
-#5 naming to docker.io/library/lexai-backend:bad 0.0s done
+#5 exporting manifest sha256:b9ecd6c7b7d5b0e7b09544121fc71c8bc51b08e0e1a08a9df42fa351b39794a0 done
+#5 exporting config sha256:2e5c4d5b20ad17e5826c47d3553e86218869224e7ef187c5d808b8f3cf32591a done
+#5 exporting attestation manifest sha256:06693327f8bc40da8ed69db4e179ad4cda8db2f4a6b8fd636b12d1a636fca365
+#5 exporting attestation manifest sha256:06693327f8bc40da8ed69db4e179ad4cda8db2f4a6b8fd636b12d1a636fca365 0.2s done
+#5 exporting manifest list sha256:19f85ca5c05e19afa7f1c366011ba5028d77f2a654d36dcbf4e5e1bf557eed53 0.1s done
+#5 naming to docker.io/library/lexai-backend:bad done
 #5 unpacking to docker.io/library/lexai-backend:bad 0.0s done
-#5 DONE 0.5s
+#5 DONE 0.4s
 exit=0
 
 $ docker tag lexai-web:local lexai-web:bad
 exit=0
 
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" deploy bad --ready-timeout 90
-[deploy 18:37:17] deploying bad (now running: local; rollback target: local)
-[deploy 18:37:17] backing up the live index
- Container lexai-redis-1 Running 
+[deploy 19:00:22] deploying bad (now running: local; rollback target: local)
+[deploy 19:00:22] backing up the live index
  Container lexai-qdrant-1 Running 
- Container lexai-redis-1 Waiting 
+ Container lexai-redis-1 Running 
  Container lexai-qdrant-1 Waiting 
+ Container lexai-redis-1 Waiting 
  Container lexai-redis-1 Healthy 
  Container lexai-qdrant-1 Healthy 
- Container lexai-ingest-run-3221afe9fce0 Creating 
- Container lexai-ingest-run-3221afe9fce0 Created 
+ Container lexai-ingest-run-13473c89d633 Creating 
+ Container lexai-ingest-run-13473c89d633 Created 
 HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
-HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
 HTTP Request: POST http://qdrant:6333/collections/lexai_meta/points "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/snapshots?wait=true "HTTP/1.1 200 OK"
-HTTP Request: GET http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/snapshots/lexai_chunks_20261121t181339167228-3724221777339767-2026-11-21-18-37-21-0.snapshot "HTTP/1.1 200 OK"
-HTTP Request: DELETE http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/snapshots/lexai_chunks_20261121t181339167228-3724221777339767-2026-11-21-18-37-21-0.snapshot "HTTP/1.1 200 OK"
-{"path": "/backups/lexai-20261121T183721Z", "collection": "lexai_chunks_20261121t181339167228", "points": 5070, "pruned": [], "event": "backup_written", "level": "info", "timestamp": "2026-11-21T18:37:26.995942Z"}
-backup: /backups/lexai-20261121T183721Z (lexai_chunks_20261121t181339167228, 5070 points, 57.8 MB)
-[deploy 18:37:27] starting api + web at bad
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/snapshots?wait=true "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/snapshots/lexai_chunks_20261121t184550028465-1662946699713990-2026-11-21-19-00-26-0.snapshot "HTTP/1.1 200 OK"
+HTTP Request: DELETE http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/snapshots/lexai_chunks_20261121t184550028465-1662946699713990-2026-11-21-19-00-26-0.snapshot "HTTP/1.1 200 OK"
+{"path": "/backups/lexai-20261121T190026Z", "collection": "lexai_chunks_20261121t184550028465", "points": 5070, "pruned": [], "event": "backup_written", "level": "info", "timestamp": "2026-11-21T19:00:29.667588Z"}
+backup: /backups/lexai-20261121T190026Z (lexai_chunks_20261121t184550028465, 5070 points, 57.7 MB)
+[deploy 19:00:30] starting api + web at bad
  Container lexai-api-1 Recreate 
  Container lexai-api-1 Recreated 
  Container lexai-web-1 Recreate 
@@ -61,15 +61,15 @@ backup: /backups/lexai-20261121T183721Z (lexai_chunks_20261121t181339167228, 507
  Container lexai-api-1 Started 
  Container lexai-web-1 Starting 
  Container lexai-web-1 Started 
-[deploy 18:37:31] smoke test of bad (waiting up to 90 s for readiness)
- Container lexai-smoke-run-fc161543aa5d Creating 
- Container lexai-smoke-run-fc161543aa5d Created 
-[FAIL] ready -> {"ready": false, "checks": {"llm": {"ok": false, "error": "ConnectError", "detail": "All connection attempts failed"}, "embedder": {"ok": false, "error": "TimeoutError", "detail": ""}, "index": {"ok": true, "collection": "lexai_chunks_20261121t181339167228", "chunks": 5070, "documents": 63, "built_at": "2026-11-21T18:13:44+00:00"}, "reranker": {"ok": true, "enabled": false, "model": null}}}
+[deploy 19:00:34] smoke test of bad (waiting up to 90 s for readiness)
+ Container lexai-smoke-run-5dd5f9b281ff Creating 
+ Container lexai-smoke-run-5dd5f9b281ff Created 
+[FAIL] ready -> {"ready": false, "checks": {"llm": {"ok": false, "error": "ConnectError", "detail": "All connection attempts failed"}, "embedder": {"ok": false, "error": "TimeoutError", "detail": ""}, "index": {"ok": true, "collection": "lexai_chunks_20261121t184550028465", "chunks": 5070, "documents": 63, "built_at": "2026-11-21T18:45:52+00:00"}, "reranker": {"ok": true, "enabled": false, "model": null}}}
 SMOKE: FAIL
 
-[deploy 18:39:11] bad FAILED its checks; container logs saved to C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\var\deploy-failure-20261121T183911Z.log
-[deploy 18:39:11] ROLLING BACK to local
-[deploy 18:39:11] starting api + web at local
+[deploy 19:02:10] bad FAILED its checks; container logs saved to C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\var\deploy-failure-20261121T190210Z.log
+[deploy 19:02:10] ROLLING BACK to local
+[deploy 19:02:10] starting api + web at local
  Container lexai-api-1 Recreate 
  Container lexai-api-1 Recreated 
  Container lexai-web-1 Recreate 
@@ -78,13 +78,13 @@ SMOKE: FAIL
  Container lexai-api-1 Started 
  Container lexai-web-1 Starting 
  Container lexai-web-1 Started 
-[deploy 18:39:15] smoke test of local (waiting up to 90 s for readiness)
- Container lexai-smoke-run-6210e1336af5 Creating 
- Container lexai-smoke-run-6210e1336af5 Created 
-[FAIL] ready -> {"ready": false, "checks": {"llm": {"ok": false, "error": "ConnectError", "detail": "All connection attempts failed"}, "embedder": {"ok": false, "error": "TimeoutError", "detail": ""}, "index": {"ok": true, "collection": "lexai_chunks_20261121t181339167228", "chunks": 5070, "documents": 63, "built_at": "2026-11-21T18:13:44+00:00"}, "reranker": {"ok": true, "enabled": false, "model": null}}}
+[deploy 19:02:14] smoke test of local (waiting up to 90 s for readiness)
+ Container lexai-smoke-run-7d624cf2e13d Creating 
+ Container lexai-smoke-run-7d624cf2e13d Created 
+[FAIL] ready -> {"ready": false, "checks": {"llm": {"ok": false, "error": "ConnectError", "detail": "All connection attempts failed"}, "embedder": {"ok": false, "error": "TimeoutError", "detail": ""}, "index": {"ok": true, "collection": "lexai_chunks_20261121t184550028465", "chunks": 5070, "documents": 63, "built_at": "2026-11-21T18:45:52+00:00"}, "reranker": {"ok": true, "enabled": false, "model": null}}}
 SMOKE: FAIL
 
-[deploy 18:40:55] ROLLBACK to local ALSO FAILED: investigate now (docs/runbook.md)
+[deploy 19:03:53] ROLLBACK to local ALSO FAILED: investigate now (docs/runbook.md)
 exit=1
 
 (exit=1 above is the expected result: the bad release was refused)
@@ -101,5 +101,7 @@ deploy-failure-20261121T161044Z.log
 deploy-failure-20261121T171213Z.log
 deploy-failure-20261121T182757Z.log
 deploy-failure-20261121T183911Z.log
+deploy-failure-20261121T185127Z.log
+deploy-failure-20261121T190210Z.log
 exit=0
 

@@ -1,12 +1,12 @@
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" ingest
  Container lexai-redis-1 Running 
  Container lexai-qdrant-1 Running 
- Container lexai-redis-1 Waiting 
  Container lexai-qdrant-1 Waiting 
- Container lexai-qdrant-1 Healthy 
+ Container lexai-redis-1 Waiting 
  Container lexai-redis-1 Healthy 
- Container lexai-ingest-run-aaf8b4ae2857 Creating 
- Container lexai-ingest-run-aaf8b4ae2857 Created 
+ Container lexai-qdrant-1 Healthy 
+ Container lexai-ingest-run-c32fea1c9681 Creating 
+ Container lexai-ingest-run-c32fea1c9681 Created 
 document                           status      detail
 ------------------------------------------------------------------------------------------
 bns-2023                           cached      https://prsindia.org/files/bills_acts/acts_parliament/2023/The%20Bharatiya%20Nyaya%20Sanhita,%202023.pdf
@@ -80,691 +80,383 @@ FETCH: all sources present and verified
  Container lexai-qdrant-1 Waiting 
  Container lexai-redis-1 Healthy 
  Container lexai-qdrant-1 Healthy 
- Container lexai-ingest-run-028fa73c0ee5 Creating 
- Container lexai-ingest-run-028fa73c0ee5 Created 
-{"doc": "bns-2023", "pages": 102, "units": 358, "chunks": 490, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:12:50.345101Z"}
-{"doc": "bnss-2023", "pages": 249, "units": 531, "chunks": 915, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:12:55.717946Z"}
-{"doc": "bsa-2023", "pages": 47, "units": 170, "chunks": 219, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:12:57.163816Z"}
-{"doc": "ipc-1860", "pages": 112, "units": 548, "chunks": 626, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:02.054425Z"}
-{"doc": "crpc-1973", "pages": 263, "units": 532, "chunks": 892, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:13.025730Z"}
-{"doc": "iea-1872", "pages": 60, "units": 179, "chunks": 225, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:15.440272Z"}
-{"doc": "constitution", "pages": 404, "units": 486, "chunks": 807, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:31.057173Z"}
-{"doc": "it-act-2000", "pages": 36, "units": 110, "chunks": 145, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:32.668768Z"}
-{"doc": "prisons-act-1894", "pages": 20, "units": 0, "chunks": 37, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:32.776117Z"}
-{"doc": "criminal-law-amendment-2018", "pages": 7, "units": 26, "chunks": 28, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:32.863990Z"}
-{"doc": "mha-cybercrime-manual", "pages": 92, "units": 0, "chunks": 102, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:35.630250Z"}
-{"doc": "mha-cprgr-manual", "pages": 41, "units": 0, "chunks": 31, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:36.604580Z"}
-{"doc": "mha-cyberfraud-instructions", "pages": 1, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:36.735541Z"}
-{"doc": "sc-judis-10166", "pages": 14, "units": 0, "chunks": 36, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:36.838315Z"}
-{"doc": "sc-judis-10187", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:36.870813Z"}
-{"doc": "sc-judis-10193", "pages": 14, "units": 0, "chunks": 33, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:36.966812Z"}
-{"doc": "sc-judis-10220", "pages": 5, "units": 0, "chunks": 11, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.011684Z"}
-{"doc": "sc-judis-10290", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.038871Z"}
-{"doc": "sc-judis-10304", "pages": 1, "units": 0, "chunks": 1, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.060094Z"}
-{"doc": "sc-judis-10322", "pages": 1, "units": 0, "chunks": 1, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.083465Z"}
-{"doc": "sc-judis-10347", "pages": 3, "units": 0, "chunks": 5, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.113503Z"}
-{"doc": "sc-judis-10356", "pages": 4, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.152246Z"}
-{"doc": "sc-judis-10391", "pages": 3, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.185748Z"}
-{"doc": "sc-judis-10426", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.213806Z"}
-{"doc": "sc-judis-10439", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.240165Z"}
-{"doc": "sc-judis-10442", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.277491Z"}
-{"doc": "sc-judis-10502", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.313319Z"}
-{"doc": "sc-judis-10519", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.341210Z"}
-{"doc": "sc-judis-10520", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.369614Z"}
-{"doc": "sc-judis-10548", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.408873Z"}
-{"doc": "sc-judis-10557", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.438387Z"}
-{"doc": "sc-judis-10562", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.468073Z"}
-{"doc": "sc-judis-10613", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.497454Z"}
-{"doc": "sc-judis-10629", "pages": 1, "units": 0, "chunks": 1, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.517895Z"}
-{"doc": "sc-judis-10637", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.543322Z"}
-{"doc": "sc-judis-10649", "pages": 3, "units": 0, "chunks": 7, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.580628Z"}
-{"doc": "sc-judis-10663", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.607412Z"}
-{"doc": "sc-judis-10668", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.639690Z"}
-{"doc": "sc-judis-10679", "pages": 4, "units": 0, "chunks": 9, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.678259Z"}
-{"doc": "sc-judis-10693", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.707710Z"}
-{"doc": "sc-judis-10752", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.737872Z"}
-{"doc": "sc-judis-10762", "pages": 3, "units": 0, "chunks": 5, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.773298Z"}
-{"doc": "sc-judis-10773", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.804359Z"}
-{"doc": "sc-judis-10796", "pages": 13, "units": 0, "chunks": 31, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:37.893144Z"}
-{"doc": "sc-judis-10804", "pages": 18, "units": 0, "chunks": 47, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.013969Z"}
-{"doc": "sc-judis-10805", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.048721Z"}
-{"doc": "sc-judis-10814", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.081264Z"}
-{"doc": "sc-judis-10818", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.120475Z"}
-{"doc": "sc-judis-1082", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.155524Z"}
-{"doc": "sc-judis-10823", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.195701Z"}
-{"doc": "sc-judis-10844", "pages": 31, "units": 0, "chunks": 83, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.385054Z"}
-{"doc": "sc-judis-10857", "pages": 3, "units": 0, "chunks": 5, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.417519Z"}
-{"doc": "sc-judis-10877", "pages": 4, "units": 0, "chunks": 7, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.453828Z"}
-{"doc": "sc-judis-10886", "pages": 5, "units": 0, "chunks": 11, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.499180Z"}
-{"doc": "sc-judis-1089", "pages": 11, "units": 0, "chunks": 28, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.587560Z"}
-{"doc": "sc-judis-10892", "pages": 10, "units": 0, "chunks": 24, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.658733Z"}
-{"doc": "sc-judis-10897", "pages": 15, "units": 0, "chunks": 34, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.769456Z"}
-{"doc": "sc-judis-10910", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.802499Z"}
-{"doc": "sc-judis-10924", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.834515Z"}
-{"doc": "sc-judis-10933", "pages": 7, "units": 0, "chunks": 15, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:38.966232Z"}
-{"doc": "sc-judis-10937", "pages": 7, "units": 0, "chunks": 17, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:39.024438Z"}
-{"doc": "sc-judis-1094", "pages": 4, "units": 0, "chunks": 9, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:39.062667Z"}
-{"doc": "sc-judis-10941", "pages": 3, "units": 0, "chunks": 7, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:13:39.099204Z"}
-HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+ Container lexai-ingest-run-ee47c07adb2a Creating 
+ Container lexai-ingest-run-ee47c07adb2a Created 
+{"doc": "bns-2023", "pages": 102, "units": 358, "chunks": 490, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:01.951180Z"}
+{"doc": "bnss-2023", "pages": 249, "units": 531, "chunks": 915, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:05.989689Z"}
+{"doc": "bsa-2023", "pages": 47, "units": 170, "chunks": 219, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:07.948763Z"}
+{"doc": "ipc-1860", "pages": 112, "units": 548, "chunks": 626, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:12.748005Z"}
+{"doc": "crpc-1973", "pages": 263, "units": 532, "chunks": 892, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:24.382682Z"}
+{"doc": "iea-1872", "pages": 60, "units": 179, "chunks": 225, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:26.663579Z"}
+{"doc": "constitution", "pages": 404, "units": 486, "chunks": 807, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:41.847379Z"}
+{"doc": "it-act-2000", "pages": 36, "units": 110, "chunks": 145, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:43.337626Z"}
+{"doc": "prisons-act-1894", "pages": 20, "units": 0, "chunks": 37, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:43.465288Z"}
+{"doc": "criminal-law-amendment-2018", "pages": 7, "units": 26, "chunks": 28, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:43.597246Z"}
+{"doc": "mha-cybercrime-manual", "pages": 92, "units": 0, "chunks": 102, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:46.361866Z"}
+{"doc": "mha-cprgr-manual", "pages": 41, "units": 0, "chunks": 31, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:47.431002Z"}
+{"doc": "mha-cyberfraud-instructions", "pages": 1, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:47.573031Z"}
+{"doc": "sc-judis-10166", "pages": 14, "units": 0, "chunks": 36, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:47.667084Z"}
+{"doc": "sc-judis-10187", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:47.697657Z"}
+{"doc": "sc-judis-10193", "pages": 14, "units": 0, "chunks": 33, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:47.791810Z"}
+{"doc": "sc-judis-10220", "pages": 5, "units": 0, "chunks": 11, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:47.835630Z"}
+{"doc": "sc-judis-10290", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:47.864952Z"}
+{"doc": "sc-judis-10304", "pages": 1, "units": 0, "chunks": 1, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:47.887442Z"}
+{"doc": "sc-judis-10322", "pages": 1, "units": 0, "chunks": 1, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:47.908900Z"}
+{"doc": "sc-judis-10347", "pages": 3, "units": 0, "chunks": 5, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:47.940277Z"}
+{"doc": "sc-judis-10356", "pages": 4, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:47.975724Z"}
+{"doc": "sc-judis-10391", "pages": 3, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.020705Z"}
+{"doc": "sc-judis-10426", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.051315Z"}
+{"doc": "sc-judis-10439", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.078165Z"}
+{"doc": "sc-judis-10442", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.118137Z"}
+{"doc": "sc-judis-10502", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.154360Z"}
+{"doc": "sc-judis-10519", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.182497Z"}
+{"doc": "sc-judis-10520", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.210422Z"}
+{"doc": "sc-judis-10548", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.247549Z"}
+{"doc": "sc-judis-10557", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.278292Z"}
+{"doc": "sc-judis-10562", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.305577Z"}
+{"doc": "sc-judis-10613", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.333992Z"}
+{"doc": "sc-judis-10629", "pages": 1, "units": 0, "chunks": 1, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.357318Z"}
+{"doc": "sc-judis-10637", "pages": 2, "units": 0, "chunks": 3, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.383631Z"}
+{"doc": "sc-judis-10649", "pages": 3, "units": 0, "chunks": 7, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.418551Z"}
+{"doc": "sc-judis-10663", "pages": 2, "units": 0, "chunks": 2, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.447173Z"}
+{"doc": "sc-judis-10668", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.480791Z"}
+{"doc": "sc-judis-10679", "pages": 4, "units": 0, "chunks": 9, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.520345Z"}
+{"doc": "sc-judis-10693", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.552284Z"}
+{"doc": "sc-judis-10752", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.583788Z"}
+{"doc": "sc-judis-10762", "pages": 3, "units": 0, "chunks": 5, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.615968Z"}
+{"doc": "sc-judis-10773", "pages": 2, "units": 0, "chunks": 4, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.648680Z"}
+{"doc": "sc-judis-10796", "pages": 13, "units": 0, "chunks": 31, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.736123Z"}
+{"doc": "sc-judis-10804", "pages": 18, "units": 0, "chunks": 47, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.850401Z"}
+{"doc": "sc-judis-10805", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.886695Z"}
+{"doc": "sc-judis-10814", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.919699Z"}
+{"doc": "sc-judis-10818", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.958342Z"}
+{"doc": "sc-judis-1082", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:48.992463Z"}
+{"doc": "sc-judis-10823", "pages": 4, "units": 0, "chunks": 8, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.032969Z"}
+{"doc": "sc-judis-10844", "pages": 31, "units": 0, "chunks": 83, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.214974Z"}
+{"doc": "sc-judis-10857", "pages": 3, "units": 0, "chunks": 5, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.255351Z"}
+{"doc": "sc-judis-10877", "pages": 4, "units": 0, "chunks": 7, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.294261Z"}
+{"doc": "sc-judis-10886", "pages": 5, "units": 0, "chunks": 11, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.340725Z"}
+{"doc": "sc-judis-1089", "pages": 11, "units": 0, "chunks": 28, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.418516Z"}
+{"doc": "sc-judis-10892", "pages": 10, "units": 0, "chunks": 24, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.506245Z"}
+{"doc": "sc-judis-10897", "pages": 15, "units": 0, "chunks": 34, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.603669Z"}
+{"doc": "sc-judis-10910", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.638670Z"}
+{"doc": "sc-judis-10924", "pages": 3, "units": 0, "chunks": 6, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.673573Z"}
+{"doc": "sc-judis-10933", "pages": 7, "units": 0, "chunks": 15, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.796297Z"}
+{"doc": "sc-judis-10937", "pages": 7, "units": 0, "chunks": 17, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.853574Z"}
+{"doc": "sc-judis-1094", "pages": 4, "units": 0, "chunks": 9, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.895207Z"}
+{"doc": "sc-judis-10941", "pages": 3, "units": 0, "chunks": 7, "event": "document_parsed", "level": "info", "timestamp": "2026-11-21T18:45:49.932283Z"}
 HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/collections "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228 "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/index?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/index?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/index?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/index?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/index?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/index?wait=true "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "bns-2023", "done": 256, "total": 490, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:14:17.088105Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "bns-2023", "done": 490, "total": 490, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:14:43.633610Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "bnss-2023", "done": 256, "total": 915, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:15:11.799063Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "bnss-2023", "done": 512, "total": 915, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:15:40.311657Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "bnss-2023", "done": 768, "total": 915, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:16:09.287338Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "bnss-2023", "done": 915, "total": 915, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:16:40.590270Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "bsa-2023", "done": 219, "total": 219, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:17:04.147748Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "ipc-1860", "done": 256, "total": 626, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:17:25.134991Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "ipc-1860", "done": 512, "total": 626, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:17:46.647599Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "ipc-1860", "done": 626, "total": 626, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:17:56.315933Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "crpc-1973", "done": 256, "total": 892, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:18:20.035809Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "crpc-1973", "done": 512, "total": 892, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:18:43.928582Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "crpc-1973", "done": 768, "total": 892, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:19:08.005742Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "crpc-1973", "done": 892, "total": 892, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:19:21.721159Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "iea-1872", "done": 225, "total": 225, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:19:41.700184Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "constitution", "done": 256, "total": 807, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:20:03.729252Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "constitution", "done": 512, "total": 807, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:20:27.174132Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "constitution", "done": 768, "total": 807, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:20:53.680080Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "constitution", "done": 807, "total": 807, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:20:58.346381Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "it-act-2000", "done": 145, "total": 145, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:11.216579Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "prisons-act-1894", "done": 37, "total": 37, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:15.420936Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "criminal-law-amendment-2018", "done": 28, "total": 28, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:17.818443Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "mha-cybercrime-manual", "done": 102, "total": 102, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:29.184099Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "mha-cprgr-manual", "done": 31, "total": 31, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:33.104690Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "mha-cyberfraud-instructions", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:33.329841Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10166", "done": 36, "total": 36, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:37.634693Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10187", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:37.872021Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10193", "done": 33, "total": 33, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:41.740377Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10220", "done": 11, "total": 11, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:42.981838Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10290", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:43.213855Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10304", "done": 1, "total": 1, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:43.359015Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10322", "done": 1, "total": 1, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:43.495891Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10347", "done": 5, "total": 5, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:44.119184Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10356", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:44.814831Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10391", "done": 4, "total": 4, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:45.277557Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10426", "done": 3, "total": 3, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:45.648600Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10439", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:45.870361Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10442", "done": 8, "total": 8, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:46.860612Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10502", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:47.544806Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10519", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:47.857805Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10520", "done": 3, "total": 3, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:48.202450Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10548", "done": 8, "total": 8, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:49.152876Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10557", "done": 4, "total": 4, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:49.621764Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10562", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:49.864224Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10613", "done": 3, "total": 3, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:50.242005Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10629", "done": 1, "total": 1, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:50.353876Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10637", "done": 3, "total": 3, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:50.686923Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10649", "done": 7, "total": 7, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:51.464146Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10663", "done": 2, "total": 2, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:51.687333Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10668", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:52.365564Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10679", "done": 9, "total": 9, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:53.386219Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10693", "done": 4, "total": 4, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:53.887535Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10752", "done": 4, "total": 4, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:54.373514Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10762", "done": 5, "total": 5, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:54.979731Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10773", "done": 4, "total": 4, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:55.394555Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10796", "done": 31, "total": 31, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:21:58.953786Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10804", "done": 47, "total": 47, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:04.249639Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10805", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:04.960015Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10814", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:05.632585Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10818", "done": 8, "total": 8, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:06.615931Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-1082", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:07.328813Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10823", "done": 8, "total": 8, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:08.301642Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10844", "done": 83, "total": 83, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:17.794258Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10857", "done": 5, "total": 5, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:18.420266Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10877", "done": 7, "total": 7, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:19.208017Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10886", "done": 11, "total": 11, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:20.520825Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-1089", "done": 28, "total": 28, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:23.649000Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10892", "done": 24, "total": 24, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:26.436907Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10897", "done": 34, "total": 34, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:30.554330Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10910", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:31.235015Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10924", "done": 6, "total": 6, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:31.899965Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10933", "done": 15, "total": 15, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:33.686509Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10937", "done": 17, "total": 17, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:35.597603Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-1094", "done": 9, "total": 9, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:36.600231Z"}
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points?wait=true "HTTP/1.1 200 OK"
-{"doc": "sc-judis-10941", "done": 7, "total": 7, "event": "embedded", "level": "info", "timestamp": "2026-11-21T18:22:37.432084Z"}
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/query "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/query "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/query "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/query "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/query "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/query "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/query "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/query "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/query "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
-HTTP Request: PUT http://qdrant:6333/collections/lexai_meta "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_meta/points "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465 "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/index?wait=true "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/index?wait=true "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/index?wait=true "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/index?wait=true "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/index?wait=true "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/index?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "bns-2023", "chunks": 490, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:45:53.524289Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "bnss-2023", "chunks": 915, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:45:55.399449Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "bsa-2023", "chunks": 219, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:45:55.589414Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "ipc-1860", "chunks": 626, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:45:57.483598Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "crpc-1973", "chunks": 892, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:45:59.116854Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "iea-1872", "chunks": 225, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:45:59.347767Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "constitution", "chunks": 807, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:00.331173Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "it-act-2000", "chunks": 145, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:00.522859Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "prisons-act-1894", "chunks": 37, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:00.576462Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "criminal-law-amendment-2018", "chunks": 28, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:00.614950Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "mha-cybercrime-manual", "chunks": 102, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:00.845533Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "mha-cprgr-manual", "chunks": 31, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:00.941024Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "mha-cyberfraud-instructions", "chunks": 2, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:00.978755Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10166", "chunks": 36, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:01.108259Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10187", "chunks": 2, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:01.146339Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10193", "chunks": 33, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:01.333689Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10220", "chunks": 11, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:01.384598Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10290", "chunks": 2, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:01.417050Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10304", "chunks": 1, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:01.501643Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10322", "chunks": 1, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:01.582082Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10347", "chunks": 5, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:01.651734Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10356", "chunks": 6, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:01.746701Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10391", "chunks": 4, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:01.812494Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10426", "chunks": 3, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:01.999300Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10439", "chunks": 2, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.020159Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10442", "chunks": 8, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.128841Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10502", "chunks": 6, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.304724Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10519", "chunks": 2, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.324439Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10520", "chunks": 3, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.381268Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10548", "chunks": 8, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.464868Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10557", "chunks": 4, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.504414Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10562", "chunks": 2, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.577501Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10613", "chunks": 3, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.658599Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10629", "chunks": 1, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.775086Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10637", "chunks": 3, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.809417Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10649", "chunks": 7, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.849699Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10663", "chunks": 2, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.878561Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10668", "chunks": 6, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.916717Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10679", "chunks": 9, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.964157Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10693", "chunks": 4, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:02.993007Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10752", "chunks": 4, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.061630Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10762", "chunks": 5, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.093086Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10773", "chunks": 4, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.116998Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10796", "chunks": 31, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.174881Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10804", "chunks": 47, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.288469Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10805", "chunks": 6, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.327127Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10814", "chunks": 6, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.347077Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10818", "chunks": 8, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.378960Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-1082", "chunks": 6, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.395639Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10823", "chunks": 8, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.416000Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10844", "chunks": 83, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.528729Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10857", "chunks": 5, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.548757Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10877", "chunks": 7, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.567916Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10886", "chunks": 11, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.593750Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-1089", "chunks": 28, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.636964Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10892", "chunks": 24, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.665029Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10897", "chunks": 34, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.718690Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10910", "chunks": 6, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.734383Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10924", "chunks": 6, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.750554Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10933", "chunks": 15, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.777446Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10937", "chunks": 17, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.805466Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-1094", "chunks": 9, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.822197Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points?wait=true "HTTP/1.1 200 OK"
+{"doc": "sc-judis-10941", "chunks": 7, "event": "document_copied", "level": "info", "timestamp": "2026-11-21T18:46:03.840308Z"}
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/query "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/query "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/query "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/query "HTTP/1.1 200 OK"
+HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/query "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/query "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/query "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/query "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://host.docker.internal:11434/v1/embeddings "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/query "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
 HTTP Request: PUT http://qdrant:6333/collections/lexai_meta/points?wait=true "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
 HTTP Request: POST http://qdrant:6333/collections/aliases "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/collections "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_meta/points "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/collections "HTTP/1.1 200 OK"
 
 document                           type         pages units chunks  notes
@@ -844,38 +536,38 @@ sc-judis-10941                     judgment         3     0      7
 [PASS] constitution: finds 'no person shall be deprived of his life or personal liberty except according to procedure established by law' -> Constitution Art.21
 [PASS] it-act-2000: finds 'computer related offences' -> IT Act s.66
 
-chunks=5070 embedded_docs=63 copied_docs=0 seconds=590.4
-BUILD STATUS: live: lexai_chunks_20261121t181339167228
-report: /app/backend/var/reports/ingest-20261121T182238Z.json
+chunks=5070 embedded_docs=0 copied_docs=63 seconds=64.7
+BUILD STATUS: live: lexai_chunks_20261121t184550028465
+report: /app/backend/var/reports/ingest-20261121T184604Z.json
 exit=0
 
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" status
- Container lexai-qdrant-1 Running 
  Container lexai-redis-1 Running 
+ Container lexai-qdrant-1 Running 
  Container lexai-redis-1 Waiting 
  Container lexai-qdrant-1 Waiting 
  Container lexai-redis-1 Healthy 
  Container lexai-qdrant-1 Healthy 
- Container lexai-ingest-run-03eae8c74f4a Creating 
- Container lexai-ingest-run-03eae8c74f4a Created 
-HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+ Container lexai-ingest-run-af99de246ebd Creating 
+ Container lexai-ingest-run-af99de246ebd Created 
 HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/collections "HTTP/1.1 200 OK"
 Qdrant: http://qdrant:6333
-builds: ['lexai_chunks_20261121t181339167228']
+builds: ['lexai_chunks_20261121t181339167228', 'lexai_chunks_20261121t184550028465']
 HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
 HTTP Request: POST http://qdrant:6333/collections/lexai_meta/points "HTTP/1.1 200 OK"
-HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
-live index: lexai_chunks_20261121t181339167228 (5070 chunks)
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t184550028465/points/count "HTTP/1.1 200 OK"
+live index: lexai_chunks_20261121t184550028465 (5070 chunks)
 {
-  "collection": "lexai_chunks_20261121t181339167228",
+  "collection": "lexai_chunks_20261121t184550028465",
   "embedding_model": "nomic-embed-text",
   "dimension": 768,
   "document_prefix": "search_document: ",
   "chunker_version": "legal-v3-max1400-ov150",
   "sparse_version": "bm25-crc32-v1",
   "avg_len": 96.61065088757395,
-  "built_at": "2026-11-21T18:13:44+00:00"
+  "built_at": "2026-11-21T18:45:52+00:00"
 }
 documents: 63
   bns-2023                             490  The Bharatiya Nyaya Sanhita, 2023
@@ -945,21 +637,21 @@ exit=0
 
 $ docker stats --no-stream
 NAME                                                                                                                    MEM USAGE / LIMIT     CPU %
-lexai-web-1                                                                                                             4.949MiB / 5.788GiB   0.00%
-lexai-api-1                                                                                                             106.8MiB / 5.788GiB   0.17%
-lexai-qdrant-1                                                                                                          55.69MiB / 5.788GiB   0.06%
-lexai-grafana-1                                                                                                         279MiB / 5.788GiB     1.50%
-lexai-prometheus-1                                                                                                      32.05MiB / 5.788GiB   0.34%
-lexai-redis-1                                                                                                           3.984MiB / 5.788GiB   0.46%
-k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  59.94MiB / 5.788GiB   0.00%
+lexai-web-1                                                                                                             4.816MiB / 5.788GiB   0.00%
+lexai-api-1                                                                                                             148.3MiB / 5.788GiB   0.17%
+lexai-qdrant-1                                                                                                          94.59MiB / 5.788GiB   3.78%
+lexai-grafana-1                                                                                                         307.1MiB / 5.788GiB   1.43%
+lexai-prometheus-1                                                                                                      33.37MiB / 5.788GiB   0.40%
+lexai-redis-1                                                                                                           4.535MiB / 5.788GiB   0.57%
+k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  64.3MiB / 5.788GiB    0.07%
 k8s_lb-tcp-443_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                          344KiB / 5.788GiB     0.00%
 k8s_POD_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_1                                      312KiB / 5.788GiB     0.00%
-k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 25.77MiB / 170MiB     0.30%
-k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   34.49MiB / 5.788GiB   0.59%
-k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   15.2MiB / 5.788GiB    0.00%
-k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                           1.844MiB / 5.788GiB   0.00%
+k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 29.35MiB / 170MiB     0.17%
+k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   38.85MiB / 5.788GiB   0.74%
+k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   18.9MiB / 5.788GiB    0.00%
+k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                           1.777MiB / 5.788GiB   0.00%
 k8s_POD_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                                 304KiB / 5.788GiB     0.00%
 k8s_POD_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                     344KiB / 5.788GiB     0.00%
-k8s_POD_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                              312KiB / 5.788GiB     0.00%
+k8s_POD_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                              328KiB / 5.788GiB     0.00%
 k8s_POD_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1                      308KiB / 5.788GiB     0.00%
 

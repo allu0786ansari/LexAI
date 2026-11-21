@@ -1,6 +1,6 @@
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" observability
- Container lexai-grafana-1 Running 
  Container lexai-prometheus-1 Running 
+ Container lexai-grafana-1 Running 
 exit=0
 
 $ C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Scripts\python.exe "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\ci\check_stack.py" prometheus --replicas 1 --timeout 240
@@ -17,28 +17,28 @@ $ C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Scripts\python.exe "C:\Us
 exit=0
 
 $ curl -s "http://127.0.0.1:9095/api/v1/query?query=sum%20by%20(route,status)(lexai_http_requests_total)"
-{"status":"success","data":{"resultType":"vector","result":[{"metric":{"route":"/readyz","status":"503"},"value":[1795286008.422,"37"]},{"metric":{"route":"/api/v1/sessions","status":"201"},"value":[1795286008.422,"2"]},{"metric":{"route":"/api/v1/chat","status":"200"},"value":[1795286008.422,"2"]}]}}exit=0
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"route":"/readyz","status":"503"},"value":[1795287399.628,"37"]},{"metric":{"route":"/api/v1/sessions","status":"201"},"value":[1795287399.628,"2"]},{"metric":{"route":"/api/v1/chat","status":"200"},"value":[1795287399.628,"2"]}]}}exit=0
 
 $ curl -s "http://127.0.0.1:9095/api/v1/query?query=lexai_process_memory_bytes"
-{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"lexai_process_memory_bytes","instance":"172.18.0.4:8000","job":"lexai-api"},"value":[1795286008.492,"183431168"]}]}}exit=0
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"lexai_process_memory_bytes","instance":"172.18.0.4:8000","job":"lexai-api"},"value":[1795287399.691,"183398400"]}]}}exit=0
 
 $ docker stats --no-stream
 NAME                                                                                                                    MEM USAGE / LIMIT     CPU %
-lexai-web-1                                                                                                             6.656MiB / 5.788GiB   0.00%
-lexai-api-1                                                                                                             148.1MiB / 5.788GiB   0.18%
-lexai-qdrant-1                                                                                                          53.13MiB / 5.788GiB   2.56%
-lexai-grafana-1                                                                                                         279.7MiB / 5.788GiB   1.76%
-lexai-prometheus-1                                                                                                      33.73MiB / 5.788GiB   0.43%
-lexai-redis-1                                                                                                           4.203MiB / 5.788GiB   0.47%
-k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  59.95MiB / 5.788GiB   0.05%
+lexai-web-1                                                                                                             6.676MiB / 5.788GiB   0.00%
+lexai-api-1                                                                                                             146.2MiB / 5.788GiB   0.16%
+lexai-qdrant-1                                                                                                          77.81MiB / 5.788GiB   0.17%
+lexai-grafana-1                                                                                                         308.1MiB / 5.788GiB   1.30%
+lexai-prometheus-1                                                                                                      33.85MiB / 5.788GiB   0.36%
+lexai-redis-1                                                                                                           4.566MiB / 5.788GiB   0.49%
+k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  64.31MiB / 5.788GiB   0.07%
 k8s_lb-tcp-443_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                          344KiB / 5.788GiB     0.00%
 k8s_POD_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_1                                      312KiB / 5.788GiB     0.00%
-k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 25.39MiB / 170MiB     0.18%
-k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   34.51MiB / 5.788GiB   0.19%
-k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   15.2MiB / 5.788GiB    0.00%
-k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                           1.844MiB / 5.788GiB   0.00%
+k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 29.45MiB / 170MiB     0.25%
+k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   38.52MiB / 5.788GiB   0.20%
+k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   18.9MiB / 5.788GiB    0.00%
+k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                           1.777MiB / 5.788GiB   0.00%
 k8s_POD_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                                 304KiB / 5.788GiB     0.00%
 k8s_POD_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                     344KiB / 5.788GiB     0.00%
-k8s_POD_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                              312KiB / 5.788GiB     0.00%
+k8s_POD_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                              328KiB / 5.788GiB     0.00%
 k8s_POD_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1                      308KiB / 5.788GiB     0.00%
 

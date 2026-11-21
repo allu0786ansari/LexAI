@@ -7,8 +7,8 @@ $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" up
  Container lexai-web-1 Recreated 
  Container lexai-qdrant-1 Waiting 
  Container lexai-redis-1 Waiting 
- Container lexai-redis-1 Healthy 
  Container lexai-qdrant-1 Healthy 
+ Container lexai-redis-1 Healthy 
  Container lexai-api-1 Starting 
  Container lexai-api-1 Started 
  Container lexai-web-1 Starting 
@@ -16,19 +16,19 @@ $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" up
 exit=0
 
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" ps
-NAME                 IMAGE                     COMMAND                  SERVICE      CREATED             STATUS                       PORTS
-lexai-api-1          lexai-backend:local       "uvicorn lexai.api.a…"   api          24 seconds ago      Up 20 seconds (healthy)      8000/tcp
-lexai-grafana-1      grafana/grafana:13.3.1    "/run.sh"                grafana      About an hour ago   Up About an hour             127.0.0.1:3001->3000/tcp
-lexai-prometheus-1   prom/prometheus:v3.16.0   "/bin/prometheus --c…"   prometheus   About an hour ago   Up About an hour             127.0.0.1:9095->9090/tcp
-lexai-qdrant-1       qdrant/qdrant:v1.20.2     "./entrypoint.sh"        qdrant       About an hour ago   Up About an hour (healthy)   6333-6334/tcp
-lexai-redis-1        redis:7.4.11-alpine       "docker-entrypoint.s…"   redis        2 hours ago         Up 2 hours (healthy)         6379/tcp
-lexai-web-1          lexai-web:local           "/docker-entrypoint.…"   web          21 seconds ago      Up 19 seconds (healthy)      127.0.0.1:8090->8080/tcp
+NAME                 IMAGE                     COMMAND                  SERVICE      CREATED          STATUS                    PORTS
+lexai-api-1          lexai-backend:local       "uvicorn lexai.api.a…"   api          24 seconds ago   Up 20 seconds (healthy)   8000/tcp
+lexai-grafana-1      grafana/grafana:13.3.1    "/run.sh"                grafana      2 hours ago      Up 2 hours                127.0.0.1:3001->3000/tcp
+lexai-prometheus-1   prom/prometheus:v3.16.0   "/bin/prometheus --c…"   prometheus   2 hours ago      Up 2 hours                127.0.0.1:9095->9090/tcp
+lexai-qdrant-1       qdrant/qdrant:v1.20.2     "./entrypoint.sh"        qdrant       9 minutes ago    Up 9 minutes (healthy)    6333-6334/tcp
+lexai-redis-1        redis:7.4.11-alpine       "docker-entrypoint.s…"   redis        3 hours ago      Up 3 hours (healthy)      6379/tcp
+lexai-web-1          lexai-web:local           "/docker-entrypoint.…"   web          22 seconds ago   Up 20 seconds (healthy)   127.0.0.1:8090->8080/tcp
 exit=0
 
 $ curl -s -i http://127.0.0.1:8090/healthz
 HTTP/1.1 200 OK
 Server: nginx
-Date: Sat, 21 Nov 2026 18:11:20 GMT
+Date: Sat, 21 Nov 2026 18:43:20 GMT
 Content-Type: text/plain
 Content-Length: 3
 Connection: keep-alive
@@ -42,7 +42,7 @@ metrics through nginx: 404exit=0
 $ curl -s -I http://127.0.0.1:8090/
 HTTP/1.1 200 OK
 Server: nginx
-Date: Sat, 21 Nov 2026 18:11:20 GMT
+Date: Sat, 21 Nov 2026 18:43:20 GMT
 Content-Type: text/html
 Content-Length: 587
 Last-Modified: Sat, 21 Nov 2026 15:36:00 GMT
@@ -60,21 +60,21 @@ exit=0
 
 $ docker stats --no-stream
 NAME                                                                                                                    MEM USAGE / LIMIT     CPU %
-lexai-web-1                                                                                                             4.93MiB / 5.788GiB    0.00%
-lexai-api-1                                                                                                             105.8MiB / 5.788GiB   0.16%
-lexai-qdrant-1                                                                                                          25.47MiB / 5.788GiB   3.20%
-lexai-grafana-1                                                                                                         280.6MiB / 5.788GiB   1.47%
-lexai-prometheus-1                                                                                                      32MiB / 5.788GiB      0.18%
-lexai-redis-1                                                                                                           3.984MiB / 5.788GiB   0.43%
-k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  57.64MiB / 5.788GiB   0.00%
+lexai-web-1                                                                                                             4.801MiB / 5.788GiB   0.00%
+lexai-api-1                                                                                                             147MiB / 5.788GiB     0.18%
+lexai-qdrant-1                                                                                                          58.83MiB / 5.788GiB   0.06%
+lexai-grafana-1                                                                                                         300.2MiB / 5.788GiB   4.69%
+lexai-prometheus-1                                                                                                      33.36MiB / 5.788GiB   0.26%
+lexai-redis-1                                                                                                           4.559MiB / 5.788GiB   0.47%
+k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  62.81MiB / 5.788GiB   0.00%
 k8s_lb-tcp-443_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                          344KiB / 5.788GiB     0.00%
 k8s_POD_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_1                                      312KiB / 5.788GiB     0.00%
-k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 23.82MiB / 170MiB     0.24%
-k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   32.08MiB / 5.788GiB   0.50%
-k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   14MiB / 5.788GiB      0.00%
-k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                           1.844MiB / 5.788GiB   0.00%
+k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 27.82MiB / 170MiB     0.13%
+k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   36.94MiB / 5.788GiB   0.51%
+k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   17.5MiB / 5.788GiB    0.00%
+k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                           1.797MiB / 5.788GiB   0.00%
 k8s_POD_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                                 304KiB / 5.788GiB     0.00%
 k8s_POD_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                     344KiB / 5.788GiB     0.00%
-k8s_POD_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                              312KiB / 5.788GiB     0.00%
+k8s_POD_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                              324KiB / 5.788GiB     0.00%
 k8s_POD_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1                      308KiB / 5.788GiB     0.00%
 
