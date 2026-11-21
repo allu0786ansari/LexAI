@@ -19,6 +19,14 @@ jobs:
     defaults:
       run:
         working-directory: backend
+    services:
+      redis:  # the Redis-backed sessions and rate limits are tested against a real server
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      TEST_REDIS_URL: redis://localhost:6379/0
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
@@ -33,6 +41,8 @@ jobs:
         run: uv run mypy
       - name: Tests
         run: uv run pytest -q
+      - name: OpenAPI schema committed for the frontend is current
+        run: uv run python scripts/export_openapi.py --check
       - name: Retrieval regression gate (offline, no model servers)
         run: |
           if [ -f ../eval/fixtures/smoke_meta.json ] && [ -f ../eval/baselines/main.json ]; then
@@ -61,8 +71,37 @@ jobs:
       - name: Tests
         run: python -m pytest -q
 
+  audit:
+    name: Dependency audit (pip-audit, npm audit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Python dependencies (known vulnerabilities)
+        run: uvx pip-audit --strict -r backend/requirements.txt -r backend/requirements-dev.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Frontend dependencies (high and critical)
+        working-directory: frontend
+        run: npm audit --audit-level=high
+
+  observability:
+    name: Prometheus rules and config (promtool)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: promtool check
+        run: |
+          docker run --rm -v "$PWD/deploy/prometheus:/etc/prometheus:ro" --entrypoint promtool \
+            prom/prometheus:v3.16.0 check config /etc/prometheus/prometheus.yml
+          docker run --rm -v "$PWD/deploy/prometheus:/etc/prometheus:ro" --entrypoint promtool \
+            prom/prometheus:v3.16.0 check rules /etc/prometheus/alerts.yml
+      - name: Grafana dashboard is valid JSON
+        run: python3 -m json.tool deploy/grafana/lexai.json > /dev/null
+
   frontend:
-    name: Frontend (lint, build)
+    name: Frontend (types, lint, unit, build, end-to-end)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -75,5 +114,19 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
+      - name: Generated API types match the OpenAPI schema
+        run: npm run gen:api && git diff --exit-code -- src/api/schema.d.ts
+      - run: npm run typecheck
       - run: npm run lint
+      - run: npm test
       - run: npm run build
+      - name: End-to-end (Playwright, mocked API)
+        run: |
+          npx playwright install --with-deps chromium
+          npm run e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: frontend/playwright-report
+          retention-days: 7

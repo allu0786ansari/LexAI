@@ -154,7 +154,7 @@ async def check_correspondence() -> None:
 
 async def search(client: httpx.AsyncClient, question: str, session_id: str | None = None) -> dict[str, Any]:
     body = {"question": question, **({"session_id": session_id} if session_id else {})}
-    response = await client.post("/api/search", json=body)
+    response = await client.post("/api/v1/search", json=body)
     response.raise_for_status()
     result: dict[str, Any] = response.json()
     return result
@@ -168,7 +168,7 @@ async def ask(client: httpx.AsyncClient, question: str, session_id: str | None =
     body = {"question": question, **({"session_id": session_id} if session_id else {})}
     kinds: list[str] = []
     events: dict[str, Any] = {}
-    async with client.stream("POST", "/api/query", json=body) as response:
+    async with client.stream("POST", "/api/v1/chat", json=body) as response:
         buffer = ""
         async for chunk in response.aiter_text():
             buffer += chunk
@@ -212,7 +212,7 @@ async def check_api(base_url: str) -> None:
         print(f"   applicable code: {r['plan']['applicable_code']} ({r['plan']['applicable_code_reason']})")
 
         print("\nB4. Follow-ups retrieve like standalone questions (one real answer first, ~1 min)")
-        session = (await client.post("/api/session")).json()["session_id"]
+        session = (await client.post("/api/v1/sessions")).json()["session_id"]
         first = await ask(client, FOLLOW_UP_START, session)
         info("first answer", (first.get("done") or {}).get("answer", "")[:200].replace("\n", " "))
         # The follow-up must find an answering provision whenever the standalone question does.
@@ -305,7 +305,8 @@ def main() -> None:
     parser.add_argument("--server-log", type=Path, default=Path("var") / "check_phase3_server.log")
     args = parser.parse_args()
     # This check sends dozens of searches a minute; lift the API's per-client rate limit.
-    os.environ["LEXAI_API_RATE_LIMIT_QUERY"] = "1000/minute"
+    for name in ("CHAT", "SEARCH", "SESSIONS"):
+        os.environ[f"LEXAI_API_RATE_LIMIT_{name}"] = "1000/minute"
     asyncio.run(check_correspondence())
     proc = start_server(args.port, args.server_log)
     try:

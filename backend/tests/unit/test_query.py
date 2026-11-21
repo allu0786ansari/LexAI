@@ -91,12 +91,13 @@ async def test_condense_uses_the_model_and_cleans_its_output() -> None:
     assert "BNS s.103" in prompt and "and is it bailable?" in prompt
 
 
-async def test_condense_falls_back_to_the_question_when_the_model_fails() -> None:
+async def test_condense_falls_back_to_the_conversation_when_the_model_fails() -> None:
     class Down(FakeLLM):
         async def complete(self, messages, **_):  # type: ignore[no-untyped-def]
             raise UpstreamUnavailable("down")
 
-    assert await condense(Down(), "and is it bailable?", HISTORY) == "and is it bailable?"  # type: ignore[arg-type]
+    out = await condense(Down(), "and is it bailable?", HISTORY)  # type: ignore[arg-type]
+    assert out == "What is the punishment for murder under BNS s.103? and is it bailable?"
 
 
 BNS_ONLY = [

@@ -51,9 +51,9 @@ def item(**kw: Any) -> GoldenItem:
 
 def test_ranked_keys_use_labels_for_statutes_and_doc_ids_for_judgments() -> None:
     passages = [
-        {"label": "BNS s.103", "law_type": "statute", "doc_id": "bns-2023"},
-        {"label": "BNS s.103", "law_type": "statute", "doc_id": "bns-2023"},  # second part, same provision
-        {"label": "K.S. Puttaswamy", "law_type": "judgment", "doc_id": "sc-2017-puttaswamy"},
+        {"label": "BNS s.103", "doc_type": "statute", "doc_id": "bns-2023"},
+        {"label": "BNS s.103", "doc_type": "statute", "doc_id": "bns-2023"},  # second part, same provision
+        {"label": "K.S. Puttaswamy", "doc_type": "judgment", "doc_id": "sc-2017-puttaswamy"},
     ]
     assert ranked_keys(passages) == ["BNS s.103", "sc-2017-puttaswamy"]
 
@@ -86,8 +86,8 @@ def test_answer_scores_citations_mentions_and_code() -> None:
         "done": {
             "answer": "Murder is punished with death or imprisonment for life [1].",
             "citations": [
-                {"ref": 1, "label": "BNS s.103", "law_type": "statute", "doc_id": "bns-2023"},
-                {"ref": 2, "label": "IPC s.302", "law_type": "statute", "doc_id": "ipc-1860"},
+                {"ref": 1, "label": "BNS s.103", "doc_type": "statute", "doc_id": "bns-2023"},
+                {"ref": 2, "label": "IPC s.302", "doc_type": "statute", "doc_id": "ipc-1860"},
             ],
             "verification": {"valid": False, "coverage": 1.0, "removed_markers": [7]},
             "latency": {"time_to_first_token_ms": 900, "generation_ms": 3900, "total_ms": 4000},

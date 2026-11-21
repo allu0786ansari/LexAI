@@ -1,18 +1,38 @@
-# React + Vite
+# LexAI frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React 19 + TypeScript + Vite + Tailwind. Talks only to the API v1 (`/api/v1/...`).
 
-Currently, two official plugins are available:
+```bash
+npm install
+npm run dev          # http://localhost:5173; /api is proxied to http://localhost:8000
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Point the dev proxy at another API with `LEXAI_API_URL=http://host:8000 npm run dev`,
+or build for a separate API host with `VITE_API_BASE=https://api.example.org npm run build`.
 
-## React Compiler
+| Command | What it does |
+| --- | --- |
+| `npm run build` | type check, then production build into `dist/` |
+| `npm run typecheck` / `npm run lint` | `tsc --noEmit` / oxlint |
+| `npm test` | Vitest: SSE parser, chat reducer (incl. "no save per token"), citation links |
+| `npm run e2e` | Playwright against the built app with the API mocked (desktop + phone) |
+| `npm run gen:api` | regenerate `src/api/schema.d.ts` from `src/api/openapi.json` |
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## API types
 
-Note: This will impact Vite dev & build performances.
+`src/api/openapi.json` is written by the backend (`python scripts/export_openapi.py` in
+`backend/`); `npm run gen:api` turns it into TypeScript. CI regenerates both and fails if
+either differs from the committed files, so the client cannot drift from the API.
 
-## Expanding the Oxlint configuration
+## Layout
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+| Path | |
+| --- | --- |
+| `src/api/` | typed client, SSE parser, generated schema |
+| `src/state/chats.ts` | conversations as a reducer; saved to `localStorage` only when an answer ends |
+| `src/lib/citations.ts` | `[n]` markers → buttons; only http(s) links survive |
+| `src/components/` | sidebar/drawer, message, composer, filters, source panel, verification badge |
+| `e2e/` | Playwright specs and the mock API |
+
+Answers are rendered as Markdown with raw HTML ignored and links restricted to http(s).
+Fonts are bundled (`@fontsource`): the page makes no third-party requests.

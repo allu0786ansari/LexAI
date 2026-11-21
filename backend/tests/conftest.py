@@ -18,6 +18,7 @@ from lexai.core.settings import (
     CorpusSettings,
     EmbedSettings,
     LLMSettings,
+    ObservabilitySettings,
     QdrantSettings,
     QuerySettings,
     RerankSettings,
@@ -27,7 +28,8 @@ from lexai.core.settings import (
 from lexai.domain.models import ChatMessage, Chunk, ChunkMetadata
 from lexai.retrieval.qdrant_store import BuildMeta, DocBuildInfo, QdrantStore, new_collection_name
 from lexai.retrieval.sparse import SPARSE_VERSION, average_length, doc_vector, tokenize
-from lexai.services.sessions import SessionStore
+from lexai.services.feedback import FeedbackStore
+from lexai.services.sessions import MemorySessionStore
 
 DIM = 64
 EMBED_MODEL = "fake-embedder"
@@ -157,7 +159,7 @@ def make_chunks() -> list[Chunk]:
 
 _SETTINGS_GROUPS = (
     LLMSettings, EmbedSettings, RerankSettings, RetrievalSettings, APISettings,
-    CorpusSettings, QdrantSettings, QuerySettings, CacheSettings,
+    CorpusSettings, QdrantSettings, QuerySettings, CacheSettings, ObservabilitySettings,
 )  # fmt: skip
 
 
@@ -178,7 +180,15 @@ def settings(tmp_path: Path) -> Settings:
         embed=EmbedSettings(model=EMBED_MODEL, dimension=DIM, query_prefix="", document_prefix=""),
         rerank=RerankSettings(enabled=False, top_n=3),
         retrieval=RetrievalSettings(),
-        api=APISettings(environment="ci", rate_limit_query="1000/minute", rate_limit_session="1000/minute"),
+        api=APISettings(
+            environment="ci",
+            rate_limit_chat="1000/minute",
+            rate_limit_search="1000/minute",
+            rate_limit_sessions="1000/minute",
+            rate_limit_feedback="1000/minute",
+            readiness_probe_s=0,
+            feedback_db=tmp_path / "feedback.sqlite3",
+        ),
         corpus=CorpusSettings(
             manifest=tmp_path / "manifest.yaml",
             bundled_dir=tmp_path / "bundled",
@@ -230,7 +240,12 @@ async def make_container(
 ) -> Container:
     llm = llm or FakeLLM()
     embedder = embedder or FakeEmbedder()
-    sessions = SessionStore(ttl_minutes=30, max_messages=20, max_sessions=100)
+    sessions = MemorySessionStore(ttl_minutes=30, max_messages=20, max_sessions=100)
     store, collection, meta = live if live else (None, None, None)
     chat = await build_chat(settings, llm, embedder, None, store, collection, sessions, cache)  # type: ignore[arg-type]
-    return Container(settings, llm, embedder, None, store, collection, meta, sessions, chat, [], cache)  # type: ignore[arg-type]
+    container = Container(
+        settings, llm, embedder, None, store, collection, meta, sessions, chat, [], cache,  # type: ignore[arg-type]
+        feedback=FeedbackStore(settings.api.feedback_db),
+    )  # fmt: skip
+    container.load_documents()
+    return container

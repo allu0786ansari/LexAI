@@ -47,7 +47,7 @@ async def stream_question(
     events: list[str] = []
     done: dict[str, Any] | None = None
     error: dict[str, Any] | None = None
-    async with client.stream("POST", "/api/query", json={"question": question}) as response:
+    async with client.stream("POST", "/api/v1/chat", json={"question": question}) as response:
         response.raise_for_status()
         event = None
         async for line in response.aiter_lines():

@@ -31,6 +31,7 @@ from typing import Any, TypeVar
 
 from pydantic import BaseModel, Field
 from qdrant_client import QdrantClient, models
+from qdrant_client.http.exceptions import UnexpectedResponse
 
 from lexai.core.errors import ConfigurationError, UpstreamUnavailable
 from lexai.core.logging import get_logger
@@ -71,6 +72,7 @@ class BuildMeta(BaseModel):
 class SearchFilter:
     doc_ids: list[str] | None = None
     doc_types: list[str] | None = None
+    short_names: list[str] | None = None
     in_force_only: bool = False
 
     def to_qdrant(self) -> models.Filter | None:
@@ -79,6 +81,8 @@ class SearchFilter:
             must.append(models.FieldCondition(key="doc_id", match=models.MatchAny(any=self.doc_ids)))
         if self.doc_types:
             must.append(models.FieldCondition(key="doc_type", match=models.MatchAny(any=self.doc_types)))
+        if self.short_names:
+            must.append(models.FieldCondition(key="short_name", match=models.MatchAny(any=self.short_names)))
         if self.in_force_only:
             must.append(models.IsNullCondition(is_null=models.PayloadField(key="repealed_on")))
         return models.Filter(must=must) if must else None
@@ -327,7 +331,7 @@ class QdrantStore:
                 with_payload=True,
             )
         except Exception as exc:
-            raise UpstreamUnavailable(f"Qdrant search failed: {exc!r}") from exc
+            raise UpstreamUnavailable(f"Qdrant search failed: {exc!r}", service="qdrant") from exc
         return [ScoredChunk(chunk=chunk_from_payload(p.payload or {}), score=p.score) for p in result.points]
 
     async def lookup_unit(self, collection: str, short_name: str, unit: str) -> list[Chunk]:
@@ -373,6 +377,15 @@ class QdrantStore:
         )
         return await self.scroll_all(collection, flt)
 
+    async def get_chunk(self, collection: str, chunk_id: str) -> Chunk | None:
+        try:
+            points = await self._run(
+                self._client.retrieve, collection, ids=[chunk_id], with_payload=True, with_vectors=False
+            )
+        except (ValueError, UnexpectedResponse):  # not a valid point id
+            return None
+        return chunk_from_payload(points[0].payload or {}) if points else None
+
     async def parts_of(self, collection: str, parent_id: str) -> list[Chunk]:
         """All pieces of one section or unit, in order."""
         flt = models.Filter(
@@ -395,5 +408,5 @@ class QdrantStore:
                 with_payload=False,
             )
         except Exception as exc:
-            raise UpstreamUnavailable(f"Qdrant search failed: {exc!r}") from exc
+            raise UpstreamUnavailable(f"Qdrant search failed: {exc!r}", service="qdrant") from exc
         return float(result.points[0].score) if result.points else None

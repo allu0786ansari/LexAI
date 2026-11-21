@@ -110,28 +110,52 @@ To use a Qdrant server instead of the embedded store, set `LEXAI_QDRANT_URL`
 ### Frontend
 
 ```bash
-cd frontend && npm install && npm run dev   # http://localhost:5173
+cd frontend && npm install && npm run dev   # http://localhost:5173 (proxies /api to :8000)
 ```
 
-API docs: http://localhost:8000/docs
+React + TypeScript; types generated from the API's OpenAPI schema. Every `[n]` in an
+answer opens the cited passage with a link to its PDF page. See
+[`frontend/README.md`](frontend/README.md). API docs: http://localhost:8000/docs
 
 ## API
 
 | Method | Path | Purpose |
 | --- | --- | --- |
-| `POST` | `/api/query` | Ask a question. Server-Sent Events (contract v1): `meta` → `citations` → `token`* → `verification` → `done`, or `error` |
-| `POST` | `/api/search` | Retrieval only: the plan, passages, notes and scores the model would get |
-| `POST` | `/api/session` | Create a chat session id |
-| `GET` | `/healthz` | Liveness |
-| `GET` | `/readyz` | Readiness: LLM served, embedder dimension, index loaded (503 if not) |
+| `POST` | `/api/v1/sessions` | Create a conversation (server-issued id; 30-minute idle expiry) |
+| `POST` | `/api/v1/chat` | Ask a question. Server-Sent Events: `meta` → `citations` → `token`* → `verification` → `done`, or `error`. Optional `filters`: acts, in force only |
+| `POST` | `/api/v1/search` | Retrieval only: the plan, passages, notes and scores the model would get |
+| `GET` | `/api/v1/chunks/{chunk_id}` | A cited passage: the whole provision, its metadata and a link to the PDF page |
+| `GET` | `/api/v1/documents` | The corpus: documents, types, legal status, indexed passages |
+| `GET` | `/api/v1/documents/{doc_id}/pdf` | The source PDF |
+| `POST` | `/api/v1/feedback` | Thumbs up/down (+ comment) on an answer, by request id |
+| `POST` | `/api/v1/admin/reindex` | Start an ingestion build (`X-API-Key`); the API switches to it when it goes live |
+| `GET` | `/healthz`, `/readyz`, `/metrics` | Liveness, readiness (503 if not ready), Prometheus metrics |
 
-Every response carries an `X-Request-ID` header; the same id is in the logs and in `done`/`error` events.
+Errors are JSON `{code, message, request_id}`: 404 unknown session/passage, 413 body over
+16 KB, 422 invalid request, 429 rate limited (with `Retry-After`), 503 model server or index
+unavailable. Every response carries `X-Request-ID`; the same id is in the logs, in the
+`meta`/`done`/`error` events and on the request's trace. Security controls and their
+mapping to the OWASP Top 10 for LLM Applications: [`docs/security.md`](docs/security.md).
+
+### Observability
+
+- **Traces** (OpenTelemetry): one trace per request with a span per stage — condense,
+  retrieve (chunk ids and scores), context, generate (tokens, time to first token),
+  verify. Export to Langfuse or any OTLP collector (`LEXAI_OBS_OTLP_*`), or to a local
+  file (`LEXAI_OBS_TRACE_FILE`, on in the laptop profile) read with
+  `python scripts/show_trace.py`.
+- **Metrics** at `/metrics`: requests and latency per route, time to first token,
+  latency per stage, answers by outcome, verification failures, cache hits, upstream
+  errors, rate-limited requests. Dashboard: [`deploy/grafana/lexai.json`](deploy/grafana/lexai.json);
+  alerts: [`deploy/prometheus/alerts.yml`](deploy/prometheus/alerts.yml).
+- **State**: sessions, rate limits and the answer cache are in-process by default and
+  move to Redis with `LEXAI_API_REDIS_URL` (needed for more than one API worker).
 
 ## Configuration
 
 All settings are environment variables (or `backend/.env`), grouped by prefix:
 `LEXAI_LLM_*`, `LEXAI_EMBED_*`, `LEXAI_RERANK_*`, `LEXAI_RETRIEVAL_*`, `LEXAI_CORPUS_*`,
-`LEXAI_QDRANT_*`, `LEXAI_QUERY_*`, `LEXAI_CACHE_*`, `LEXAI_API_*`.
+`LEXAI_QDRANT_*`, `LEXAI_QUERY_*`, `LEXAI_CACHE_*`, `LEXAI_API_*`, `LEXAI_OBS_*`.
 See [`deploy/.env.example`](deploy/.env.example) for every option and its default.
 To serve the model with vLLM on a GPU, see [`deploy/vllm/README.md`](deploy/vllm/README.md).
 
@@ -157,6 +181,9 @@ python -m lexai.evaluation answers --limit 40  # full answers, deterministic met
 python -m lexai.evaluation report              # report.md from the JSON results
 python -m lexai.evaluation offline             # CI retrieval gate on eval/fixtures (no model server)
 python scripts/load_test.py                    # latency under concurrency
+python scripts/check_phase5.py                 # API v1, security, sources, tracing, reindex (real stack)
+python scripts/show_trace.py --list            # recent requests in the local trace file
+python scripts/export_openapi.py               # refresh the schema the frontend types come from
 ```
 
 The golden set, metrics, split and gate are described in
@@ -191,11 +218,12 @@ eval/
   fixtures/       exported index + smoke queries for the offline CI gate
   baselines/      gate baseline (Recall@8, MRR@10)
   reports/        results per commit (JSON + report.md)
-deploy/           Ollama Modelfiles (server, laptop), env profiles, vLLM notes
+deploy/           Ollama Modelfiles, env profiles, vLLM notes, Grafana dashboard, Prometheus alerts
 .github/workflows/ CI: lint, types, tests (Linux + Windows/pip), retrieval gate, frontend build
 docs/adr/         architecture decision records
+docs/security.md  security controls mapped to the OWASP Top 10 for LLM Applications
 runlogs/          per-phase verification scripts and their output
-frontend/         React + Vite chat UI
+frontend/         React + TypeScript chat UI (types from the OpenAPI schema; Vitest + Playwright)
 ```
 
 ## Roadmap
@@ -206,7 +234,7 @@ frontend/         React + Vite chat UI
 | 2 | Ingestion: corpus manifest, BNS/BNSS/BSA, legal-structure chunking, Qdrant | **done** ([results](runlogs/phase2/RESULTS.md)) |
 | 3 | Retrieval & generation: query routing, citation verification, abstention | **done** ([results](runlogs/phase3/RESULTS.md)) |
 | 4 | Evaluation: golden set, retrieval/answer metrics, ablations, load test, CI gate | **done** ([results](runlogs/phase4/RESULTS.md)) |
-| 5 | API v1, TypeScript UI, security, observability | planned |
+| 5 | API v1, TypeScript UI, security, observability | in review |
 | 6 | Docker Compose, CI/CD, deployment | planned |
 
 ## Disclaimer

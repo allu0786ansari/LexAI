@@ -1,0 +1,52 @@
+# Prometheus alert rules for LexAI (loaded by deploy/prometheus/prometheus.yml).
+# Thresholds follow the plan: readiness failing 2 min, p95 time to first token above
+# target, error rate above 2%. The time-to-first-token target is for the GPU server
+# (3 s); on the 8 GB laptop answers start after ~20 s, so raise it there.
+groups:
+  - name: lexai
+    rules:
+      - alert: LexAIDown
+        expr: up{job="lexai-api"} == 0
+        for: 2m
+        labels: {severity: critical}
+        annotations:
+          summary: "LexAI API is not answering metrics scrapes"
+
+      - alert: LexAINotReady
+        expr: lexai_ready == 0
+        for: 2m
+        labels: {severity: critical}
+        annotations:
+          summary: "LexAI /readyz has failed for 2 minutes (model server or index unavailable)"
+
+      - alert: LexAISlowFirstToken
+        expr: |
+          histogram_quantile(0.95, sum by (le) (rate(lexai_time_to_first_token_seconds_bucket[10m]))) > 3
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "p95 time to first token {{ $value | humanizeDuration }} is above the 3 s target"
+
+      - alert: LexAIHighErrorRate
+        # Chat errors arrive inside a 200 stream, so they are counted from lexai_answers_total.
+        expr: |
+          (
+            sum(rate(lexai_http_requests_total{status=~"5.."}[5m]))
+            + sum(rate(lexai_answers_total{outcome="error"}[5m]))
+          )
+          / clamp_min(sum(rate(lexai_http_requests_total[5m])), 1e-9)
+          > 0.02
+        for: 5m
+        labels: {severity: critical}
+        annotations:
+          summary: "LexAI error rate {{ $value | humanizePercentage }} is above 2%"
+
+      - alert: LexAIVerificationFailures
+        expr: |
+          sum(rate(lexai_verification_failures_total{kind="unsupported_provision"}[30m]))
+          / clamp_min(sum(rate(lexai_answers_total{outcome="answered"}[30m])), 1e-9)
+          > 0.2
+        for: 30m
+        labels: {severity: warning}
+        annotations:
+          summary: "More than 20% of answers mention a provision that is not in their sources"

@@ -9,6 +9,7 @@ import httpx
 import pytest
 import respx
 
+from lexai.core.errors import ConfigurationError
 from lexai.core.settings import Settings
 from lexai.ingestion import indexer
 from lexai.ingestion.fetch import fetch_documents
@@ -205,3 +206,44 @@ async def test_dry_run_makes_no_model_or_database_calls(settings: Settings, patc
     assert report.status == "dry run ok" and report.chunks > 0
     assert patched.calls == 0
     assert not settings.qdrant.path.exists()
+
+
+def write_two_doc_corpus(settings: Settings) -> None:
+    statutes = settings.corpus.bundled_dir / "statutes"
+    statutes.mkdir(parents=True, exist_ok=True)
+    sums = []
+    docs = []
+    for doc_id, short in (("example-2023", "EC"), ("other-2023", "OC")):
+        pdf = statutes / f"{doc_id}.pdf"
+        pdf.write_bytes(f"%PDF-1.4 {doc_id}".encode())
+        sums.append(f"{hashlib.sha256(pdf.read_bytes()).hexdigest()}  statutes/{doc_id}.pdf")
+        docs.append({"id": doc_id, "title": f"The {short} Code, 2023", "short_name": short, "doc_type": "statute",
+                     "file": f"statutes/{doc_id}.pdf", "expect": ["whoever commits murder shall be punished"], "min_units": 4})  # fmt: skip
+    (settings.corpus.bundled_dir / "SHA256SUMS").write_text("\n".join(sums) + "\n")
+    settings.corpus.manifest.write_text(json.dumps({"version": 1, "documents": docs}))
+
+
+async def test_a_partial_build_keeps_every_other_document(settings: Settings, patched: Any) -> None:
+    write_two_doc_corpus(settings)
+    full = await build_index(settings)
+    assert full.status.startswith("live") and full.embedded_docs == 2
+    partial = await build_index(settings, only=["other-2023"])
+    assert partial.status.startswith("live"), partial
+    assert (
+        partial.copied_docs == 2 and partial.embedded_docs == 0
+    )  # selected one unchanged + one carried over
+    store = QdrantStore.connect(settings.qdrant)
+    try:
+        live = await store.live_collection()
+        meta = await store.read_meta(live) if live else None
+        assert live == partial.collection and meta is not None
+        assert set(meta.docs) == {"example-2023", "other-2023"}
+        assert await store.count(live) == full.chunks
+    finally:
+        await store.close()
+
+
+async def test_a_partial_build_without_a_live_index_is_refused(settings: Settings, patched: Any) -> None:
+    write_two_doc_corpus(settings)
+    with pytest.raises(ConfigurationError, match="partial rebuild"):
+        await build_index(settings, only=["other-2023"])

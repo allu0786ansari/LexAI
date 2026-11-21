@@ -42,7 +42,7 @@ from lexai.evaluation.judge import Judge
 from lexai.evaluation.runner import RunResult, describe_settings, run_answers, run_retrieval
 from lexai.evaluation.sources import IndexTextSource
 from lexai.query.condense import condense
-from lexai.services.sessions import SessionStore
+from lexai.services.sessions import MemorySessionStore
 
 DATASET = REPO_ROOT / "eval" / "datasets" / "golden_v1.jsonl"
 FIXTURE_DIR = REPO_ROOT / "eval" / "fixtures"
@@ -182,7 +182,7 @@ async def cmd_answers(args: argparse.Namespace) -> int:
         source = IndexTextSource(container.store, container.collection)
 
         async def passage_text(citation: dict[str, Any]) -> str:
-            key = citation["doc_id"] if citation.get("law_type") == "judgment" else citation["label"]
+            key = citation["doc_id"] if citation.get("doc_type") == "judgment" else citation["label"]
             return await source(key) or citation.get("snippet", "")
 
         judge = Judge.from_env(passage_text)
@@ -238,11 +238,11 @@ async def cmd_export_fixture(args: argparse.Namespace) -> int:
         for item in items:
             standalone = item.question
             if item.turns:
-                history = SessionStore(30, 20, 10)
-                sid = history.create()
+                history = MemorySessionStore(30, 20, 10)
+                sid = await history.create()
                 for t in item.turns:
-                    history.append_turn(sid, t, "(previous answer)")
-                standalone = await condense(container.llm, item.question, history.history(sid))
+                    await history.append_turn(sid, t, "(previous answer)")
+                standalone = await condense(container.llm, item.question, await history.history(sid))
             vector = await container.embedder.embed_query(standalone)
             queries[item.id] = {"standalone": standalone, "vector": [round(v, 6) for v in vector]}
         write_queries(out, queries)
@@ -261,7 +261,7 @@ async def offline_run(
     settings = apply_config(pinned_settings(fixture_dir), config)
     settings.query.condense_enabled = False  # follow-ups use the rewrite stored in the fixture
     embedder = FixtureEmbedder(queries)
-    sessions = SessionStore(30, 20, 10)
+    sessions = MemorySessionStore(30, 20, 10)
     chat = await build_chat(settings, None, embedder, None, store, collection, sessions, None)  # type: ignore[arg-type]
     items = [i for i in load_dataset(dataset) if i.id in queries]
     swapped = [i.model_copy(update={"question": queries[i.id]["standalone"], "turns": []}) for i in items]

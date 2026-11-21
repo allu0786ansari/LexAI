@@ -88,12 +88,22 @@ def select_docs(docs: list[DocumentSpec], only: list[str]) -> list[DocumentSpec]
 
 
 async def build_index(
-    settings: Settings, *, only: list[str] | None = None, dry_run: bool = False
+    settings: Settings,
+    *,
+    only: list[str] | None = None,
+    dry_run: bool = False,
+    store: QdrantStore | None = None,
 ) -> BuildReport:
+    """Build and publish a new index. `store`: an open store to use (the API's, for an
+    in-process reindex: embedded Qdrant allows one client per process); it is not closed."""
     started = time.perf_counter()
     report = BuildReport(dry_run=dry_run)
     corpus = settings.corpus
-    docs = select_docs(expand(load_manifest(corpus.manifest), corpus.bundled_dir), only or [])
+    all_docs = expand(load_manifest(corpus.manifest), corpus.bundled_dir)
+    docs = select_docs(all_docs, only or [])
+    # A partial build (--only) rebuilds the selected documents and copies every other
+    # manifest document from the live index unchanged; it never drops them.
+    carried = [d.id for d in all_docs if d not in docs] if only else []
     sums, lock = read_bundled_sums(corpus.bundled_dir), read_lock(corpus.lock_file)
     fingerprint = chunker_fingerprint(corpus.max_chunk_chars, corpus.chunk_overlap_chars)
 
@@ -138,7 +148,8 @@ async def build_index(
         return report
 
     # 3. build a new collection -------------------------------------------------
-    store = QdrantStore.connect(settings.qdrant)
+    owns_store = store is None
+    store = store or QdrantStore.connect(settings.qdrant)
     embedder = EmbeddingClient(settings.embed)
     name = new_collection_name()
     report.collection = name
@@ -154,6 +165,11 @@ async def build_index(
             and live_meta.chunker_version == fingerprint
             and live_meta.sparse_version == SPARSE_VERSION
         )
+        if carried and not reusable:
+            raise ConfigurationError(
+                "A partial rebuild (--only) needs a live index built with the current embedder, chunker and "
+                "BM25 settings, to copy the other documents from. Run a full build."
+            )
         all_texts = [c.embed_text for p in parsed.values() for c in p.chunks]
         avg_len = live_meta.avg_len if reusable and live_meta else average_length(all_texts)
 
@@ -177,9 +193,19 @@ async def build_index(
                 await _embed_and_upsert(store, embedder, name, pd.chunks, avg_len)
                 report.embedded_docs += 1
             meta.docs[doc_id] = DocBuildInfo(sha256=hashes[doc_id], chunks=len(pd.chunks), title=pd.title)
+        for doc_id in carried:
+            if live and live_meta and doc_id in live_meta.docs:
+                copied = await store.copy_document(live, name, doc_id)
+                meta.docs[doc_id] = live_meta.docs[doc_id]
+                report.copied_docs += 1
+                logger.info("document_carried_over", doc=doc_id, chunks=copied)
+            else:
+                logger.warning("document_not_in_live_index", doc=doc_id)
+                report.problems.append(f"{doc_id}: not in the live index; run a full build to add it")
 
         # 4. checks ---------------------------------------------------------------
-        report.checks = await _check(store, embedder, name, parsed)
+        carried_chunks = sum(meta.docs[d].chunks for d in carried if d in meta.docs)
+        report.checks = await _check(store, embedder, name, parsed, carried_chunks)
         failed = [c for c in report.checks if not c["ok"]]
         if failed:
             report.status = f"failed: {len(failed)} checks failed (live index unchanged)"
@@ -201,7 +227,8 @@ async def build_index(
     finally:
         report.seconds = round(time.perf_counter() - started, 1)
         await embedder.aclose()
-        await store.close()
+        if owns_store:
+            await store.close()
     return report
 
 
@@ -218,10 +245,14 @@ async def _embed_and_upsert(
 
 
 async def _check(
-    store: QdrantStore, embedder: EmbeddingClient, name: str, parsed: dict[str, ParsedDocument]
+    store: QdrantStore,
+    embedder: EmbeddingClient,
+    name: str,
+    parsed: dict[str, ParsedDocument],
+    carried_chunks: int = 0,
 ) -> list[dict[str, Any]]:
     checks: list[dict[str, Any]] = []
-    expected_total = sum(len(p.chunks) for p in parsed.values())
+    expected_total = sum(len(p.chunks) for p in parsed.values()) + carried_chunks
     total = await store.count(name)
     checks.append(
         {"check": "total chunks", "ok": total == expected_total, "detail": f"{total}/{expected_total}"}
