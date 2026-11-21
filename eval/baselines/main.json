@@ -1,0 +1,12 @@
+{
+  "commit": "da6e99f",
+  "config": "hybrid",
+  "overall": {
+    "hit@1": 0.8,
+    "hit@5": 0.975,
+    "recall@8": 0.9375,
+    "mrr@10": 0.8833,
+    "ndcg@10": 0.8865
+  },
+  "items": 40
+}
