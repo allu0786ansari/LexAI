@@ -1,7 +1,7 @@
 model qwen2.5:7b-instruct-q4_K_M: already downloaded
 model nomic-embed-text: already downloaded
 $ ollama create qwen2.5-7b-instruct -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\ollama\Modelfile.laptop"
-[?2026h[?25l[1Ggathering model components [K
+[?2026h[?25l[1Ggathering model components [K[?25h[?2026l[?2026h[?25l[1Ggathering model components [K
 using existing layer sha256:2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730 [K
 using existing layer sha256:66b9ea09bd5b7099cbb4fc820f31b575c0366fa439b08245566692c6784e281e [K
 using existing layer sha256:eb4402837c7829a690fa845de4d7f3fd842c2adee476d5341da8a46ea9255175 [K
@@ -20,10 +20,10 @@ exit=0
 $ ollama list
 NAME                                ID              SIZE      MODIFIED               
 qwen2.5-7b-instruct:latest          b57dc8ba2735    4.7 GB    Less than a second ago    
-qwen2.5:7b-instruct-q4_K_M          845dbda0ea48    4.7 GB    5 hours ago               
+qwen2.5:7b-instruct-q4_K_M          845dbda0ea48    4.7 GB    15 hours ago              
 nomic-embed-text:latest             0a109f422b47    274 MB    4 weeks ago               
 bge-m3:latest                       790764642607    1.2 GB    4 weeks ago               
-agmesh-phi3.5:latest                061d2b22c7b8    2.4 GB    2 months ago              
+agmesh-phi3.5:latest                061d2b22c7b8    2.4 GB    3 months ago              
 phi3.5:3.8b-mini-instruct-q4_K_M    570961596984    2.4 GB    3 months ago              
 qwen2.5:3b-instruct                 357c53fb659c    1.9 GB    4 months ago              
 exit=0
@@ -41,8 +41,8 @@ Reranker: disabled
 [PASS] embedding dimension matches config: model returns 768, LEXAI_EMBED_DIMENSION=768
 
 Generation test (the first call also loads the model into memory) ...
-[PASS] LLM generates: first token after 25.7s, 46 chunks in 33.4s (~6.0 tokens/s)
-   reply: A First Information Report (FIR) in India is an official record of a crime reported to the police, and it is filed by the police based on information provided by a complainant, marking the initiation of a criminal investigation.
+[PASS] LLM generates: first token after 18.6s, 53 chunks in 26.8s (~6.4 tokens/s)
+   reply: A First Information Report (FIR) in India is a document registered with the police based on information provided by a complainant about a cognizable offense, which then initiates an investigation. It serves as the first official record of a crime reported to the police.
    loaded: qwen2.5-7b-instruct:latest  5.2 GB total, 50% on GPU
 
 SUMMARY: ALL PASSED

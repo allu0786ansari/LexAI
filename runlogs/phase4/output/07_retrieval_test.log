@@ -1,6 +1,11 @@
 $ .venv\Scripts\python.exe -m lexai.evaluation retrieval --split test --configs hybrid
-2026-11-20 22:15:25 [info     ] index_ready                    built_at=2026-11-20T13:30:54+00:00 chunks=5070 collection=lexai_chunks_20261120t133053900723
-2026-11-20 22:15:26 [info     ] correspondence_ready           sections=2271
-hybrid      n= 74  hit@1 0.892  hit@5 0.919  recall@8 0.919  mrr@10 0.905  ndcg@10 0.909  (132s) -> retrieval-test-hybrid.json
+2026-11-21 06:44:37 [info     ] index_ready                    built_at=2026-11-20T13:30:54+00:00 chunks=5070 collection=lexai_chunks_20261120t133053900723
+2026-11-21 06:44:38 [info     ] correspondence_ready           sections=2271
+2026-11-21 06:45:21 [info     ] condense_rejected              added=['act IPC', 'IPC Section 378'] rewrite='What is the punishment for theft of property worth less than five thousand rupees under Section 378 of the Indian Penal Code?'
+2026-11-21 06:45:24 [info     ] condense_rejected              added=['act IPC'] rewrite='How is criminal conspiracy punished under the Indian Penal Code, 1860?'
+2026-11-21 06:45:33 [info     ] condense_rejected              added=["unknown act 'BIS) Act'"] rewrite='Which section of the Bureau of Indian Standards (BIS) Act replaced section 125 of the Criminal Procedure Code (CrPC)?'
+2026-11-21 06:45:39 [info     ] condense_rejected              added=['act IPC', 'IPC Section 376'] rewrite='What is the punishment for rape under Section 376 of the Indian Penal Code if the victim is under sixteen years of age?'
+2026-11-21 06:45:44 [info     ] condense_rejected              added=['Section 357', "unknown act 'Bureau of Investigation Act'"] rewrite='What is the punishment for an offence resulting in death under the Bureau of Investigation Act, Section 357?'
+hybrid      n= 74  hit@1 0.946  hit@5 0.960  recall@8 0.960  mrr@10 0.953  ndcg@10 0.955  (62s) -> retrieval-test-hybrid.json
 exit=0
 

@@ -3,7 +3,7 @@ All checks passed!
 exit=0
 
 $ .venv\Scripts\python.exe -m ruff format --check .
-70 files already formatted
+71 files already formatted
 exit=0
 
 $ .venv\Scripts\python.exe -m mypy
@@ -18,18 +18,18 @@ configfile: pyproject.toml
 testpaths: tests
 plugins: anyio-4.16.0, platformdirs-4.14.7, asyncio-1.5.0, respx-0.23.1
 asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
-collected 154 items
+collected 163 items
 
 tests\api\test_api.py .......................                            [ 14%]
-tests\unit\test_answering.py ......................                      [ 29%]
+tests\unit\test_answering.py .........................                   [ 29%]
 tests\unit\test_embedder.py .......                                      [ 33%]
-tests\unit\test_evaluation.py .............s                             [ 42%]
-tests\unit\test_fetch_and_build.py ..........                            [ 49%]
-tests\unit\test_ingestion.py ..........................                  [ 66%]
-tests\unit\test_llm_client.py ......                                     [ 70%]
-tests\unit\test_query.py ....................................            [ 93%]
+tests\unit\test_evaluation.py ..............                             [ 42%]
+tests\unit\test_fetch_and_build.py ..........                            [ 48%]
+tests\unit\test_ingestion.py ..........................                  [ 64%]
+tests\unit\test_llm_client.py ......                                     [ 68%]
+tests\unit\test_query.py ..........................................      [ 93%]
 tests\unit\test_retrieval.py ..........                                  [100%]
 
-======================= 153 passed, 1 skipped in 39.59s =======================
+============================ 163 passed in 57.34s =============================
 exit=0
 

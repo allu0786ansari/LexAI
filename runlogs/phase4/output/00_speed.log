@@ -1,0 +1,33 @@
+===================== 21-11-2026  6:35:47.78 =====================
+$ powercfg /getactivescheme
+Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)exit=0
+
+$ powershell -NoProfile -Command "$b = Get-CimInstance Win32_Battery; 'BatteryStatus=' + $b.BatteryStatus + ' charge=' + $b.EstimatedChargeRemaining"
+BatteryStatus=2 charge=99
+exit=0
+
+(BatteryStatus 2 = plugged in, 1 = on battery)
+$ powershell -NoProfile -Command "$o = Get-CimInstance Win32_OperatingSystem; 'free RAM MB=' + [int]($o.FreePhysicalMemory/1024) + ' free virtual MB=' + [int]($o.FreeVirtualMemory/1024)"
+free RAM MB=1858 free virtual MB=10257
+exit=0
+
+$ powershell -NoProfile -Command "$c = Get-CimInstance Win32_Processor; 'CPU MHz=' + $c.CurrentClockSpeed + ' of ' + $c.MaxClockSpeed + ' load=' + $c.LoadPercentage"
+CPU MHz=3110 of 3110 load=12
+exit=0
+
+$ nvidia-smi --query-gpu=temperature.gpu,clocks.sm,clocks.max.sm,power.draw,utilization.gpu,memory.used,clocks_throttle_reasons.active --format=csv
+temperature.gpu, clocks.current.sm [MHz], clocks.max.sm [MHz], power.draw [W], utilization.gpu [%], memory.used [MiB], clocks_throttle_reasons.active
+42, 1380 MHz, 1785 MHz, 15.36 W, 0 %, 0 MiB, 0x0000000000000000
+exit=0
+
+$ ollama ps
+time=2026-11-21T06:35:54.916+05:30 level=INFO source=app_windows.go:281 msg="starting Ollama" app=C:\Users\LENOVO\AppData\Local\Programs\Ollama version=0.40.9 OS=Windows/10.0.26300
+time=2026-11-21T06:35:54.918+05:30 level=INFO source=app.go:238 msg="initialized tools registry" tool_count=0
+time=2026-11-21T06:35:54.929+05:30 level=INFO source=app.go:253 msg="starting ollama server"
+time=2026-11-21T06:35:54.929+05:30 level=INFO source=app.go:285 msg="starting ui server" port=58416
+time=2026-11-21T06:35:54.978+05:30 level=INFO source=app.go:402 msg="deferring pending update for fast startup"
+time=2026-11-21T06:35:57.930+05:30 level=INFO source=updater.go:373 msg="beginning update checker" interval=1h0m0s
+time=2026-11-21T06:35:58.339+05:30 level=INFO source=updater.go:133 msg="New update available at https://github.com/ollama/ollama/releases/download/v0.40.16/OllamaSetup.exe"
+time=2026-11-21T06:35:58.684+05:30 level=INFO source=updater.go:198 msg="update already downloaded" bundle=C:\Users\LENOVO\AppData\Local\Ollama\updates_v2\ebc82afa4f90fff4c778d67b5487f6653937e2f443d31150c9eed61d1c73f97e\OllamaSetup.exe
+NAME    ID    SIZE    PROCESSOR    CONTEXT    RUNNER    UNTIL 
+time=2026-11-21T07:06:27.126+05:30 level=ERROR source=server.go:224 msg="ollama exited" err="exit status 0x40010004"
