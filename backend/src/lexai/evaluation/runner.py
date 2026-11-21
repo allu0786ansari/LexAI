@@ -58,12 +58,12 @@ class RunResult:
     seconds: float
 
 
-def _session(sessions: SessionStore, item: GoldenItem) -> str | None:
+async def _session(sessions: SessionStore, item: GoldenItem) -> str | None:
     if not item.turns:
         return None
-    session = sessions.create()
+    session = await sessions.create()
     for turn in item.turns:
-        sessions.append_turn(session, turn, PREVIOUS_ANSWER)
+        await sessions.append_turn(session, turn, PREVIOUS_ANSWER)
     return session
 
 
@@ -89,7 +89,7 @@ async def run_retrieval(
     start = time.perf_counter()
     results: list[ItemResult] = []
     for item in items:
-        res = await chat.search(item.question, _session(sessions, item))
+        res = await chat.search(item.question, await _session(sessions, item))
         keys = metrics.ranked_keys(res.get("passages", []))
         r = ItemResult(item, keys)
         if item.has_gold:
@@ -191,7 +191,7 @@ async def run_answers(
             results.append(saved[item.id])
             continue
         t0 = time.perf_counter()
-        session = _session(sessions, item) or sessions.create()
+        session = await _session(sessions, item) or await sessions.create()
         events: dict[str, Any] = {}
         async for event in chat.stream_answer(item.question, session, uuid.uuid4().hex):
             if event.event == "token":

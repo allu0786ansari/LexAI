@@ -34,7 +34,7 @@ async def test_query_streams_meta_citations_tokens_verification_done(
 ) -> None:
     app = create_app(settings, await make_container(settings, live_store))
     async with client_for(app) as client:
-        response = await client.post("/api/query", json={"question": "What is the punishment for murder?"})
+        response = await client.post("/api/v1/chat", json={"question": "What is the punishment for murder?"})
     assert response.status_code == 200
     events = parse_sse(response.text)
     kinds = [kind for kind, _ in events]
@@ -68,9 +68,9 @@ async def test_prompt_contains_numbered_passages_and_history(settings: Settings,
     llm = FakeLLM()
     app = create_app(settings, await make_container(settings, live_store, llm=llm))
     async with client_for(app) as client:
-        session = (await client.post("/api/session")).json()["session_id"]
-        await client.post("/api/query", json={"question": "murder punishment", "session_id": session})
-        await client.post("/api/query", json={"question": "and for cheating?", "session_id": session})
+        session = (await client.post("/api/v1/sessions")).json()["session_id"]
+        await client.post("/api/v1/chat", json={"question": "murder punishment", "session_id": session})
+        await client.post("/api/v1/chat", json={"question": "and for cheating?", "session_id": session})
     system, *rest = llm.calls[1]
     assert system.role == "system" and "<passages>" in system.content and "[1]" in system.content
     assert [m.role for m in rest] == ["user", "assistant", "user"]
@@ -80,7 +80,7 @@ async def test_llm_outage_becomes_an_error_event(settings: Settings, live_store:
     llm = FakeLLM(error=UpstreamUnavailable("connection refused"))
     app = create_app(settings, await make_container(settings, live_store, llm=llm))
     async with client_for(app) as client:
-        response = await client.post("/api/query", json={"question": "murder"})
+        response = await client.post("/api/v1/chat", json={"question": "murder"})
     kind, data = parse_sse(response.text)[-1]
     assert kind == "error"
     assert data == {
@@ -93,7 +93,7 @@ async def test_llm_outage_becomes_an_error_event(settings: Settings, live_store:
 async def test_embedder_outage_is_an_error_not_garbage(settings: Settings, live_store: Live) -> None:
     app = create_app(settings, await make_container(settings, live_store, embedder=FakeEmbedder(fail=True)))
     async with client_for(app) as client:
-        response = await client.post("/api/query", json={"question": "murder"})
+        response = await client.post("/api/v1/chat", json={"question": "murder"})
     events = parse_sse(response.text)
     assert [k for k, _ in events] == ["meta", "error"]
 
@@ -101,7 +101,7 @@ async def test_embedder_outage_is_an_error_not_garbage(settings: Settings, live_
 async def test_missing_index_returns_index_not_ready(settings: Settings) -> None:
     app = create_app(settings, await make_container(settings, None))
     async with client_for(app) as client:
-        response = await client.post("/api/query", json={"question": "murder"})
+        response = await client.post("/api/v1/chat", json={"question": "murder"})
     kind, data = parse_sse(response.text)[-1]
     assert kind == "error" and data["code"] == "index_not_ready"  # type: ignore[index]
 
@@ -134,7 +134,7 @@ async def test_request_id_is_propagated(settings: Settings, live_store: Live) ->
 async def test_question_length_is_validated(settings: Settings, live_store: Live, question: str) -> None:
     app = create_app(settings, await make_container(settings, live_store))
     async with client_for(app) as client:
-        response = await client.post("/api/query", json={"question": question})
+        response = await client.post("/api/v1/chat", json={"question": question})
     assert response.status_code == 422
 
 
@@ -145,7 +145,7 @@ async def test_health_stays_fast_while_answers_stream(settings: Settings, live_s
     async with client_for(app) as client:
 
         async def ask() -> None:
-            await client.post("/api/query", json={"question": "murder punishment"})
+            await client.post("/api/v1/chat", json={"question": "murder punishment"})
 
         async def probe() -> list[float]:
             timings = []
@@ -168,7 +168,7 @@ async def test_prompt_passages_carry_act_section_and_status(settings: Settings, 
     llm = FakeLLM()
     app = create_app(settings, await make_container(settings, live_store, llm=llm))
     async with client_for(app) as client:
-        await client.post("/api/query", json={"question": "punishment for murder"})
+        await client.post("/api/v1/chat", json={"question": "punishment for murder"})
     system = llm.calls[0][0].content
     assert "IPC s.302 — Punishment for murder" in system
     assert "repealed 2024-07-01; replaced by BNS" in system
@@ -179,7 +179,7 @@ async def test_context_respects_the_character_budget(settings: Settings, live_st
     llm = FakeLLM()
     app = create_app(settings, await make_container(settings, live_store, llm=llm))
     async with client_for(app) as client:
-        response = await client.post("/api/query", json={"question": "punishment for murder"})
+        response = await client.post("/api/v1/chat", json={"question": "punishment for murder"})
     citations = parse_sse(response.text)[1][1]
     assert isinstance(citations, list) and len(citations) <= 3
     assert "[4]" not in llm.calls[0][0].content
@@ -191,7 +191,7 @@ async def test_context_respects_the_character_budget(settings: Settings, live_st
 async def ask(app: object, question: str, session_id: str | None = None) -> dict[str, object]:
     async with client_for(app) as client:
         body = {"question": question, **({"session_id": session_id} if session_id else {})}
-        response = await client.post("/api/query", json=body)
+        response = await client.post("/api/v1/chat", json=body)
     events = parse_sse(response.text)
     return {kind: data for kind, data in events} | {"_kinds": [k for k, _ in events]}
 
@@ -275,7 +275,7 @@ async def test_follow_up_is_rewritten_before_searching(settings: Settings, live_
     llm = FakeLLM(completion="Is murder under BNS s.103 a bailable offence?")
     app = create_app(settings, await make_container(settings, live_store, llm=llm))
     async with client_for(app) as client:
-        session = (await client.post("/api/session")).json()["session_id"]
+        session = (await client.post("/api/v1/sessions")).json()["session_id"]
     await ask(app, "What is the punishment for murder under BNS s.103?", session)
     out = await ask(app, "and is it bailable?", session)
     assert out["meta"]["standalone_query"] == "Is murder under BNS s.103 a bailable offence?"  # type: ignore[index]
@@ -288,7 +288,9 @@ async def test_search_endpoint_returns_plan_passages_and_scores(settings: Settin
     llm = FakeLLM()
     app = create_app(settings, await make_container(settings, live_store, llm=llm))
     async with client_for(app) as client:
-        response = await client.post("/api/search", json={"question": "Which BNS section replaced IPC 302?"})
+        response = await client.post(
+            "/api/v1/search", json={"question": "Which BNS section replaced IPC 302?"}
+        )
     body = response.json()
     assert response.status_code == 200 and llm.calls == []
     assert body["plan"]["intent"] == "old_to_new_mapping"
@@ -299,5 +301,18 @@ async def test_search_endpoint_returns_plan_passages_and_scores(settings: Settin
 async def test_search_without_index_is_503(settings: Settings) -> None:
     app = create_app(settings, await make_container(settings, None))
     async with client_for(app) as client:
-        response = await client.post("/api/search", json={"question": "murder"})
+        response = await client.post("/api/v1/search", json={"question": "murder"})
     assert response.status_code == 503 and response.json()["code"] == "index_not_ready"
+
+
+async def test_refusal_in_a_conversation_makes_no_model_call(settings: Settings, live_store: Live) -> None:
+    """Refusal is decided on the user's own words, before any follow-up rewrite."""
+    llm = FakeLLM(completion="How can one destroy evidence of murder under BNS s.103?")
+    app = create_app(settings, await make_container(settings, live_store, llm=llm))
+    async with client_for(app) as client:
+        session = (await client.post("/api/v1/sessions")).json()["session_id"]
+    await ask(app, "What is the punishment for murder?", session)
+    calls_before = (len(llm.calls), len(llm.complete_calls))
+    out = await ask(app, "How do I destroy the CCTV evidence before the police come?", session)
+    assert out["meta"]["intent"] == "refused"  # type: ignore[index]
+    assert (len(llm.calls), len(llm.complete_calls)) == calls_before

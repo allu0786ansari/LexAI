@@ -116,16 +116,21 @@ class LLMClient:
                 return
             except (httpx.TransportError, httpx.HTTPStatusError) as exc:
                 if emitted:
-                    raise GenerationError(f"stream interrupted after first token: {exc!r}") from exc
+                    raise GenerationError(
+                        f"stream interrupted after first token: {exc!r}", service="llm"
+                    ) from exc
                 if _is_retryable(exc) and attempt < self.settings.max_retries:
                     await self._backoff(attempt, exc)
                     attempt += 1
                     continue
                 if isinstance(exc, httpx.HTTPStatusError) and not _is_retryable(exc):
                     raise GenerationError(
-                        f"LLM rejected the request ({exc.response.status_code}): {exc.response.text[:300]}"
+                        f"LLM rejected the request ({exc.response.status_code}): {exc.response.text[:300]}",
+                        service="llm",
                     ) from exc
-                raise UpstreamUnavailable(f"LLM unreachable at {self.settings.base_url}: {exc!r}") from exc
+                raise UpstreamUnavailable(
+                    f"LLM unreachable at {self.settings.base_url}: {exc!r}", service="llm"
+                ) from exc
 
     async def complete(
         self,
@@ -148,9 +153,9 @@ class LLMClient:
                     await self._backoff(attempt, exc)
                     attempt += 1
                     continue
-                raise UpstreamUnavailable(f"LLM call failed: {exc!r}") from exc
+                raise UpstreamUnavailable(f"LLM call failed: {exc!r}", service="llm") from exc
             except (KeyError, IndexError, ValueError) as exc:
-                raise GenerationError(f"Malformed LLM response: {exc!r}") from exc
+                raise GenerationError(f"Malformed LLM response: {exc!r}", service="llm") from exc
 
     async def health(self) -> dict[str, Any]:
         """Check the server is up and serves the configured model."""

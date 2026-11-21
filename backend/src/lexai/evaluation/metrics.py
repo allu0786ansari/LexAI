@@ -31,7 +31,7 @@ _MARKER = re.compile(r"\[(\d{1,3})\]")
 
 def passage_key(passage: dict[str, Any]) -> str:
     """A citation/passage dict -> scoring key: provision label, or doc_id for judgments."""
-    if passage.get("law_type") == "judgment":
+    if passage.get("doc_type") == "judgment":
         return str(passage["doc_id"])
     return str(passage["label"])
 

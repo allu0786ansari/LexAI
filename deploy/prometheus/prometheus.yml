@@ -1,0 +1,14 @@
+# Scrapes the LexAI API and loads the alert rules. Used by the Phase 6 Docker Compose
+# stack; for a local Prometheus, change the target to localhost:8000.
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - alerts.yml
+
+scrape_configs:
+  - job_name: lexai-api
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["api:8000"]

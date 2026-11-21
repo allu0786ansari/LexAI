@@ -31,6 +31,7 @@ from typing import Any, TypeVar
 
 from pydantic import BaseModel, Field
 from qdrant_client import QdrantClient, models
+from qdrant_client.http.exceptions import UnexpectedResponse
 
 from lexai.core.errors import ConfigurationError, UpstreamUnavailable
 from lexai.core.logging import get_logger
@@ -71,6 +72,7 @@ class BuildMeta(BaseModel):
 class SearchFilter:
     doc_ids: list[str] | None = None
     doc_types: list[str] | None = None
+    short_names: list[str] | None = None
     in_force_only: bool = False
 
     def to_qdrant(self) -> models.Filter | None:
@@ -79,6 +81,8 @@ class SearchFilter:
             must.append(models.FieldCondition(key="doc_id", match=models.MatchAny(any=self.doc_ids)))
         if self.doc_types:
             must.append(models.FieldCondition(key="doc_type", match=models.MatchAny(any=self.doc_types)))
+        if self.short_names:
+            must.append(models.FieldCondition(key="short_name", match=models.MatchAny(any=self.short_names)))
         if self.in_force_only:
             must.append(models.IsNullCondition(is_null=models.PayloadField(key="repealed_on")))
         return models.Filter(must=must) if must else None
@@ -277,15 +281,28 @@ class QdrantStore:
         )
         await self._run(self._client.update_collection_aliases, change_aliases_operations=ops)
 
+    async def incomplete_builds(self, exclude: str | None = None) -> list[str]:
+        """Collections without build metadata: left by a build that failed or was interrupted."""
+        out = []
+        for name in await self.build_collections():
+            if name != exclude and await self.read_meta(name) is None:
+                out.append(name)
+        return out
+
     async def prune(self, keep: str) -> list[str]:
-        """Delete builds older than the live one beyond `keep_previous`."""
-        builds = [c for c in await self.build_collections() if c != keep]
-        older = [c for c in builds if c < keep]
-        newer_failed = [c for c in builds if c > keep]
-        doomed = older[: max(0, len(older) - self.settings.keep_previous)] + newer_failed
+        """
+        Delete every incomplete build, and complete builds older than the live one beyond
+        `keep_previous`. Only complete builds are kept for rollback: a build interrupted
+        half-way is newer than the live one but must never become the rollback target.
+        """
+        incomplete = await self.incomplete_builds(exclude=keep)
+        complete = [c for c in await self.build_collections() if c != keep and c not in incomplete]
+        older = [c for c in complete if c < keep]
+        newer = [c for c in complete if c > keep]
+        doomed = incomplete + older[: max(0, len(older) - self.settings.keep_previous)] + newer
         for name in doomed:
             await self.delete_collection(name)
-        return doomed
+        return sorted(doomed)
 
     # ---- reading -----------------------------------------------------------
 
@@ -327,7 +344,7 @@ class QdrantStore:
                 with_payload=True,
             )
         except Exception as exc:
-            raise UpstreamUnavailable(f"Qdrant search failed: {exc!r}") from exc
+            raise UpstreamUnavailable(f"Qdrant search failed: {exc!r}", service="qdrant") from exc
         return [ScoredChunk(chunk=chunk_from_payload(p.payload or {}), score=p.score) for p in result.points]
 
     async def lookup_unit(self, collection: str, short_name: str, unit: str) -> list[Chunk]:
@@ -373,6 +390,15 @@ class QdrantStore:
         )
         return await self.scroll_all(collection, flt)
 
+    async def get_chunk(self, collection: str, chunk_id: str) -> Chunk | None:
+        try:
+            points = await self._run(
+                self._client.retrieve, collection, ids=[chunk_id], with_payload=True, with_vectors=False
+            )
+        except (ValueError, UnexpectedResponse):  # not a valid point id
+            return None
+        return chunk_from_payload(points[0].payload or {}) if points else None
+
     async def parts_of(self, collection: str, parent_id: str) -> list[Chunk]:
         """All pieces of one section or unit, in order."""
         flt = models.Filter(
@@ -395,5 +421,5 @@ class QdrantStore:
                 with_payload=False,
             )
         except Exception as exc:
-            raise UpstreamUnavailable(f"Qdrant search failed: {exc!r}") from exc
+            raise UpstreamUnavailable(f"Qdrant search failed: {exc!r}", service="qdrant") from exc
         return float(result.points[0].score) if result.points else None

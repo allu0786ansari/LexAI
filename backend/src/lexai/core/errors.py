@@ -7,8 +7,9 @@ class LexAIError(Exception):
     code = "internal_error"
     public_message = "An unexpected error occurred."
 
-    def __init__(self, message: str | None = None) -> None:
+    def __init__(self, message: str | None = None, *, service: str | None = None) -> None:
         super().__init__(message or self.public_message)
+        self.service = service  # the upstream that failed (llm, embedder, qdrant), for metrics
 
 
 class ConfigurationError(LexAIError):
@@ -41,3 +42,15 @@ class RetrievalError(LexAIError):
 class GenerationError(LexAIError):
     code = "generation_failed"
     public_message = "Answer generation failed. Please retry."
+
+
+class SessionNotFound(LexAIError):
+    """Only server-issued session ids are accepted; an unknown or expired id is refused."""
+
+    code = "session_not_found"
+    public_message = "Unknown or expired session. Create a new session and retry."
+
+
+class Forbidden(LexAIError):
+    code = "forbidden"
+    public_message = "A valid API key is required."

@@ -1,9 +1,9 @@
 """
 Laptop-scale load test of the running stack (API + Qdrant + Ollama).
 
-1. Retrieval: /api/search at concurrency 1, 4 and 8 (no generation). Reports
+1. Retrieval: /api/v1/search at concurrency 1, 4 and 8 (no generation). Reports
    p50/p95/max latency, throughput and errors.
-2. Answers: /api/query (streamed) at concurrency 1 and 2 with distinct
+2. Answers: /api/v1/chat (streamed) at concurrency 1 and 2 with distinct
    questions and the answer cache off. Reports time to first token and total
    time; with one GPU, concurrent answers queue in Ollama, so this shows how
    waiting grows rather than a throughput figure.
@@ -96,7 +96,7 @@ async def search_load(client: httpx.AsyncClient, concurrency: int, total: int) -
             question = queue.pop()
             start = time.perf_counter()
             try:
-                r = await client.post("/api/search", json={"question": question})
+                r = await client.post("/api/v1/search", json={"question": question})
                 r.raise_for_status()
                 latencies.append((time.perf_counter() - start) * 1000)
             except httpx.HTTPError:
@@ -111,7 +111,7 @@ async def one_answer(client: httpx.AsyncClient, question: str) -> tuple[float | 
     start = time.perf_counter()
     first: float | None = None
     ok = False
-    async with client.stream("POST", "/api/query", json={"question": question}) as response:
+    async with client.stream("POST", "/api/v1/chat", json={"question": question}) as response:
         response.raise_for_status()
         async for line in response.aiter_lines():
             if line == "event: token" and first is None:
@@ -155,12 +155,12 @@ async def answer_load(client: httpx.AsyncClient, concurrency: int, questions: li
 async def run(base_url: str, searches: int, answers: int) -> dict[str, Any]:
     results: dict[str, Any] = {"search": [], "answers": []}
     async with httpx.AsyncClient(base_url=base_url, timeout=httpx.Timeout(1200, connect=5)) as client:
-        await client.post("/api/search", json={"question": "warm up"})
-        print("\n1. Retrieval (/api/search)", flush=True)
+        await client.post("/api/v1/search", json={"question": "warm up"})
+        print("\n1. Retrieval (/api/v1/search)", flush=True)
         for c in (1, 4, 8):
             results["search"].append(await search_load(client, c, searches))
         if answers:
-            print("\n2. Answers (/api/query, cache off) - several minutes on a laptop", flush=True)
+            print("\n2. Answers (/api/v1/chat, cache off) - several minutes on a laptop", flush=True)
             n = min(answers, len(ANSWER_QUESTIONS))
             results["answers"].append(await answer_load(client, 1, ANSWER_QUESTIONS[:n]))
             results["answers"].append(await answer_load(client, 2, ANSWER_QUESTIONS[-n:]))
@@ -175,7 +175,8 @@ def main() -> None:
     parser.add_argument("--server-log", type=Path, default=Path("var") / "load_test_server.log")
     parser.add_argument("--json", type=Path, default=None)
     args = parser.parse_args()
-    os.environ["LEXAI_API_RATE_LIMIT_QUERY"] = "10000/minute"
+    for name in ("CHAT", "SEARCH", "SESSIONS"):
+        os.environ[f"LEXAI_API_RATE_LIMIT_{name}"] = "10000/minute"
     os.environ["LEXAI_CACHE_ENABLED"] = "false"
     proc = start_server(args.port, args.server_log)
     try:

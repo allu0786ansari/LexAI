@@ -60,7 +60,8 @@ class EmbeddingClient:
                     raise UpstreamUnavailable(
                         f"Embedding model '{self.settings.model}' is not available at "
                         f"{self.settings.base_url}. Download it first (Ollama: "
-                        f"`ollama pull {self.settings.model}`) or fix LEXAI_EMBED_MODEL in backend/.env."
+                        f"`ollama pull {self.settings.model}`) or fix LEXAI_EMBED_MODEL in backend/.env.",
+                        service="embedder",
                     ) from exc
                 error: httpx.HTTPError = exc
                 retryable = exc.response.status_code in {429, 500, 502, 503}
@@ -68,11 +69,14 @@ class EmbeddingClient:
                 error = exc
                 retryable = True
             except (KeyError, ValueError, TypeError) as exc:
-                raise UpstreamUnavailable(f"Malformed embedding response: {exc!r}") from exc
+                raise UpstreamUnavailable(
+                    f"Malformed embedding response: {exc!r}", service="embedder"
+                ) from exc
             else:
                 if len(vectors) != len(texts):
                     raise UpstreamUnavailable(
-                        f"Embedder returned {len(vectors)} vectors for {len(texts)} inputs"
+                        f"Embedder returned {len(vectors)} vectors for {len(texts)} inputs",
+                        service="embedder",
                     )
                 return vectors
 
@@ -83,7 +87,8 @@ class EmbeddingClient:
                 attempt += 1
                 continue
             raise UpstreamUnavailable(
-                f"Embedding failed ({self.settings.model} at {self.settings.base_url}): {error!r}"
+                f"Embedding failed ({self.settings.model} at {self.settings.base_url}): {error!r}",
+                service="embedder",
             ) from error
 
     async def embed_documents(self, texts: Sequence[str]) -> list[list[float]]:

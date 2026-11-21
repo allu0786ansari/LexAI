@@ -1,0 +1,38 @@
+$ .venv\Scripts\python.exe -m ruff check .
+All checks passed!
+exit=0
+
+$ .venv\Scripts\python.exe -m ruff format --check .
+82 files already formatted
+exit=0
+
+$ .venv\Scripts\python.exe -m mypy
+Success: no issues found in 57 source files
+exit=0
+
+$ .venv\Scripts\python.exe -m pytest -v
+============================= test session starts =============================
+platform win32 -- Python 3.12.4, pytest-9.2.0, pluggy-1.7.0
+rootdir: C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0, platformdirs-4.14.7, asyncio-1.5.0, respx-0.23.1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 193 items
+
+tests\api\test_api.py ........................                           [ 12%]
+tests\api\test_v1.py ...............                                     [ 20%]
+tests\unit\test_answering.py .........................                   [ 33%]
+tests\unit\test_embedder.py .......                                      [ 36%]
+tests\unit\test_evaluation.py ...............                            [ 44%]
+tests\unit\test_fetch_and_build.py ............                          [ 50%]
+tests\unit\test_ingestion.py ..........................                  [ 64%]
+tests\unit\test_llm_client.py ......                                     [ 67%]
+tests\unit\test_observability_config.py ..                               [ 68%]
+tests\unit\test_query.py ..........................................      [ 90%]
+tests\unit\test_retrieval.py ...........                                 [ 95%]
+tests\unit\test_state_and_telemetry.py .ssss...                          [100%]
+
+================== 189 passed, 4 skipped in 67.18s (0:01:07) ==================
+exit=0
+

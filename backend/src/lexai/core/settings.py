@@ -12,7 +12,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, field_validator
+from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_ROOT = Path(__file__).resolve().parents[3]
@@ -190,14 +190,63 @@ class CacheSettings(BaseSettings):
     redis_url: str | None = None
 
 
+class ObservabilitySettings(BaseSettings):
+    """Tracing (OpenTelemetry) and metrics (Prometheus)."""
+
+    model_config = _config("LEXAI_OBS_")
+
+    service_name: str = "lexai-api"
+    otlp_endpoint: str | None = Field(
+        default=None,
+        description="OTLP/HTTP traces endpoint, e.g. Langfuse: https://<host>/api/public/otel/v1/traces",
+    )
+    otlp_headers: SecretStr | None = Field(
+        default=None, description='Comma-separated "key=value" headers, e.g. "Authorization=Basic <base64>".'
+    )
+    trace_file: Path | None = Field(
+        default=None, description="Also write finished spans as JSON lines here (laptop: no collector)."
+    )
+    capture_text: bool = Field(
+        default=False,
+        description="Put the question and answer text on traces (PII-masked otherwise). "
+        "Enable only for a trace backend you control.",
+    )
+    metrics_enabled: bool = True
+
+    @field_validator("trace_file", mode="before")
+    @classmethod
+    def _resolve(cls, v: str | Path | None) -> Path | None:
+        return _resolve_path(v, BACKEND_ROOT) if v else None
+
+
 class APISettings(BaseSettings):
     model_config = _config("LEXAI_API_")
 
     environment: Literal["local", "ci", "production"] = "local"
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
-    rate_limit_query: str = "20/minute"
-    rate_limit_session: str = "10/minute"
+    redis_url: str | None = Field(
+        default=None,
+        description="Redis for sessions, rate limits and the answer cache; in-process when unset.",
+    )
+    rate_limit_chat: str = Field(default="20/minute", description="Per client IP and per session.")
+    rate_limit_search: str = "60/minute"
+    rate_limit_sessions: str = "10/minute"
+    rate_limit_feedback: str = "30/minute"
+    max_body_bytes: int = Field(default=16_384, gt=0)
+    admin_api_key: SecretStr | None = Field(
+        default=None, description="Required by /api/v1/admin/*; admin endpoints are disabled when unset."
+    )
+    feedback_db: Path = Field(default=BACKEND_ROOT / "var" / "feedback.sqlite3")
+    readiness_probe_s: float = Field(
+        default=30.0, ge=0, description="Background readiness check for the lexai_ready metric (0 = off)."
+    )
+
+    @field_validator("feedback_db", mode="before")
+    @classmethod
+    def _resolve(cls, v: str | Path) -> Path:
+        return _resolve_path(v, BACKEND_ROOT)
+
     session_ttl_minutes: int = Field(default=30, gt=0)
     session_max_messages: int = Field(default=20, gt=0)
     max_sessions: int = Field(default=10_000, gt=0)
@@ -222,6 +271,7 @@ class Settings:
         qdrant: QdrantSettings | None = None,
         query: QuerySettings | None = None,
         cache: CacheSettings | None = None,
+        obs: ObservabilitySettings | None = None,
     ) -> None:
         self.llm = llm or LLMSettings()
         self.embed = embed or EmbedSettings()
@@ -232,6 +282,7 @@ class Settings:
         self.qdrant = qdrant or QdrantSettings()
         self.query = query or QuerySettings()
         self.cache = cache or CacheSettings()
+        self.obs = obs or ObservabilitySettings()
 
 
 def env_profile(path: Path = ENV_FILE) -> str:

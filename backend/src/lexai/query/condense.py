@@ -122,7 +122,7 @@ async def condense(
         )
     except LexAIError as exc:
         logger.warning("condense_failed", error=str(exc))
-        return question
+        return fallback(question, history)
     rewritten = _clean(text)
     if not rewritten or len(rewritten) > 400:
         return fallback(question, history)
