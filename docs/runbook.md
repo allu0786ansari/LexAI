@@ -79,7 +79,10 @@ deploy\lexai.bat smoke
 start http://127.0.0.1:8090
 ```
 
-If `network` still fails after `ollama-for-docker.bat`, the firewall rule is missing: run it
+`network` also finds the right address of Windows: with Rancher Desktop's network tunnel,
+Docker's `host-gateway` (172.17.0.1) is the Linux VM itself, while Windows answers at
+192.168.127.254; `network` saves that to `deploy\var\host.env`, which every later
+`lexai.bat` command uses. If `network` still fails after `ollama-for-docker.bat`, the firewall rule is missing: run it
 again from an Administrator prompt. `deploy\ollama-for-docker.bat undo` reverts both changes.
 
 ## 3. Releases and deploys

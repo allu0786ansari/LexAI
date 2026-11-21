@@ -21,6 +21,8 @@ REM     deploy\lexai.bat ps / logs / down / wipe
 REM ===========================================================================
 
 set "D=%~dp0"
+REM This script's own path (taken before "shift", which also shifts %0).
+set "SELF=%~f0"
 REM deploy.py needs Python 3.11+: the backend virtual environment if there is one.
 if not defined LEXAI_PYTHON set "LEXAI_PYTHON=python"
 if exist "%D%..\backend\.venv\Scripts\python.exe" set "LEXAI_PYTHON=%D%..\backend\.venv\Scripts\python.exe"
@@ -84,8 +86,8 @@ if not defined GW exit /b 1
 >"%HOSTENV%" echo LEXAI_HOST_GATEWAY=%GW%
 echo Saved LEXAI_HOST_GATEWAY=%GW% to deploy\var\host.env; recreating api and web with it ...
 set "LEXAI_NETWORK_RETRY=1"
-call "%~f0" up
-call "%~f0" network
+call "%SELF%" up
+call "%SELF%" network
 exit /b %ERRORLEVEL%
 
 :c_models
