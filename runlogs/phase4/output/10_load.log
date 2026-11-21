@@ -1,0 +1,21 @@
+$ .venv\Scripts\python.exe scripts\load_test.py --answers 4 --json "C:\Users\LENOVO\OneDrive\Desktop\LexAI\eval\reports\96a538c\load.json" --server-log "C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase4\output\10_server.log"
+API starting (pid 19272), log: C:\Users\LENOVO\OneDrive\Desktop\LexAI\runlogs\phase4\output\10_server.log
+API is up.
+
+1. Retrieval (/api/search)
+  search c=1                   n=48   err=0   p50    272 ms  p95    461 ms  max 523 ms  3.53 req/s
+  search c=4                   n=48   err=0   p50    935 ms  p95   1768 ms  max 1876 ms  4.27 req/s
+  search c=8                   n=48   err=0   p50   1310 ms  p95   3510 ms  max 3864 ms  4.33 req/s
+
+2. Answers (/api/query, cache off) - several minutes on a laptop
+  answer total c=1             n=4    err=0   p50  29088 ms  p95  40797 ms  max 40797 ms  0.04 req/s
+  answer first token c=1       n=4    err=0   p50  15392 ms  p95  25685 ms  max 25685 ms  0.04 req/s
+  answer total c=2             n=4    err=0   p50 131034 ms  p95 134117 ms  max 134117 ms  0.02 req/s
+  answer first token c=2       n=4    err=0   p50  34771 ms  p95 110189 ms  max 110189 ms  0.02 req/s
+API stopped.
+
+results: C:\Users\LENOVO\OneDrive\Desktop\LexAI\eval\reports\96a538c\load.json
+
+SUMMARY: NO ERRORS
+exit=0
+

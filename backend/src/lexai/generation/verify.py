@@ -82,6 +82,7 @@ def _supported(act: str | None, unit: str, passages: list[ScoredChunk]) -> bool:
     return False
 
 
+ABSTENTION = re.compile(r"indexed sources do not (?:answer|cover)", re.I)
 _TRAILING_MARKERS = re.compile(r"([.!?])[ \t]*((?:\[[^\]\n]{1,20}\][ \t]*)+)")
 
 
@@ -113,7 +114,8 @@ def verify(answer: str, passages: list[ScoredChunk]) -> Verification:
     claims = claim_sentences(cleaned)
     cited = [s for s in claims if _MARKER.search(s)]
     coverage = round(len(cited) / len(claims), 2) if claims else None
-    if claims and not cited:
+    if claims and not cited and not ABSTENTION.search(cleaned):
+        # An abstention ("The indexed sources do not answer this.") makes no claim to cite.
         flags.append({"kind": "no_citations", "detail": "the answer cites no passage"})
     valid = not any(f["kind"] in ("unsupported_provision", "no_citations") for f in flags)
     return Verification(

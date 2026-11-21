@@ -299,12 +299,16 @@ class QdrantStore:
         k_sparse: int,
         limit: int,
         flt: SearchFilter | None = None,
+        mode: str = "hybrid",
     ) -> list[ScoredChunk]:
         qfilter = flt.to_qdrant() if flt else None
-        prefetch = [
-            models.Prefetch(query=list(v), using=DENSE, limit=k_dense, filter=qfilter) for v in dense_queries
-        ]
-        if sparse_query[0]:
+        prefetch = []
+        if mode in ("hybrid", "dense"):
+            prefetch = [
+                models.Prefetch(query=list(v), using=DENSE, limit=k_dense, filter=qfilter)
+                for v in dense_queries
+            ]
+        if sparse_query[0] and mode in ("hybrid", "bm25"):
             prefetch.append(
                 models.Prefetch(
                     query=models.SparseVector(indices=sparse_query[0], values=sparse_query[1]),

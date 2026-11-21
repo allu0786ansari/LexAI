@@ -7,18 +7,30 @@ text; its version is logged with every answer and sent in the `done` event.
 
 from __future__ import annotations
 
+from functools import cache
 from pathlib import Path
 
+from lexai.core.errors import ConfigurationError
 from lexai.domain.models import ChunkMetadata, ScoredChunk
 
-PROMPT_VERSION = "answer_v3"
+PROMPT_VERSION = "answer_v4"  # default; LEXAI_LLM_PROMPT_VERSION selects another template
 _TEMPLATES = Path(__file__).parent / "templates"
-ANSWER_TEMPLATE = (_TEMPLATES / f"{PROMPT_VERSION}.md").read_text(encoding="utf-8")
 
 
-def render_system_prompt(context: str, applicable_law: str, notes: list[str]) -> str:
+@cache
+def answer_template(version: str = PROMPT_VERSION) -> str:
+    path = _TEMPLATES / f"{version}.md"
+    if not path.exists():
+        known = ", ".join(sorted(p.stem for p in _TEMPLATES.glob("answer_v*.md")))
+        raise ConfigurationError(f"unknown prompt version {version!r} (available: {known})")
+    return path.read_text(encoding="utf-8")
+
+
+def render_system_prompt(
+    context: str, applicable_law: str, notes: list[str], version: str = PROMPT_VERSION
+) -> str:
     notes_block = "Notes:\n" + "\n".join(f"- {n}" for n in notes) + "\n" if notes else ""
-    return ANSWER_TEMPLATE.format(context=context, applicable_law=applicable_law, notes=notes_block)
+    return answer_template(version).format(context=context, applicable_law=applicable_law, notes=notes_block)
 
 
 def applicable_law_text(era: str, reason: str) -> str:

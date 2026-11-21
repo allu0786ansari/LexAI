@@ -5,10 +5,21 @@ Supreme Court judgments and government manuals. It retrieves the relevant
 passages, generates an answer with **Qwen2.5-7B-Instruct**, and cites every
 claim as `[n]` so you can check the source.
 
-> **Status: Phase 3 of 6 complete** (query understanding and grounded answers;
-> [verified results](runlogs/phase3/RESULTS.md)). The full plan covers ingestion,
-> retrieval, evaluation, API/UI, observability and deployment. Quality numbers
-> will be published here only once Phase 4's evaluation produces them.
+> **Status: Phase 4 of 6 complete** (evaluation harness and CI regression gate;
+> [verified results](runlogs/phase4/RESULTS.md)). The full plan covers ingestion,
+> retrieval, evaluation, API/UI, observability and deployment.
+
+**Measured on an 8 GB laptop** (200-question golden set, held-out test split, Qwen2.5-7B):
+
+| | |
+| --- | --- |
+| Right provision ranked first / in top 5 (test split) | 94.6% / 96.0% (MRR@10 0.953) |
+| Answers passing citation verification | 87.5% (gold provision cited in 87.9%) |
+| Unanswerable questions declined · crime-assistance requests refused | 100% · 100% |
+| Typical answer on the laptop | first token ~21 s, complete ~51 s |
+
+The golden set was written for this corpus and checked against it automatically; it was
+not reviewed by a lawyer. Details, ablations and known weaknesses: [Phase 4 results](runlogs/phase4/RESULTS.md).
 
 ## How it works
 
@@ -138,7 +149,18 @@ python -m lexai.ingestion.cli build --only "sc-*"   # rebuild a subset (others c
 python -m lexai.ingestion.cli status           # the live index and its documents
 python scripts/inspect_index.py                # look up provisions, run test searches
 python scripts/check_models.py                 # are the configured models served and working?
+
+# Evaluation (results in eval/reports/<commit>/)
+python -m lexai.evaluation validate            # check the golden set against the index
+python -m lexai.evaluation retrieval --configs hybrid,dense,bm25,no-routing
+python -m lexai.evaluation answers --limit 40  # full answers, deterministic metrics (+ judge if configured)
+python -m lexai.evaluation report              # report.md from the JSON results
+python -m lexai.evaluation offline             # CI retrieval gate on eval/fixtures (no model server)
+python scripts/load_test.py                    # latency under concurrency
 ```
+
+The golden set, metrics, split and gate are described in
+[ADR 0004](docs/adr/0004-phase-4-evaluation.md).
 
 With uv/make: `make check`. Git hooks: `pre-commit install`.
 
@@ -156,14 +178,21 @@ backend/
     query/        reference extraction, intent, applicable code, guardrails, follow-up rewriting
     retrieval/    Qdrant store (dense + BM25 sparse, RRF), hybrid retriever, router, old↔new correspondence
     services/     session memory, answer cache
+    evaluation/   golden-set loader, metrics, judge, offline fixture, `python -m lexai.evaluation`
   tests/          unit and API tests (no model servers needed)
-  scripts/        model check, index inspection, smoke test, Phase 3 checks against a running stack
+  scripts/        model check, index inspection, smoke test, Phase 3 checks, load test
 data/
   manifest.yaml   every source document and its metadata
   manifest.lock.json  checksums of downloaded files (written by `fetch`)
   bundled/        PDFs shipped with the repo + SHA256SUMS
   raw/            downloads (not in git)
+eval/
+  datasets/       golden set (200 items) and its builder; test-split lock
+  fixtures/       exported index + smoke queries for the offline CI gate
+  baselines/      gate baseline (Recall@8, MRR@10)
+  reports/        results per commit (JSON + report.md)
 deploy/           Ollama Modelfiles (server, laptop), env profiles, vLLM notes
+.github/workflows/ CI: lint, types, tests (Linux + Windows/pip), retrieval gate, frontend build
 docs/adr/         architecture decision records
 runlogs/          per-phase verification scripts and their output
 frontend/         React + Vite chat UI
@@ -176,7 +205,7 @@ frontend/         React + Vite chat UI
 | 1 | Foundation: async clients, Qwen2.5-7B, fail-loudly, tests | **done** ([results](runlogs/phase1/RESULTS.md)) |
 | 2 | Ingestion: corpus manifest, BNS/BNSS/BSA, legal-structure chunking, Qdrant | **done** ([results](runlogs/phase2/RESULTS.md)) |
 | 3 | Retrieval & generation: query routing, citation verification, abstention | **done** ([results](runlogs/phase3/RESULTS.md)) |
-| 4 | Evaluation: golden set, retrieval metrics, RAGAS, CI gate | planned |
+| 4 | Evaluation: golden set, retrieval/answer metrics, ablations, load test, CI gate | **done** ([results](runlogs/phase4/RESULTS.md)) |
 | 5 | API v1, TypeScript UI, security, observability | planned |
 | 6 | Docker Compose, CI/CD, deployment | planned |
 

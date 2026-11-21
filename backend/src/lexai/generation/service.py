@@ -33,7 +33,6 @@ from lexai.domain.models import (
 from lexai.generation.context import assemble
 from lexai.generation.prompts import (
     HYDE_PROMPT,
-    PROMPT_VERSION,
     applicable_law_text,
     format_context,
     render_system_prompt,
@@ -149,6 +148,25 @@ class ChatService:
             logger.warning("hyde_failed", error=str(exc))
             return None
 
+    async def _retrieve(self, plan: QueryPlan, latency: dict[str, Any]) -> Retrieved:
+        assert self.router is not None
+        extra: list[str] = []
+        if self.settings.retrieval.hyde_enabled:
+            t0 = time.perf_counter()
+            hyde_text = await self._hyde(plan.standalone)
+            latency["hyde_ms"] = _ms(t0)
+            if hyde_text:
+                extra.append(hyde_text)
+        t0 = time.perf_counter()
+        try:
+            retrieved = await self.router.retrieve(plan, extra)
+        except LexAIError:
+            raise
+        except Exception as exc:
+            raise RetrievalError(repr(exc)) from exc
+        latency["retrieval_ms"] = _ms(t0)
+        return retrieved
+
     def _should_abstain(self, retrieved: Retrieved) -> bool:
         if retrieved.found_exact:
             return False
@@ -187,29 +205,17 @@ class ChatService:
             raise IndexNotReady()
 
         key = cache_key(
-            normalise(plan.standalone), self.index_version, PROMPT_VERSION, self.settings.llm.model
+            normalise(plan.standalone),
+            self.index_version,
+            self.settings.llm.prompt_version,
+            self.settings.llm.model,
         )
         if self.cache is not None and (hit := await self.cache.get(key)):
             async for event in self._replay(hit, question, session_id, request_id, latency, t_start):
                 yield event
             return
 
-        extra: list[str] = []
-        if self.settings.retrieval.hyde_enabled:
-            t0 = time.perf_counter()
-            hyde_text = await self._hyde(plan.standalone)
-            latency["hyde_ms"] = _ms(t0)
-            if hyde_text:
-                extra.append(hyde_text)
-
-        t0 = time.perf_counter()
-        try:
-            retrieved = await self.router.retrieve(plan, extra)
-        except LexAIError:
-            raise
-        except Exception as exc:
-            raise RetrievalError(repr(exc)) from exc
-        latency["retrieval_ms"] = _ms(t0)
+        retrieved = await self._retrieve(plan, latency)
 
         if not retrieved.pinned and not retrieved.ranked:
             async for event in self._fixed_reply(
@@ -247,7 +253,10 @@ class ChatService:
         yield StreamEvent(event="citations", data=[c.model_dump() for c in citations])
 
         system = render_system_prompt(
-            format_context(passages), applicable_law_text(plan.era.era, plan.era.reason), retrieved.notes
+            format_context(passages),
+            applicable_law_text(plan.era.era, plan.era.reason),
+            retrieved.notes,
+            self.settings.llm.prompt_version,
         )
         keep = self.settings.api.history_messages_in_prompt
         messages = [ChatMessage(role="system", content=system)]
@@ -307,7 +316,8 @@ class ChatService:
             return result | {"passages": [], "notes": [], "abstain": False}
         if self.router is None or self.store is None or self.collection is None:
             raise IndexNotReady()
-        retrieved = await self.router.retrieve(plan)
+        latency: dict[str, Any] = {}
+        retrieved = await self._retrieve(plan, latency)
         exact_parents = {p.chunk.metadata.parent_id for p in retrieved.pinned}
         passages = await assemble(
             self.store,
@@ -323,6 +333,7 @@ class ChatService:
             "best_rerank": retrieved.best_rerank,
             "abstain": self._should_abstain(retrieved),
             "index_version": self.index_version,
+            "latency": latency,
         }
 
     async def _fixed_reply(
@@ -392,7 +403,7 @@ class ChatService:
         breakdown = LatencyBreakdown(total_ms=_ms(t_start), **latency)
         logger.info(
             "query_complete",
-            prompt_version=PROMPT_VERSION,
+            prompt_version=self.settings.llm.prompt_version,
             index_version=self.index_version,
             context_chunks=len(citations),
             answer_chars=len(answer),
@@ -409,7 +420,7 @@ class ChatService:
             request_id=request_id,
             citations=citations,
             latency=breakdown,
-            prompt_version=PROMPT_VERSION,
+            prompt_version=self.settings.llm.prompt_version,
             index_version=self.index_version,
             usage=usage,
             cached=cached,

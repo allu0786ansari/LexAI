@@ -1,0 +1,76 @@
+{
+  "search": [
+    {
+      "name": "search c=1",
+      "requests": 48,
+      "errors": 0,
+      "p50_ms": 274,
+      "p95_ms": 418,
+      "max_ms": 481,
+      "mean_ms": 260,
+      "throughput_rps": 3.85
+    },
+    {
+      "name": "search c=4",
+      "requests": 48,
+      "errors": 0,
+      "p50_ms": 835,
+      "p95_ms": 1595,
+      "max_ms": 1703,
+      "mean_ms": 818,
+      "throughput_rps": 4.78
+    },
+    {
+      "name": "search c=8",
+      "requests": 48,
+      "errors": 0,
+      "p50_ms": 1285,
+      "p95_ms": 3161,
+      "max_ms": 3425,
+      "mean_ms": 1572,
+      "throughput_rps": 4.78
+    }
+  ],
+  "answers": [
+    {
+      "name": "answer total c=1",
+      "requests": 4,
+      "errors": 0,
+      "p50_ms": 387551,
+      "p95_ms": 495866,
+      "max_ms": 495866,
+      "mean_ms": 348772,
+      "throughput_rps": 0.0,
+      "ttft": {
+        "name": "answer first token c=1",
+        "requests": 4,
+        "errors": 0,
+        "p50_ms": 39623,
+        "p95_ms": 49318,
+        "max_ms": 49318,
+        "mean_ms": 35715,
+        "throughput_rps": 0.0
+      }
+    },
+    {
+      "name": "answer total c=2",
+      "requests": 4,
+      "errors": 0,
+      "p50_ms": 697712,
+      "p95_ms": 732530,
+      "max_ms": 732530,
+      "mean_ms": 589610,
+      "throughput_rps": 0.0,
+      "ttft": {
+        "name": "answer first token c=2",
+        "requests": 4,
+        "errors": 0,
+        "p50_ms": 369452,
+        "p95_ms": 371563,
+        "max_ms": 371563,
+        "mean_ms": 269853,
+        "throughput_rps": 0.0
+      }
+    }
+  ]
+}

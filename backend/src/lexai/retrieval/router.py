@@ -172,7 +172,8 @@ class Router:
             self.hybrid.retrieve(plan.standalone, extra_dense, flt, query_vector_dense=vector)
         )
         best = asyncio.create_task(self.store.best_dense_score(self.collection, vector, flt))
-        await self._exact(plan, out)
+        if self.query.routing_enabled:
+            await self._exact(plan, out)
         candidates = await search
         out.best_dense = await best
 
@@ -184,6 +185,8 @@ class Router:
             out.best_rerank = ranked[0].score if ranked else None
         else:
             ranked = candidates[: self.rerank_top_n]
-        out.ranked = await self._prefer_applicable_code(plan, ranked, out)
+        out.ranked = (
+            await self._prefer_applicable_code(plan, ranked, out) if self.query.routing_enabled else ranked
+        )
         out.notes = list(dict.fromkeys(out.notes))  # each note once, in order
         return out

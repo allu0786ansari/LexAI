@@ -1,0 +1,47 @@
+$ .venv\Scripts\python.exe -m lexai.evaluation retrieval --split dev --configs hybrid,dense,bm25,no-routing
+2026-11-21 06:38:06 [info     ] index_ready                    built_at=2026-11-20T13:30:54+00:00 chunks=5070 collection=lexai_chunks_20261120t133053900723
+2026-11-21 06:38:08 [info     ] correspondence_ready           sections=2271
+2026-11-21 06:38:48 [info     ] condense_rejected              added=['act IPC', 'IPC Section 302'] rewrite='What is the bail status of a murder offence under Section 302 of the Indian Penal Code?'
+2026-11-21 06:39:04 [info     ] condense_rejected              added=['act CrPC', 'CrPC Section 154'] rewrite='What is the procedure under Section 154 of the Criminal Procedure Code, 1973, if the police refuse to register an FIR?'
+2026-11-21 06:39:09 [info     ] condense_rejected              added=['act IPC', 'IPC Section 304B'] rewrite='What is the minimum punishment for dowry death under Section 304B of the Indian Penal Code?'
+2026-11-21 06:39:13 [info     ] condense_rejected              added=['act IPC', 'IPC Section 354'] rewrite='Is a repeat offence of stalking under Section 354 IPC punished more severely?'
+2026-11-21 06:39:21 [info     ] condense_rejected              added=['act CrPC', 'CrPC Section 438'] rewrite='Which courts can grant anticipatory bail under Section 438 of the Criminal Procedure Code, 1973?'
+2026-11-21 06:39:26 [info     ] condense_rejected              added=['act IPC'] rewrite='Must the police inform the person the grounds of arrest under the Indian Penal Code or any relevant act?'
+2026-11-21 06:39:32 [info     ] condense_rejected              added=['act CrPC', 'CrPC Section 167'] rewrite='Within how many hours must an arrested person be produced before a magistrate under Section 167 of the Criminal Procedure Code, 1973?'
+2026-11-21 06:39:40 [info     ] condense_rejected              added=['act IEA', 'IEA Section 27'] rewrite='What is the admissibility of a confession made in police custody in the presence of a magistrate under Indian law, specifically referring to Section 27 of the Indian Evidence Act, 1872?'
+hybrid      n= 94  hit@1 0.862  hit@5 0.936  recall@8 0.915  mrr@10 0.892  ndcg@10 0.884  (95s) -> retrieval-dev-hybrid.json
+2026-11-21 06:39:51 [info     ] index_ready                    built_at=2026-11-20T13:30:54+00:00 chunks=5070 collection=lexai_chunks_20261120t133053900723
+2026-11-21 06:39:52 [info     ] correspondence_ready           sections=2271
+2026-11-21 06:40:20 [info     ] condense_rejected              added=['act IPC', 'IPC Section 302'] rewrite='What is the bail status of a murder offence under Section 302 of the Indian Penal Code?'
+2026-11-21 06:40:35 [info     ] condense_rejected              added=['act CrPC', 'CrPC Section 154'] rewrite='What is the procedure under Section 154 of the Criminal Procedure Code, 1973, if the police refuse to register an FIR?'
+2026-11-21 06:40:40 [info     ] condense_rejected              added=['act IPC', 'IPC Section 304B'] rewrite='What is the minimum punishment for dowry death under Section 304B of the Indian Penal Code?'
+2026-11-21 06:40:43 [info     ] condense_rejected              added=['act IPC', 'IPC Section 354'] rewrite='Is a repeat offence of stalking under Section 354 IPC punished more severely?'
+2026-11-21 06:40:52 [info     ] condense_rejected              added=['act CrPC', 'CrPC Section 438'] rewrite='Which courts can grant anticipatory bail under Section 438 of the Criminal Procedure Code, 1973?'
+2026-11-21 06:40:56 [info     ] condense_rejected              added=['act IPC'] rewrite='Must the police inform the person the grounds of arrest under the Indian Penal Code or any relevant act?'
+2026-11-21 06:41:02 [info     ] condense_rejected              added=['act CrPC', 'CrPC Section 167'] rewrite='Within how many hours must an arrested person be produced before a magistrate under Section 167 of the Criminal Procedure Code, 1973?'
+2026-11-21 06:41:10 [info     ] condense_rejected              added=['act IEA', 'IEA Section 27'] rewrite='What is the admissibility of a confession made in police custody in the presence of a magistrate under Indian law, specifically referring to Section 27 of the Indian Evidence Act, 1872?'
+dense       n= 94  hit@1 0.851  hit@5 0.925  recall@8 0.915  mrr@10 0.879  ndcg@10 0.879  (80s) -> retrieval-dev-dense.json
+2026-11-21 06:41:20 [info     ] index_ready                    built_at=2026-11-20T13:30:54+00:00 chunks=5070 collection=lexai_chunks_20261120t133053900723
+2026-11-21 06:41:21 [info     ] correspondence_ready           sections=2271
+2026-11-21 06:42:00 [info     ] condense_rejected              added=['act IPC', 'IPC Section 302'] rewrite='What is the bail status of a murder offence under Section 302 of the Indian Penal Code?'
+2026-11-21 06:42:14 [info     ] condense_rejected              added=['act CrPC', 'CrPC Section 154'] rewrite='What is the procedure under Section 154 of the Criminal Procedure Code, 1973, if the police refuse to register an FIR?'
+2026-11-21 06:42:19 [info     ] condense_rejected              added=['act IPC', 'IPC Section 304B'] rewrite='What is the minimum punishment for dowry death under Section 304B of the Indian Penal Code?'
+2026-11-21 06:42:23 [info     ] condense_rejected              added=['act IPC', 'IPC Section 354'] rewrite='Is a repeat offence of stalking under Section 354 IPC punished more severely?'
+2026-11-21 06:42:32 [info     ] condense_rejected              added=['act CrPC', 'CrPC Section 438'] rewrite='Which courts can grant anticipatory bail under Section 438 of the Criminal Procedure Code, 1973?'
+2026-11-21 06:42:36 [info     ] condense_rejected              added=['act IPC'] rewrite='Must the police inform the person the grounds of arrest under the Indian Penal Code or any relevant act?'
+2026-11-21 06:42:42 [info     ] condense_rejected              added=['act CrPC', 'CrPC Section 167'] rewrite='Within how many hours must an arrested person be produced before a magistrate under Section 167 of the Criminal Procedure Code, 1973?'
+2026-11-21 06:42:50 [info     ] condense_rejected              added=['act IEA', 'IEA Section 27'] rewrite='What is the admissibility of a confession made in police custody in the presence of a magistrate under Indian law, specifically referring to Section 27 of the Indian Evidence Act, 1872?'
+bm25        n= 94  hit@1 0.777  hit@5 0.904  recall@8 0.883  mrr@10 0.828  ndcg@10 0.831  (92s) -> retrieval-dev-bm25.json
+2026-11-21 06:43:01 [info     ] index_ready                    built_at=2026-11-20T13:30:54+00:00 chunks=5070 collection=lexai_chunks_20261120t133053900723
+2026-11-21 06:43:02 [info     ] correspondence_ready           sections=2271
+2026-11-21 06:43:35 [info     ] condense_rejected              added=['act IPC', 'IPC Section 302'] rewrite='What is the bail status of a murder offence under Section 302 of the Indian Penal Code?'
+2026-11-21 06:43:49 [info     ] condense_rejected              added=['act CrPC', 'CrPC Section 154'] rewrite='What is the procedure under Section 154 of the Criminal Procedure Code, 1973, if the police refuse to register an FIR?'
+2026-11-21 06:43:54 [info     ] condense_rejected              added=['act IPC', 'IPC Section 304B'] rewrite='What is the minimum punishment for dowry death under Section 304B of the Indian Penal Code?'
+2026-11-21 06:43:58 [info     ] condense_rejected              added=['act IPC', 'IPC Section 354'] rewrite='Is a repeat offence of stalking under Section 354 IPC punished more severely?'
+2026-11-21 06:44:07 [info     ] condense_rejected              added=['act CrPC', 'CrPC Section 438'] rewrite='Which courts can grant anticipatory bail under Section 438 of the Criminal Procedure Code, 1973?'
+2026-11-21 06:44:11 [info     ] condense_rejected              added=['act IPC'] rewrite='Must the police inform the person the grounds of arrest under the Indian Penal Code or any relevant act?'
+2026-11-21 06:44:17 [info     ] condense_rejected              added=['act CrPC', 'CrPC Section 167'] rewrite='Within how many hours must an arrested person be produced before a magistrate under Section 167 of the Criminal Procedure Code, 1973?'
+2026-11-21 06:44:25 [info     ] condense_rejected              added=['act IEA', 'IEA Section 27'] rewrite='What is the admissibility of a confession made in police custody in the presence of a magistrate under Indian law, specifically referring to Section 27 of the Indian Evidence Act, 1872?'
+no-routing  n= 94  hit@1 0.553  hit@5 0.851  recall@8 0.777  mrr@10 0.673  ndcg@10 0.674  (85s) -> retrieval-dev-no-routing.json
+exit=0
+

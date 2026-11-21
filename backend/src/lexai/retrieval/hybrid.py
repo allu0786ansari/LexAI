@@ -49,4 +49,5 @@ class HybridRetriever:
             k_sparse=self.settings.k_sparse,
             limit=self.settings.fused_top_n,
             flt=flt,
+            mode=self.settings.mode,
         )

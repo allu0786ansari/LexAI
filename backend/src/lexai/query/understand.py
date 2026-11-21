@@ -208,6 +208,14 @@ def plan_query(question: str, standalone: str | None = None) -> QueryPlan:
     plan = QueryPlan(question=question, standalone=text, references=refs, acts=acts)
     plan.intent = classify(text, refs, acts)
     plan.era = decide_era(text, acts + [r.act for r in refs if r.act])
+    if standalone and standalone != question:
+        # The user's own words outrank the rewrite ("...of the new code?" must not become the CrPC).
+        own_refs = extract_references(question)
+        own = decide_era(
+            question, [a for _, _, a in act_mentions(question)] + [r.act for r in own_refs if r.act]
+        )
+        if own.explicit:
+            plan.era = own
     if plan.intent == "refused":
         plan.reply = REFUSAL
     elif plan.intent == "out_of_scope":
