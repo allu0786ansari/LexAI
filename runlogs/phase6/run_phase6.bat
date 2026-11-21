@@ -266,6 +266,8 @@ echo Browser tests against nginx (production CSP) and one real question ...
 set "CMD=call npx playwright test --reporter=list" & call :tee "%LOG%"
 set "PW_BASE_URL=" & set "PW_LIVE=" & set "PW_CHANNEL="
 popd
+REM The API's side of the real question (errors, timings), before later steps replace the container.
+set "CMD=%COMPOSE% logs --no-color --since 15m api" & call :run "%LOG%"
 goto :eof
 
 
