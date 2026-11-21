@@ -9,7 +9,9 @@ B4. Feedback is stored; /metrics shows answers, time to first token and stage la
 B5. Tracing: the follow-up's trace has one span per stage (condense, retrieve, context,
     generate, verify) with times, read from the local trace file.
 B6. Admin reindex of one small document: the job succeeds, every other document is
-    kept, and the API answers from the new index without a restart.
+    kept, and the API answers from the new index without a restart. The API's memory is
+    sampled meanwhile; if the API dies, its exit code and log tail are shown, it is
+    restarted, the live index is checked intact, and the reindex is retried once.
 B7. Rate limit: of 21 chat requests sent at once, 20 are answered and one gets
     429 with Retry-After (refused questions: no model call).
 
@@ -20,9 +22,13 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import csv
+import io
 import json
 import os
+import re
 import secrets
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -30,7 +36,7 @@ from typing import Any
 
 import httpx
 from show_trace import tree
-from smoke_phase1 import start_server, stop_server
+from smoke_phase1 import describe_exit, start_server, stop_server
 
 failures: list[str] = []
 FORGED = "2b1f7c9e-4d3a-4f6b-9e8d-1a2b3c4d5e6f"
@@ -71,7 +77,99 @@ async def chat(client: httpx.AsyncClient, question: str, session_id: str | None)
     return events
 
 
-async def check(base_url: str, admin_key: str, trace_file: Path) -> None:
+class Server:
+    """The API under test; restartable if it dies."""
+
+    def __init__(self, port: int, log: Path) -> None:
+        self.port, self.log, self.restarts = port, log, 0
+        self.proc = start_server(port, log)
+
+    def restart(self) -> None:
+        self.restarts += 1
+        self.log = self.log.with_name(f"{self.log.stem}_restart{self.restarts}{self.log.suffix}")
+        print(f"   restarting the API (log: {self.log})", flush=True)
+        self.proc = start_server(self.port, self.log)
+
+    def stop(self) -> None:
+        stop_server(self.proc)
+
+
+def memory_mb(pid: int) -> int | None:
+    """Resident memory of a process, without extra packages (tasklist on Windows, /proc on Linux)."""
+    try:
+        if sys.platform == "win32":
+            out = subprocess.run(
+                ["tasklist", "/FI", f"PID eq {pid}", "/FO", "CSV", "/NH"],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            ).stdout
+            fields = next(csv.reader(io.StringIO(out.strip())), [])
+            digits = re.sub(r"\D", "", fields[-1]) if fields else ""
+            return int(digits) // 1024 if digits else None
+        with open(f"/proc/{pid}/status", encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("VmRSS:"):
+                    return int(line.split()[1]) // 1024
+    except (OSError, subprocess.SubprocessError, ValueError):
+        return None
+    return None
+
+
+def tail(path: Path, n: int) -> list[str]:
+    try:
+        return path.read_text(encoding="utf-8", errors="replace").splitlines()[-n:]
+    except OSError:
+        return []
+
+
+async def reindex(
+    client: httpx.AsyncClient, server: Server, key: str, doc_id: str, chunks: int
+) -> dict[str, Any]:
+    """Start a reindex of one document and wait for it, sampling the API's memory; survives an API crash."""
+    headers = {"X-API-Key": key}
+    idle = memory_mb(server.proc.pid)
+    peak = idle or 0
+    t0 = time.perf_counter()
+    job: dict[str, Any] = {"status": "failed", "detail": ""}
+    try:
+        start = await client.post("/api/v1/admin/reindex", headers=headers, json={"only": [doc_id]})
+        job = start.json()
+        print(
+            f"   reindexing {doc_id} ({chunks} chunks): job {job.get('job_id')}, API memory {idle} MB",
+            flush=True,
+        )
+        while (
+            start.status_code == 202
+            and job["status"] in ("queued", "running")
+            and time.perf_counter() - t0 < 1200
+        ):
+            await asyncio.sleep(3)
+            peak = max(peak, memory_mb(server.proc.pid) or 0)
+            job = (await client.get(f"/api/v1/admin/reindex/{job['job_id']}", headers=headers)).json()
+    except httpx.TransportError:
+        await asyncio.sleep(2)
+        return {
+            "crashed": True,
+            "exit": server.proc.poll(),
+            "peak_mb": peak,
+            "idle_mb": idle,
+            "status": "crashed",
+            "detail": "",
+            "seconds": time.perf_counter() - t0,
+        }
+    return {
+        "crashed": False,
+        "exit": None,
+        "peak_mb": peak,
+        "idle_mb": idle,
+        "status": job.get("status"),
+        "detail": job.get("detail", ""),
+        "seconds": time.perf_counter() - t0,
+    }
+
+
+async def check(base_url: str, admin_key: str, trace_file: Path, server: Server) -> None:
     async with httpx.AsyncClient(base_url=base_url, timeout=httpx.Timeout(900, connect=5)) as client:
         print("\nB1. Sessions")
         forged = await chat(client, "What is murder?", FORGED)
@@ -200,25 +298,40 @@ async def check(base_url: str, admin_key: str, trace_file: Path) -> None:
         )
         before = (answers[2].get("done") or {}).get("index_version", "")
         chunks_before = sum(d["chunks"] for d in docs)
-        start = await client.post(
-            "/api/v1/admin/reindex", headers={"X-API-Key": admin_key}, json={"only": [small["doc_id"]]}
-        )
-        job = start.json()
-        print(f"   reindexing {small['doc_id']} ({small['chunks']} chunks): job {job.get('job_id')}")
-        t0 = time.perf_counter()
-        while (
-            start.status_code == 202
-            and job["status"] in ("queued", "running")
-            and time.perf_counter() - t0 < 1200
-        ):
-            await asyncio.sleep(5)
-            job = (
-                await client.get(f"/api/v1/admin/reindex/{job['job_id']}", headers={"X-API-Key": admin_key})
-            ).json()
+        result = await reindex(client, server, admin_key, small["doc_id"], small["chunks"])
+        if result["crashed"]:
+            report(
+                "reindex job succeeded",
+                False,
+                f"the API process died during the reindex: {describe_exit(result['exit'])}; "
+                f"API memory peaked at {result['peak_mb']} MB",
+            )
+            print("   last lines of the server log:")
+            print("\n".join("      " + line for line in tail(server.log, 25)))
+            server.restart()
+            docs_now = (await client.get("/api/v1/documents")).json()
+            chunks_now = sum(d["chunks"] for d in docs_now)
+            report(
+                "index intact after the crash",
+                chunks_now == chunks_before,
+                f"{chunks_now}/{chunks_before} chunks",
+            )
+            survived = await chat(client, "What does Article 21 of the Constitution protect?", None)
+            report(
+                "API answers after a restart",
+                "done" in survived,
+                f"index {(survived.get('done') or {}).get('index_version')}",
+            )
+            print("   retrying the reindex once (it also removes the interrupted build)")
+            result = await reindex(client, server, admin_key, small["doc_id"], small["chunks"])
+            if result["crashed"]:
+                report("reindex succeeded on retry", False, f"died again: {describe_exit(result['exit'])}")
+                server.restart()
         report(
-            "reindex job succeeded",
-            job.get("status") == "succeeded",
-            f"{job.get('detail', '')[:120]} ({time.perf_counter() - t0:.0f} s)",
+            "reindex job succeeded" if server.restarts == 0 else "reindex succeeded on retry",
+            result["status"] == "succeeded",
+            f"{result['detail'][:120]} ({result['seconds']:.0f} s; "
+            f"API memory {result['idle_mb']} -> peak {result['peak_mb']} MB)",
         )
         docs_after = (await client.get("/api/v1/documents")).json()
         chunks_after = sum(d["chunks"] for d in docs_after)
@@ -253,11 +366,14 @@ def main() -> None:
     os.environ["LEXAI_API_ADMIN_API_KEY"] = admin_key
     os.environ["LEXAI_OBS_TRACE_FILE"] = str(trace_file.resolve())
     os.environ["LEXAI_API_ENVIRONMENT"] = "local"
-    proc = start_server(args.port, args.server_log)
+    server = Server(args.port, args.server_log)
     try:
-        asyncio.run(check(f"http://127.0.0.1:{args.port}", admin_key, trace_file))
+        asyncio.run(check(f"http://127.0.0.1:{args.port}", admin_key, trace_file, server))
+    except httpx.TransportError as exc:  # the API died outside the reindex step
+        report("API stayed up", False, f"{exc!r}; {describe_exit(server.proc.poll())}")
+        print("\n".join("      " + line for line in tail(server.log, 25)))
     finally:
-        stop_server(proc)
+        server.stop()
     print("\nSUMMARY:", "ALL PASSED" if not failures else f"FAILED ({len(failures)}): {failures}")
     sys.exit(1 if failures else 0)
 

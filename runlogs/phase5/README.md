@@ -74,7 +74,7 @@ git push
 | `06_phase5.log` | `SUMMARY: ALL PASSED` — forged session 404, 413, headers, admin 401, every citation and PDF opens, trace with all five stages, reindex succeeded with no document lost, 20 allowed then 429 |
 | `07_phase3.log`, `08_smoke.log` | `SUMMARY: ALL PASSED` |
 
-## Run 2 (after run 1)
+## Run 3 (after runs 1 and 2)
 
 Only the parts that changed (about 10 minutes):
 
@@ -83,7 +83,7 @@ cd /d C:\Users\LENOVO\OneDrive\Desktop\LexAI
 git pull
 runlogs\phase5\run_phase5.bat quality phase5
 git add runlogs\phase5\output
-git commit -m "Phase 5 run 2 logs"
+git commit -m "Phase 5 run 3 logs"
 git push
 ```
 
@@ -108,4 +108,5 @@ Open http://localhost:5173, ask a question, click a `[1]`.
 | Run | Date | Result |
 | --- | --- | --- |
 | 1 | 2026-11-21 | Quality 187 passed, 4 skipped (Redis tests; CI runs them); frontend type check, lint, 13 unit tests, build all passed; Phase 3 checks and smoke **all passed through API v1**. Phase 5: 17/18 — forged session 404, 413, headers, admin 401, **15/15 citations and 15/15 PDF links open**, all three answers verified, metrics, a full trace with every stage, **reindex of prisons-act-1894 in 100 s with all 5,070 chunks kept and the API switched to the new index**. **Failed:** the rate-limit check — all 21 requests got 200. Not a limiter bug: each request took ~7.5 s because a refused question inside a conversation was still rewritten by the model before the refusal, so the 21 requests were spread over ~150 s and never 20 in one minute. **Fixed:** refusal is decided on the user's own words before any rewrite (no model call at all; test added); the check now sends the 21 requests at once. |
+| 2 | 2026-11-21 | Quality 188 passed (incl. the new refusal test). Phase 5: the first 14 checks passed again (sessions, security, 15/15 citations and PDF links, three verified answers, feedback, metrics, full trace). Then **the API process died during the admin reindex**, about 15 s in, while carrying documents into the new build: no Python error or shutdown in its log, so it was killed or crashed natively; no exit code was recorded and the check script stopped with a traceback. The same reindex had passed in run 1 (100 s). **Found while investigating:** a build interrupted this way leaves a half-written collection that is newer than the live one, so the next build's clean-up kept it as the rollback copy and deleted the last good build (and in embedded mode it is loaded into memory at every start). **Fixed:** only complete builds are kept for rollback; leftovers of interrupted builds are removed at the start of every build (test added). **Diagnostics:** the API now runs with Python's faulthandler (native crashes print a stack trace into the server log); the check samples the API's memory during the reindex; if the API dies it reports the exit code and log tail, restarts the API, checks the live index is intact and answering, and retries the reindex once. Rehearsed by killing the API mid-reindex: index intact, answers served, retry succeeded and removed the half-written build. Reindex memory measured here: +70-80 MB. |
 

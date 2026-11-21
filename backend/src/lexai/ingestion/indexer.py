@@ -155,6 +155,10 @@ async def build_index(
     report.collection = name
     try:
         live = await store.live_collection()
+        # Leftovers of interrupted builds (no metadata) waste space and, in embedded mode, memory.
+        for leftover in await store.incomplete_builds(exclude=live):
+            await store.delete_collection(leftover)
+            logger.warning("removed_interrupted_build", collection=leftover)
         report.previous = live
         live_meta = await store.read_meta(live) if live else None
         reusable = (

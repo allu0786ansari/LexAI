@@ -8,9 +8,9 @@ from lexai.api.container import check_compatible
 from lexai.core.errors import IndexMismatchError
 from lexai.core.settings import Settings
 from lexai.retrieval.hybrid import HybridRetriever
-from lexai.retrieval.qdrant_store import BuildMeta, QdrantStore, SearchFilter
+from lexai.retrieval.qdrant_store import BuildMeta, QdrantStore, SearchFilter, new_collection_name
 from lexai.retrieval.sparse import doc_vector, query_vector, term_index, tokenize
-from tests.conftest import FakeEmbedder, make_chunks, publish
+from tests.conftest import DIM, FakeEmbedder, make_chunks, publish
 
 Live = tuple[QdrantStore, str, BuildMeta]
 
@@ -86,3 +86,20 @@ def test_status_is_only_given_for_legislation() -> None:
     assert status_text(by_label["BNS s.103"]) == "in force"
     judgment = by_label["BNS s.103"].model_copy(update={"doc_type": "judgment"})
     assert status_text(judgment) == ""
+
+
+async def test_an_interrupted_build_never_becomes_the_rollback_copy(
+    live_store: Live, settings: Settings
+) -> None:
+    """A build that died half-way (collection written, no metadata) is removed, not kept."""
+    store, first, _ = live_store
+    second, _ = await publish(store, make_chunks()[:2], settings)
+    crashed = new_collection_name()  # newer than `second`, like a build interrupted by a crash
+    await store.create_collection(crashed, DIM)
+    assert await store.live_collection() == second  # the live index kept serving
+    assert await store.incomplete_builds(exclude=second) == [crashed]
+
+    third, _ = await publish(store, make_chunks()[:1], settings)
+    pruned = await store.prune(keep=third)
+    assert crashed in pruned and first in pruned
+    assert await store.build_collections() == [second, third]  # the complete build is the rollback copy

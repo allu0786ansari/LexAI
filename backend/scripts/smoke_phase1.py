@@ -193,6 +193,8 @@ def start_server(port: int, log_path: Path) -> subprocess.Popen[bytes]:
     proc = subprocess.Popen(
         [
             sys.executable,
+            "-X",
+            "faulthandler",  # a native crash prints a stack trace into the server log
             "-m",
             "uvicorn",
             "lexai.api.app:create_app",
@@ -222,7 +224,30 @@ def start_server(port: int, log_path: Path) -> subprocess.Popen[bytes]:
     raise SystemExit(f"API did not start within 15 minutes; see {log_path}")
 
 
+def describe_exit(code: int | None) -> str:
+    """A process exit code in words (Windows NTSTATUS codes included)."""
+    if code is None:
+        return "still running"
+    known = {
+        0xC0000005: "access violation (native crash)",
+        0xC0000409: "stack buffer overrun / fail-fast (native crash)",
+        0xC0000017: "out of memory",
+        0xC000012D: "commit limit reached (out of virtual memory)",
+        0xC00000FD: "stack overflow",
+        0xC000013A: "Ctrl+C / console closed",
+        0x40010004: "terminated (console closed or logoff)",
+        1: "Python error (see the log)",
+    }
+    if code < 0:
+        return f"{code} (killed by signal {-code})"
+    unsigned = code & 0xFFFFFFFF
+    return f"{code} (0x{unsigned:08X}: {known.get(unsigned, 'unknown')})"
+
+
 def stop_server(proc: subprocess.Popen[bytes]) -> None:
+    if proc.poll() is not None:
+        print(f"API had already exited: {describe_exit(proc.returncode)}", flush=True)
+        return
     proc.terminate()
     try:
         proc.wait(timeout=15)

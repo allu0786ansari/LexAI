@@ -281,15 +281,28 @@ class QdrantStore:
         )
         await self._run(self._client.update_collection_aliases, change_aliases_operations=ops)
 
+    async def incomplete_builds(self, exclude: str | None = None) -> list[str]:
+        """Collections without build metadata: left by a build that failed or was interrupted."""
+        out = []
+        for name in await self.build_collections():
+            if name != exclude and await self.read_meta(name) is None:
+                out.append(name)
+        return out
+
     async def prune(self, keep: str) -> list[str]:
-        """Delete builds older than the live one beyond `keep_previous`."""
-        builds = [c for c in await self.build_collections() if c != keep]
-        older = [c for c in builds if c < keep]
-        newer_failed = [c for c in builds if c > keep]
-        doomed = older[: max(0, len(older) - self.settings.keep_previous)] + newer_failed
+        """
+        Delete every incomplete build, and complete builds older than the live one beyond
+        `keep_previous`. Only complete builds are kept for rollback: a build interrupted
+        half-way is newer than the live one but must never become the rollback target.
+        """
+        incomplete = await self.incomplete_builds(exclude=keep)
+        complete = [c for c in await self.build_collections() if c != keep and c not in incomplete]
+        older = [c for c in complete if c < keep]
+        newer = [c for c in complete if c > keep]
+        doomed = incomplete + older[: max(0, len(older) - self.settings.keep_previous)] + newer
         for name in doomed:
             await self.delete_collection(name)
-        return doomed
+        return sorted(doomed)
 
     # ---- reading -----------------------------------------------------------
 
