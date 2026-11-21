@@ -5,10 +5,21 @@ Supreme Court judgments and government manuals. It retrieves the relevant
 passages, generates an answer with **Qwen2.5-7B-Instruct**, and cites every
 claim as `[n]` so you can check the source.
 
-> **Status: Phase 3 of 6 complete** (query understanding and grounded answers;
-> [verified results](runlogs/phase3/RESULTS.md)). The full plan covers ingestion,
-> retrieval, evaluation, API/UI, observability and deployment. Quality numbers
-> will be published here only once Phase 4's evaluation produces them.
+> **Status: Phase 4 of 6 complete** (evaluation harness and CI regression gate;
+> [verified results](runlogs/phase4/RESULTS.md)). The full plan covers ingestion,
+> retrieval, evaluation, API/UI, observability and deployment.
+
+**Measured on an 8 GB laptop** (200-question golden set, held-out test split, Qwen2.5-7B):
+
+| | |
+| --- | --- |
+| Right provision ranked first / in top 5 (test split) | 94.6% / 96.0% (MRR@10 0.953) |
+| Answers passing citation verification | 87.5% (gold provision cited in 87.9%) |
+| Unanswerable questions declined · crime-assistance requests refused | 100% · 100% |
+| Typical answer on the laptop | first token ~21 s, complete ~51 s |
+
+The golden set was written for this corpus and checked against it automatically; it was
+not reviewed by a lawyer. Details, ablations and known weaknesses: [Phase 4 results](runlogs/phase4/RESULTS.md).
 
 ## How it works
 
@@ -194,7 +205,7 @@ frontend/         React + Vite chat UI
 | 1 | Foundation: async clients, Qwen2.5-7B, fail-loudly, tests | **done** ([results](runlogs/phase1/RESULTS.md)) |
 | 2 | Ingestion: corpus manifest, BNS/BNSS/BSA, legal-structure chunking, Qdrant | **done** ([results](runlogs/phase2/RESULTS.md)) |
 | 3 | Retrieval & generation: query routing, citation verification, abstention | **done** ([results](runlogs/phase3/RESULTS.md)) |
-| 4 | Evaluation: golden set, retrieval/answer metrics, ablations, load test, CI gate | in review |
+| 4 | Evaluation: golden set, retrieval/answer metrics, ablations, load test, CI gate | **done** ([results](runlogs/phase4/RESULTS.md)) |
 | 5 | API v1, TypeScript UI, security, observability | planned |
 | 6 | Docker Compose, CI/CD, deployment | planned |
 

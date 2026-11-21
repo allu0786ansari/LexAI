@@ -1,0 +1,25 @@
+{
+  "retrieval": {
+    "k_dense": 40,
+    "k_sparse": 40,
+    "fused_top_n": 30,
+    "context_char_budget": 6000,
+    "hyde_enabled": false,
+    "mode": "hybrid"
+  },
+  "query": {
+    "condense_enabled": true,
+    "condense_turns": 3,
+    "condense_max_tokens": 96,
+    "max_references": 4,
+    "routing_enabled": true,
+    "abstain_min_dense": 0.63,
+    "abstain_min_rerank": null,
+    "abstain_show_sources": 3
+  },
+  "rerank": {
+    "enabled": false,
+    "model": "BAAI/bge-reranker-v2-m3",
+    "top_n": 5
+  }
+}

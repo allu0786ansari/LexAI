@@ -33,8 +33,10 @@ from lexai.evaluation.fixture import (
     export_index,
     fixture_present,
     load_fixture,
+    pinned_settings,
     smoke_items,
     write_queries,
+    write_settings,
 )
 from lexai.evaluation.judge import Judge
 from lexai.evaluation.runner import RunResult, describe_settings, run_answers, run_retrieval
@@ -244,6 +246,7 @@ async def cmd_export_fixture(args: argparse.Namespace) -> int:
             vector = await container.embedder.embed_query(standalone)
             queries[item.id] = {"standalone": standalone, "vector": [round(v, 6) for v in vector]}
         write_queries(out, queries)
+        write_settings(out, settings)
         print(f"exported {len(queries)} smoke queries to {out}")
     finally:
         await container.aclose()
@@ -255,7 +258,7 @@ async def offline_run(
 ) -> RunResult:
     """Retrieval over the exported smoke fixture: no model server, no index on disk."""
     store, collection, _meta, queries = await load_fixture(fixture_dir)
-    settings = apply_config(Settings(), config)
+    settings = apply_config(pinned_settings(fixture_dir), config)
     settings.query.condense_enabled = False  # follow-ups use the rewrite stored in the fixture
     embedder = FixtureEmbedder(queries)
     sessions = SessionStore(30, 20, 10)

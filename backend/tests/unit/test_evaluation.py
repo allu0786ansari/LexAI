@@ -291,9 +291,13 @@ async def test_fixture_round_trip_runs_the_live_pipeline(
     not (fixture_present(cli.FIXTURE_DIR) and cli.BASELINE.exists()),
     reason="no exported fixture / baseline in eval/ (run export-fixture on the laptop)",
 )
-async def test_offline_gate_against_the_committed_baseline() -> None:
+async def test_offline_gate_against_the_committed_baseline(monkeypatch: pytest.MonkeyPatch) -> None:
+    # The fixture pins its retrieval settings: this machine's environment must not matter.
+    monkeypatch.setenv("LEXAI_RETRIEVAL_CONTEXT_CHAR_BUDGET", "1500")
+    monkeypatch.setenv("LEXAI_QUERY_ROUTING_ENABLED", "false")
     baseline = json.loads(cli.BASELINE.read_text(encoding="utf-8"))
     run = await cli.offline_run(baseline["config"])
+    assert run.summary["overall"] == pytest.approx(baseline["overall"], abs=1e-4), "not reproducible"
     assert cli.gate(run.summary, baseline) == []
     regressed = await cli.offline_run("no-routing")
     assert cli.gate(regressed.summary, baseline), "removing routing must fail the gate"

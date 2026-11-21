@@ -25,7 +25,13 @@ from typing import Any
 import numpy as np
 from qdrant_client import QdrantClient, models
 
-from lexai.core.settings import QdrantSettings
+from lexai.core.settings import (
+    QdrantSettings,
+    QuerySettings,
+    RerankSettings,
+    RetrievalSettings,
+    Settings,
+)
 from lexai.domain.models import Chunk
 from lexai.evaluation.dataset import GoldenItem
 from lexai.retrieval.qdrant_store import (
@@ -43,6 +49,7 @@ VECTORS = "smoke_index.npz"
 PAYLOADS = "smoke_payloads.json.gz"
 META = "smoke_meta.json"
 QUERIES = "smoke_queries.json"
+SETTINGS = "smoke_settings.json"  # retrieval/query/rerank settings the fixture was exported with
 
 
 def smoke_items(items: list[GoldenItem]) -> list[GoldenItem]:
@@ -88,6 +95,28 @@ async def export_index(store: QdrantStore, collection: str, meta: BuildMeta, out
 
 def write_queries(out_dir: Path, queries: dict[str, dict[str, Any]]) -> None:
     (out_dir / QUERIES).write_text(json.dumps(queries, ensure_ascii=False), encoding="utf-8")
+
+
+def write_settings(out_dir: Path, settings: Settings) -> None:
+    pinned = {
+        "retrieval": settings.retrieval.model_dump(mode="json"),
+        "query": settings.query.model_dump(mode="json"),
+        "rerank": settings.rerank.model_dump(mode="json"),
+    }
+    (out_dir / SETTINGS).write_text(json.dumps(pinned, indent=2) + "\n", encoding="utf-8")
+
+
+def pinned_settings(directory: Path) -> Settings:
+    """Settings for an offline run: the exporting machine's retrieval, query and rerank
+    settings, so the gate gives the same numbers on every machine whatever its .env says."""
+    settings = Settings()
+    path = directory / SETTINGS
+    if path.exists():
+        pinned = json.loads(path.read_text(encoding="utf-8"))
+        settings.retrieval = RetrievalSettings(**pinned["retrieval"])
+        settings.query = QuerySettings(**pinned["query"])
+        settings.rerank = RerankSettings(**pinned["rerank"])
+    return settings
 
 
 def fixture_present(directory: Path) -> bool:

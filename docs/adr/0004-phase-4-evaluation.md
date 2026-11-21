@@ -1,6 +1,6 @@
 # ADR 0004 — Phase 4 evaluation harness and regression gate
 
-Date: 2026-11-20 · Status: proposed (pending the laptop run, runlogs/phase4)
+Date: 2026-11-21 · Status: accepted (verified on the target laptop, see runlogs/phase4/RESULTS.md)
 
 ## Context
 
@@ -73,6 +73,16 @@ gate that blocks regressions in pull requests.
    message that tries to override its rules. `LEXAI_LLM_PROMPT_VERSION` selects
    the template (v3 kept for comparison); the version is part of the cache key
    and of every result. An abstention is no longer flagged "no citations".
+
+11. **The fixture pins its retrieval settings.** Run 3 showed the offline numbers
+   depended on the machine's `.env` (the laptop profile's 6,000-character budget vs
+   the defaults in CI). `export-fixture` now saves the retrieval, query and rerank
+   settings (`smoke_settings.json`) and the offline run uses them, so every machine
+   reproduces the baseline exactly; a test checks this with a conflicting
+   environment.
+12. **The answers step is resumable.** Each answer is appended to a checkpoint and a
+   rerun with the same settings continues; a 30-minute step interrupted at item 37
+   (run 2) no longer loses everything.
 
 ## Consequences
 
