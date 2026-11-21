@@ -20,7 +20,7 @@ REM     deploy\lexai.bat ps / logs / down / wipe
 REM ===========================================================================
 
 set "D=%~dp0"
-REM deploy.py needs Python 3.10+: the backend virtual environment if there is one.
+REM deploy.py needs Python 3.11+: the backend virtual environment if there is one.
 if not defined LEXAI_PYTHON set "LEXAI_PYTHON=python"
 if exist "%D%..\backend\.venv\Scripts\python.exe" set "LEXAI_PYTHON=%D%..\backend\.venv\Scripts\python.exe"
 set COMPOSE=docker compose --project-directory "%D%." --env-file "%D%env\laptop-docker.env" -f "%D%compose.yaml" -f "%D%compose.laptop.yaml"

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Zero-surprise deploys with automatic rollback (Linux, macOS and Windows; needs only Python 3.10+
+Zero-surprise deploys with automatic rollback (Linux, macOS and Windows; needs only Python 3.11+
 and Docker Compose on the host).
 
     python deploy/deploy.py --tag 1.2.0                 # server: pull, back up, switch, smoke, keep or roll back
