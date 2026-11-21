@@ -1,11 +1,23 @@
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" models
- Container lexai-ingest-run-99a28c599d45 Creating 
- Container lexai-ingest-run-99a28c599d45 Created 
+ Container lexai-ingest-run-58c9726f3e7f Creating 
+ Container lexai-ingest-run-58c9726f3e7f Created 
 Config:   /app/backend/.env (profile: none (no backend/.env; built-in defaults))
 LLM:      qwen2.5-7b-instruct at http://host.docker.internal:11434/v1
 Embedder: nomic-embed-text (768-dim) at http://host.docker.internal:11434/v1
 Reranker: disabled
 
-[FAIL] model server reachable: http://host.docker.internal:11434/v1: ConnectError('All connection attempts failed'). Is Ollama running?
+[PASS] model server reachable: 7 models served
+[PASS] LLM model served: qwen2.5-7b-instruct
+[PASS] embedding model served: nomic-embed-text
+[PASS] LLM context length pinned: num_ctx=4096
+[PASS] embedding dimension matches config: model returns 768, LEXAI_EMBED_DIMENSION=768
+
+Generation test (the first call also loads the model into memory) ...
+[PASS] LLM generates: first token after 45.0s, 62 chunks in 57.8s (~4.8 tokens/s)
+   reply: A First Information Report (FIR) in India is an official record of a crime reported to the police, which is registered based on information provided by the complainant under Section 154 of the Indian Penal Code. It serves as the basis for the police to initiate an investigation into the reported cri
+   loaded: qwen2.5-7b-instruct:latest  5.2 GB total, 50% on GPU
+   loaded: nomic-embed-text:latest  0.3 GB total, 100% on GPU
+
+SUMMARY: ALL PASSED
 exit=0
 

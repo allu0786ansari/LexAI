@@ -1,233 +1,250 @@
 $ docker compose --project-directory "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy" --env-file "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\env\laptop-docker.env" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.yaml" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.laptop.yaml" --profile observability ps -a
-NAME                 IMAGE                     COMMAND                  SERVICE      CREATED             STATUS                    PORTS
-lexai-api-1          lexai-backend:local       "uvicorn lexai.api.a…"   api          9 minutes ago       Up 8 minutes (healthy)    8000/tcp
-lexai-grafana-1      grafana/grafana:13.3.1    "/run.sh"                grafana      About an hour ago   Up About an hour          127.0.0.1:3001->3000/tcp
-lexai-prometheus-1   prom/prometheus:v3.16.0   "/bin/prometheus --c…"   prometheus   About an hour ago   Up About an hour          127.0.0.1:9095->9090/tcp
-lexai-qdrant-1       qdrant/qdrant:v1.20.2     "./entrypoint.sh"        qdrant       59 minutes ago      Up 59 minutes (healthy)   6333-6334/tcp
-lexai-redis-1        redis:7.4.11-alpine       "docker-entrypoint.s…"   redis        2 hours ago         Up 2 hours (healthy)      6379/tcp
-lexai-web-1          lexai-web:local           "/docker-entrypoint.…"   web          8 minutes ago       Up 8 minutes (healthy)    127.0.0.1:8090->8080/tcp
+NAME                 IMAGE                     COMMAND                  SERVICE      CREATED              STATUS                        PORTS
+lexai-api-1          lexai-backend:local       "uvicorn lexai.api.a…"   api          About a minute ago   Up About a minute (healthy)   8000/tcp
+lexai-grafana-1      grafana/grafana:13.3.1    "/run.sh"                grafana      2 hours ago          Up 2 hours                    127.0.0.1:3001->3000/tcp
+lexai-prometheus-1   prom/prometheus:v3.16.0   "/bin/prometheus --c…"   prometheus   2 hours ago          Up 2 hours                    127.0.0.1:9095->9090/tcp
+lexai-qdrant-1       qdrant/qdrant:v1.20.2     "./entrypoint.sh"        qdrant       7 minutes ago        Up 7 minutes (healthy)        6333-6334/tcp
+lexai-redis-1        redis:7.4.11-alpine       "docker-entrypoint.s…"   redis        3 hours ago          Up 3 hours (healthy)          6379/tcp
+lexai-web-1          lexai-web:local           "/docker-entrypoint.…"   web          About a minute ago   Up About a minute (healthy)   127.0.0.1:8090->8080/tcp
 exit=0
 
 $ docker stats --no-stream
 NAME                                                                                                                    MEM USAGE / LIMIT     CPU %
-lexai-web-1                                                                                                             4.875MiB / 5.788GiB   0.00%
-lexai-api-1                                                                                                             105.6MiB / 5.788GiB   0.21%
-lexai-qdrant-1                                                                                                          25.27MiB / 5.788GiB   0.06%
-lexai-grafana-1                                                                                                         280.7MiB / 5.788GiB   1.57%
-lexai-prometheus-1                                                                                                      32.31MiB / 5.788GiB   0.49%
-lexai-redis-1                                                                                                           3.984MiB / 5.788GiB   0.49%
-k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  57.64MiB / 5.788GiB   0.21%
+lexai-web-1                                                                                                             4.871MiB / 5.788GiB   0.00%
+lexai-api-1                                                                                                             144.5MiB / 5.788GiB   0.16%
+lexai-qdrant-1                                                                                                          56.96MiB / 5.788GiB   7.98%
+lexai-grafana-1                                                                                                         300MiB / 5.788GiB     2.50%
+lexai-prometheus-1                                                                                                      33.36MiB / 5.788GiB   0.85%
+lexai-redis-1                                                                                                           4.559MiB / 5.788GiB   7.36%
+k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  62.81MiB / 5.788GiB   0.00%
 k8s_lb-tcp-443_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                          344KiB / 5.788GiB     0.00%
 k8s_POD_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_1                                      312KiB / 5.788GiB     0.00%
-k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 23.91MiB / 170MiB     0.26%
-k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   31.77MiB / 5.788GiB   0.69%
-k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   14MiB / 5.788GiB      0.00%
-k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                           1.844MiB / 5.788GiB   0.00%
+k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 28.03MiB / 170MiB     0.36%
+k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   36.94MiB / 5.788GiB   0.32%
+k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   17.5MiB / 5.788GiB    0.09%
+k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                           1.797MiB / 5.788GiB   0.00%
 k8s_POD_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                                 304KiB / 5.788GiB     0.00%
 k8s_POD_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                     344KiB / 5.788GiB     0.00%
-k8s_POD_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                              312KiB / 5.788GiB     0.00%
+k8s_POD_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                              324KiB / 5.788GiB     0.00%
 k8s_POD_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1                      308KiB / 5.788GiB     0.00%
 
 $ docker compose --project-directory "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy" --env-file "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\env\laptop-docker.env" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.yaml" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.laptop.yaml" logs --no-color --tail 80 api web qdrant redis
-web-1     | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
-web-1     | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
-web-1     | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
-web-1     | 10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf is not a file or does not exist
-web-1     | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
-qdrant-1  | 2026-11-21T17:21:11.668339Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000569
-qdrant-1  | 2026-11-21T17:21:46.675088Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.000612
-web-1     | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
-web-1     | 20-envsubst-on-templates.sh: Running envsubst on /etc/nginx/templates/default.conf.template to /etc/nginx/conf.d/default.conf
+web-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+web-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+web-1  | 10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf is not a file or does not exist
+web-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+web-1  | 20-envsubst-on-templates.sh: Running envsubst on /etc/nginx/templates/default.conf.template to /etc/nginx/conf.d/default.conf
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+web-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+web-1  | 2026/11/21 18:39:15 [notice] 1#1: using the "epoll" event method
+web-1  | 2026/11/21 18:39:15 [notice] 1#1: nginx/1.31.9
+web-1  | 2026/11/21 18:39:15 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) 
+web-1  | 2026/11/21 18:39:15 [notice] 1#1: OS: Linux 6.6.114.1-microsoft-standard-WSL2
+web-1  | 2026/11/21 18:39:15 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+web-1  | 2026/11/21 18:39:15 [notice] 1#1: start worker processes
+web-1  | 2026/11/21 18:39:15 [notice] 1#1: start worker process 25
+web-1  | 2026/11/21 18:39:15 [notice] 1#1: start worker process 26
+web-1  | 2026/11/21 18:39:15 [notice] 1#1: start worker process 27
+web-1  | 2026/11/21 18:39:15 [notice] 1#1: start worker process 28
+web-1  | 2026/11/21 18:39:17 [error] 25#25: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.8, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:39:17 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1  | 2026/11/21 18:39:20 [error] 25#25: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.8, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:39:20 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:39:23 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1  | 2026/11/21 18:39:23 [error] 25#25: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.8, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1  | 2026/11/21 18:39:26 [error] 25#25: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.8, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:39:26 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:39:34 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:39:42 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:39:50 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:39:58 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:40:06 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:40:14 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:40:22 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:40:30 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:40:38 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:40:46 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:40:54 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+qdrant-1  | 2026-11-21T18:35:32.641483Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000985
+qdrant-1  | 2026-11-21T18:35:40.648487Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000757
+qdrant-1  | 2026-11-21T18:35:48.662096Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001614
+qdrant-1  | 2026-11-21T18:35:56.627448Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 127 "-" "python-client/1.20.0 python/3.12.16" 0.000335
+qdrant-1  | 2026-11-21T18:35:56.632931Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001010
+qdrant-1  | 2026-11-21T18:35:56.665686Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001764
+qdrant-1  | 2026-11-21T18:36:04.675922Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000978
+qdrant-1  | 2026-11-21T18:36:12.690347Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001633
+qdrant-1  | 2026-11-21T18:36:20.706656Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001451
+qdrant-1  | 2026-11-21T18:36:28.707154Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001096
+qdrant-1  | 2026-11-21T18:36:31.634030Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 127 "-" "python-client/1.20.0 python/3.12.16" 0.000554
+qdrant-1  | 2026-11-21T18:36:31.643382Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001889
+qdrant-1  | 2026-11-21T18:36:36.718937Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000832
+qdrant-1  | 2026-11-21T18:36:44.730900Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001393
+qdrant-1  | 2026-11-21T18:36:52.744320Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001294
+qdrant-1  | 2026-11-21T18:37:00.749246Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000834
+qdrant-1  | 2026-11-21T18:37:06.641782Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 127 "-" "python-client/1.20.0 python/3.12.16" 0.000428
+qdrant-1  | 2026-11-21T18:37:06.648135Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.002137
+qdrant-1  | 2026-11-21T18:37:08.760034Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001890
+qdrant-1  | 2026-11-21T18:37:21.769927Z  INFO actix_web::middleware::logger: 172.18.0.8 "GET /aliases HTTP/1.1" 200 128 "-" "python-client/1.20.0 python/3.12.16" 0.000408
+qdrant-1  | 2026-11-21T18:37:21.777311Z  INFO actix_web::middleware::logger: 172.18.0.8 "GET /collections/lexai_meta/exists HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000520
+qdrant-1  | 2026-11-21T18:37:21.787359Z  INFO actix_web::middleware::logger: 172.18.0.8 "POST /collections/lexai_meta/points HTTP/1.1" 200 5769 "-" "python-client/1.20.0 python/3.12.16" 0.007024
+qdrant-1  | 2026-11-21T18:37:21.791533Z  INFO actix_web::middleware::logger: 172.18.0.8 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.001164
+qdrant-1  | 2026-11-21T18:37:21.840280Z  INFO collection::collection::snapshots: Creating collection snapshot lexai_chunks_20261121t181339167228-3724221777339767-2026-11-21-18-37-21-0.snapshot into "./snapshots/lexai_chunks_20261121t181339167228/lexai_chunks_20261121t181339167228-3724221777339767-2026-11-21-18-37-21-0.snapshot"
+qdrant-1  | 2026-11-21T18:37:25.639464Z  INFO actix_web::middleware::logger: 172.18.0.8 "POST /collections/lexai_chunks_20261121t181339167228/snapshots?wait=true HTTP/1.1" 200 213 "-" "python-httpx/0.28.1" 3.802039
+qdrant-1  | 2026-11-21T18:37:26.428563Z  INFO actix_web::middleware::logger: 172.18.0.8 "GET /collections/lexai_chunks_20261121t181339167228/snapshots/lexai_chunks_20261121t181339167228-3724221777339767-2026-11-21-18-37-21-0.snapshot HTTP/1.1" 200 41086880 "-" "python-httpx/0.28.1" 0.681683
+qdrant-1  | 2026-11-21T18:37:26.653852Z  INFO storage::content_manager::snapshots: Deleting collection snapshot "/qdrant/snapshots/lexai_chunks_20261121t181339167228/lexai_chunks_20261121t181339167228-3724221777339767-2026-11-21-18-37-21-0.snapshot"
+qdrant-1  | 2026-11-21T18:37:26.662300Z  INFO actix_web::middleware::logger: 172.18.0.8 "DELETE /collections/lexai_chunks_20261121t181339167228/snapshots/lexai_chunks_20261121t181339167228-3724221777339767-2026-11-21-18-37-21-0.snapshot HTTP/1.1" 200 71 "-" "python-httpx/0.28.1" 0.008962
+qdrant-1  | 2026-11-21T18:37:40.947488Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 128 "-" "python-client/1.20.0 python/3.12.16" 0.000839
+qdrant-1  | 2026-11-21T18:37:40.950891Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /collections/lexai_meta/exists HTTP/1.1" 200 79 "-" "python-client/1.20.0 python/3.12.16" 0.000471
+qdrant-1  | 2026-11-21T18:37:40.962338Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_meta/points HTTP/1.1" 200 5769 "-" "python-client/1.20.0 python/3.12.16" 0.007610
+qdrant-1  | 2026-11-21T18:37:41.088879Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/scroll HTTP/1.1" 200 285463 "-" "python-client/1.20.0 python/3.12.16" 0.028685
+qdrant-1  | 2026-11-21T18:37:41.132702Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/scroll HTTP/1.1" 200 288593 "-" "python-client/1.20.0 python/3.12.16" 0.020245
+qdrant-1  | 2026-11-21T18:37:41.156727Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/scroll HTTP/1.1" 200 276242 "-" "python-client/1.20.0 python/3.12.16" 0.011747
+qdrant-1  | 2026-11-21T18:37:41.180952Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/scroll HTTP/1.1" 200 284148 "-" "python-client/1.20.0 python/3.12.16" 0.009754
+qdrant-1  | 2026-11-21T18:37:41.268941Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/scroll HTTP/1.1" 200 272409 "-" "python-client/1.20.0 python/3.12.16" 0.009248
+qdrant-1  | 2026-11-21T18:37:41.290979Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/scroll HTTP/1.1" 200 273475 "-" "python-client/1.20.0 python/3.12.16" 0.009588
+qdrant-1  | 2026-11-21T18:37:42.504298Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 127 "-" "python-client/1.20.0 python/3.12.16" 0.000170
+qdrant-1  | 2026-11-21T18:37:42.509966Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.002602
+qdrant-1  | 2026-11-21T18:37:45.514505Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000866
+qdrant-1  | 2026-11-21T18:37:53.530153Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001624
+qdrant-1  | 2026-11-21T18:38:01.534112Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000914
+qdrant-1  | 2026-11-21T18:38:09.540457Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000905
+qdrant-1  | 2026-11-21T18:38:17.515519Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 128 "-" "python-client/1.20.0 python/3.12.16" 0.000306
+qdrant-1  | 2026-11-21T18:38:17.520116Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000899
+qdrant-1  | 2026-11-21T18:38:17.546971Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000738
+qdrant-1  | 2026-11-21T18:38:25.565245Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.002303
+qdrant-1  | 2026-11-21T18:38:33.567503Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001162
+qdrant-1  | 2026-11-21T18:38:41.576206Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000826
+qdrant-1  | 2026-11-21T18:38:49.586890Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.001593
+qdrant-1  | 2026-11-21T18:38:52.522941Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 127 "-" "python-client/1.20.0 python/3.12.16" 0.000508
+qdrant-1  | 2026-11-21T18:38:52.529994Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000790
+qdrant-1  | 2026-11-21T18:38:57.595492Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.000930
+qdrant-1  | 2026-11-21T18:39:05.602415Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001073
+qdrant-1  | 2026-11-21T18:39:24.856850Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 126 "-" "python-client/1.20.0 python/3.12.16" 0.000774
+qdrant-1  | 2026-11-21T18:39:24.861432Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /collections/lexai_meta/exists HTTP/1.1" 200 82 "-" "python-client/1.20.0 python/3.12.16" 0.000524
+qdrant-1  | 2026-11-21T18:39:24.872682Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_meta/points HTTP/1.1" 200 5769 "-" "python-client/1.20.0 python/3.12.16" 0.007730
+qdrant-1  | 2026-11-21T18:39:24.989361Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/scroll HTTP/1.1" 200 285462 "-" "python-client/1.20.0 python/3.12.16" 0.027950
+qdrant-1  | 2026-11-21T18:39:25.023486Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/scroll HTTP/1.1" 200 288592 "-" "python-client/1.20.0 python/3.12.16" 0.019433
+qdrant-1  | 2026-11-21T18:39:25.063831Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/scroll HTTP/1.1" 200 276242 "-" "python-client/1.20.0 python/3.12.16" 0.018245
+qdrant-1  | 2026-11-21T18:39:25.109690Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/scroll HTTP/1.1" 200 284147 "-" "python-client/1.20.0 python/3.12.16" 0.012645
+qdrant-1  | 2026-11-21T18:39:25.235416Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/scroll HTTP/1.1" 200 272409 "-" "python-client/1.20.0 python/3.12.16" 0.012625
+qdrant-1  | 2026-11-21T18:39:25.271379Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/scroll HTTP/1.1" 200 273475 "-" "python-client/1.20.0 python/3.12.16" 0.011631
+qdrant-1  | 2026-11-21T18:39:26.594124Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 127 "-" "python-client/1.20.0 python/3.12.16" 0.000217
+qdrant-1  | 2026-11-21T18:39:26.599275Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.000825
+qdrant-1  | 2026-11-21T18:39:29.492652Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001784
+qdrant-1  | 2026-11-21T18:39:37.503997Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001648
+qdrant-1  | 2026-11-21T18:39:45.512752Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001385
+qdrant-1  | 2026-11-21T18:39:53.518445Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000978
+qdrant-1  | 2026-11-21T18:40:01.527191Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001165
+qdrant-1  | 2026-11-21T18:40:01.602248Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 127 "-" "python-client/1.20.0 python/3.12.16" 0.000227
+qdrant-1  | 2026-11-21T18:40:01.606589Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.000731
+qdrant-1  | 2026-11-21T18:40:09.537718Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.001543
+qdrant-1  | 2026-11-21T18:40:17.545638Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000963
+qdrant-1  | 2026-11-21T18:40:25.558540Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.001285
+qdrant-1  | 2026-11-21T18:40:33.563792Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001201
+qdrant-1  | 2026-11-21T18:40:36.607560Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 127 "-" "python-client/1.20.0 python/3.12.16" 0.000374
+qdrant-1  | 2026-11-21T18:40:36.617723Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.003877
+qdrant-1  | 2026-11-21T18:40:41.575622Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.002921
+qdrant-1  | 2026-11-21T18:40:49.584050Z  INFO actix_web::middleware::logger: 172.18.0.4 "POST /collections/lexai_chunks_20261121t181339167228/points/count HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001034
+api-1     | 
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:39:27.604144Z"}
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "9af5c1237e885058dd8c08996efa136f", "level": "warning", "timestamp": "2026-11-21T18:39:29.491996Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:39:29.605791Z"}
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "9af5c1237e885058dd8c08996efa136f", "level": "warning", "timestamp": "2026-11-21T18:39:30.494095Z"}
+api-1     | INFO:     127.0.0.1:57928 - "GET /healthz HTTP/1.1" 200 OK
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "9af5c1237e885058dd8c08996efa136f", "level": "warning", "timestamp": "2026-11-21T18:39:32.495922Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "4caa5bee1497c8f06b3dbf8ce4d608d4", "level": "warning", "timestamp": "2026-11-21T18:39:37.498510Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "4caa5bee1497c8f06b3dbf8ce4d608d4", "level": "warning", "timestamp": "2026-11-21T18:39:38.502987Z"}
+api-1     | INFO:     172.18.0.6:60928 - "GET /metrics HTTP/1.1" 200 OK
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "4caa5bee1497c8f06b3dbf8ce4d608d4", "level": "warning", "timestamp": "2026-11-21T18:39:40.507319Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "8214cd6d9cb3adcf7ff3671448d5d998", "level": "warning", "timestamp": "2026-11-21T18:39:45.508764Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | INFO:     127.0.0.1:58680 - "GET /healthz HTTP/1.1" 200 OK
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "8214cd6d9cb3adcf7ff3671448d5d998", "level": "warning", "timestamp": "2026-11-21T18:39:46.512749Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "8214cd6d9cb3adcf7ff3671448d5d998", "level": "warning", "timestamp": "2026-11-21T18:39:48.517728Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "8c38bd2b3677bdefd9bf20ba6346a3df", "level": "warning", "timestamp": "2026-11-21T18:39:53.515544Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "8c38bd2b3677bdefd9bf20ba6346a3df", "level": "warning", "timestamp": "2026-11-21T18:39:54.519389Z"}
+api-1     | INFO:     172.18.0.6:34294 - "GET /metrics HTTP/1.1" 200 OK
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "8c38bd2b3677bdefd9bf20ba6346a3df", "level": "warning", "timestamp": "2026-11-21T18:39:56.522596Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | INFO:     127.0.0.1:52086 - "GET /healthz HTTP/1.1" 200 OK
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "e2306476bd32ac640124530e5398563c", "level": "warning", "timestamp": "2026-11-21T18:40:01.525028Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:40:01.606168Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "e2306476bd32ac640124530e5398563c", "level": "warning", "timestamp": "2026-11-21T18:40:02.529308Z"}
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:40:02.609109Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "e2306476bd32ac640124530e5398563c", "level": "warning", "timestamp": "2026-11-21T18:40:04.533260Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:40:04.611623Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "728c501c363adbb0f560f9478e85596b", "level": "warning", "timestamp": "2026-11-21T18:40:09.535200Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | INFO:     172.18.0.6:52740 - "GET /metrics HTTP/1.1" 200 OK
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "728c501c363adbb0f560f9478e85596b", "level": "warning", "timestamp": "2026-11-21T18:40:10.537792Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "728c501c363adbb0f560f9478e85596b", "level": "warning", "timestamp": "2026-11-21T18:40:12.542324Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | INFO:     127.0.0.1:54176 - "GET /healthz HTTP/1.1" 200 OK
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "c149a92913815d00dd9e1c1fd21dbf35", "level": "warning", "timestamp": "2026-11-21T18:40:17.543471Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "c149a92913815d00dd9e1c1fd21dbf35", "level": "warning", "timestamp": "2026-11-21T18:40:18.548038Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "c149a92913815d00dd9e1c1fd21dbf35", "level": "warning", "timestamp": "2026-11-21T18:40:20.551511Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | INFO:     172.18.0.6:47400 - "GET /metrics HTTP/1.1" 200 OK
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "94fe3fd9707234f5281cb79fca257a46", "level": "warning", "timestamp": "2026-11-21T18:40:25.555874Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "94fe3fd9707234f5281cb79fca257a46", "level": "warning", "timestamp": "2026-11-21T18:40:26.560405Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "94fe3fd9707234f5281cb79fca257a46", "level": "warning", "timestamp": "2026-11-21T18:40:28.562372Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | INFO:     127.0.0.1:49266 - "GET /healthz HTTP/1.1" 200 OK
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "66f9586584cd531ac29c6143b738f44b", "level": "warning", "timestamp": "2026-11-21T18:40:33.561794Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "66f9586584cd531ac29c6143b738f44b", "level": "warning", "timestamp": "2026-11-21T18:40:34.563699Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "66f9586584cd531ac29c6143b738f44b", "level": "warning", "timestamp": "2026-11-21T18:40:36.569155Z"}
+api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:40:36.616756Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:40:37.619637Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:40:39.624525Z"}
+api-1     | INFO:     172.18.0.6:48222 - "GET /metrics HTTP/1.1" 200 OK
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "08bf58866fd2e012ce946cb35019db68", "level": "warning", "timestamp": "2026-11-21T18:40:41.569576Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "08bf58866fd2e012ce946cb35019db68", "level": "warning", "timestamp": "2026-11-21T18:40:42.578013Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "08bf58866fd2e012ce946cb35019db68", "level": "warning", "timestamp": "2026-11-21T18:40:44.582513Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | INFO:     127.0.0.1:42492 - "GET /healthz HTTP/1.1" 200 OK
+api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "9ae6bdbc112ec2b7447b05c6dd49f4a0", "level": "warning", "timestamp": "2026-11-21T18:40:49.581938Z"}
+api-1     | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "9ae6bdbc112ec2b7447b05c6dd49f4a0", "level": "warning", "timestamp": "2026-11-21T18:40:50.585683Z"}
+api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "path": "/readyz", "request_id": "9ae6bdbc112ec2b7447b05c6dd49f4a0", "level": "warning", "timestamp": "2026-11-21T18:40:52.589783Z"}
+api-1     | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1     | INFO:     172.18.0.6:44090 - "GET /metrics HTTP/1.1" 200 OK
 redis-1   | 1:C 21 Nov 2026 16:03:51.753 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-qdrant-1  | 2026-11-21T17:22:21.680662Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 77 "-" "python-client/1.20.0 python/3.12.16" 0.000270
-web-1     | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
-web-1     | /docker-entrypoint.sh: Configuration complete; ready for start up
 redis-1   | 1:C 21 Nov 2026 16:03:51.753 * Redis version=7.4.11, bits=64, commit=00000000, modified=0, pid=1, just started
 redis-1   | 1:C 21 Nov 2026 16:03:51.753 * Configuration loaded
-web-1     | 2026/11/21 17:57:45 [notice] 1#1: using the "epoll" event method
-web-1     | 2026/11/21 17:57:45 [notice] 1#1: nginx/1.31.9
-qdrant-1  | 2026-11-21T17:22:56.685835Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000253
-qdrant-1  | 2026-11-21T17:23:31.692075Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000362
-qdrant-1  | 2026-11-21T17:24:06.700174Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000296
-qdrant-1  | 2026-11-21T17:24:41.708513Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000568
-qdrant-1  | 2026-11-21T17:25:16.716384Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000369
-qdrant-1  | 2026-11-21T17:25:51.723548Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000219
-qdrant-1  | 2026-11-21T17:26:26.730117Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000498
-web-1     | 2026/11/21 17:57:45 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) 
-web-1     | 2026/11/21 17:57:45 [notice] 1#1: OS: Linux 6.6.114.1-microsoft-standard-WSL2
-web-1     | 2026/11/21 17:57:45 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
-web-1     | 2026/11/21 17:57:45 [notice] 1#1: start worker processes
-web-1     | 2026/11/21 17:57:45 [notice] 1#1: start worker process 26
 redis-1   | 1:M 21 Nov 2026 16:03:51.753 * monotonic clock: POSIX clock_gettime
 redis-1   | 1:M 21 Nov 2026 16:03:51.754 * Running mode=standalone, port=6379.
-qdrant-1  | 2026-11-21T17:27:01.736319Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 77 "-" "python-client/1.20.0 python/3.12.16" 0.000278
-qdrant-1  | 2026-11-21T17:27:36.742995Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000761
-qdrant-1  | 2026-11-21T17:28:11.750325Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000394
-web-1     | 2026/11/21 17:57:45 [notice] 1#1: start worker process 27
-web-1     | 2026/11/21 17:57:45 [notice] 1#1: start worker process 28
 redis-1   | 1:M 21 Nov 2026 16:03:51.754 * Server initialized
 redis-1   | 1:M 21 Nov 2026 16:03:51.755 * Ready to accept connections tcp
-web-1     | 2026/11/21 17:57:45 [notice] 1#1: start worker process 29
-web-1     | 192.168.127.1 - - [21/Nov/2026:17:58:05 +0000] "GET /metrics HTTP/1.1" 404 146 "-" "curl/8.23.0" "-"
-web-1     | 192.168.127.1 - - [21/Nov/2026:17:58:05 +0000] "HEAD / HTTP/1.1" 200 0 "-" "curl/8.23.0" "-"
-qdrant-1  | 2026-11-21T17:28:46.756082Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000288
-qdrant-1  | 2026-11-21T17:29:21.761074Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000209
-qdrant-1  | 2026-11-21T17:29:56.767674Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000346
-qdrant-1  | 2026-11-21T17:30:31.773804Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000329
-qdrant-1  | 2026-11-21T17:31:06.782251Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000340
-qdrant-1  | 2026-11-21T17:31:41.788259Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000254
-qdrant-1  | 2026-11-21T17:32:16.796710Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000347
-qdrant-1  | 2026-11-21T17:32:51.805316Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000372
-qdrant-1  | 2026-11-21T17:33:26.810698Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000415
-qdrant-1  | 2026-11-21T17:34:01.818001Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000409
-qdrant-1  | 2026-11-21T17:34:36.824675Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000463
-qdrant-1  | 2026-11-21T17:35:11.831387Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000449
-qdrant-1  | 2026-11-21T17:35:46.838182Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000210
-qdrant-1  | 2026-11-21T17:36:21.845480Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000320
-qdrant-1  | 2026-11-21T17:36:56.853083Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000411
-qdrant-1  | 2026-11-21T17:37:31.859421Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000204
-qdrant-1  | 2026-11-21T17:38:06.867820Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000549
-qdrant-1  | 2026-11-21T17:38:41.875767Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000306
-qdrant-1  | 2026-11-21T17:39:16.881618Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000233
-qdrant-1  | 2026-11-21T17:39:51.888616Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000318
-qdrant-1  | 2026-11-21T17:40:26.894481Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000229
-qdrant-1  | 2026-11-21T17:41:01.901599Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000368
-qdrant-1  | 2026-11-21T17:41:36.910369Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000530
-qdrant-1  | 2026-11-21T17:42:11.916420Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000268
-qdrant-1  | 2026-11-21T17:42:46.923655Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000503
-qdrant-1  | 2026-11-21T17:43:21.930413Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000322
-qdrant-1  | 2026-11-21T17:43:56.935109Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000232
-qdrant-1  | 2026-11-21T17:44:31.939751Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000254
-qdrant-1  | 2026-11-21T17:45:06.946931Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000527
-qdrant-1  | 2026-11-21T17:45:41.953421Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000268
-qdrant-1  | 2026-11-21T17:46:16.960964Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000240
-qdrant-1  | 2026-11-21T17:46:51.967062Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000297
-qdrant-1  | 2026-11-21T17:47:26.973611Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000352
-qdrant-1  | 2026-11-21T17:48:01.982330Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000551
-qdrant-1  | 2026-11-21T17:48:36.988178Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000256
-qdrant-1  | 2026-11-21T17:49:12.014182Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.003163
-qdrant-1  | 2026-11-21T17:49:47.060395Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.002494
-qdrant-1  | 2026-11-21T17:50:22.098199Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.001876
-qdrant-1  | 2026-11-21T17:50:57.143661Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.004411
-qdrant-1  | 2026-11-21T17:51:32.180194Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.002150
-qdrant-1  | 2026-11-21T17:52:07.192214Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000757
-qdrant-1  | 2026-11-21T17:52:42.505240Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.114833
-qdrant-1  | 2026-11-21T17:53:17.601866Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000502
-qdrant-1  | 2026-11-21T17:53:52.613454Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000780
-qdrant-1  | 2026-11-21T17:54:27.698104Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.006182
-qdrant-1  | 2026-11-21T17:55:02.753245Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.003771
-qdrant-1  | 2026-11-21T17:55:37.776560Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 80 "-" "python-client/1.20.0 python/3.12.16" 0.002403
-qdrant-1  | 2026-11-21T17:56:12.837559Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000751
-qdrant-1  | 2026-11-21T17:56:47.844360Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000464
-qdrant-1  | 2026-11-21T17:57:22.848953Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000280
-qdrant-1  | 2026-11-21T17:57:55.539813Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000211
-qdrant-1  | 2026-11-21T17:57:55.809883Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 77 "-" "python-client/1.20.0 python/3.12.16" 0.000194
-qdrant-1  | 2026-11-21T17:58:30.823538Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000348
-qdrant-1  | 2026-11-21T17:59:05.831241Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000393
-qdrant-1  | 2026-11-21T17:59:40.838433Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000348
-qdrant-1  | 2026-11-21T18:00:15.845497Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000482
-qdrant-1  | 2026-11-21T18:00:50.852620Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000222
-qdrant-1  | 2026-11-21T18:01:25.860530Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000707
-qdrant-1  | 2026-11-21T18:02:00.869939Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000263
-qdrant-1  | 2026-11-21T18:02:35.879138Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000467
-qdrant-1  | 2026-11-21T18:03:10.889549Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000614
-qdrant-1  | 2026-11-21T18:03:45.896716Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000443
-qdrant-1  | 2026-11-21T18:04:20.904244Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000388
-qdrant-1  | 2026-11-21T18:04:55.911629Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000391
-qdrant-1  | 2026-11-21T18:05:30.918908Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000409
-qdrant-1  | 2026-11-21T18:06:05.924554Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 78 "-" "python-client/1.20.0 python/3.12.16" 0.000216
-qdrant-1  | 2026-11-21T18:06:40.933438Z  INFO actix_web::middleware::logger: 172.18.0.4 "GET /aliases HTTP/1.1" 200 81 "-" "python-client/1.20.0 python/3.12.16" 0.000546
-api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:01:25.867848Z"}
-api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:01:26.871924Z"}
-api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:01:28.875820Z"}
-api-1     | INFO:     127.0.0.1:52614 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:41850 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:58648 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:41808 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:58788 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
-api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:02:00.873323Z"}
-api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:02:01.877248Z"}
-api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:02:03.880494Z"}
-api-1     | INFO:     172.18.0.6:53994 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:43752 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:52214 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:37388 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
-api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:02:35.885692Z"}
-api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:02:36.888481Z"}
-api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:02:38.890674Z"}
-api-1     | INFO:     172.18.0.6:50452 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:35660 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:59962 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:45172 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:55706 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
-api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:03:10.895336Z"}
-api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:03:11.897484Z"}
-api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:03:13.899527Z"}
-api-1     | INFO:     127.0.0.1:49274 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:43978 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:57912 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:41094 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
-api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:03:45.899982Z"}
-api-1     | INFO:     127.0.0.1:53202 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:03:46.901666Z"}
-api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:03:48.904190Z"}
-api-1     | INFO:     172.18.0.6:33086 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:44902 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:47946 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:45108 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
-api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:04:20.909649Z"}
-api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:04:21.913399Z"}
-api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:04:23.915196Z"}
-api-1     | INFO:     172.18.0.6:50422 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:44036 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:45602 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:52414 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:54462 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
-api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:04:55.916253Z"}
-api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:04:56.918235Z"}
-api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:04:58.920013Z"}
-api-1     | INFO:     127.0.0.1:50454 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:55270 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:46922 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:47522 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
-api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:05:30.924043Z"}
-api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:05:31.926684Z"}
-api-1     | INFO:     127.0.0.1:52662 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:05:33.929306Z"}
-api-1     | INFO:     172.18.0.6:40900 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:33818 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:59414 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:60404 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
-api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:06:05.927493Z"}
-api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:06:06.928279Z"}
-api-1     | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:06:08.929735Z"}
-api-1     | INFO:     172.18.0.6:60432 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:43840 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:41212 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | INFO:     127.0.0.1:36014 - "GET /healthz HTTP/1.1" 200 OK
-api-1     | INFO:     172.18.0.6:50504 - "GET /metrics HTTP/1.1" 200 OK
-api-1     | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
-api-1     | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:06:40.947319Z"}
-api-1     | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:06:41.948510Z"}
 exit=0
 
 $ docker system df
 TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
-Images          18        14        6.329GB   347.1MB (5%)
+Images          18        14        6.328GB   347MB (5%)
 Containers      32        17        581.6kB   299kB (51%)
-Local Volumes   7         6         351MB     434.2kB (0%)
+Local Volumes   7         6         946.5MB   434.2kB (0%)
 Build Cache     76        0         2.716GB   1.868GB
 exit=0
 
 $ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse HEAD
-c5ac3ee6adc4953c7c9083b39558e7f9ee3f6bae
+0df878e144a38ac0a83fcd6df00c3a4a976a67aa
 exit=0
 

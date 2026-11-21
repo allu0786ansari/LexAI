@@ -1,22 +1,27 @@
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" backup
- Container lexai-redis-1 Running 
  Container lexai-qdrant-1 Running 
- Container lexai-redis-1 Waiting 
+ Container lexai-redis-1 Running 
  Container lexai-qdrant-1 Waiting 
+ Container lexai-redis-1 Waiting 
  Container lexai-redis-1 Healthy 
  Container lexai-qdrant-1 Healthy 
- Container lexai-ingest-run-d7ef1ee13b0a Creating 
- Container lexai-ingest-run-d7ef1ee13b0a Created 
+ Container lexai-ingest-run-d9d5597bb094 Creating 
+ Container lexai-ingest-run-d9d5597bb094 Created 
 HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
-{"code": "backup_failed", "error": "there is no live index to back up (run `lexai-ingest build` first)", "event": "ingest_failed", "level": "error", "timestamp": "2026-11-21T17:07:00.162489Z"}
-ERROR: there is no live index to back up (run `lexai-ingest build` first)
-
-exit=1
+HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_meta/points "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/snapshots?wait=true "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/snapshots/lexai_chunks_20261121t181339167228-6012009728650392-2026-11-21-18-33-35-0.snapshot "HTTP/1.1 200 OK"
+HTTP Request: DELETE http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/snapshots/lexai_chunks_20261121t181339167228-6012009728650392-2026-11-21-18-33-35-0.snapshot "HTTP/1.1 200 OK"
+{"path": "/backups/lexai-20261121T183335Z", "collection": "lexai_chunks_20261121t181339167228", "points": 5070, "pruned": [], "event": "backup_written", "level": "info", "timestamp": "2026-11-21T18:33:40.458630Z"}
+backup: /backups/lexai-20261121T183335Z (lexai_chunks_20261121t181339167228, 5070 points, 57.8 MB)
+exit=0
 
 $ dir /s /b "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\backups\lexai-*"
-File Not Found
-exit=1
+C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\backups\lexai-20261121T183335Z
+exit=0
 
 $ docker compose --project-directory "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy" --env-file "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\env\laptop-docker.env" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.yaml" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.laptop.yaml" rm -sf qdrant
  Container lexai-qdrant-1 Stopping 
@@ -43,58 +48,143 @@ exit=0
 
 --- the index is gone now (status must fail): ---
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" status
- Container lexai-qdrant-1 Running 
  Container lexai-redis-1 Running 
- Container lexai-redis-1 Waiting 
+ Container lexai-qdrant-1 Running 
  Container lexai-qdrant-1 Waiting 
- Container lexai-redis-1 Healthy 
+ Container lexai-redis-1 Waiting 
  Container lexai-qdrant-1 Healthy 
- Container lexai-ingest-run-a2635238bdb6 Creating 
- Container lexai-ingest-run-a2635238bdb6 Created 
+ Container lexai-redis-1 Healthy 
+ Container lexai-ingest-run-58298395fc58 Creating 
+ Container lexai-ingest-run-58298395fc58 Created 
 HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/collections "HTTP/1.1 200 OK"
-HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
 Qdrant: http://qdrant:6333
 builds: []
 live index: none (run build)
+HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
 
 exit=1
 
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" restore
  Container lexai-redis-1 Running 
  Container lexai-qdrant-1 Running 
- Container lexai-qdrant-1 Waiting 
  Container lexai-redis-1 Waiting 
+ Container lexai-qdrant-1 Waiting 
  Container lexai-redis-1 Healthy 
  Container lexai-qdrant-1 Healthy 
- Container lexai-ingest-run-282da32ecc38 Creating 
- Container lexai-ingest-run-282da32ecc38 Created 
-{"code": "backup_failed", "error": "no backups in /backups", "event": "ingest_failed", "level": "error", "timestamp": "2026-11-21T17:07:16.252347Z"}
-ERROR: no backups in /backups
-
-exit=1
+ Container lexai-ingest-run-af60b5ee9389 Creating 
+ Container lexai-ingest-run-af60b5ee9389 Created 
+HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/snapshots/upload?priority=snapshot&wait=true "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_meta "HTTP/1.1 200 OK"
+HTTP Request: PUT http://qdrant:6333/collections/lexai_meta/points?wait=true "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/aliases "HTTP/1.1 200 OK"
+{"path": "/backups/lexai-20261121T183335Z", "collection": "lexai_chunks_20261121t181339167228", "previous": null, "event": "backup_restored", "level": "info", "timestamp": "2026-11-21T18:34:05.074863Z"}
+restored lexai-20261121T183335Z: lexai_chunks_20261121t181339167228 (5070 points, backed up 2026-11-21T18:33:40+00:00) is live; previously live: none
+exit=0
 
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" status
  Container lexai-qdrant-1 Running 
  Container lexai-redis-1 Running 
- Container lexai-qdrant-1 Waiting 
  Container lexai-redis-1 Waiting 
- Container lexai-qdrant-1 Healthy 
+ Container lexai-qdrant-1 Waiting 
  Container lexai-redis-1 Healthy 
- Container lexai-ingest-run-d3b606b965f4 Creating 
- Container lexai-ingest-run-d3b606b965f4 Created 
+ Container lexai-qdrant-1 Healthy 
+ Container lexai-ingest-run-e30f09c162f7 Creating 
+ Container lexai-ingest-run-e30f09c162f7 Created 
+HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
 HTTP Request: GET http://qdrant:6333/collections "HTTP/1.1 200 OK"
 Qdrant: http://qdrant:6333
-builds: []
-live index: none (run build)
-
-exit=1
+builds: ['lexai_chunks_20261121t181339167228']
+HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_meta/points "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+live index: lexai_chunks_20261121t181339167228 (5070 chunks)
+{
+  "collection": "lexai_chunks_20261121t181339167228",
+  "embedding_model": "nomic-embed-text",
+  "dimension": 768,
+  "document_prefix": "search_document: ",
+  "chunker_version": "legal-v3-max1400-ov150",
+  "sparse_version": "bm25-crc32-v1",
+  "avg_len": 96.61065088757395,
+  "built_at": "2026-11-21T18:13:44+00:00"
+}
+documents: 63
+  bns-2023                             490  The Bharatiya Nyaya Sanhita, 2023
+  bnss-2023                            915  The Bharatiya Nagarik Suraksha Sanhita, 2023
+  bsa-2023                             219  The Bharatiya Sakshya Adhiniyam, 2023
+  constitution                         807  The Constitution of India
+  criminal-law-amendment-2018           28  The Criminal Law (Amendment) Act, 2018
+  crpc-1973                            892  The Code of Criminal Procedure, 1973
+  iea-1872                             225  The Indian Evidence Act, 1872
+  ipc-1860                             626  The Indian Penal Code, 1860
+  it-act-2000                          145  The Information Technology Act, 2000
+  mha-cprgr-manual                      31  Ministry of Home Affairs — CPRGR Manual
+  mha-cybercrime-manual                102  Ministry of Home Affairs — Cyber Crime Manual
+  mha-cyberfraud-instructions            2  Ministry of Home Affairs — Instructions on Cyber Fraud Reporting
+  prisons-act-1894                      37  The Prisons Act, 1894 (Maharashtra compilation, with Bombay amendments)
+  sc-judis-10166                        36  Balaji Raghavan [In T.C.(C) No.9/94]S.P. Anand [In T.C.(C) N v.  (1995-12-15)
+  sc-judis-10187                         2  Dharamdeo v. Bijarat & Ors. (1995-12-12)
+  sc-judis-10193                        33  Ramakant Mayekar v. Smt. Celine D’Silva (1995-12-11)
+  sc-judis-10220                        11  Sector-6 v.  (1995-12-06)
+  sc-judis-10290                         2  S. Prabh Singh Dhillon Etc. Etc. v. Hoshiarpur Improvement Trust & Ors. (1995-11-23)
+  sc-judis-10304                         1  Sakti Through Its Director v. R.K. Ragala & Ors. (1995-11-21)
+  sc-judis-10322                         1  Ashwani Kumar & Ors. Etc. Etc. v. State Of Bihar & Ors. Etc. Etc. (1995-11-16)
+  sc-judis-10347                         5  Anokhey & Anr. v. State Of U.P.With Cri A.No. 531-32/93. 609-610/93. Crl.M.P. (1995-11-14)
+  sc-judis-10356                         6  Sita Ram Yadava v. Union Of India & Ors. (1995-11-13)
+  sc-judis-10391                         4  Jaipur Development Authority v. Children’S Academy (1995-11-03)
+  sc-judis-10426                         3  Smt. Beli Ram Singh Chowdhry & Ors. v. State Of Assam (1995-10-31)
+  sc-judis-10439                         2  Smt. Yashomati Harsukhlal Lathia & Ors. v. Saurashtra Kutch Stock Exchange & Ors. (1995-10-30)
+  sc-judis-10442                         8  State Of Assam v. C.K. Das (1995-10-20)
+  sc-judis-10502                         6  Shri Narendera Kumar Agrawal v. Smt. Saroj Maloo And Ors. (1995-09-20)
+  sc-judis-10519                         2  State Of Karnataka Represented Throughchief Secretary To Gov v. Shri T.R. Dhananjaya & Anr (1995-09-14)
+  sc-judis-10520                         3  Debaraj Padhi & Others v. Steel Authority Of India Limited & Others (1995-09-14)
+  sc-judis-10548                         8  Shri Sat Pal v. The State Of Punjab (1995-09-08)
+  sc-judis-10557                         4  Sheela Barse v. Union Bank Of India And Ors. (1995-09-05)
+  sc-judis-10562                         2  Giani Pratap Singh v. State Of Rajasthan & Anr. (1995-09-04)
+  sc-judis-10613                         3  Superintendent Of Police (C.B.I.) v. Deepak Chowdhary & Ors (1995-08-17)
+  sc-judis-10629                         1  Special Land Acquisition Officer v. N.S. Takkalaki And Ors. (1995-08-16)
+  sc-judis-10637                         3  Kailash Potlia v. The State Of Andhra Pradesh (1995-08-14)
+  sc-judis-10649                         7  Baby Samuel v. Tukaram Laxman Sable & Ors. (1995-08-09)
+  sc-judis-10663                         2  Sri Kaptan Singh [Deceased]Through Lrs. v. Rajinder Singh & Anr. (1995-08-03)
+  sc-judis-10668                         6  Vithal And Others v. The State Of Maharashtra (1995-08-03)
+  sc-judis-10679                         9  Amarjit Singh v. State Of Punjab (1995-07-27)
+  sc-judis-10693                         4  Shri Topandas Kundanmal v. The State Through The Landacquisition Officer (1995-07-25)
+  sc-judis-10752                         4  Amalesh Chandra Chakraborty& Ors. v. Union Of India & Ors. (1995-05-10)
+  sc-judis-10762                         5  Union Of India & Ors. ...Appelants v. Dr. J. K. Goel ...Respondent (1995-05-08)
+  sc-judis-10773                         4  Hal Employees Union v. The Presiding Officer And Anr. (1995-05-01)
+  sc-judis-10796                        31  In Re: 1. Shri Sanjiv Datta v.  (1995-04-19)
+  sc-judis-10804                        47  Union Of India v. Meera Mohideen (1995-04-14)
+  sc-judis-10805                         6  All India Judge’S Association & Ors. v. Union Of India & Ors. (1995-04-10)
+  sc-judis-10814                         6  People’S Union For Civil Liberties (Pucl) v. Union Of India And Another (1995-03-30)
+  sc-judis-10818                         8  Commissioner Of Wealth Tax v. Smt. Binapani Chakravarty (1995-03-28)
+  sc-judis-1082                          6  In re THE EDITOR v. Arabinda Bose And Another. (1952-12-12)
+  sc-judis-10823                         8  Koti Sarroj Anamma & Anr. v. Jonnalagada Malleswara Rao (1995-03-28)
+  sc-judis-10844                        83  In Re: Vinay Chandra Mishra [The Alleged Contemner] v.  (1995-03-10)
+  sc-judis-10857                         5  Heirs & Lrs. Of Deceased Somabhai Kanjibhai Baria v. Patel Parshottamdas Jamdas (D) & Anr. (1995-03-03)
+  sc-judis-10877                         7  The Director General v. Dr. K. Naryanaswami & Ors. (1995-02-21)
+  sc-judis-10886                        11  Bank Of Maharashtra v. Rice Shipping & Transport Co. Pvt. Limited & Anr. (1995-02-16)
+  sc-judis-1089                         28  State Of Madras v. C. P. Sarathy And Another. (1952-12-05)
+  sc-judis-10892                        24  Hindustan Steel Works Construction Limited Etc. Etc. v. Hindustan Steel Works Construction Limited Employees’ Union (1995-02-10)
+  sc-judis-10897                        34  Delhi Development Authority v. Skipper Construction And Anr. (1995-02-08)
+  sc-judis-10910                         6  Chabungbam Ibohal Singh v. UNION OF INDIA & ORS.Civil Appeal No. 1149 of 1987 (1995-02-02)
+  sc-judis-10924                         6  Consumer Unity & Trust Society v. Chairman & Managing Director (1995-01-31)
+  sc-judis-10933                        15  Delhi Development Authority v. Skipper Construction And Anr. (1995-01-25)
+  sc-judis-10937                        17  Mahadeo Savlaram Shelke & Ors. v. The Puna Municipal Corpn. & Anr. (1995-01-23)
+  sc-judis-1094                          9  Thakur Pratap Singh v. Shri Krishna Gupta And Others. (1952-12-02)
+  sc-judis-10941                         7  Mrs. Mary Joyce Poonacha V. v. M/S. K.T. Plantations Pvt. Ltd. & Ors.(K Ramaswamy &N. Ven (1995-01-20)
+exit=0
 
 $ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" smoke --questions 2 --wait-ready 180
- Container lexai-smoke-run-c269ac169c88 Creating 
- Container lexai-smoke-run-c269ac169c88 Created 
-[FAIL] ready -> {"ready": false, "checks": {"llm": {"ok": false, "error": "ConnectError", "detail": "All connection attempts failed"}, "embedder": {"ok": false, "error": "TimeoutError", "detail": ""}, "index": {"ok": false, "error": "RuntimeError", "detail": "no live index: run the ingestion build"}, "reranker": {"ok": true, "enabled": false, "model": null}}}
+ Container lexai-smoke-run-8c7c4e4e643b Creating 
+ Container lexai-smoke-run-8c7c4e4e643b Created 
+[FAIL] ready -> {"ready": false, "checks": {"llm": {"ok": false, "error": "ConnectError", "detail": "All connection attempts failed"}, "embedder": {"ok": false, "error": "TimeoutError", "detail": ""}, "index": {"ok": true, "collection": "lexai_chunks_20261121t181339167228", "chunks": 5070, "documents": 63, "built_at": "2026-11-21T18:13:44+00:00"}, "reranker": {"ok": true, "enabled": false, "model": null}}}
 SMOKE: FAIL
 
 exit=1
