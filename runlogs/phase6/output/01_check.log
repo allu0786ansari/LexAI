@@ -1,0 +1,99 @@
+$ ver
+
+Microsoft Windows [Version 10.0.26300.10075]
+exit=0
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse --abbrev-ref HEAD
+phase-6-deploy
+exit=0
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" rev-parse HEAD
+cc4c2971dd21f2afbf43df1c451f8a882ebaeb65
+exit=0
+
+$ git -C "C:\Users\LENOVO\OneDrive\Desktop\LexAI" status --short
+ M runlogs/phase6/output/01_check.log
+ D runlogs/phase6/output/02_build.log
+ D runlogs/phase6/output/03_up.log
+ D runlogs/phase6/output/04_models.log
+ D runlogs/phase6/output/04_network.log
+ D runlogs/phase6/output/05_ingest.log
+ D runlogs/phase6/output/06_deploy.log
+ D runlogs/phase6/output/07_browser.log
+ D runlogs/phase6/output/08_observability.log
+ D runlogs/phase6/output/09_backup.log
+ D runlogs/phase6/output/10_rehearsal.log
+ D runlogs/phase6/output/11_collect.log
+ D runlogs/phase6/output/deploy-failure-20261121T161044Z.log
+ D runlogs/phase6/output/deploy-failure-20261121T171213Z.log
+ D runlogs/phase6/output/deploy-failure-20261121T182757Z.log
+ D runlogs/phase6/output/deploy-failure-20261121T183911Z.log
+ D runlogs/phase6/output/deploy-failure-20261121T185127Z.log
+ D runlogs/phase6/output/deploy-failure-20261121T190210Z.log
+exit=0
+
+$ docker version --format "client {{.Client.Version}} server {{.Server.Version}}"
+client 29.6.2-rd server 29.5.3
+exit=0
+
+$ docker compose version
+Docker Compose version v5.3.1
+exit=0
+
+$ docker info --format "cpus={{.NCPU}} memory={{.MemTotal}} os={{.OperatingSystem}}"
+cpus=4 memory=6215036928 os=Rancher Desktop WSL Distribution
+exit=0
+
+$ C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Scripts\python.exe --version
+Python 3.12.4
+exit=0
+
+$ ollama --version
+ollama version is 0.40.16
+exit=0
+
+$ ollama list
+NAME                                ID              SIZE      MODIFIED     
+qwen2.5-7b-instruct:latest          b57dc8ba2735    4.7 GB    8 hours ago     
+qwen2.5:7b-instruct-q4_K_M          845dbda0ea48    4.7 GB    33 hours ago    
+nomic-embed-text:latest             0a109f422b47    274 MB    4 weeks ago     
+bge-m3:latest                       790764642607    1.2 GB    4 weeks ago     
+agmesh-phi3.5:latest                061d2b22c7b8    2.4 GB    3 months ago    
+phi3.5:3.8b-mini-instruct-q4_K_M    570961596984    2.4 GB    3 months ago    
+qwen2.5:3b-instruct                 357c53fb659c    1.9 GB    4 months ago    
+exit=0
+
+$ systeminfo (memory lines)
+Total Physical Memory:         7,975 MB
+Available Physical Memory:     797 MB
+
+$ type %UserProfile%\.wslconfig
+[wsl2]
+memory=6GB
+processors=4
+swap=4GB
+autoProxy=false
+
+$ anything listening on port 8090 (the web UI's port; LexAI's own nginx is fine)
+  TCP    127.0.0.1:8090         0.0.0.0:0              LISTENING       12140
+
+$ Ollama listening address (127.0.0.1 only = containers cannot reach it)
+  TCP    0.0.0.0:11434          0.0.0.0:0              LISTENING       13156
+  TCP    [::]:11434             [::]:0                 LISTENING       13156
+
+$ Kubernetes containers in Rancher Desktop (should be none: turn Kubernetes off)
+k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2
+k8s_lb-tcp-443_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1
+k8s_POD_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_1
+k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1
+k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1
+k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1
+k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1
+k8s_POD_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1
+k8s_POD_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1
+k8s_POD_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1
+k8s_POD_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1
+
+$ type deploy\var\host.env (how containers reach Windows; written by the network step)
+LEXAI_HOST_GATEWAY=192.168.127.254
+

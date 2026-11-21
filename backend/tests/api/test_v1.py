@@ -174,6 +174,8 @@ async def test_documents_and_pdfs(settings: Settings, live_store: Live, tmp_path
         and by_id["ipc-1860"]["has_pdf"] is False
     )
     assert pdf.status_code == 200 and pdf.headers["content-type"] == "application/pdf"
+    assert "content-security-policy" not in pdf.headers  # the browser's PDF viewer must be allowed to render
+    assert pdf.headers["x-content-type-options"] == "nosniff"
     assert absent.status_code == 404 and traversal.status_code == 404
     assert chunk["pdf_url"] == "/api/v1/documents/constitution/pdf#page=4"
 
@@ -290,3 +292,21 @@ async def test_client_disconnect_stops_generation(settings: Settings, live_store
                 break
     await asyncio.sleep(0.1)  # generation stopped; nothing hangs
     assert llm.calls
+
+
+async def test_an_index_published_by_another_process_is_picked_up(settings: Settings) -> None:
+    """`make up` then `make ingest`: the API starts on an empty store and serves once the job publishes."""
+    from tests.conftest import make_chunks, publish
+
+    store = QdrantStore.connect(settings.qdrant)
+    container = await make_container(settings, (store, None, None))  # type: ignore[arg-type]
+    app = create_app(settings, container)
+    async with client_for(app) as client:
+        before = await client.post("/api/v1/search", json={"question": "murder"})
+        assert before.status_code == 503 and before.json()["code"] == "index_not_ready"
+        name, _ = await publish(store, make_chunks(), settings)  # what the ingest job does
+        assert await container.refresh_index() is True
+        assert await container.refresh_index() is False  # already on it
+        after = await client.post("/api/v1/search", json={"question": "punishment for murder"})
+    assert after.status_code == 200 and after.json()["index_version"] == name
+    await store.close()

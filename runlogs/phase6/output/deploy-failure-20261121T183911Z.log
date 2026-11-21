@@ -1,0 +1,143 @@
+api-1  | {"otlp": false, "trace_file": "/app/backend/var/traces.jsonl", "event": "tracing_enabled", "level": "info", "timestamp": "2026-11-21T18:37:33.799942Z"}
+api-1  | INFO:     Started server process [1]
+api-1  | INFO:     Waiting for application startup.
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:37:33.905147Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:37:34.908518Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:37:36.914308Z"}
+api-1  | {"error": "Embedding failed (nomic-embed-text at http://host.docker.internal:11434/v1): ConnectError('All connection attempts failed')", "event": "embedder_unreachable_at_startup", "level": "warning", "timestamp": "2026-11-21T18:37:40.922567Z"}
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+api-1  | HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_meta/points "HTTP/1.1 200 OK"
+api-1  | {"collection": "lexai_chunks_20261121t181339167228", "chunks": 5070, "built_at": "2026-11-21T18:13:44+00:00", "event": "index_ready", "level": "info", "timestamp": "2026-11-21T18:37:40.963796Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/scroll "HTTP/1.1 200 OK"
+api-1  | {"sections": 2271, "event": "correspondence_ready", "level": "info", "timestamp": "2026-11-21T18:37:42.362289Z"}
+api-1  | {"sessions": "RedisSessionStore", "rate_limits": "redis", "cache": "RedisCache", "event": "state_backends", "level": "info", "timestamp": "2026-11-21T18:37:42.502895Z"}
+api-1  | {"version": "0.6.0", "profile": "none (no backend/.env; built-in defaults)", "llm": "does-not-exist-in-this-release", "embedder": "nomic-embed-text", "prompt": "answer_v4", "notes": ["embedder unreachable at start-up"], "event": "startup_complete", "level": "info", "timestamp": "2026-11-21T18:37:42.503107Z"}
+api-1  | INFO:     Application startup complete.
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:37:42.508430Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:37:43.512260Z"}
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "3c1239ff2e1e996ae8f609783b876e51", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:37:45.514451Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:37:45.514904Z"}HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | 
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "3c1239ff2e1e996ae8f609783b876e51", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:37:46.516328Z"}
+api-1  | INFO:     127.0.0.1:51482 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "3c1239ff2e1e996ae8f609783b876e51", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:37:48.519149Z"}
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "70d903004e3a9e0c56ac06d3d51fe8aa", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:37:53.521138Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "70d903004e3a9e0c56ac06d3d51fe8aa", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:37:54.523646Z"}
+api-1  | INFO:     172.18.0.6:58648 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "70d903004e3a9e0c56ac06d3d51fe8aa", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:37:56.526771Z"}
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "d5d8df053814902c5e2293b35b23e3dd", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:01.532201Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | INFO:     127.0.0.1:40132 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "d5d8df053814902c5e2293b35b23e3dd", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:02.534251Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "d5d8df053814902c5e2293b35b23e3dd", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:04.535736Z"}
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "9ef76b258a124b4ab1edb5aca19e1e03", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:09.538654Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | INFO:     172.18.0.6:45208 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "9ef76b258a124b4ab1edb5aca19e1e03", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:10.543746Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "9ef76b258a124b4ab1edb5aca19e1e03", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:12.547746Z"}
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:41124 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:38:17.519042Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "20b313a7d6a2b0c707dccb3731aa2031", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:17.545206Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:38:18.522514Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "20b313a7d6a2b0c707dccb3731aa2031", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:18.549012Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:38:20.527044Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "20b313a7d6a2b0c707dccb3731aa2031", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:20.553488Z"}
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     172.18.0.6:48174 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "b20284919dd5cdbbd9aa56fa95c0146a", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:25.556131Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "b20284919dd5cdbbd9aa56fa95c0146a", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:26.560421Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "b20284919dd5cdbbd9aa56fa95c0146a", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:28.564151Z"}
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:39094 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "daa73cb68725cd968acc92547d84c166", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:33.565691Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "daa73cb68725cd968acc92547d84c166", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:34.568147Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "daa73cb68725cd968acc92547d84c166", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:36.571254Z"}
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     172.18.0.6:42456 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "76d545015175ad1866764376adaf9ddf", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:41.574610Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "76d545015175ad1866764376adaf9ddf", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:42.579388Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "76d545015175ad1866764376adaf9ddf", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:44.584235Z"}
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:50008 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "1a7dce19f8f99b875393be0b7d3c851b", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:49.583535Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "1a7dce19f8f99b875393be0b7d3c851b", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:50.585369Z"}
+api-1  | HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:38:52.529898Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "1a7dce19f8f99b875393be0b7d3c851b", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:52.586921Z"}
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:38:53.532783Z"}
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     172.18.0.6:59774 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "level": "warning", "timestamp": "2026-11-21T18:38:55.535269Z"}
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "cfcb52d39215882e3ac98569094f9302", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:57.593609Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "cfcb52d39215882e3ac98569094f9302", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:38:58.598143Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "cfcb52d39215882e3ac98569094f9302", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:39:00.602056Z"}
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+api-1  | INFO:     127.0.0.1:50612 - "GET /healthz HTTP/1.1" 200 OK
+api-1  | {"attempt": 1, "delay_s": 1.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "206163ed4399da861aa87dd326a80bb0", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:39:05.600287Z"}
+api-1  | HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t181339167228/points/count "HTTP/1.1 200 OK"
+api-1  | {"attempt": 2, "delay_s": 2.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "206163ed4399da861aa87dd326a80bb0", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:39:06.602163Z"}
+api-1  | {"attempt": 3, "delay_s": 4.0, "error": "ConnectError('All connection attempts failed')", "event": "embed_retry", "request_id": "206163ed4399da861aa87dd326a80bb0", "path": "/readyz", "level": "warning", "timestamp": "2026-11-21T18:39:08.607906Z"}
+api-1  | INFO:     172.18.0.6:52272 - "GET /metrics HTTP/1.1" 200 OK
+api-1  | INFO:     172.18.0.8:0 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+web-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+web-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+web-1  | 10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf is not a file or does not exist
+web-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+web-1  | 20-envsubst-on-templates.sh: Running envsubst on /etc/nginx/templates/default.conf.template to /etc/nginx/conf.d/default.conf
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+web-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+web-1  | 2026/11/21 18:37:31 [notice] 1#1: using the "epoll" event method
+web-1  | 2026/11/21 18:37:31 [notice] 1#1: nginx/1.31.9
+web-1  | 2026/11/21 18:37:31 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) 
+web-1  | 2026/11/21 18:37:31 [notice] 1#1: OS: Linux 6.6.114.1-microsoft-standard-WSL2
+web-1  | 2026/11/21 18:37:31 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+web-1  | 2026/11/21 18:37:31 [notice] 1#1: start worker processes
+web-1  | 2026/11/21 18:37:31 [notice] 1#1: start worker process 25
+web-1  | 2026/11/21 18:37:31 [notice] 1#1: start worker process 26
+web-1  | 2026/11/21 18:37:31 [notice] 1#1: start worker process 27
+web-1  | 2026/11/21 18:37:31 [notice] 1#1: start worker process 28
+web-1  | 2026/11/21 18:37:33 [error] 25#25: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.8, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:37:33 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1  | 2026/11/21 18:37:36 [error] 25#25: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.8, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:37:36 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:37:39 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1  | 2026/11/21 18:37:39 [error] 25#25: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.8, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1  | 2026/11/21 18:37:42 [error] 25#25: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.18.0.8, server: _, request: "GET /readyz HTTP/1.1", upstream: "http://172.18.0.4:8000/readyz", host: "web:8080"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:37:42 +0000] "GET /readyz HTTP/1.1" 502 150 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:37:50 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:37:58 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:38:06 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:38:14 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:38:22 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:38:30 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:38:38 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:38:46 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:38:54 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:39:02 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"
+web-1  | 172.18.0.8 - - [21/Nov/2026:18:39:10 +0000] "GET /readyz HTTP/1.1" 503 359 "-" "python-httpx/0.28.1" "-"

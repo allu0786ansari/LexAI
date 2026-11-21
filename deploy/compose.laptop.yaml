@@ -1,0 +1,19 @@
+# Laptop overlay: Ollama runs on the host (as in Phases 1-5), the containers use the
+# 8 GB laptop profile, and the web UI listens on this machine only.
+#
+#   deploy\lexai.bat up        (Windows)  |  make up-laptop   (Linux / macOS)
+#
+# Uses env/laptop-docker.env for Compose's own settings (no deploy/.env needed).
+services:
+  api:
+    env_file:
+      - {path: env/laptop-8gb.env, required: true}
+  ingest:
+    env_file:
+      - {path: env/laptop-8gb.env, required: true}
+  eval:
+    env_file:
+      - {path: env/laptop-8gb.env, required: true}
+  smoke:
+    env_file:
+      - {path: env/laptop-8gb.env, required: true}

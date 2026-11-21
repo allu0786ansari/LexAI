@@ -1,6 +1,6 @@
 [project]
 name = "lexai"
-version = "0.5.0"
+version = "0.6.0"
 description = "LexAI: retrieval-augmented legal research assistant for Indian law"
 requires-python = ">=3.12,<3.14"
 dependencies = [

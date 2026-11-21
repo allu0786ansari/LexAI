@@ -1,0 +1,15 @@
+$ netstat (Ollama on Windows)
+  TCP    0.0.0.0:11434          0.0.0.0:0              LISTENING       13156
+  TCP    [::]:11434             [::]:0                 LISTENING       13156
+
+$ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" network
+ Container lexai-ingest-run-3ab838dfbc23 Creating 
+ Container lexai-ingest-run-3ab838dfbc23 Created 
+model server URL: http://host.docker.internal:11434/v1
+  host.docker.internal (configured)          -> 192.168.127.254 port 11434: open
+  host.rancher-desktop.internal              -> 192.168.127.254 port 11434: (same address as above)
+  host.docker.internal.                      -> 192.168.127.254 port 11434: (same address as above)
+  gateway.docker.internal                    -> 192.168.127.1   port 11434: timeout (firewall?)
+[PASS] the model server answers at http://host.docker.internal:11434/v1: 7 models
+exit=0
+

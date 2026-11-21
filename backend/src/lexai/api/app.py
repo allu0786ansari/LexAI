@@ -53,9 +53,13 @@ def _error(
 
 
 async def _probe(container: Container, interval: float) -> None:
-    """Keeps the lexai_ready and lexai_active_sessions gauges current for dashboards and alerts."""
+    """
+    Keeps the lexai_ready and lexai_active_sessions gauges current, and picks up an index
+    published by another process (the ingest job, or a reindex run by another replica).
+    """
     while True:
         try:
+            await container.refresh_index()
             ready, _ = await container.readiness()
             READY.set(1 if ready else 0)
             ACTIVE_SESSIONS.set(await container.sessions.count())

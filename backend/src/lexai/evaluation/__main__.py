@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import os
 import subprocess
 import sys
 from datetime import UTC, datetime
@@ -61,6 +62,9 @@ CONFIGS = {
 
 
 def commit() -> str:
+    # In a container there is no git checkout: the caller passes the commit (eval.yml, Makefile).
+    if os.environ.get("LEXAI_COMMIT"):
+        return os.environ["LEXAI_COMMIT"][:12]
     try:
         out = subprocess.run(
             ["git", "rev-parse", "--short", "HEAD"],  # noqa: S607 - git on PATH is expected

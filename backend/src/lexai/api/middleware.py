@@ -148,7 +148,9 @@ class SecurityHeadersMiddleware:
             if message["type"] == "http.response.start":
                 headers = list(message.get("headers", []))
                 headers.extend(_HEADERS)
-                if not docs:
+                content_type = dict(headers).get(b"content-type", b"")
+                # A CSP of default-src 'none' stops the browser's PDF viewer from rendering a PDF.
+                if not docs and not content_type.startswith(b"application/pdf"):
                     headers.append(_API_CSP)
                 message["headers"] = headers
             await send(message)

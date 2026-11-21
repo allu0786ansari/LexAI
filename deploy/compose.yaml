@@ -1,0 +1,211 @@
+# LexAI on one machine: nginx (web UI + reverse proxy) -> API replicas -> Qdrant, Redis, Ollama.
+#
+#   cp deploy/.env.example deploy/.env      # then edit the secrets
+#   make up && make ingest                  # first start: pulls models, builds the index
+#   open http://localhost:8080
+#
+# Overlays: compose.laptop.yaml (Ollama already running on the host, 8 GB laptop profile),
+# compose.gpu.yaml (vLLM on an NVIDIA GPU). Profiles: `ollama` (model server in a container,
+# on by default through COMPOSE_PROFILES in .env), `observability` (Prometheus + Grafana),
+# `job` (one-off ingest / eval / backup containers, started with `docker compose run`).
+# Operations: docs/runbook.md.
+
+name: lexai
+
+x-logging: &logging
+  driver: json-file
+  options: {max-size: "10m", max-file: "5"}
+
+x-hardening: &hardening
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+
+# Settings shared by the API and the jobs. LEXAI_* values come from the env file(s); these
+# point the containers at each other and win over the env files.
+x-lexai-env: &lexai-env
+  LEXAI_API_ENVIRONMENT: production
+  LEXAI_QDRANT_URL: http://qdrant:6333
+  LEXAI_API_REDIS_URL: redis://redis:6379/0
+  LEXAI_CACHE_REDIS_URL: redis://redis:6379/1
+  LEXAI_LLM_BASE_URL: ${LEXAI_LLM_BASE_URL:-http://ollama:11434/v1}
+  LEXAI_EMBED_BASE_URL: ${LEXAI_EMBED_BASE_URL:-http://ollama:11434/v1}
+  LEXAI_API_CORS_ORIGINS: ""   # same origin through nginx
+
+x-lexai-depends: &lexai-depends
+  qdrant: {condition: service_healthy}
+  redis: {condition: service_healthy}
+  ollama-init: {condition: service_completed_successfully, required: false}
+
+x-backend-image: &backend-image
+  image: ${LEXAI_REGISTRY:-}lexai-backend:${LEXAI_IMAGE_TAG:-local}
+  build: {context: ../backend}
+
+x-job: &job
+  <<: *backend-image
+  profiles: [job]
+  # On Linux, the Makefile and deploy.sh set these to your user so the job can write to
+  # data/, eval/, deploy/var and deploy/backups (bind mounts keep the host's owners).
+  user: "${LEXAI_UID:-10001}:${LEXAI_GID:-10001}"
+  env_file: &env-files
+    - {path: .env, required: false}
+  environment: *lexai-env
+  volumes:
+    - ../data:/app/data
+    - ../eval:/app/eval
+    - ./var:/app/backend/var
+    - ${LEXAI_BACKUP_DIR:-./backups}:/backups
+  depends_on: *lexai-depends
+  extra_hosts: ["host.docker.internal:${LEXAI_HOST_GATEWAY:-host-gateway}"]
+  restart: "no"
+  logging: *logging
+
+services:
+  web:
+    image: ${LEXAI_REGISTRY:-}lexai-web:${LEXAI_IMAGE_TAG:-local}
+    build: {context: ../frontend}
+    <<: *hardening
+    tmpfs:
+      - /tmp:mode=1777
+      - /etc/nginx/conf.d:mode=1777   # the image renders its config here at start-up
+    ports:
+      - "${LEXAI_WEB_BIND:-0.0.0.0}:${LEXAI_WEB_PORT:-8080}:8080"
+    depends_on:
+      api: {condition: service_started}
+    restart: unless-stopped
+    logging: *logging
+
+  api:
+    <<: [*backend-image, *hardening]
+    env_file: *env-files
+    environment: *lexai-env
+    tmpfs: ["/tmp:mode=1777"]
+    volumes:
+      - ../data:/app/data:ro        # sources for the PDF links; the index lives in Qdrant
+      - api-var:/app/backend/var    # feedback database, reports
+    deploy:
+      replicas: ${LEXAI_API_REPLICAS:-1}
+    depends_on: *lexai-depends
+    extra_hosts: ["host.docker.internal:${LEXAI_HOST_GATEWAY:-host-gateway}"]
+    stop_grace_period: 30s          # lets streaming answers finish on deploys
+    restart: unless-stopped
+    logging: *logging
+
+  qdrant:
+    image: qdrant/qdrant:v1.20.2
+    security_opt: ["no-new-privileges:true"]
+    environment:
+      QDRANT__TELEMETRY_DISABLED: "true"
+    volumes:
+      - qdrant-data:/qdrant/storage
+      - qdrant-snapshots:/qdrant/snapshots
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/6333 && printf 'GET /readyz HTTP/1.0\\r\\n\\r\\n' >&3 && grep -q ' 200 ' <&3"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+    logging: *logging
+
+  redis:
+    image: redis:7.4.11-alpine
+    read_only: true                 # the entrypoint drops to the redis user itself
+    security_opt: ["no-new-privileges:true"]
+    # Sessions, rate limits and the answer cache. Sessions survive restarts (RDB snapshot).
+    command: ["redis-server", "--save", "60", "100", "--maxmemory", "256mb", "--maxmemory-policy", "volatile-lru"]
+    volumes: [redis-data:/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+    logging: *logging
+
+  ollama:
+    image: ollama/ollama:0.40.16
+    profiles: [ollama]
+    environment:
+      OLLAMA_KEEP_ALIVE: 30m
+    volumes: [ollama-models:/root/.ollama]
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+    logging: *logging
+
+  ollama-init:
+    image: ollama/ollama:0.40.16
+    profiles: [ollama]
+    entrypoint: ["/bin/sh", "/modelfiles/init.sh"]
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      EMBED_MODEL: ${LEXAI_EMBED_MODEL:-nomic-embed-text}
+      LLM_MODEL: ${LEXAI_LLM_MODEL:-qwen2.5-7b-instruct}
+      LLM_MODELFILE: ${OLLAMA_LLM_MODELFILE-/modelfiles/Modelfile}
+    volumes: ["./ollama:/modelfiles:ro"]
+    depends_on:
+      ollama: {condition: service_healthy}
+    restart: "no"
+    logging: *logging
+
+  # ---- one-off jobs: docker compose run --rm <job> <args> ---------------------------
+  ingest:   # lexai-ingest fetch | build [--only ID] | status | backup | restore [DIR]
+    <<: *job
+    entrypoint: ["lexai-ingest"]
+    command: ["status"]
+
+  eval:     # python -m lexai.evaluation <validate | retrieval | answers | report | offline>
+    <<: *job
+    entrypoint: ["python", "-m", "lexai.evaluation"]
+    command: ["validate"]
+
+  smoke:    # post-deploy check through nginx (deploy/deploy.sh)
+    <<: *job
+    entrypoint: ["python", "scripts/smoke_release.py"]
+    command: ["--base-url", "http://web:8080"]
+    depends_on: {}
+
+  # ---- observability -------------------------------------------------------------------
+  prometheus:
+    image: prom/prometheus:v3.16.0
+    profiles: [observability]
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=15d
+    volumes:
+      - ./prometheus:/etc/prometheus:ro
+      - prometheus-data:/prometheus
+    ports: ["127.0.0.1:${PROMETHEUS_PORT:-9095}:9090"]
+    restart: unless-stopped
+    logging: *logging
+
+  grafana:
+    image: grafana/grafana:13.3.1
+    profiles: [observability]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?set GRAFANA_ADMIN_PASSWORD in the env file}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /etc/grafana/dashboards/lexai.json
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/etc/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    ports: ["127.0.0.1:${GRAFANA_PORT:-3001}:3000"]
+    depends_on: [prometheus]
+    restart: unless-stopped
+    logging: *logging
+
+volumes:
+  api-var:
+  qdrant-data:
+  qdrant-snapshots:
+  redis-data:
+  ollama-models:
+  prometheus-data:
+  grafana-data:

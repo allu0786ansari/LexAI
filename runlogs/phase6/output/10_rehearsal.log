@@ -1,0 +1,130 @@
+$ docker build -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\ci\bad-release.Dockerfile" -t lexai-backend:bad "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\ci"
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from bad-release.Dockerfile
+#1 transferring dockerfile: 612B 0.0s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/lexai-backend:local
+#2 DONE 0.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/1] FROM docker.io/library/lexai-backend:local@sha256:df2249a840ccabbc684912b736da5612f389fca75eb88942916e4cd1be05ecfd
+#4 resolve docker.io/library/lexai-backend:local@sha256:df2249a840ccabbc684912b736da5612f389fca75eb88942916e4cd1be05ecfd 0.1s done
+#4 CACHED
+
+#5 exporting to image
+#5 exporting layers done
+#5 exporting manifest sha256:b9ecd6c7b7d5b0e7b09544121fc71c8bc51b08e0e1a08a9df42fa351b39794a0 done
+#5 exporting config sha256:2e5c4d5b20ad17e5826c47d3553e86218869224e7ef187c5d808b8f3cf32591a done
+#5 exporting attestation manifest sha256:50f4dea27d9a38faef8a65a967341d18a21624c0ac8c86132395dbcace023f7e
+#5 exporting attestation manifest sha256:50f4dea27d9a38faef8a65a967341d18a21624c0ac8c86132395dbcace023f7e 0.1s done
+#5 exporting manifest list sha256:357f6299119d55ae41bf27701cf79aad094ec66c77f5ef6e70cbef7158b9dc9a
+#5 exporting manifest list sha256:357f6299119d55ae41bf27701cf79aad094ec66c77f5ef6e70cbef7158b9dc9a 0.1s done
+#5 naming to docker.io/library/lexai-backend:bad done
+#5 unpacking to docker.io/library/lexai-backend:bad 0.1s done
+#5 DONE 0.4s
+exit=0
+
+$ docker tag lexai-web:local lexai-web:bad
+exit=0
+
+$ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" deploy bad --ready-timeout 90
+[deploy 19:16:56] host address from host.env: LEXAI_HOST_GATEWAY=192.168.127.254
+[deploy 19:16:56] deploying bad (now running: local; rollback target: local)
+[deploy 19:16:56] backing up the live index
+ Container lexai-redis-1 Running 
+ Container lexai-qdrant-1 Running 
+ Container lexai-qdrant-1 Waiting 
+ Container lexai-redis-1 Waiting 
+ Container lexai-qdrant-1 Healthy 
+ Container lexai-redis-1 Healthy 
+ Container lexai-ingest-run-267db02cf175 Creating 
+ Container lexai-ingest-run-267db02cf175 Created 
+HTTP Request: GET http://qdrant:6333 "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/aliases "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections/lexai_meta/exists "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_meta/points "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/points/count "HTTP/1.1 200 OK"
+HTTP Request: POST http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/snapshots?wait=true "HTTP/1.1 200 OK"
+HTTP Request: GET http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/snapshots/lexai_chunks_20261121t191045867862-3758859124285980-2026-11-21-19-17-00-0.snapshot "HTTP/1.1 200 OK"
+HTTP Request: DELETE http://qdrant:6333/collections/lexai_chunks_20261121t191045867862/snapshots/lexai_chunks_20261121t191045867862-3758859124285980-2026-11-21-19-17-00-0.snapshot "HTTP/1.1 200 OK"
+{"path": "/backups/lexai-20261121T191700Z", "collection": "lexai_chunks_20261121t191045867862", "points": 5070, "pruned": [], "event": "backup_written", "level": "info", "timestamp": "2026-11-21T19:17:04.887053Z"}
+backup: /backups/lexai-20261121T191700Z (lexai_chunks_20261121t191045867862, 5070 points, 57.8 MB)
+[deploy 19:17:05] starting api + web at bad
+ Container lexai-api-1 Recreate 
+ Container lexai-api-1 Recreated 
+ Container lexai-web-1 Recreate 
+ Container lexai-web-1 Recreated 
+ Container lexai-api-1 Starting 
+ Container lexai-api-1 Started 
+ Container lexai-web-1 Starting 
+ Container lexai-web-1 Started 
+[deploy 19:17:09] smoke test of bad (waiting up to 90 s for readiness)
+ Container lexai-smoke-run-2951cf157cfd Creating 
+ Container lexai-smoke-run-2951cf157cfd Created 
+[FAIL] ready -> {"ready": false, "checks": {"llm": {"ok": false, "reachable": true, "model": "does-not-exist-in-this-release", "model_available": false, "detail": "model 'does-not-exist-in-this-release' is not served"}, "embedder": {"ok": true, "reachable": true, "model": "nomic-embed-text", "dimension": 768, "dimension_ok": true}, "index": {"ok": true, "collection": "lexai_chunks_20261121t191045867862", "chunks": 5070, "documents": 63, "built_at": "2026-11-21T19:10:48+00:00"}, "reranker": {"ok": true, "enabled": false, "model": null}}}
+SMOKE: FAIL
+
+[deploy 19:18:45] bad FAILED its checks; container logs saved to C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\var\deploy-failure-20261121T191845Z.log
+[deploy 19:18:45] ROLLING BACK to local
+[deploy 19:18:45] starting api + web at local
+ Container lexai-api-1 Recreate 
+ Container lexai-api-1 Recreated 
+ Container lexai-web-1 Recreate 
+ Container lexai-web-1 Recreated 
+ Container lexai-api-1 Starting 
+ Container lexai-api-1 Started 
+ Container lexai-web-1 Starting 
+ Container lexai-web-1 Started 
+[deploy 19:18:50] smoke test of local (waiting up to 90 s for readiness)
+ Container lexai-smoke-run-4efdb0693695 Creating 
+ Container lexai-smoke-run-4efdb0693695 Created 
+[PASS] ready
+[PASS] web UI served with CSP -> 200
+[PASS] metrics not public -> 404
+[PASS] session -> 201
+[PASS] answer: What does Article 21 of the Constitution protect? -> 0 s, 5 passages, 5 cited
+[PASS] answer: What does Article 14 of the Constitution guarantee? -> 0 s, 5 passages, 5 cited
+[PASS] answer: Which freedoms does Article 19 of the Constitution give citizens? -> 0 s, 4 passages, 4 cited
+[PASS] answer: What remedy does Article 32 of the Constitution provide? -> 0 s, 5 passages, 5 cited
+[PASS] answer: What does Article 17 of the Constitution abolish? -> 0 s, 5 passages, 5 cited
+[PASS] answers citing a source >= 0 -> 5/5
+SMOKE: PASS
+[deploy 19:18:55] ROLLED BACK to local in 119 s; bad was not deployed
+exit=1
+
+(exit=1 above is the expected result: the bad release was refused)
+$ docker compose --project-directory "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy" --env-file "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\env\laptop-docker.env" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.yaml" -f "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\compose.laptop.yaml" ps api --format "{{.Image}} {{.Status}}"
+lexai-backend:local Up 6 seconds (healthy)
+exit=0
+
+$ type "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\var\release.json"
+{
+  "current": "local",
+  "previous": null,
+  "history": [
+    {
+      "tag": "local",
+      "at": "2026-11-21T19:14:43+00:00"
+    },
+    {
+      "tag": "local",
+      "at": "2026-11-21T19:18:55+00:00"
+    }
+  ]
+}exit=0
+
+$ dir /b "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\var\deploy-failure-*.log"
+deploy-failure-20261121T161044Z.log
+deploy-failure-20261121T171213Z.log
+deploy-failure-20261121T182757Z.log
+deploy-failure-20261121T183911Z.log
+deploy-failure-20261121T185127Z.log
+deploy-failure-20261121T190210Z.log
+deploy-failure-20261121T191845Z.log
+exit=0
+

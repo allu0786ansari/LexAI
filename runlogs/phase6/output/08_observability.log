@@ -1,0 +1,44 @@
+$ call "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\lexai.bat" observability
+ Container lexai-grafana-1 Running 
+ Container lexai-prometheus-1 Running 
+exit=0
+
+$ C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Scripts\python.exe "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\ci\check_stack.py" prometheus --replicas 1 --timeout 240
+[PASS] prometheus targets: 1/1 API targets up (want 1)
+[PASS] prometheus readiness metric: lexai_ready = ['1']
+[PASS] prometheus request metrics: 10 requests recorded
+[PASS] prometheus alert rules: 5 alert rules loaded
+exit=0
+
+$ C:\Users\LENOVO\OneDrive\Desktop\LexAI\backend\.venv\Scripts\python.exe "C:\Users\LENOVO\OneDrive\Desktop\LexAI\deploy\ci\check_stack.py" grafana --password lexai-laptop --timeout 240
+[PASS] grafana dashboard provisioned: dashboards ['LexAI']
+[PASS] grafana data source healthy: Successfully queried the Prometheus API.
+[PASS] grafana sees LexAI metrics: 1 series via Grafana
+exit=0
+
+$ curl -s "http://127.0.0.1:9095/api/v1/query?query=sum%20by%20(route,status)(lexai_http_requests_total)"
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"route":"/api/v1/sessions","status":"201"},"value":[1795288567.933,"2"]},{"metric":{"route":"/api/v1/chat","status":"200"},"value":[1795288567.933,"6"]},{"metric":{"route":"/readyz","status":"200"},"value":[1795288567.933,"1"]},{"metric":{"route":"/api/v1/chunks/{chunk_id}","status":"200"},"value":[1795288567.933,"1"]}]}}exit=0
+
+$ curl -s "http://127.0.0.1:9095/api/v1/query?query=lexai_process_memory_bytes"
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"lexai_process_memory_bytes","instance":"172.18.0.4:8000","job":"lexai-api"},"value":[1795288568.011,"185221120"]}]}}exit=0
+
+$ docker stats --no-stream
+NAME                                                                                                                    MEM USAGE / LIMIT     CPU %
+lexai-web-1                                                                                                             5.332MiB / 5.788GiB   4.71%
+lexai-api-1                                                                                                             147.1MiB / 5.788GiB   3.84%
+lexai-qdrant-1                                                                                                          81.04MiB / 5.788GiB   0.29%
+lexai-grafana-1                                                                                                         311.2MiB / 5.788GiB   1.83%
+lexai-prometheus-1                                                                                                      34.03MiB / 5.788GiB   1.33%
+lexai-redis-1                                                                                                           4.676MiB / 5.788GiB   0.52%
+k8s_traefik_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_2                                  65.48MiB / 5.788GiB   0.10%
+k8s_lb-tcp-443_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                          344KiB / 5.788GiB     0.00%
+k8s_POD_traefik-7c8544f77-8k67g_kube-system_3ba16642-5ef8-4cd2-804c-4597e158ef4f_1                                      312KiB / 5.788GiB     0.00%
+k8s_coredns_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                 30.3MiB / 170MiB      0.27%
+k8s_metrics-server_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                   38.88MiB / 5.788GiB   0.21%
+k8s_local-path-provisioner_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1   19.32MiB / 5.788GiB   4.19%
+k8s_lb-tcp-80_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                           1.777MiB / 5.788GiB   0.00%
+k8s_POD_svclb-traefik-06ebe2d4-7jcbj_kube-system_53409ca7-a295-4fed-add2-062a2fa80210_1                                 304KiB / 5.788GiB     0.00%
+k8s_POD_coredns-7cfb7bc9c7-9g94l_kube-system_e78e56e7-9237-4a91-80a2-e4cae5ec1299_1                                     344KiB / 5.788GiB     0.00%
+k8s_POD_metrics-server-6dc596dfb8-bpppb_kube-system_70241bb8-39f3-4267-8d0c-f47cd14cfaa6_1                              328KiB / 5.788GiB     0.00%
+k8s_POD_local-path-provisioner-77b9867795-rkw8g_kube-system_b266c491-4227-4f23-9951-d44120a65306_1                      308KiB / 5.788GiB     0.00%
+

@@ -10,3 +10,11 @@ Thumbs.db
 !.env.example
 # Downloaded sources (see data/manifest.yaml); pinned by data/manifest.lock.json
 data/raw/
+
+# Docker deployment state (deploy/deploy.py, backups)
+deploy/var/*
+!deploy/var/.gitkeep
+deploy/backups/*
+!deploy/backups/.gitkeep
+deploy/.env
+__pycache__/

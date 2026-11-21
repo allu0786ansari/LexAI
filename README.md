@@ -5,10 +5,12 @@ Supreme Court judgments and government manuals. It retrieves the relevant
 passages, generates an answer with **Qwen2.5-7B-Instruct**, and cites every
 claim as `[n]` so you can check the source.
 
-> **Status: Phase 5 of 6 complete** (API v1, TypeScript UI, security controls, tracing and
-> metrics; [verified results](runlogs/phase5/RESULTS.md)). Evaluation:
-> [Phase 4 results](runlogs/phase4/RESULTS.md). The full plan covers ingestion, retrieval,
-> evaluation, API/UI, observability and deployment.
+> **Status: Phases 1–6 verified** on the 8 GB laptop and in CI: Docker Compose deployment,
+> image scanning, releases to GHCR, deploys with automatic rollback, backups
+> ([results](runlogs/phase6/RESULTS.md), [runbook](docs/runbook.md)). Not yet: a server with a
+> public HTTPS demo.
+> Earlier phases: [API, UI, security, observability](runlogs/phase5/RESULTS.md) ·
+> [evaluation](runlogs/phase4/RESULTS.md).
 
 **Measured on an 8 GB laptop** (200-question golden set, held-out test split, Qwen2.5-7B):
 
@@ -74,7 +76,46 @@ Browser (React) ──SSE──▶ FastAPI (async)
 - **One model interface.** Ollama (dev) and vLLM (prod) both speak the
   OpenAI-compatible API, under the same model name.
 
-## Quick start
+## Run it with Docker
+
+```text
+                 :8080                     (one or more replicas)
+ Browser ──▶ web: nginx ──/api, /readyz──▶ api: FastAPI ──▶ qdrant   (index, snapshots)
+             static UI, CSP,               uvicorn, 1 worker ├─▶ redis    (sessions, rate limits, cache)
+             /metrics blocked              non-root, read-only└─▶ ollama  (Qwen2.5-7B + nomic-embed-text)
+                                                                 or vLLM on a GPU (compose.gpu.yaml)
+ prometheus :9095 ◀── scrapes every replica      grafana :3001 (provisioned dashboard)
+ langfuse   :3000 ◀── OTLP traces (optional, deploy/langfuse)
+ jobs (docker compose run): ingest · eval · backup/restore · smoke
+```
+
+**Any Linux server or workstation** (Docker with Compose v2):
+
+```bash
+cp deploy/.env.example deploy/.env      # set LEXAI_API_ADMIN_API_KEY and GRAFANA_ADMIN_PASSWORD
+make up                                 # first start pulls ~5 GB of models into a volume
+make docker-ingest                      # download sources and build the index (~10-30 min on CPU)
+open http://localhost:8080
+make up-observability                   # + Prometheus and Grafana
+python3 deploy/deploy.py --tag 0.6.0    # later: deploy a release, smoke-tested, rolled back on failure
+```
+
+**The 8 GB Windows laptop** (Docker Desktop or Rancher Desktop; Ollama stays on Windows with
+the models from the earlier phases):
+
+```bat
+deploy\ollama-for-docker.bat           & REM once: let the containers reach Ollama
+deploy\lexai.bat build
+deploy\lexai.bat up
+deploy\lexai.bat network
+deploy\lexai.bat ingest
+start http://127.0.0.1:8090
+```
+
+GPU server: `make up-gpu` (vLLM, Qwen2.5-7B AWQ, 8K context). Operations — upgrades,
+rollback, backups, scaling, incidents — are in the [runbook](docs/runbook.md).
+
+## Quick start without Docker
 
 Prerequisites: Python 3.12, [Ollama](https://ollama.com), Node 18+ for the UI.
 
@@ -106,7 +147,7 @@ uvicorn lexai.api.app:create_app --factory --port 8000
 
 (`uv sync --extra rerank` works too; `requirements*.txt` are exported from `uv.lock`.)
 To use a Qdrant server instead of the embedded store, set `LEXAI_QDRANT_URL`
-(e.g. `http://localhost:6333`); Phase 6 adds it to Docker Compose.
+(e.g. `http://localhost:6333`); Docker Compose does this for you.
 
 ### Frontend
 
@@ -147,7 +188,7 @@ mapping to the OWASP Top 10 for LLM Applications: [`docs/security.md`](docs/secu
   `python scripts/show_trace.py`.
 - **Metrics** at `/metrics`: requests and latency per route, time to first token,
   latency per stage, answers by outcome, verification failures, cache hits, upstream
-  errors, rate-limited requests. Dashboard: [`deploy/grafana/lexai.json`](deploy/grafana/lexai.json);
+  errors, rate-limited requests. Dashboard: [`deploy/grafana/dashboards/lexai.json`](deploy/grafana/dashboards/lexai.json);
   alerts: [`deploy/prometheus/alerts.yml`](deploy/prometheus/alerts.yml).
 - **State**: sessions, rate limits and the answer cache are in-process by default and
   move to Redis with `LEXAI_API_REDIS_URL` (needed for more than one API worker).
@@ -157,7 +198,8 @@ mapping to the OWASP Top 10 for LLM Applications: [`docs/security.md`](docs/secu
 All settings are environment variables (or `backend/.env`), grouped by prefix:
 `LEXAI_LLM_*`, `LEXAI_EMBED_*`, `LEXAI_RERANK_*`, `LEXAI_RETRIEVAL_*`, `LEXAI_CORPUS_*`,
 `LEXAI_QDRANT_*`, `LEXAI_QUERY_*`, `LEXAI_CACHE_*`, `LEXAI_API_*`, `LEXAI_OBS_*`.
-See [`deploy/.env.example`](deploy/.env.example) for every option and its default.
+See [`backend/.env.example`](backend/.env.example) for every option and its default; with
+Docker, [`deploy/.env.example`](deploy/.env.example) holds the evaluated configuration.
 To serve the model with vLLM on a GPU, see [`deploy/vllm/README.md`](deploy/vllm/README.md).
 
 ## Development
@@ -208,7 +250,7 @@ backend/
     services/     session memory, answer cache
     evaluation/   golden-set loader, metrics, judge, offline fixture, `python -m lexai.evaluation`
   tests/          unit and API tests (no model servers needed)
-  scripts/        model check, index inspection, smoke test, Phase 3 checks, load test
+  scripts/        model check, index inspection, smoke tests (incl. release smoke), checks, load test
 data/
   manifest.yaml   every source document and its metadata
   manifest.lock.json  checksums of downloaded files (written by `fetch`)
@@ -219,8 +261,11 @@ eval/
   fixtures/       exported index + smoke queries for the offline CI gate
   baselines/      gate baseline (Recall@8, MRR@10)
   reports/        results per commit (JSON + report.md)
-deploy/           Ollama Modelfiles, env profiles, vLLM notes, Grafana dashboard, Prometheus alerts
-.github/workflows/ CI: lint, types, tests (Linux + Windows/pip), retrieval gate, frontend build
+deploy/           compose.yaml (+ laptop and GPU overlays), deploy.py (deploy + rollback), lexai.bat,
+                  Ollama Modelfiles, env profiles, Grafana provisioning, Prometheus rules, Langfuse
+.github/workflows/ ci.yml: lint, types, tests (Linux + Windows/pip), retrieval gate, frontend, images +
+                  Trivy, fresh-machine Compose deploy, backup/restore, rollback rehearsal;
+                  release.yml: GHCR images + SBOM + deploy; eval.yml: nightly evaluation (GPU runner)
 docs/adr/         architecture decision records
 docs/security.md  security controls mapped to the OWASP Top 10 for LLM Applications
 runlogs/          per-phase verification scripts and their output
@@ -236,7 +281,7 @@ frontend/         React + TypeScript chat UI (types from the OpenAPI schema; Vit
 | 3 | Retrieval & generation: query routing, citation verification, abstention | **done** ([results](runlogs/phase3/RESULTS.md)) |
 | 4 | Evaluation: golden set, retrieval/answer metrics, ablations, load test, CI gate | **done** ([results](runlogs/phase4/RESULTS.md)) |
 | 5 | API v1, TypeScript UI, security, observability | **done** ([results](runlogs/phase5/RESULTS.md)) |
-| 6 | Docker Compose, CI/CD, deployment | planned |
+| 6 | Docker Compose, CI/CD, deployment, backups, runbook | **done** ([results](runlogs/phase6/RESULTS.md)); public demo server pending |
 
 ## Disclaimer
 
