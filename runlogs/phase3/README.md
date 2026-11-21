@@ -1,5 +1,9 @@
 # Phase 3 — run and report (Windows Command Prompt)
 
+> **Archived.** This is the record of the Phase 3 run. Its runner script was retired after
+> Phase 6; to run LexAI today see the [main README](../../README.md). The script is in git
+> history: `git show 6d82741:runlogs/phase3/run_phase3.bat`.
+
 Phase 3 makes answers correct and checkable: the question is understood before
 searching, named sections are fetched exactly, the old and new criminal codes are
 linked, and every answer is checked against its sources after it is written.

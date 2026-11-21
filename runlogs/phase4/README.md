@@ -1,5 +1,9 @@
 # Phase 4 — run and report (Windows Command Prompt)
 
+> **Archived.** This is the record of the Phase 4 run. Its runner script was retired after
+> Phase 6; to run LexAI today see the [main README](../../README.md). The script is in git
+> history: `git show 24a7ae0:runlogs/phase4/run_phase4.bat`.
+
 Phase 4 measures LexAI instead of spot-checking it: a 200-question golden set,
 retrieval and answer metrics, ablations that show what each part of the pipeline
 is worth, a load test, and a regression gate that runs in GitHub Actions on every

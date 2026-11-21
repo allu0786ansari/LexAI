@@ -20,7 +20,6 @@ import asyncio
 import hashlib
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from pathlib import Path
 
 import httpx
 
@@ -186,7 +185,3 @@ def format_results(results: list[FetchResult]) -> str:
     lines.append("-" * 90)
     lines.append("FETCH: all sources present and verified" if not failed else f"FETCH FAILED for: {failed}")
     return "\n".join(lines)
-
-
-def raw_path(spec: DocumentSpec, settings: CorpusSettings) -> Path:
-    return settings.raw_dir / f"{spec.id}.pdf"

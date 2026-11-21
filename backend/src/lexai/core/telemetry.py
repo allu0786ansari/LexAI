@@ -102,8 +102,3 @@ def configure_tracing(obs: ObservabilitySettings) -> TracerProvider | None:
 def flush() -> None:
     if _configured is not None:
         _configured.force_flush(timeout_millis=5000)
-
-
-def trace_id_hex() -> str:
-    ctx = trace.get_current_span().get_span_context()
-    return f"{ctx.trace_id:032x}" if ctx and ctx.is_valid else ""

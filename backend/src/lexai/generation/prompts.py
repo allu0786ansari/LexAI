@@ -81,19 +81,6 @@ def passage_header(n: int, meta: ChunkMetadata) -> str:
     return " | ".join(bits)
 
 
-def within_budget(chunks: list[ScoredChunk], char_budget: int) -> list[ScoredChunk]:
-    """Keep passages in rank order until the character budget is used (always at least one)."""
-    kept: list[ScoredChunk] = []
-    used = 0
-    for item in chunks:
-        size = len(item.chunk.text) + 120  # header allowance
-        if kept and used + size > char_budget:
-            break
-        kept.append(item)
-        used += size
-    return kept
-
-
 def _evidence(text: str) -> str:
     """A passage cannot open or close the <passages> block (prompt-injection hardening)."""
     return text.replace("<passages>", "(passages)").replace("</passages>", "(/passages)")

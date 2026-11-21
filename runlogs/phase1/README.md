@@ -1,5 +1,9 @@
 # Phase 1 — run and report (Windows Command Prompt)
 
+> **Archived.** This is the record of the Phase 1 run. Its runner script was retired after
+> Phase 6; to run LexAI today see the [main README](../../README.md). The script is in git
+> history: `git show 078f324:runlogs/phase1/run_phase1.bat`.
+
 Everything here runs in **cmd.exe** with plain Python and pip — no uv, no
 PowerShell. Run the steps below, then push `runlogs\phase1\output\` (or paste
 the files in chat). Phase 2 starts only after they are reviewed.

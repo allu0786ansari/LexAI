@@ -1,5 +1,9 @@
 # Phase 2 — run and report (Windows Command Prompt)
 
+> **Archived.** This is the record of the Phase 2 run. Its runner script was retired after
+> Phase 6; to run LexAI today see the [main README](../../README.md). The script is in git
+> history: `git show 08b936d:runlogs/phase2/run_phase2.bat`.
+
 Phase 2 replaces the v0.1 ingestion (FAISS + whole-page chunks) with a
 pinned corpus, a parser that understands sections and articles, and a
 hybrid Qdrant index. Everything runs in **cmd.exe** with plain Python and pip.
